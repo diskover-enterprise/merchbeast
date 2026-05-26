@@ -68,7 +68,6 @@ export default function Home() {
             {loginOpen && (
               <div className="mb-login-dropdown">
                 <a href="/dashboard/login">Owner Login</a>
-                <a href="/admin/login">Admin Login</a>
               </div>
             )}
           </div>
@@ -257,6 +256,7 @@ export default function Home() {
           <a href="#">Instagram</a>
           <a href="#">TikTok</a>
           <a href="mailto:hello@merchbeast.co">hello@merchbeast.co</a>
+          <a href="/admin/login">Admin</a>
         </div>
       </footer>
 
