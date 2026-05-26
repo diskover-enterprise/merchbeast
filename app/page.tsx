@@ -104,7 +104,7 @@ export default function Home() {
             <span>HP <b>∞</b></span>
           </div>
           <div className="mb-mascot">
-            <img src="/gorilla.svg" alt="Merch Beast gorilla mascot" />
+            <img src="/godzilla.svg" alt="Merch Beast Godzilla mascot" />
           </div>
         </div>
 
