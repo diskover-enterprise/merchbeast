@@ -1,0 +1,20 @@
+@import "tailwindcss";
+
+:root {
+  --color-primary: #0A0A0A;
+  --color-secondary: #FFFFFF;
+  --color-accent: #0A0A0A;
+  --font-family: var(--font-inter), 'Inter', sans-serif;
+  --font-display: var(--font-display), 'Cormorant Garamond', serif;
+}
+
+body {
+  background-color: #F8F7F4;
+  color: #0A0A0A;
+  font-family: var(--font-family), Arial, sans-serif;
+}
+
+@layer utilities {
+  .line-clamp-1 { overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 1; }
+  .line-clamp-2 { overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; }
+}
