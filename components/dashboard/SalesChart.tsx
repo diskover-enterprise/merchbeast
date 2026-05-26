@@ -26,27 +26,36 @@ export function SalesChart({ data }: Props) {
   }))
 
   return (
-    <ResponsiveContainer width="100%" height={240}>
-      <BarChart data={formatted} margin={{ top: 4, right: 8, bottom: 4, left: 8 }}>
-        <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f0f0f0" />
+    <ResponsiveContainer width="100%" height={220}>
+      <BarChart data={formatted} margin={{ top: 4, right: 4, bottom: 4, left: 4 }}>
+        <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#1a2138" />
         <XAxis
           dataKey="label"
-          tick={{ fontSize: 11, fill: '#9ca3af' }}
+          tick={{ fontSize: 10, fill: '#525a78', letterSpacing: 1 }}
           axisLine={false}
           tickLine={false}
         />
         <YAxis
           tickFormatter={(v) => formatCurrency(Number(v))}
-          tick={{ fontSize: 11, fill: '#9ca3af' }}
+          tick={{ fontSize: 10, fill: '#525a78' }}
           axisLine={false}
           tickLine={false}
-          width={48}
+          width={52}
         />
         <Tooltip
           formatter={(value) => [formatCurrency(Number(value)), 'Revenue']}
-          contentStyle={{ borderRadius: '8px', border: '1px solid #e5e7eb' }}
+          contentStyle={{
+            background: '#080b15',
+            border: '1px solid #232c4a',
+            borderRadius: 0,
+            color: '#eef0fa',
+            fontSize: 12,
+            letterSpacing: '0.08em',
+          }}
+          cursor={{ fill: 'rgba(91,108,255,0.07)' }}
         />
-        <Bar dataKey="revenue" fill="#f97316" radius={[4, 4, 0, 0]} />
+        <Bar dataKey="revenue" fill="#5b6cff" radius={[2, 2, 0, 0]}
+          style={{ filter: 'drop-shadow(0 0 6px rgba(91,108,255,0.5))' }} />
       </BarChart>
     </ResponsiveContainer>
   )

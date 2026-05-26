@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react'
 import { SalesChart } from '@/components/dashboard/SalesChart'
 import { formatCurrency } from '@/lib/utils'
-import { ShoppingBag, DollarSign, TrendingUp, Package } from 'lucide-react'
+import { DollarSign, ShoppingBag, TrendingUp, Package } from 'lucide-react'
 
 interface Stats {
   totalOrders: number
@@ -22,69 +22,112 @@ export default function DashboardOverviewPage() {
 
   if (!stats) {
     return (
-      <div className="p-8 animate-pulse space-y-6">
-        <div className="h-8 bg-gray-200 rounded w-48" />
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-          {[1, 2, 3].map((i) => <div key={i} className="h-28 bg-gray-200 rounded-xl" />)}
+      <>
+        <div className="db-sec-head">
+          <span className="num">[ 01 ]</span>
+          <span className="label">Overview</span>
+          <span className="spacer" />
+          <span>Loading…</span>
         </div>
-        <div className="h-64 bg-gray-200 rounded-xl" />
-      </div>
+        <div className="db-content">
+          <div className="db-stats">
+            {[1, 2, 3].map((i) => (
+              <div key={i} className="db-stat">
+                <div className="db-skeleton" style={{ height: 12, width: '60%', marginBottom: 18 }} />
+                <div className="db-skeleton" style={{ height: 34, width: '80%' }} />
+              </div>
+            ))}
+          </div>
+          <div className="db-skeleton" style={{ height: 280, borderRadius: 2 }} />
+        </div>
+      </>
     )
   }
 
   const statCards = [
-    { label: 'Total Revenue (30d)', value: formatCurrency(stats.totalRevenue), icon: DollarSign, color: 'bg-green-50 text-green-600' },
-    { label: 'Orders (30d)', value: stats.recentOrdersCount, icon: ShoppingBag, color: 'bg-blue-50 text-blue-600' },
-    { label: 'All-time Orders', value: stats.totalOrders, icon: TrendingUp, color: 'bg-purple-50 text-purple-600' },
+    {
+      label: 'Revenue · 30d',
+      value: formatCurrency(stats.totalRevenue),
+      sub: 'gross sales',
+      icon: DollarSign,
+    },
+    {
+      label: 'Orders · 30d',
+      value: stats.recentOrdersCount,
+      sub: 'recent orders',
+      icon: ShoppingBag,
+    },
+    {
+      label: 'All-time Orders',
+      value: stats.totalOrders,
+      sub: 'lifetime count',
+      icon: TrendingUp,
+    },
   ]
 
   return (
-    <div className="p-8">
-      <h1 className="text-2xl font-bold text-gray-900 mb-6">Dashboard Overview</h1>
+    <>
+      <div className="db-sec-head">
+        <span className="num">[ 01 ]</span>
+        <span className="label">Overview</span>
+        <span className="spacer" />
+        <span>Status&nbsp;<b style={{ color: 'var(--neon)' }}>OK</b></span>
+        <span className="blink" />
+      </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
-        {statCards.map(({ label, value, icon: Icon, color }) => (
-          <div key={label} className="bg-white rounded-xl shadow-sm p-5 flex items-center gap-4">
-            <div className={`w-12 h-12 rounded-xl flex items-center justify-center ${color}`}>
-              <Icon size={22} />
+      <div className="db-content">
+        {/* Stat cards */}
+        <div className="db-stats">
+          {statCards.map(({ label, value, sub, icon: Icon }) => (
+            <div key={label} className="db-stat">
+              <div className="db-stat-label">
+                {label}
+                <Icon />
+              </div>
+              <div className="db-stat-value">{value}</div>
+              <div className="db-stat-sub">{sub}</div>
             </div>
-            <div>
-              <p className="text-sm text-gray-500">{label}</p>
-              <p className="text-2xl font-bold text-gray-900">{value}</p>
+          ))}
+        </div>
+
+        {/* Chart + top products */}
+        <div className="db-grid-2-1">
+          <div className="db-card">
+            <div className="db-card-head">
+              <svg viewBox="0 0 16 16"><rect x="1" y="8" width="3" height="7"/><rect x="6" y="4" width="3" height="11"/><rect x="11" y="1" width="3" height="14"/></svg>
+              <span>Revenue — Last 7 Days</span>
+            </div>
+            <div className="db-card-body">
+              <SalesChart data={stats.dailyRevenue} />
             </div>
           </div>
-        ))}
-      </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <div className="lg:col-span-2 bg-white rounded-xl shadow-sm p-5">
-          <h2 className="font-semibold text-gray-700 mb-4">Revenue — Last 7 Days</h2>
-          <SalesChart data={stats.dailyRevenue} />
-        </div>
-
-        <div className="bg-white rounded-xl shadow-sm p-5">
-          <h2 className="font-semibold text-gray-700 mb-4 flex items-center gap-2">
-            <Package size={16} /> Top Products
-          </h2>
-          {stats.topProducts.length === 0 ? (
-            <p className="text-gray-400 text-sm">No sales yet</p>
-          ) : (
-            <ol className="space-y-3">
-              {stats.topProducts.map((p, i) => (
-                <li key={p.id} className="flex items-center gap-3">
-                  <span className="w-6 h-6 rounded-full bg-orange-100 text-orange-600 text-xs font-bold flex items-center justify-center shrink-0">
-                    {i + 1}
-                  </span>
-                  <div className="flex-1 min-w-0">
-                    <p className="text-sm font-medium truncate">{p.name}</p>
-                    <p className="text-xs text-gray-400">{p.soldCount} sold</p>
-                  </div>
-                </li>
-              ))}
-            </ol>
-          )}
+          <div className="db-card">
+            <div className="db-card-head">
+              <Package size={13} style={{ stroke: 'var(--neon)', fill: 'none' }} />
+              <span>Top Products</span>
+            </div>
+            <div className="db-card-body">
+              {stats.topProducts.length === 0 ? (
+                <div className="db-empty">
+                  <p className="db-empty-tag">No data yet</p>
+                  <p className="db-empty-headline">Empty</p>
+                </div>
+              ) : (
+                <ol className="db-top-list">
+                  {stats.topProducts.map((p, i) => (
+                    <li key={p.id} className="db-top-item">
+                      <span className={`db-top-rank${i === 0 ? ' first' : ''}`}>{i + 1}</span>
+                      <span className="db-top-name">{p.name}</span>
+                      <span className="db-top-count">{p.soldCount}&nbsp;sold</span>
+                    </li>
+                  ))}
+                </ol>
+              )}
+            </div>
+          </div>
         </div>
       </div>
-    </div>
+    </>
   )
 }

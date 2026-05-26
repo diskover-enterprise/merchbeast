@@ -30,7 +30,7 @@ const defaults: Settings = {
   instagram: '', websiteUrl: '', address: '',
 }
 
-function ImageUploadButton({ onUploaded }: { onUploaded: (url: string) => void }) {
+function UploadBtn({ onUploaded }: { onUploaded: (url: string) => void }) {
   const ref = useRef<HTMLInputElement>(null)
   const [uploading, setUploading] = useState(false)
 
@@ -51,42 +51,12 @@ function ImageUploadButton({ onUploaded }: { onUploaded: (url: string) => void }
 
   return (
     <>
-      <button
-        type="button"
-        onClick={() => ref.current?.click()}
-        disabled={uploading}
-        className="flex items-center gap-1.5 px-3 py-2 text-xs border border-gray-300 rounded-lg hover:bg-gray-50 disabled:opacity-50 shrink-0 transition-colors"
-      >
-        {uploading ? (
-          <span className="w-3 h-3 border-2 border-gray-400 border-t-transparent rounded-full animate-spin" />
-        ) : (
-          <Upload size={13} />
-        )}
+      <button type="button" className="db-btn ghost" onClick={() => ref.current?.click()} disabled={uploading} style={{ flexShrink: 0 }}>
+        {uploading ? <span className="db-spinner" /> : <Upload size={12} />}
         {uploading ? 'Uploading…' : 'Upload'}
       </button>
-      <input ref={ref} type="file" accept="image/*" className="hidden" onChange={handleChange} />
+      <input ref={ref} type="file" accept="image/*" style={{ display: 'none' }} onChange={handleChange} />
     </>
-  )
-}
-
-function Section({ title, children }: { title: string; children: React.ReactNode }) {
-  return (
-    <div className="bg-white rounded-xl shadow-sm overflow-hidden mb-6">
-      <div className="px-6 py-4 border-b border-gray-100">
-        <h2 className="text-sm font-semibold text-gray-900 uppercase tracking-wide">{title}</h2>
-      </div>
-      <div className="p-6 space-y-5">{children}</div>
-    </div>
-  )
-}
-
-function Field({ label, hint, children }: { label: string; hint?: string; children: React.ReactNode }) {
-  return (
-    <div>
-      <label className="block text-sm font-medium text-gray-700 mb-1">{label}</label>
-      {hint && <p className="text-xs text-gray-400 mb-2">{hint}</p>}
-      {children}
-    </div>
   )
 }
 
@@ -101,20 +71,20 @@ export default function SettingsPage() {
     fetch('/api/dashboard/settings').then((r) => r.json()).then((data) => {
       setSlug(data.slug ?? '')
       setForm({
-        name: data.name ?? '',
-        tagline: data.tagline ?? '',
-        description: data.description ?? '',
-        about: data.about ?? '',
-        heroHeadline: data.heroHeadline ?? '',
-        logo: data.logo ?? '',
-        bannerImage: data.bannerImage ?? '',
-        primaryColor: data.primaryColor ?? '#000000',
+        name:           data.name           ?? '',
+        tagline:        data.tagline        ?? '',
+        description:    data.description    ?? '',
+        about:          data.about          ?? '',
+        heroHeadline:   data.heroHeadline   ?? '',
+        logo:           data.logo           ?? '',
+        bannerImage:    data.bannerImage    ?? '',
+        primaryColor:   data.primaryColor   ?? '#000000',
         secondaryColor: data.secondaryColor ?? '#ffffff',
-        accentColor: data.accentColor ?? '#ff6600',
-        fontFamily: data.fontFamily ?? 'Inter',
-        instagram: data.instagram ?? '',
-        websiteUrl: data.websiteUrl ?? '',
-        address: data.address ?? '',
+        accentColor:    data.accentColor    ?? '#ff6600',
+        fontFamily:     data.fontFamily     ?? 'Inter',
+        instagram:      data.instagram      ?? '',
+        websiteUrl:     data.websiteUrl     ?? '',
+        address:        data.address        ?? '',
       })
       setLoading(false)
     })
@@ -136,170 +106,186 @@ export default function SettingsPage() {
     setTimeout(() => setSaved(false), 2500)
   }
 
-  const input = (key: keyof Settings) => (
-    <input
-      value={form[key]}
-      onChange={(e) => set(key, e.target.value)}
-      className="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-gray-400"
-    />
-  )
-
-  const textarea = (key: keyof Settings, rows = 3) => (
-    <textarea
-      value={form[key]}
-      onChange={(e) => set(key, e.target.value)}
-      rows={rows}
-      className="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-gray-400 resize-none"
-    />
-  )
-
   if (loading) {
     return (
-      <div className="p-8 animate-pulse space-y-4 max-w-2xl">
-        {[1, 2, 3, 4, 5].map((i) => <div key={i} className="h-32 bg-gray-200 rounded-xl" />)}
-      </div>
+      <>
+        <div className="db-sec-head">
+          <span className="num">[ 04 ]</span>
+          <span className="label">Settings</span>
+          <span className="spacer" />
+          <span>Loading…</span>
+        </div>
+        <div className="db-content" style={{ maxWidth: 680 }}>
+          {[1, 2, 3].map((i) => (
+            <div key={i} className="db-skeleton" style={{ height: 140, marginBottom: 14, borderRadius: 2 }} />
+          ))}
+        </div>
+      </>
     )
   }
 
   return (
-    <div className="p-8 max-w-2xl">
-      <div className="flex items-center justify-between mb-6">
-        <h1 className="text-2xl font-bold text-gray-900">Store Settings</h1>
+    <>
+      <div className="db-sec-head">
+        <span className="num">[ 04 ]</span>
+        <span className="label">Settings</span>
+        <span className="spacer" />
         {slug && (
-          <a
-            href={`/shop/${slug}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-xs text-gray-500 underline hover:text-gray-900"
-          >
-            View Storefront →
+          <a href={`/shop/${slug}`} target="_blank" rel="noopener noreferrer"
+            style={{ color: 'var(--neon)', letterSpacing: '.18em', fontSize: 10 }}>
+            View Shop ↗
           </a>
         )}
+        <span className="blink" />
       </div>
 
-      {/* Brand Identity */}
-      <Section title="Brand Identity">
-        <Field label="Store Name" hint="Displayed in the navbar and page title.">
-          {input('name')}
-        </Field>
-        <Field label="Tagline" hint="Short line shown under your logo or name on the hero. e.g. 'Est. 2019 · Ho Chi Minh City'">
-          {input('tagline')}
-        </Field>
-        <Field label="Hero Headline" hint="Large text on the storefront hero. Leave blank to use your store name.">
-          {input('heroHeadline')}
-        </Field>
-        <Field label="Brand Description" hint="One to two sentences. Used as the editorial quote on your storefront.">
-          {textarea('description', 2)}
-        </Field>
-        <Field label="About / Brand Story" hint="Longer text shown in the About section below your hero. Tell your story.">
-          {textarea('about', 5)}
-        </Field>
-      </Section>
+      <div className="db-content" style={{ maxWidth: 680 }}>
 
-      {/* Media */}
-      <Section title="Media">
-        <Field label="Logo" hint="Transparent PNG recommended. Upload a file or paste a URL.">
-          <div className="flex gap-2 items-start">
-            <div className="flex-1">{input('logo')}</div>
-            <ImageUploadButton onUploaded={(url) => set('logo', url)} />
-            {form.logo && (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img src={form.logo} alt="logo preview" className="w-12 h-12 object-contain border border-gray-200 rounded shrink-0" />
-            )}
-          </div>
-        </Field>
-        <Field label="Banner / Hero Image" hint="Wide landscape image (1400×600 recommended). Upload a file or paste a URL.">
-          <div className="space-y-2">
-            <div className="flex gap-2">
-              <div className="flex-1">{input('bannerImage')}</div>
-              <ImageUploadButton onUploaded={(url) => set('bannerImage', url)} />
+        {/* Brand Identity */}
+        <div className="db-section">
+          <div className="db-section-head">Brand Identity</div>
+          <div className="db-section-body">
+            <div className="db-field">
+              <label>Store Name</label>
+              <p className="db-field-hint">Displayed in the navbar and page title.</p>
+              <input type="text" value={form.name} onChange={(e) => set('name', e.target.value)} placeholder="Your store name" />
             </div>
-            {form.bannerImage && (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img src={form.bannerImage} alt="banner preview" className="w-full h-24 object-cover rounded-lg border border-gray-200" />
-            )}
+            <div className="db-field">
+              <label>Tagline</label>
+              <p className="db-field-hint">Short line under your logo. e.g. "Est. 2019 · London"</p>
+              <input type="text" value={form.tagline} onChange={(e) => set('tagline', e.target.value)} placeholder="Short tagline" />
+            </div>
+            <div className="db-field">
+              <label>Hero Headline</label>
+              <p className="db-field-hint">Large text on the storefront hero. Leave blank to use store name.</p>
+              <input type="text" value={form.heroHeadline} onChange={(e) => set('heroHeadline', e.target.value)} placeholder="Hero headline" />
+            </div>
+            <div className="db-field">
+              <label>Brand Description</label>
+              <p className="db-field-hint">One to two sentences shown as an editorial quote.</p>
+              <textarea value={form.description} onChange={(e) => set('description', e.target.value)} rows={2} placeholder="Short description" />
+            </div>
+            <div className="db-field">
+              <label>About / Brand Story</label>
+              <p className="db-field-hint">Longer text shown in the About section. Tell your story.</p>
+              <textarea value={form.about} onChange={(e) => set('about', e.target.value)} rows={5} placeholder="Your brand story…" />
+            </div>
           </div>
-        </Field>
-      </Section>
+        </div>
 
-      {/* Design */}
-      <Section title="Design">
-        <Field label="Font Family">
-          <select
-            value={form.fontFamily}
-            onChange={(e) => set('fontFamily', e.target.value)}
-            className="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-gray-400"
-          >
-            {FONT_OPTIONS.map((f) => <option key={f} value={f}>{f}</option>)}
-          </select>
-        </Field>
-
-        <div className="grid grid-cols-3 gap-4">
-          {[
-            { key: 'primaryColor' as const, label: 'Primary', hint: 'Navbar, hero bg, buttons' },
-            { key: 'secondaryColor' as const, label: 'Secondary', hint: 'Page background, text on primary' },
-            { key: 'accentColor' as const, label: 'Accent', hint: 'Labels, highlights, badges' },
-          ].map(({ key, label, hint }) => (
-            <div key={key}>
-              <label className="block text-sm font-medium text-gray-700 mb-0.5">{label}</label>
-              <p className="text-[10px] text-gray-400 mb-2">{hint}</p>
-              <div className="flex items-center gap-2 border border-gray-300 rounded-lg px-2 py-1.5">
-                <input
-                  type="color"
-                  value={form[key]}
-                  onChange={(e) => set(key, e.target.value)}
-                  className="w-8 h-8 rounded cursor-pointer border-0 p-0 bg-transparent"
-                />
-                <span className="text-xs font-mono text-gray-600">{form[key]}</span>
+        {/* Media */}
+        <div className="db-section">
+          <div className="db-section-head">Media</div>
+          <div className="db-section-body">
+            <div className="db-field">
+              <label>Logo</label>
+              <p className="db-field-hint">Transparent PNG recommended.</p>
+              <div className="db-img-row">
+                <div className="db-field" style={{ marginBottom: 0 }}>
+                  <input type="url" value={form.logo} onChange={(e) => set('logo', e.target.value)} placeholder="https://…" />
+                </div>
+                <UploadBtn onUploaded={(url) => set('logo', url)} />
+                {form.logo && (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img src={form.logo} alt="" style={{ width: 40, height: 40, objectFit: 'contain', border: '1px solid var(--line)', flexShrink: 0 }} />
+                )}
               </div>
             </div>
-          ))}
-        </div>
-
-        {/* Live preview */}
-        <div>
-          <p className="text-xs text-gray-400 mb-2">Live preview</p>
-          <div className="rounded-lg p-4 flex items-center gap-3" style={{ backgroundColor: form.primaryColor }}>
-            <div
-              className="w-8 h-8 rounded-full font-bold flex items-center justify-center text-sm shrink-0"
-              style={{ backgroundColor: form.accentColor, color: form.secondaryColor }}
-            >
-              {form.name[0]?.toUpperCase() ?? 'S'}
-            </div>
-            <div>
-              <p className="font-semibold text-sm leading-none" style={{ color: form.secondaryColor, fontFamily: form.fontFamily }}>
-                {form.name || 'Store Name'}
-              </p>
-              {form.tagline && (
-                <p className="text-[10px] mt-1 opacity-60" style={{ color: form.secondaryColor }}>
-                  {form.tagline}
-                </p>
-              )}
+            <div className="db-field">
+              <label>Banner / Hero Image</label>
+              <p className="db-field-hint">Wide landscape image (1400×600 recommended).</p>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+                <div className="db-img-row">
+                  <div className="db-field" style={{ marginBottom: 0 }}>
+                    <input type="url" value={form.bannerImage} onChange={(e) => set('bannerImage', e.target.value)} placeholder="https://…" />
+                  </div>
+                  <UploadBtn onUploaded={(url) => set('bannerImage', url)} />
+                </div>
+                {form.bannerImage && (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img src={form.bannerImage} alt="" style={{ width: '100%', height: 80, objectFit: 'cover', border: '1px solid var(--line)' }} />
+                )}
+              </div>
             </div>
           </div>
         </div>
-      </Section>
 
-      {/* Contact & Social */}
-      <Section title="Contact & Social">
-        <Field label="Instagram URL" hint="Full URL e.g. https://instagram.com/yourbrand">
-          {input('instagram')}
-        </Field>
-        <Field label="Website URL" hint="Your main restaurant website, if different from this store.">
-          {input('websiteUrl')}
-        </Field>
-        <Field label="Address" hint="Physical location shown in the storefront footer.">
-          {input('address')}
-        </Field>
-      </Section>
+        {/* Design */}
+        <div className="db-section">
+          <div className="db-section-head">Design</div>
+          <div className="db-section-body">
+            <div className="db-field">
+              <label>Font Family</label>
+              <select value={form.fontFamily} onChange={(e) => set('fontFamily', e.target.value)}>
+                {FONT_OPTIONS.map((f) => <option key={f} value={f}>{f}</option>)}
+              </select>
+            </div>
 
-      <button
-        onClick={handleSave}
-        disabled={saving}
-        className="flex items-center gap-2 bg-gray-900 text-white px-6 py-3 rounded-lg font-semibold hover:bg-gray-700 transition-colors disabled:opacity-60"
-      >
-        {saved ? <><Check size={18} /> Saved!</> : saving ? 'Saving...' : 'Save Changes'}
-      </button>
-    </div>
+            <div className="db-color-row">
+              {([
+                { key: 'primaryColor'   as const, label: 'Primary',   hint: 'Navbar, hero' },
+                { key: 'secondaryColor' as const, label: 'Secondary',  hint: 'Page bg' },
+                { key: 'accentColor'    as const, label: 'Accent',     hint: 'Highlights' },
+              ]).map(({ key, label, hint }) => (
+                <div key={key}>
+                  <p className="db-color-label">{label}</p>
+                  <p style={{ fontSize: 10, color: 'var(--ink-mute)', marginBottom: 8 }}>{hint}</p>
+                  <div className="db-color-pick">
+                    <input type="color" value={form[key]} onChange={(e) => set(key, e.target.value)} />
+                    <span className="hex">{form[key]}</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* Live preview */}
+            <div style={{ marginTop: 20 }}>
+              <p style={{ fontSize: 10, letterSpacing: '.2em', textTransform: 'uppercase', color: 'var(--ink-mute)', marginBottom: 8 }}>Preview</p>
+              <div className="db-brand-preview" style={{ backgroundColor: form.primaryColor }}>
+                <div style={{
+                  width: 32, height: 32, borderRadius: '50%',
+                  background: form.accentColor, color: form.secondaryColor,
+                  display: 'flex', alignItems: 'center', justifyContent: 'center',
+                  fontWeight: 700, fontSize: 14, flexShrink: 0,
+                }}>
+                  {form.name[0]?.toUpperCase() ?? 'S'}
+                </div>
+                <div>
+                  <p style={{ fontFamily: form.fontFamily, color: form.secondaryColor, fontWeight: 600, fontSize: 14, lineHeight: 1 }}>
+                    {form.name || 'Store Name'}
+                  </p>
+                  {form.tagline && (
+                    <p style={{ color: form.secondaryColor, fontSize: 11, opacity: .6, marginTop: 4 }}>{form.tagline}</p>
+                  )}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Contact & Social */}
+        <div className="db-section">
+          <div className="db-section-head">Contact &amp; Social</div>
+          <div className="db-section-body">
+            <div className="db-field">
+              <label>Instagram URL</label>
+              <input type="url" value={form.instagram} onChange={(e) => set('instagram', e.target.value)} placeholder="https://instagram.com/yourbrand" />
+            </div>
+            <div className="db-field">
+              <label>Website URL</label>
+              <input type="url" value={form.websiteUrl} onChange={(e) => set('websiteUrl', e.target.value)} placeholder="https://yourbrand.com" />
+            </div>
+            <div className="db-field" style={{ marginBottom: 0 }}>
+              <label>Address</label>
+              <input type="text" value={form.address} onChange={(e) => set('address', e.target.value)} placeholder="City, Country" />
+            </div>
+          </div>
+        </div>
+
+        <button className="db-btn primary" onClick={handleSave} disabled={saving} style={{ marginTop: 8 }}>
+          {saved ? <><Check size={13} /> Saved!</> : saving ? 'Saving…' : 'Save Changes'}
+        </button>
+      </div>
+    </>
   )
 }

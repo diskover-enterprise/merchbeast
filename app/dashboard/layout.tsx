@@ -1,10 +1,13 @@
+import './dashboard.css'
 import { DashboardSidebar } from '@/components/dashboard/DashboardSidebar'
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="flex h-screen overflow-hidden bg-gray-100">
+    <div className="db-shell">
+      <div className="db-bg-grid" />
+      <div className="db-bg-scan" />
       <DashboardSidebar />
-      <main className="flex-1 overflow-y-auto">
+      <main className="db-main">
         {children}
       </main>
     </div>

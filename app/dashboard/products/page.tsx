@@ -33,72 +33,48 @@ function ImageUploader({
       const { url } = await res.json()
       uploaded.push(url)
     }
-    const newValue = [...urls, ...uploaded].join(', ')
-    onChange(newValue)
+    onChange([...urls, ...uploaded].join(', '))
     setUploading(false)
   }
 
   function removeUrl(idx: number) {
-    const next = urls.filter((_, i) => i !== idx)
-    onChange(next.join(', '))
+    onChange(urls.filter((_, i) => i !== idx).join(', '))
   }
 
   return (
-    <div className="space-y-3">
-      {/* Image previews */}
+    <div>
       {urls.length > 0 && (
-        <div className="flex flex-wrap gap-2">
+        <div className="db-img-list">
           {urls.map((url, idx) => (
-            <div key={idx} className="relative group w-20 h-20 rounded-lg overflow-hidden border border-gray-200">
+            <div key={idx} className="db-img-thumb">
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={url} alt="" className="w-full h-full object-cover" />
-              <button
-                onClick={() => removeUrl(idx)}
-                className="absolute inset-0 flex items-center justify-center bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity"
-              >
-                <X size={16} className="text-white" />
+              <img src={url} alt="" />
+              <button className="db-img-remove" onClick={() => removeUrl(idx)}>
+                <X size={13} />
               </button>
             </div>
           ))}
         </div>
       )}
-
-      {/* Upload button */}
-      <div className="flex gap-2">
-        <button
-          type="button"
-          onClick={() => inputRef.current?.click()}
-          disabled={uploading}
-          className="flex items-center gap-2 px-3 py-2 text-xs border border-gray-300 rounded-lg hover:bg-gray-50 disabled:opacity-50 transition-colors"
-        >
-          {uploading ? (
-            <span className="w-3.5 h-3.5 border-2 border-gray-400 border-t-transparent rounded-full animate-spin" />
-          ) : (
-            <Upload size={14} />
-          )}
-          {uploading ? 'Uploading…' : 'Upload images'}
+      <div className="db-upload-row">
+        <button type="button" className="db-btn ghost" onClick={() => inputRef.current?.click()} disabled={uploading}>
+          {uploading ? <span className="db-spinner" /> : <Upload size={13} />}
+          {uploading ? 'Uploading…' : 'Upload'}
         </button>
-        <input
-          ref={inputRef}
-          type="file"
-          accept="image/*"
-          multiple
-          className="hidden"
-          onChange={(e) => handleFiles(e.target.files)}
-        />
         <button
           type="button"
+          className="db-btn ghost"
           onClick={() => {
-            const url = prompt('Or paste an image URL:')
+            const url = prompt('Paste an image URL:')
             if (url?.trim()) onChange([...urls, url.trim()].join(', '))
           }}
-          className="flex items-center gap-2 px-3 py-2 text-xs border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
         >
-          <ImageIcon size={14} />
-          Paste URL
+          <ImageIcon size={13} /> Paste URL
         </button>
+        <input ref={inputRef} type="file" accept="image/*" multiple style={{ display: 'none' }}
+          onChange={(e) => handleFiles(e.target.files)} />
       </div>
-      {error && <p className="text-xs text-red-500">{error}</p>}
+      {error && <p style={{ color: '#ff5050', fontSize: 11, marginTop: 6 }}>{error}</p>}
     </div>
   )
 }
@@ -148,7 +124,6 @@ export default function ProductsPage() {
       stock: form.stock,
       images: form.images ? form.images.split(',').map((s) => s.trim()).filter(Boolean) : [],
     }
-
     if (editing) {
       await fetch(`/api/products/${editing.id}`, {
         method: 'PUT',
@@ -162,7 +137,6 @@ export default function ProductsPage() {
         body: JSON.stringify(payload),
       })
     }
-
     setSaving(false)
     setShowForm(false)
     loadProducts()
@@ -176,168 +150,151 @@ export default function ProductsPage() {
 
   if (loading) {
     return (
-      <div className="p-8 animate-pulse space-y-4">
-        <div className="h-8 bg-gray-200 rounded w-32" />
-        {[1, 2, 3].map((i) => <div key={i} className="h-16 bg-gray-200 rounded-xl" />)}
-      </div>
+      <>
+        <div className="db-sec-head">
+          <span className="num">[ 03 ]</span>
+          <span className="label">Products</span>
+          <span className="spacer" />
+          <span>Loading…</span>
+        </div>
+        <div className="db-content">
+          {[1, 2, 3].map((i) => (
+            <div key={i} className="db-skeleton" style={{ height: 56, marginBottom: 8 }} />
+          ))}
+        </div>
+      </>
     )
   }
 
   return (
-    <div className="p-8">
-      <div className="flex items-center justify-between mb-6">
-        <h1 className="text-2xl font-bold text-gray-900">Products</h1>
-        <button
-          onClick={openAdd}
-          className="flex items-center gap-2 bg-gray-900 text-white px-4 py-2 rounded-xl text-sm font-semibold hover:bg-gray-700 transition-colors"
-        >
-          <Plus size={16} /> Add Product
-        </button>
+    <>
+      <div className="db-sec-head">
+        <span className="num">[ 03 ]</span>
+        <span className="label">Products</span>
+        <span className="spacer" />
+        <span>{products.length}&nbsp;items</span>
+        <span className="blink" />
       </div>
 
-      {/* Form Modal */}
-      {showForm && (
-        <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
-          <div className="bg-white rounded-2xl shadow-2xl w-full max-w-lg max-h-[90vh] overflow-y-auto">
-            <div className="flex items-center justify-between p-6 border-b">
-              <h2 className="text-lg font-bold">{editing ? 'Edit Product' : 'Add Product'}</h2>
-              <button onClick={() => setShowForm(false)} className="p-1 hover:bg-gray-100 rounded">
-                <X size={20} />
-              </button>
-            </div>
-            <div className="p-6 space-y-4">
-              {(['name', 'category'] as const).map((field) => (
-                <div key={field}>
-                  <label className="block text-sm font-medium text-gray-700 mb-1 capitalize">{field}</label>
-                  <input
-                    value={form[field]}
-                    onChange={(e) => setForm({ ...form, [field]: e.target.value })}
-                    className="w-full border border-gray-300 rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-gray-500"
-                  />
-                </div>
-              ))}
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Description</label>
-                <textarea
-                  value={form.description}
-                  onChange={(e) => setForm({ ...form, description: e.target.value })}
-                  rows={3}
-                  className="w-full border border-gray-300 rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-gray-500 resize-none"
-                />
+      <div className="db-content">
+        <div className="db-page-head">
+          <div />
+          <button className="db-btn primary" onClick={openAdd}>
+            <Plus size={13} /> Add Product
+          </button>
+        </div>
+
+        {/* Modal */}
+        {showForm && (
+          <div className="db-modal-overlay">
+            <div className="db-modal">
+              <div className="db-modal-head">
+                <span className="db-modal-title">{editing ? 'Edit Product' : 'New Product'}</span>
+                <button className="db-modal-close" onClick={() => setShowForm(false)}>
+                  <X size={13} />
+                </button>
               </div>
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Price ($)</label>
-                  <input
-                    type="number"
-                    step="0.01"
-                    value={form.price}
-                    onChange={(e) => setForm({ ...form, price: e.target.value })}
-                    className="w-full border border-gray-300 rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-gray-500"
-                  />
+              <div className="db-modal-body">
+                <div className="db-field">
+                  <label>Name</label>
+                  <input type="text" value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} placeholder="Product name" />
                 </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Stock</label>
-                  <input
-                    type="number"
-                    value={form.stock}
-                    onChange={(e) => setForm({ ...form, stock: e.target.value })}
-                    className="w-full border border-gray-300 rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-gray-500"
-                  />
+                <div className="db-field">
+                  <label>Category</label>
+                  <input type="text" value={form.category} onChange={(e) => setForm({ ...form, category: e.target.value })} placeholder="e.g. T-Shirts" />
+                </div>
+                <div className="db-field">
+                  <label>Description</label>
+                  <textarea value={form.description} onChange={(e) => setForm({ ...form, description: e.target.value })} rows={3} placeholder="Short product description" />
+                </div>
+                <div className="db-field-row">
+                  <div className="db-field">
+                    <label>Price ($)</label>
+                    <input type="number" step="0.01" value={form.price} onChange={(e) => setForm({ ...form, price: e.target.value })} placeholder="0.00" />
+                  </div>
+                  <div className="db-field">
+                    <label>Stock</label>
+                    <input type="number" value={form.stock} onChange={(e) => setForm({ ...form, stock: e.target.value })} placeholder="0" />
+                  </div>
+                </div>
+                <div className="db-field">
+                  <label>Images</label>
+                  <ImageUploader value={form.images} onChange={(v) => setForm({ ...form, images: v })} />
                 </div>
               </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Images</label>
-                <ImageUploader
-                  value={form.images}
-                  onChange={(v) => setForm({ ...form, images: v })}
-                />
+              <div className="db-modal-foot">
+                <button className="db-btn ghost" onClick={() => setShowForm(false)}>Cancel</button>
+                <button className="db-btn primary" onClick={handleSave} disabled={saving}>
+                  <Check size={13} /> {saving ? 'Saving…' : 'Save'}
+                </button>
               </div>
             </div>
-            <div className="p-6 border-t flex justify-end gap-3">
-              <button onClick={() => setShowForm(false)} className="px-4 py-2 text-sm border rounded-xl hover:bg-gray-50">
-                Cancel
-              </button>
-              <button
-                onClick={handleSave}
-                disabled={saving}
-                className="flex items-center gap-2 px-4 py-2 text-sm bg-gray-900 text-white rounded-xl hover:bg-gray-700 disabled:opacity-60"
-              >
-                <Check size={16} />
-                {saving ? 'Saving...' : 'Save'}
+          </div>
+        )}
+
+        {products.length === 0 ? (
+          <div className="db-card">
+            <div className="db-empty">
+              <p className="db-empty-tag">Nothing here yet</p>
+              <p className="db-empty-headline" style={{ marginBottom: 20 }}>No Products</p>
+              <button className="db-btn primary" onClick={openAdd}>
+                <Plus size={13} /> Add First Product
               </button>
             </div>
           </div>
-        </div>
-      )}
-
-      {products.length === 0 ? (
-        <div className="text-center py-24 text-gray-400">
-          <p className="text-xl mb-4">No products yet</p>
-          <button onClick={openAdd} className="text-gray-900 underline hover:no-underline text-sm">
-            Add your first product
-          </button>
-        </div>
-      ) : (
-        <div className="bg-white rounded-xl shadow-sm overflow-hidden">
-          <table className="w-full text-sm">
-            <thead className="bg-gray-50 text-gray-500 uppercase text-xs tracking-wide">
-              <tr>
-                <th className="text-left px-5 py-3">Product</th>
-                <th className="text-left px-5 py-3">Category</th>
-                <th className="text-left px-5 py-3">Price</th>
-                <th className="text-left px-5 py-3">Stock</th>
-                <th className="text-right px-5 py-3">Actions</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-gray-100">
-              {products.map((p) => (
-                <tr key={p.id} className="hover:bg-gray-50">
-                  <td className="px-5 py-4">
-                    <div className="flex items-center gap-3">
-                      {p.images[0] ? (
-                        // eslint-disable-next-line @next/next/no-img-element
-                        <img src={p.images[0]} alt={p.name} className="w-10 h-10 rounded-lg object-cover shrink-0" />
-                      ) : (
-                        <div className="w-10 h-10 rounded-lg bg-gray-100 flex items-center justify-center shrink-0">
-                          <ImageIcon size={16} className="text-gray-300" />
+        ) : (
+          <div className="db-card">
+            <div className="db-table-wrap">
+              <table className="db-table">
+                <thead>
+                  <tr>
+                    <th>Product</th>
+                    <th>Category</th>
+                    <th>Price</th>
+                    <th>Stock</th>
+                    <th style={{ textAlign: 'right' }}>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {products.map((p) => (
+                    <tr key={p.id}>
+                      <td className="strong">
+                        <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+                          {p.images[0] ? (
+                            // eslint-disable-next-line @next/next/no-img-element
+                            <img src={p.images[0]} alt={p.name} style={{ width: 36, height: 36, objectFit: 'cover', border: '1px solid var(--line)', flexShrink: 0 }} />
+                          ) : (
+                            <div style={{ width: 36, height: 36, background: 'var(--bg-2)', border: '1px solid var(--line)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                              <ImageIcon size={14} style={{ color: 'var(--ink-mute)' }} />
+                            </div>
+                          )}
+                          <div>
+                            <span>{p.name}</span>
+                            <div style={{ fontSize: 11, color: 'var(--ink-mute)', fontWeight: 400 }}>{p.description?.slice(0, 40)}{p.description?.length > 40 ? '…' : ''}</div>
+                          </div>
                         </div>
-                      )}
-                      <div>
-                        <p className="font-medium text-gray-900">{p.name}</p>
-                        <p className="text-gray-400 text-xs line-clamp-1">{p.description}</p>
-                      </div>
-                    </div>
-                  </td>
-                  <td className="px-5 py-4 text-gray-600">{p.category}</td>
-                  <td className="px-5 py-4 font-bold">{formatCurrency(p.price)}</td>
-                  <td className="px-5 py-4">
-                    <span className={p.stock > 0 ? 'text-green-600' : 'text-red-500'}>
-                      {p.stock}
-                    </span>
-                  </td>
-                  <td className="px-5 py-4">
-                    <div className="flex items-center justify-end gap-2">
-                      <button
-                        onClick={() => openEdit(p)}
-                        className="p-1.5 rounded hover:bg-gray-100 text-gray-500 hover:text-gray-900"
-                      >
-                        <Pencil size={15} />
-                      </button>
-                      <button
-                        onClick={() => handleDelete(p.id)}
-                        className="p-1.5 rounded hover:bg-red-50 text-gray-400 hover:text-red-600"
-                      >
-                        <Trash2 size={15} />
-                      </button>
-                    </div>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      )}
-    </div>
+                      </td>
+                      <td>{p.category}</td>
+                      <td className="strong">{formatCurrency(p.price)}</td>
+                      <td style={{ color: p.stock > 0 ? '#00c882' : '#ff5050' }}>{p.stock}</td>
+                      <td className="right">
+                        <div style={{ display: 'flex', justifyContent: 'flex-end', gap: 6 }}>
+                          <button className="db-btn ghost" style={{ padding: '5px 10px' }} onClick={() => openEdit(p)}>
+                            <Pencil size={12} />
+                          </button>
+                          <button className="db-btn ghost" style={{ padding: '5px 10px', borderColor: 'rgba(255,80,80,.35)', color: '#ff5050' }} onClick={() => handleDelete(p.id)}>
+                            <Trash2 size={12} />
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        )}
+      </div>
+    </>
   )
 }
