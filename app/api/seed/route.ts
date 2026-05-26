@@ -70,6 +70,23 @@ const shops = [
     ],
   },
   {
+    name: 'Quazar Arcade', slug: 'quazar-arcade',
+    description: 'Retro arcade vibes meet neon-soaked streetwear. Stack coins, smash records, wear the culture.',
+    primaryColor: '#08051a', secondaryColor: '#f5f0ff', accentColor: '#FF2E9A', fontFamily: 'Oswald',
+    ownerEmail: 'owner@quazar-arcade.com',
+    bannerImage: U('1511882639-86977afa-b044-4a0a-84b4-8eb4a640f7bb', 1400, 600), logo: null,
+    products: [
+      { name: 'Neon Nights Hoodie', description: 'Oversized black hoodie with neon pink arcade graphic print.', price: 8800, category: 'Apparel', stock: 40, images: [U('1556821840-3a63f8550206')] },
+      { name: 'High Score Tee', description: '100% cotton heavyweight tee. Pixel art scoreboard graphic on the back.', price: 4200, category: 'Apparel', stock: 60, images: [U('1503341504253-dff4815485f1')] },
+      { name: 'Player 1 Snapback', description: 'Black structured 6-panel cap with embroidered neon pink "P1" logo.', price: 3200, category: 'Headwear', stock: 50, images: [U('1588850561407-ed78c282e89b')] },
+      { name: 'Arcade Token Keychain', description: 'Die-cast metal token with Quazar logo. Comes on a heavy-gauge keyring.', price: 1200, category: 'Accessories', stock: 120, images: [U('1535303291-63be1a1d4fb5')] },
+      { name: 'Cabinet Enamel Pin Set', description: 'Set of 4 hard enamel pins: joystick, coin slot, CRT screen, and Quazar logo.', price: 2200, category: 'Accessories', stock: 80, images: [U('1558961399-13a9fe9d03c5')] },
+      { name: 'Neon Grid Tote', description: 'Heavy canvas tote with neon cyan grid print. Reinforced handles.', price: 2800, category: 'Bags', stock: 70, images: [U('1544816155-12df9643f363')] },
+      { name: 'Pixel Art Poster — Vol.1', description: 'Limited edition 18×24" print on 200gsm matte stock. Numbered and signed.', price: 3500, category: 'Print', stock: 50, images: [U('1501504905252-8e3a1dae1074')] },
+      { name: 'Quazar Insulated Tumbler', description: '20oz double-wall stainless tumbler. Matte black with neon pink logo.', price: 3800, category: 'Drinkware', stock: 45, images: [U('1514228742587-6b1558fcca3d')] },
+    ],
+  },
+  {
     name: 'Lunch Lady', slug: 'lunch-lady',
     description: 'Saigon street hawker spirit. Phở since the beginning. The original, the iconic, the irreplaceable.',
     primaryColor: '#1C2E54', secondaryColor: '#FFFFFF', accentColor: '#C84020', fontFamily: 'Playfair Display',
