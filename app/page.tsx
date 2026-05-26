@@ -14,7 +14,7 @@ export default function Home() {
   const [form, setForm] = useState({
     fname: '', lname: '', email: '', phone: '',
     address: '', address2: '', city: '', state: '', zip: '',
-    country: 'United Kingdom', notes: '',
+    country: 'Canada', notes: '',
   })
   const [items, setItems] = useState<OrderItem[]>([
     { id: 1, product: 'T-Shirt', size: 'M', color: 'Black', qty: 1 },
@@ -241,11 +241,8 @@ export default function Home() {
                   <div className="mb-of-field">
                     <label>Country</label>
                     <select value={form.country} onChange={e => setField('country', e.target.value)}>
-                      <option>United Kingdom</option>
-                      <option>United States</option>
                       <option>Canada</option>
-                      <option>Australia</option>
-                      <option>Other</option>
+                      <option>United States</option>
                     </select>
                   </div>
                 </div>
