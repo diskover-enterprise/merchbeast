@@ -102,47 +102,7 @@ export default function Home() {
             <span>HP <b>∞</b></span>
           </div>
           <div className="mb-mascot">
-            <svg viewBox="0 0 400 480" aria-label="Merch Beast gorilla mascot" style={{width:'100%',height:'100%',overflow:'visible'}}>
-              <g className="mb-impact" style={{transformOrigin:'200px 280px'}}>
-                <circle cx="200" cy="280" r="160"/>
-                <circle cx="200" cy="280" r="120" opacity=".6"/>
-              </g>
-              <line x1="40" y1="450" x2="360" y2="450" stroke="rgba(91,108,255,.4)" strokeWidth="1" strokeDasharray="4 6"/>
-              <g className="gorilla-core">
-                <path className="gorilla-body" d="M 80 245 C 90 195, 130 165, 200 162 C 270 165, 310 195, 320 245" />
-                <path className="gorilla-fill" d="M 95 245 L 95 380 Q 95 430 145 432 L 255 432 Q 305 430 305 380 L 305 245 Z"/>
-                <path d="M 145 260 Q 200 248 255 260 L 250 360 Q 200 372 150 360 Z" fill="rgba(91,108,255,0.12)" stroke="var(--neon)" strokeWidth="2"/>
-                <line x1="200" y1="252" x2="200" y2="368" stroke="rgba(91,108,255,.5)" strokeWidth="1.5"/>
-                <path className="gorilla-body" d="M 145 432 L 145 460 M 200 432 L 200 460 M 255 432 L 255 460" strokeWidth="3"/>
-                <ellipse cx="135" cy="463" rx="22" ry="6" fill="rgba(91,108,255,0.18)" stroke="var(--neon)" strokeWidth="2"/>
-                <ellipse cx="265" cy="463" rx="22" ry="6" fill="rgba(91,108,255,0.18)" stroke="var(--neon)" strokeWidth="2"/>
-                <g>
-                  <path className="gorilla-fill" d="M 130 90 Q 200 30 270 90 Q 285 130 280 170 L 120 170 Q 115 130 130 90 Z"/>
-                  <path d="M 122 160 Q 200 142 278 160" fill="none" stroke="var(--neon)" strokeWidth="3"/>
-                  <path className="gorilla-fill" d="M 132 170 Q 132 235 200 245 Q 268 235 268 170 Z"/>
-                  <path d="M 145 175 Q 175 168 195 178 M 205 178 Q 225 168 255 175" stroke="var(--neon)" strokeWidth="2.5" fill="none"/>
-                  <ellipse className="gorilla-eye gorilla-eye-l" cx="165" cy="190" rx="9" ry="9"/>
-                  <ellipse className="gorilla-eye gorilla-eye-r" cx="235" cy="190" rx="9" ry="9"/>
-                  <path d="M 188 210 Q 200 218 212 210 Q 208 222 200 224 Q 192 222 188 210 Z" fill="rgba(91,108,255,.25)" stroke="var(--neon)" strokeWidth="1.6"/>
-                  <circle cx="196" cy="214" r="1.6" fill="var(--neon)"/>
-                  <circle cx="204" cy="214" r="1.6" fill="var(--neon)"/>
-                  <path d="M 175 232 Q 200 244 225 232" stroke="var(--neon)" strokeWidth="2.5" fill="none"/>
-                  <path d="M 188 236 L 188 240 M 212 236 L 212 240" stroke="var(--neon)" strokeWidth="2"/>
-                  <ellipse cx="115" cy="135" rx="10" ry="14" fill="rgba(91,108,255,.18)" stroke="var(--neon)" strokeWidth="2"/>
-                  <ellipse cx="285" cy="135" rx="10" ry="14" fill="rgba(91,108,255,.18)" stroke="var(--neon)" strokeWidth="2"/>
-                </g>
-              </g>
-              <g className="arm-l">
-                <path d="M 95 245 Q 60 250 50 290 Q 45 330 65 360 Q 85 390 120 380 Q 145 372 150 340 L 140 270 Q 125 248 95 245 Z" fill="rgba(91,108,255,0.08)" stroke="var(--neon)" strokeWidth="3"/>
-                <circle cx="118" cy="385" r="26" fill="rgba(91,108,255,0.18)" stroke="var(--neon)" strokeWidth="3"/>
-                <path d="M 102 378 L 102 396 M 116 374 L 116 396 M 130 378 L 130 394" stroke="var(--neon)" strokeWidth="2"/>
-              </g>
-              <g className="arm-r">
-                <path d="M 305 245 Q 340 250 350 290 Q 355 330 335 360 Q 315 390 280 380 Q 255 372 250 340 L 260 270 Q 275 248 305 245 Z" fill="rgba(91,108,255,0.08)" stroke="var(--neon)" strokeWidth="3"/>
-                <circle cx="282" cy="385" r="26" fill="rgba(91,108,255,0.18)" stroke="var(--neon)" strokeWidth="3"/>
-                <path d="M 270 378 L 270 396 M 284 374 L 284 396 M 298 378 L 298 394" stroke="var(--neon)" strokeWidth="2"/>
-              </g>
-            </svg>
+            <img src="/gorilla.svg" alt="Merch Beast gorilla mascot" />
           </div>
         </div>
 

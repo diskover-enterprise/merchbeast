@@ -244,7 +244,15 @@
   position: absolute; inset: 6%;
   display: grid; place-items: center;
 }
-.mb-mascot img { width: 100%; height: 100%; object-fit: contain; display: block; }
+.mb-mascot img {
+  width: 100%; height: 100%; object-fit: contain; display: block;
+  animation: mb-float 4s ease-in-out infinite;
+  filter: drop-shadow(0 0 24px rgba(91,108,255,0.5)) drop-shadow(0 0 8px rgba(91,108,255,0.8));
+}
+@keyframes mb-float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-14px); }
+}
 
 /* Gorilla CSS animations */
 .gorilla-body { fill: none; stroke: var(--neon); stroke-width: 3; }
