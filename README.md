@@ -74,8 +74,8 @@ Log in at http://localhost:3000/dashboard/login
 | Path | Description |
 |------|-------------|
 | `/` | Marketplace homepage with all restaurants |
-| `/restaurants/[slug]` | Individual branded storefront |
-| `/restaurants/[slug]/products/[id]` | Product detail page |
+| `/shop/[slug]` | Individual branded storefront |
+| `/shop/[slug]/products/[id]` | Product detail page |
 | `/cart` | Cart page |
 | `/checkout` | Stripe checkout redirect |
 | `/order-confirmation/[id]` | Post-purchase confirmation |

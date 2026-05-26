@@ -32,7 +32,7 @@ export function BrandedNavbar({ restaurant }: { restaurant: Restaurant }) {
       >
         <div className="max-w-7xl mx-auto px-6 sm:px-14 h-14 flex items-center justify-between">
           <Link
-            href={`/restaurants/${restaurant.slug}`}
+            href={`/shop/${restaurant.slug}`}
             className="flex items-center gap-3 hover:opacity-70 transition-opacity"
           >
             {restaurant.logo && (

@@ -19,7 +19,7 @@ export default function AdminRestaurantsPage() {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    fetch('/api/admin/restaurants')
+    fetch('/api/admin/shops')
       .then((r) => r.json())
       .then((data) => {
         setRestaurants(data)
@@ -66,13 +66,13 @@ export default function AdminRestaurantsPage() {
                 <td className="px-4 py-3">
                   <div className="flex items-center gap-4">
                     <Link
-                      href={`/admin/restaurants/${r.id}`}
+                      href={`/admin/shops/${r.id}`}
                       className="text-[10px] tracking-wider uppercase underline text-gray-500 hover:text-gray-900 transition-colors"
                     >
                       Edit Settings
                     </Link>
                     <Link
-                      href={`/restaurants/${r.slug}`}
+                      href={`/shop/${r.slug}`}
                       target="_blank"
                       className="text-[10px] tracking-wider uppercase underline text-gray-500 hover:text-gray-900 transition-colors"
                     >

@@ -4,7 +4,7 @@ import { Restaurant } from '@/types'
 
 export function RestaurantCard({ restaurant }: { restaurant: Restaurant }) {
   return (
-    <Link href={`/restaurants/${restaurant.slug}`} className="group block">
+    <Link href={`/shop/${restaurant.slug}`} className="group block">
       <div
         className="aspect-[3/2] overflow-hidden relative"
         style={{ backgroundColor: restaurant.primaryColor }}

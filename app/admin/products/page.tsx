@@ -99,7 +99,7 @@ export default function AdminProductsPage() {
   const [saving, setSaving] = useState(false)
 
   useEffect(() => {
-    fetch('/api/admin/restaurants')
+    fetch('/api/admin/shops')
       .then((r) => r.json())
       .then((data) => {
         setRestaurants(data)

@@ -99,7 +99,7 @@ export default function AdminRestaurantSettingsPage() {
   const [saved, setSaved] = useState(false)
 
   useEffect(() => {
-    fetch(`/api/admin/restaurants/${id}`)
+    fetch(`/api/admin/shops/${id}`)
       .then(async (r) => {
         if (!r.ok) throw new Error(`HTTP ${r.status}`)
         return r.json()
@@ -136,7 +136,7 @@ export default function AdminRestaurantSettingsPage() {
 
   async function handleSave() {
     setSaving(true)
-    await fetch(`/api/admin/restaurants/${id}`, {
+    await fetch(`/api/admin/shops/${id}`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(form),
@@ -175,7 +175,7 @@ export default function AdminRestaurantSettingsPage() {
     <div className="p-8 max-w-2xl">
       <div className="flex items-center gap-3 mb-2">
         <button
-          onClick={() => router.push('/admin/restaurants')}
+          onClick={() => router.push('/admin/shops')}
           className="text-gray-400 hover:text-gray-900 transition-colors"
         >
           <ArrowLeft size={18} />
@@ -188,7 +188,7 @@ export default function AdminRestaurantSettingsPage() {
 
       {slug && (
         <a
-          href={`/restaurants/${slug}`}
+          href={`/shop/${slug}`}
           target="_blank"
           rel="noopener noreferrer"
           className="inline-block mb-6 text-xs text-gray-500 underline hover:text-gray-900"

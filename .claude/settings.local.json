@@ -67,7 +67,17 @@
       "Bash(cp /tmp/oxide-darwin/package/tailwindcss-oxide.darwin-arm64.node /Users/mac/Downloads/restaurant-marketplace/node_modules/@tailwindcss/oxide-darwin-arm64/)",
       "Bash(cp /tmp/oxide-darwin/package/package.json /Users/mac/Downloads/restaurant-marketplace/node_modules/@tailwindcss/oxide-darwin-arm64/)",
       "Bash(git init *)",
-      "Bash(git add *)"
+      "Bash(git add *)",
+      "Bash(git remote *)",
+      "Bash(git push *)",
+      "Bash(git commit *)",
+      "mcp__Claude_in_Chrome__tabs_context_mcp",
+      "mcp__Claude_in_Chrome__tabs_create_mcp",
+      "WebFetch(domain:merchbeast.vercel.app)",
+      "Bash(unzip -l \"/Users/mac/Downloads/home page merch.zip\")",
+      "Bash(unzip -o \"/Users/mac/Downloads/home page merch.zip\" -d \"/tmp/merch-design/\")",
+      "Bash(cp \"/tmp/merch-design/gorilla.svg\" \"/Users/mac/Downloads/restaurant-marketplace/public/gorilla.svg\" && echo \"copied\")",
+      "Bash(cp \"/Users/mac/Downloads/gorilla.svg\" \"/Users/mac/Downloads/restaurant-marketplace/public/gorilla.svg\" && echo \"updated\")"
     ]
   }
 }

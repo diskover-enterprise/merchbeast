@@ -31,7 +31,7 @@ export default function AdminOrdersPage() {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    fetch('/api/admin/restaurants')
+    fetch('/api/admin/shops')
       .then((r) => r.json())
       .then((data: Array<{ id: string; name: string }>) => setRestaurants(data))
   }, [])

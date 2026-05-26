@@ -167,7 +167,7 @@ export default function SettingsPage() {
         <h1 className="text-2xl font-bold text-gray-900">Store Settings</h1>
         {slug && (
           <a
-            href={`/restaurants/${slug}`}
+            href={`/shop/${slug}`}
             target="_blank"
             rel="noopener noreferrer"
             className="text-xs text-gray-500 underline hover:text-gray-900"

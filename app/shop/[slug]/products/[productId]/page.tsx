@@ -11,8 +11,8 @@ import { ProductCard } from '@/components/storefront/ProductCard'
 
 async function fetchData(slug: string, productId: string) {
   const [rRes, pRes] = await Promise.all([
-    fetch(`/api/restaurants/${slug}`),
-    fetch(`/api/restaurants/${slug}/products`),
+    fetch(`/api/shops/${slug}`),
+    fetch(`/api/shops/${slug}/products`),
   ])
   if (!rRes.ok) return null
   const restaurant: Restaurant = await rRes.json()
@@ -82,7 +82,7 @@ export default function ProductDetailPage({
       {/* Back link */}
       <div className="max-w-7xl mx-auto px-6 pt-6 pb-0">
         <Link
-          href={`/restaurants/${restaurant.slug}`}
+          href={`/shop/${restaurant.slug}`}
           className="text-xs tracking-[0.2em] uppercase text-[#6B6B6B] hover:text-[#0A0A0A] transition-colors"
         >
           ← {restaurant.name}

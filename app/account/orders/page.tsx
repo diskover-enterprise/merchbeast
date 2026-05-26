@@ -62,7 +62,7 @@ export default function MyOrdersPage() {
                 style={{ backgroundColor: order.restaurant.primaryColor }}
               >
                 <Link
-                  href={`/restaurants/${order.restaurant.slug}`}
+                  href={`/shop/${order.restaurant.slug}`}
                   className="font-semibold text-sm hover:underline"
                   style={{ color: '#fff' }}
                 >

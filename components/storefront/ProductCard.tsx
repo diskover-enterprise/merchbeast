@@ -52,7 +52,7 @@ export function ProductCard({ product, restaurant }: Props) {
   return (
     <>
       <Link
-        href={`/restaurants/${restaurant.slug}/products/${product.id}`}
+        href={`/shop/${restaurant.slug}/products/${product.id}`}
         className="group block"
       >
         {/* Image */}

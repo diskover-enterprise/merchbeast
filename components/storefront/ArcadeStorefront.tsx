@@ -80,7 +80,7 @@ function ArcadeCard({ product, restaurant, index, onConflict }: CardProps) {
   }
 
   return (
-    <Link href={`/restaurants/${restaurant.slug}/products/${product.id}`} className="group block" style={{ textDecoration: 'none' }}>
+    <Link href={`/shop/${restaurant.slug}/products/${product.id}`} className="group block" style={{ textDecoration: 'none' }}>
       <div style={{
         border: `1px solid ${NEON_PINK}55`,
         background: `linear-gradient(135deg, rgba(255,46,154,0.06) 0%, rgba(8,5,26,0.95) 100%)`,
@@ -251,7 +251,7 @@ export function ArcadeStorefront({ restaurant, products }: Props) {
           padding: '0 24px', height: '52px',
           display: 'flex', alignItems: 'center', justifyContent: 'space-between',
         }}>
-          <Link href={`/restaurants/${restaurant.slug}`}
+          <Link href={`/shop/${restaurant.slug}`}
             style={{ fontFamily: PIXEL, fontSize: '9px', color: TEXT, textDecoration: 'none',
               textShadow: neonText(NEON_PINK) }}>
             {restaurant.name.toUpperCase()}

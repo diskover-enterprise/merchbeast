@@ -113,7 +113,7 @@ async function main() {
 
   console.log(`✅ Quazar Arcade — ${products.length} products created`)
   console.log(`   Owner login: owner@quazar-arcade.com / password123`)
-  console.log(`   Storefront: http://localhost:3000/restaurants/quazar-arcade`)
+  console.log(`   Storefront: http://localhost:3000/shop/quazar-arcade`)
 }
 
 main()
