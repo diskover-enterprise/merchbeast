@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { signIn } from 'next-auth/react'
-import { Utensils, Eye, EyeOff } from 'lucide-react'
+import { Eye, EyeOff } from 'lucide-react'
 
 export default function LoginPage() {
   const [email, setEmail] = useState('')
@@ -34,11 +34,10 @@ export default function LoginPage() {
     <div className="min-h-screen bg-gray-900 flex items-center justify-center px-4">
       <div className="w-full max-w-md bg-white rounded-2xl shadow-2xl p-8">
         <div className="flex items-center gap-2 justify-center mb-6">
-          <Utensils size={28} className="text-orange-500" />
-          <span className="text-xl font-bold text-gray-900">Restaurant Dashboard</span>
+          <span className="text-xl font-bold text-gray-900">Owner Dashboard</span>
         </div>
         <h1 className="text-2xl font-bold text-gray-900 mb-1">Sign In</h1>
-        <p className="text-gray-500 text-sm mb-6">Access your restaurant&apos;s dashboard</p>
+        <p className="text-gray-500 text-sm mb-6">Access your shop&apos;s dashboard</p>
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
