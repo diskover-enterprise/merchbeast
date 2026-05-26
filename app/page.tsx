@@ -18,6 +18,7 @@ export default function Home() {
   const [activeItem, setActiveItem] = useState('tee')
   const [fileNames, setFileNames] = useState<string[]>([])
   const [submitted, setSubmitted] = useState(false)
+  const [loginOpen, setLoginOpen] = useState(false)
   const [dragging, setDragging] = useState(false)
   const fileRef = useRef<HTMLInputElement>(null)
 
@@ -60,6 +61,17 @@ export default function Home() {
           <a href="#services">Services</a>
           <a href="#quote">Get a Quote</a>
           <a href="#contact">Contact</a>
+          <div className="mb-login-wrap" onMouseEnter={() => setLoginOpen(true)} onMouseLeave={() => setLoginOpen(false)}>
+            <button className="mb-login-trigger">
+              Login ▾
+            </button>
+            {loginOpen && (
+              <div className="mb-login-dropdown">
+                <a href="/dashboard/login">Owner Login</a>
+                <a href="/admin/login">Admin Login</a>
+              </div>
+            )}
+          </div>
         </nav>
       </header>
 

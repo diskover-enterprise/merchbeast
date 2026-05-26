@@ -91,6 +91,39 @@
   background: var(--neon); box-shadow: var(--neon-glow);
 }
 
+/* Login dropdown */
+.mb-login-wrap { position: relative; }
+.mb-login-trigger {
+  background: none; border: none; cursor: pointer;
+  font-size: 13px; letter-spacing: .14em; text-transform: uppercase;
+  color: var(--ink-dim); font-family: inherit;
+  transition: color .2s;
+  padding: 0;
+}
+.mb-login-trigger:hover { color: var(--ink); }
+.mb-login-dropdown {
+  position: absolute; top: calc(100% + 14px); right: 0;
+  background: var(--bg-1);
+  border: 1px solid var(--line-2);
+  min-width: 160px;
+  z-index: 50;
+  clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
+}
+.mb-login-dropdown a {
+  display: block;
+  padding: 14px 20px;
+  font-size: 12px; letter-spacing: .2em; text-transform: uppercase;
+  color: var(--ink-dim);
+  border-bottom: 1px solid var(--line);
+  transition: all .2s;
+}
+.mb-login-dropdown a:last-child { border-bottom: none; }
+.mb-login-dropdown a:hover {
+  color: var(--neon);
+  background: var(--neon-soft);
+  text-shadow: var(--neon-glow);
+}
+
 /* ======================== Marquee ======================== */
 .mb-marquee {
   position: relative; z-index: 4;
