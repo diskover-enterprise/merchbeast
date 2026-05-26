@@ -3,35 +3,48 @@
 import { useState, useRef } from 'react'
 import './merch-homepage.css'
 
-const ITEMS = [
-  { key: 'tee', label: 'T-Shirt', icon: <svg viewBox="0 0 32 32"><path d="M6 8 L11 4 L21 4 L26 8 L29 12 L25 15 L24 14 L24 28 L8 28 L8 14 L7 15 L3 12 Z" strokeLinejoin="round"/></svg> },
-  { key: 'hoodie', label: 'Hoodie', icon: <svg viewBox="0 0 32 32"><path d="M8 10 L12 4 L20 4 L24 10 L29 13 L26 18 L25 17 L25 28 L7 28 L7 17 L6 18 L3 13 Z" strokeLinejoin="round"/><path d="M12 4 Q16 8 20 4" /></svg> },
-  { key: 'cap', label: 'Cap', icon: <svg viewBox="0 0 32 32"><path d="M4 20 Q4 12 16 12 Q28 12 28 20 L28 22 L4 22 Z" strokeLinejoin="round"/><path d="M16 12 L16 8" /><circle cx="16" cy="7" r="1.4"/></svg> },
-  { key: 'patch', label: 'Patch', icon: <svg viewBox="0 0 32 32"><path d="M16 4 L26 10 L26 22 L16 28 L6 22 L6 10 Z" strokeLinejoin="round"/><circle cx="16" cy="16" r="4"/></svg> },
-  { key: 'tote', label: 'Tote', icon: <svg viewBox="0 0 32 32"><path d="M8 12 L8 28 L24 28 L24 12 Z" strokeLinejoin="round"/><path d="M12 12 Q12 6 16 6 Q20 6 20 12"/></svg> },
-  { key: 'polo', label: 'Polo', icon: <svg viewBox="0 0 32 32"><path d="M6 8 L11 4 L13 8 L16 11 L19 8 L21 4 L26 8 L29 12 L25 15 L24 14 L24 28 L8 28 L8 14 L7 15 L3 12 Z" strokeLinejoin="round"/></svg> },
-  { key: 'jacket', label: 'Jacket', icon: <svg viewBox="0 0 32 32"><path d="M6 8 L12 4 L16 8 L20 4 L26 8 L28 14 L25 16 L25 28 L7 28 L7 16 L4 14 Z" strokeLinejoin="round"/><path d="M16 8 L16 28"/></svg> },
-  { key: 'other', label: 'Other', icon: <svg viewBox="0 0 32 32"><circle cx="9" cy="16" r="2"/><circle cx="16" cy="16" r="2"/><circle cx="23" cy="16" r="2"/></svg> },
-]
+const PRODUCTS = ['Hat', 'Hoodie', 'T-Shirt', 'Crew Neck']
+const SIZES    = ['XS', 'S', 'M', 'L', 'XL', 'XXL']
+const COLORS   = ['Black', 'White', 'Grey', 'Navy', 'Olive', 'Red', 'Natural']
+
+interface OrderItem { id: number; product: string; size: string; color: string; qty: number }
 
 export default function Home() {
-  const [activeItem, setActiveItem] = useState('tee')
-  const [fileNames, setFileNames] = useState<string[]>([])
+  // Order form state
+  const [form, setForm] = useState({
+    fname: '', lname: '', email: '', phone: '',
+    address: '', address2: '', city: '', state: '', zip: '',
+    country: 'United Kingdom', notes: '',
+  })
+  const [items, setItems] = useState<OrderItem[]>([
+    { id: 1, product: 'T-Shirt', size: 'M', color: 'Black', qty: 1 },
+  ])
   const [submitted, setSubmitted] = useState(false)
-  const [loginOpen, setLoginOpen] = useState(false)
-  const [dragging, setDragging] = useState(false)
-  const fileRef = useRef<HTMLInputElement>(null)
+  const [errors, setErrors] = useState<string[]>([])
+  const nextId = useRef(2)
 
-  function handleFiles(files: FileList | null) {
-    if (!files) return
-    setFileNames(Array.from(files).map(f => f.name))
+  function setField(key: string, val: string) {
+    setForm(f => ({ ...f, [key]: val }))
   }
-
+  function addItem() {
+    setItems(prev => [...prev, { id: nextId.current++, product: 'T-Shirt', size: 'M', color: 'Black', qty: 1 }])
+  }
+  function removeItem(id: number) {
+    setItems(prev => prev.filter(i => i.id !== id))
+  }
+  function updateItem(id: number, field: string, value: string | number) {
+    setItems(prev => prev.map(i => i.id === id ? { ...i, [field]: value } : i))
+  }
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
+    const required = ['fname', 'lname', 'email', 'address', 'city', 'state', 'zip']
+    const missing = required.filter(k => !form[k as keyof typeof form].trim())
+    setErrors(missing)
+    if (missing.length > 0 || items.length === 0) return
     setSubmitted(true)
-    setTimeout(() => setSubmitted(false), 2400)
   }
+
+  const totalUnits = items.reduce((s, i) => s + i.qty, 0)
 
   return (
     <div className="merch-page">
@@ -39,14 +52,14 @@ export default function Home() {
       <div className="mb-bg-scratches">
         <svg viewBox="0 0 1600 1200" preserveAspectRatio="none">
           <g stroke="#ffffff" strokeLinecap="round" fill="none">
-            <line x1="40" y1="120" x2="180" y2="60" strokeWidth=".6" opacity=".18"/>
-            <line x1="220" y1="380" x2="380" y2="320" strokeWidth=".5" opacity=".15"/>
-            <line x1="900" y1="80" x2="1080" y2="40" strokeWidth=".4" opacity=".2"/>
+            <line x1="40"   y1="120" x2="180"  y2="60"  strokeWidth=".6" opacity=".18"/>
+            <line x1="220"  y1="380" x2="380"  y2="320" strokeWidth=".5" opacity=".15"/>
+            <line x1="900"  y1="80"  x2="1080" y2="40"  strokeWidth=".4" opacity=".2"/>
             <line x1="1300" y1="220" x2="1480" y2="180" strokeWidth=".6" opacity=".15"/>
-            <line x1="80" y1="640" x2="240" y2="600" strokeWidth=".5" opacity=".18"/>
+            <line x1="80"   y1="640" x2="240"  y2="600" strokeWidth=".5" opacity=".18"/>
             <line x1="1200" y1="540" x2="1420" y2="490" strokeWidth=".7" opacity=".14"/>
-            <line x1="500" y1="780" x2="660" y2="730" strokeWidth=".5" opacity=".18"/>
-            <line x1="780" y1="980" x2="940" y2="940" strokeWidth=".6" opacity=".15"/>
+            <line x1="500"  y1="780" x2="660"  y2="730" strokeWidth=".5" opacity=".18"/>
+            <line x1="780"  y1="980" x2="940"  y2="940" strokeWidth=".6" opacity=".15"/>
           </g>
         </svg>
       </div>
@@ -59,7 +72,7 @@ export default function Home() {
         </div>
         <nav className="mb-nav">
           <a href="#services">Services</a>
-          <a href="#quote">Get a Quote</a>
+          <a href="#quote">Order</a>
           <a href="#contact">Contact</a>
           <a href="/dashboard/login" className="mb-btn primary" style={{padding:'10px 20px',fontSize:'12px'}}>Owner Login</a>
         </nav>
@@ -158,82 +171,160 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Quote form */}
+      {/* Order Form */}
       <div className="mb-sec-head" id="quote">
         <span className="num">[ 02 ]</span>
-        <span className="title">GET A QUOTE</span>
+        <span className="title">ORDER FORM</span>
         <span className="spacer" />
         <span>RESPONSE &lt; 24H</span>
         <span className="blink" />
       </div>
 
-      <section className="mb-quote">
-        <div className="mb-quote-inner">
-          <div className="mb-quote-head">
-            <h2>Feed the<br/><span>beast.</span></h2>
-            <p>Drop your artwork and a few details. We&apos;ll come back within 24 hours with a price, a turnaround, and a sample-ready mock — no obligation, no pressure.</p>
-            <ul className="mb-quote-checks">
-              <li>Free artwork review &amp; digitising</li>
-              <li>Sample before bulk run</li>
-              <li>UK-made, worldwide shipping</li>
-            </ul>
-            <div className="mb-quote-meta">
-              <div>EMAIL<b>hello@merchbeast.co</b></div>
-              <div>WORKSHOP<b>Mon–Fri 09–18</b></div>
+      <section className="mb-of-wrap">
+        <div className="mb-of">
+          {submitted ? (
+            <div className="mb-of-success">
+              <div className="mb-of-success-icon">✓</div>
+              <h2>Order Received!</h2>
+              <p>Thanks! We&apos;ll review your order and reach out to confirm details shortly.</p>
             </div>
-          </div>
+          ) : (
+            <form onSubmit={handleSubmit} autoComplete="off">
 
-          <form className="mb-qf" autoComplete="off" onSubmit={handleSubmit}>
-            <div className="mb-row-2">
-              <div className="mb-field">
-                <label>Name <span className="req">*</span></label>
-                <input type="text" name="name" placeholder="Your full name" required />
+              {/* Customer Info */}
+              <div className="mb-of-section">
+                <div className="mb-of-sec-label">Customer Info</div>
+                <div className="mb-of-grid">
+                  <div className={`mb-of-field${errors.includes('fname') ? ' error' : ''}`}>
+                    <label>First Name <span>*</span></label>
+                    <input type="text" value={form.fname} onChange={e => setField('fname', e.target.value)} placeholder="Jane" />
+                  </div>
+                  <div className={`mb-of-field${errors.includes('lname') ? ' error' : ''}`}>
+                    <label>Last Name <span>*</span></label>
+                    <input type="text" value={form.lname} onChange={e => setField('lname', e.target.value)} placeholder="Doe" />
+                  </div>
+                  <div className={`mb-of-field full${errors.includes('email') ? ' error' : ''}`}>
+                    <label>Email <span>*</span></label>
+                    <input type="email" value={form.email} onChange={e => setField('email', e.target.value)} placeholder="jane@example.com" />
+                  </div>
+                  <div className="mb-of-field full">
+                    <label>Phone</label>
+                    <input type="tel" value={form.phone} onChange={e => setField('phone', e.target.value)} placeholder="+44 (0) 7700 000000" />
+                  </div>
+                </div>
               </div>
-              <div className="mb-field">
-                <label>Email <span className="req">*</span></label>
-                <input type="email" name="email" placeholder="you@somewhere.com" required />
+
+              {/* Shipping Address */}
+              <div className="mb-of-section">
+                <div className="mb-of-sec-label">Shipping Address</div>
+                <div className="mb-of-grid">
+                  <div className={`mb-of-field full${errors.includes('address') ? ' error' : ''}`}>
+                    <label>Street Address <span>*</span></label>
+                    <input type="text" value={form.address} onChange={e => setField('address', e.target.value)} placeholder="123 Main St" />
+                  </div>
+                  <div className="mb-of-field full">
+                    <label>Apt / Suite / Unit</label>
+                    <input type="text" value={form.address2} onChange={e => setField('address2', e.target.value)} placeholder="Apt 4B" />
+                  </div>
+                  <div className={`mb-of-field${errors.includes('city') ? ' error' : ''}`}>
+                    <label>City <span>*</span></label>
+                    <input type="text" value={form.city} onChange={e => setField('city', e.target.value)} placeholder="London" />
+                  </div>
+                  <div className={`mb-of-field${errors.includes('state') ? ' error' : ''}`}>
+                    <label>County / State <span>*</span></label>
+                    <input type="text" value={form.state} onChange={e => setField('state', e.target.value)} placeholder="Greater London" />
+                  </div>
+                  <div className={`mb-of-field${errors.includes('zip') ? ' error' : ''}`}>
+                    <label>Postcode <span>*</span></label>
+                    <input type="text" value={form.zip} onChange={e => setField('zip', e.target.value)} placeholder="EC1A 1BB" />
+                  </div>
+                  <div className="mb-of-field">
+                    <label>Country</label>
+                    <select value={form.country} onChange={e => setField('country', e.target.value)}>
+                      <option>United Kingdom</option>
+                      <option>United States</option>
+                      <option>Canada</option>
+                      <option>Australia</option>
+                      <option>Other</option>
+                    </select>
+                  </div>
+                </div>
               </div>
-            </div>
-            <div className="mb-field">
-              <label>Choose your item <span className="req">*</span></label>
-              <div className="mb-items">
-                {ITEMS.map(item => (
-                  <button key={item.key} type="button"
-                    className={`mb-item-pick${activeItem === item.key ? ' active' : ''}`}
-                    onClick={() => setActiveItem(item.key)}>
-                    {item.icon}
-                    <span>{item.label}</span>
-                  </button>
-                ))}
+
+              {/* Items */}
+              <div className="mb-of-section">
+                <div className="mb-of-sec-label">Items</div>
+                <div className="mb-of-rows">
+                  {items.map(item => (
+                    <div key={item.id} className="mb-of-item-row">
+                      <div className="mb-of-field">
+                        <label>Product</label>
+                        <select value={item.product} onChange={e => updateItem(item.id, 'product', e.target.value)}>
+                          {PRODUCTS.map(p => <option key={p}>{p}</option>)}
+                        </select>
+                      </div>
+                      <div className="mb-of-field">
+                        <label>Size</label>
+                        <select
+                          value={item.product === 'Hat' ? 'One Size' : item.size}
+                          disabled={item.product === 'Hat'}
+                          onChange={e => updateItem(item.id, 'size', e.target.value)}
+                          style={item.product === 'Hat' ? { opacity: .35, cursor: 'not-allowed' } : {}}
+                        >
+                          {item.product === 'Hat'
+                            ? <option>One Size</option>
+                            : SIZES.map(s => <option key={s}>{s}</option>)}
+                        </select>
+                      </div>
+                      <div className="mb-of-field">
+                        <label>Color</label>
+                        <select value={item.color} onChange={e => updateItem(item.id, 'color', e.target.value)}>
+                          {COLORS.map(c => <option key={c}>{c}</option>)}
+                        </select>
+                      </div>
+                      <div className="mb-of-field">
+                        <label>Qty</label>
+                        <input type="number" min={1} value={item.qty} style={{ textAlign: 'center' }}
+                          onChange={e => updateItem(item.id, 'qty', Math.max(1, parseInt(e.target.value) || 1))} />
+                      </div>
+                      <button type="button" className="mb-of-remove" onClick={() => removeItem(item.id)}>✕</button>
+                    </div>
+                  ))}
+                </div>
+                <button type="button" className="mb-of-add-btn" onClick={addItem}>+ Add Another Item</button>
               </div>
-              <input type="hidden" name="item" value={activeItem} readOnly />
-            </div>
-            <div className="mb-field">
-              <label>Upload artwork <span className="req">*</span></label>
-              <label className={`mb-dropzone${dragging ? ' drag' : ''}`}
-                onDragEnter={e => { e.preventDefault(); setDragging(true) }}
-                onDragOver={e => { e.preventDefault(); setDragging(true) }}
-                onDragLeave={e => { e.preventDefault(); setDragging(false) }}
-                onDrop={e => { e.preventDefault(); setDragging(false); handleFiles(e.dataTransfer.files) }}>
-                <svg viewBox="0 0 24 24">
-                  <path d="M12 16 L12 4 M7 9 L12 4 L17 9" strokeLinecap="round" strokeLinejoin="round"/>
-                  <path d="M4 16 L4 20 L20 20 L20 16" strokeLinecap="round" strokeLinejoin="round"/>
-                </svg>
-                <div className="hint">Drop artwork or <u>browse files</u></div>
-                <div className="sub">PNG · JPG · PDF · AI · SVG · up to 50&nbsp;MB</div>
-                <input ref={fileRef} type="file" multiple accept=".png,.jpg,.jpeg,.pdf,.ai,.svg"
-                  onChange={e => handleFiles(e.target.files)} />
-                {fileNames.length > 0 && <div className="files">✓ {fileNames.join(', ')}</div>}
-              </label>
-            </div>
-            <div className="mb-qf-submit">
-              <div className="small">REPLY WITHIN <b>24 HOURS</b></div>
-              <button type="submit" className="mb-btn primary"
-                style={submitted ? {pointerEvents:'none'} : {}}>
-                {submitted ? 'Sent ✓' : 'Unleash It →'}
+
+              {/* Summary */}
+              <div className="mb-of-section">
+                <div className="mb-of-sec-label">Order Summary</div>
+                <div className="mb-of-summary">
+                  <div className="mb-of-sum-row"><span>Unique Items</span><span>{items.length}</span></div>
+                  <div className="mb-of-sum-row"><span>Total Units</span><span>{totalUnits}</span></div>
+                  <div className="mb-of-sum-row total"><span>Grand Total</span><span>{totalUnits} unit{totalUnits !== 1 ? 's' : ''}</span></div>
+                </div>
+              </div>
+
+              {/* Notes */}
+              <div className="mb-of-section">
+                <div className="mb-of-sec-label">Additional Notes</div>
+                <div className="mb-of-field">
+                  <label>Special Instructions</label>
+                  <textarea value={form.notes} rows={3} onChange={e => setField('notes', e.target.value)}
+                    placeholder="Any special requests, sizing notes, or delivery instructions…" />
+                </div>
+              </div>
+
+              {items.length === 0 && (
+                <p style={{ color: '#ff5050', fontSize: 12, marginBottom: 12, letterSpacing: '.1em' }}>
+                  Please add at least one item.
+                </p>
+              )}
+
+              <button type="submit" className="mb-btn primary mb-of-submit">
+                Submit Order →
               </button>
-            </div>
-          </form>
+            </form>
+          )}
         </div>
       </section>
 
