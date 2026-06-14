@@ -4,6 +4,7 @@ import { useState, use } from 'react'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import { products, getProduct } from '../products-data'
+import { useCart } from '../../cart-context'
 import '../../merch-homepage.css'
 import '../products.css'
 
@@ -12,7 +13,15 @@ export default function ProductPage({ params }: { params: Promise<{ slug: string
   const product = getProduct(slug)
   if (!product) notFound()
 
+  const { addToCart, count } = useCart()
   const [activeImg, setActiveImg] = useState(0)
+  const [added, setAdded] = useState(false)
+
+  function handleAddToCart() {
+    addToCart(product!)
+    setAdded(true)
+    setTimeout(() => setAdded(false), 2000)
+  }
 
   return (
     <div className="mb-page">
@@ -27,7 +36,9 @@ export default function ProductPage({ params }: { params: Promise<{ slug: string
           <a href="/#work">Work</a>
           <a href="/#how">Process</a>
           <a href="/products" style={{color:'var(--green)'}}>Shop</a>
-          <a href="/#cta" className="mb-btn-nav">Get A Quote</a>
+          <a href="/cart" className="mb-btn-nav" style={{position:'relative'}}>
+            Cart{count > 0 && <span style={{position:'absolute',top:'-6px',right:'-8px',background:'var(--green)',color:'#000',borderRadius:'50%',width:'18px',height:'18px',fontSize:'11px',fontWeight:700,display:'flex',alignItems:'center',justifyContent:'center'}}>{count}</span>}
+          </a>
         </nav>
       </header>
 
@@ -82,16 +93,18 @@ export default function ProductPage({ params }: { params: Promise<{ slug: string
                 </div>
               )}
 
-              <a
-                href={product.shopifyUrl}
-                target="_blank"
-                rel="noopener noreferrer"
+              <button
+                onClick={handleAddToCart}
                 className="mb-btn mb-btn-primary mb-btn-lg product-buy-btn"
               >
-                Shop Now
+                {added ? '✓ Added to Cart' : 'Add to Cart'}
+              </button>
+
+              <a href="/cart" className="mb-btn mb-btn-ghost mb-btn-lg product-buy-btn" style={{marginTop:'0.75rem',textAlign:'center',display:'block'}}>
+                View Cart{count > 0 ? ` (${count})` : ''}
               </a>
 
-              <p className="product-note">You'll be taken to our secure Shopify checkout.</p>
+              <p className="product-note">Secure checkout powered by Stripe.</p>
             </div>
 
           </div>

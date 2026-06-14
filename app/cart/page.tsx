@@ -1,99 +1,107 @@
 'use client'
 
-import { useCart } from '@/hooks/useCart'
-import { formatCurrency } from '@/lib/utils'
-import { MarketplaceNavbar } from '@/components/storefront/MarketplaceNavbar'
-import { Trash2, ShoppingBag } from 'lucide-react'
-import Image from 'next/image'
 import Link from 'next/link'
+import { useCart } from '../cart-context'
+import '../merch-homepage.css'
+import '../products/products.css'
+import './cart.css'
 
 export default function CartPage() {
-  const { cart, removeItem, updateQuantity, total, mounted } = useCart()
+  const { items, removeFromCart, updateQuantity, total } = useCart()
 
-  if (!mounted) return null
+  async function handleCheckout() {
+    const res = await fetch('/api/checkout', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        items: items.map(i => ({ slug: i.product.slug, quantity: i.quantity })),
+      }),
+    })
+    const data = await res.json()
+    if (data.url) window.location.href = data.url
+  }
 
   return (
-    <div className="min-h-screen flex flex-col">
-      <MarketplaceNavbar />
-      <main className="flex-1 max-w-3xl mx-auto w-full px-4 py-12">
-        <h1 className="text-3xl font-bold mb-8">Your Cart</h1>
+    <div className="mb-page">
 
-        {cart.items.length === 0 ? (
-          <div className="text-center py-24 text-gray-400">
-            <ShoppingBag size={64} className="mx-auto mb-4 opacity-20" />
-            <p className="text-xl mb-6">Your cart is empty</p>
-            <Link
-              href="/"
-              className="inline-block bg-gray-900 text-white px-6 py-3 rounded-xl font-semibold hover:bg-gray-700 transition-colors"
-            >
-              Browse Restaurants
-            </Link>
+      <header className="mb-nav">
+        <a href="/" className="mb-logo">
+          <span className="mb-logo-dot" />
+          MERCH&nbsp;BEAST
+        </a>
+        <nav className="mb-nav-links">
+          <a href="/#services">Services</a>
+          <a href="/#work">Work</a>
+          <a href="/#how">Process</a>
+          <a href="/products" style={{color:'var(--green)'}}>Shop</a>
+          <a href="/#cta" className="mb-btn-nav">Get A Quote</a>
+        </nav>
+      </header>
+
+      <div className="cart-page">
+        <div className="mb-container">
+          <div className="cart-header">
+            <Link href="/products" className="cart-back">← Back to Shop</Link>
+            <h1 className="cart-title">Your Cart</h1>
           </div>
-        ) : (
-          <>
-            <div className="space-y-4 mb-8">
-              {cart.items.map((item) => (
-                <div key={item.productId} className="flex gap-4 bg-white rounded-xl p-4 shadow-sm">
-                  <div className="w-20 h-20 rounded-lg overflow-hidden bg-gray-100 shrink-0">
-                    {item.image ? (
-                      <Image
-                        src={item.image}
-                        alt={item.name}
-                        width={80}
-                        height={80}
-                        className="object-cover w-full h-full"
-                      />
-                    ) : (
-                      <div className="w-full h-full flex items-center justify-center text-2xl">🛍️</div>
-                    )}
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <p className="font-semibold truncate">{item.name}</p>
-                    <p className="text-sm text-gray-400">{item.restaurantName}</p>
-                    <p className="font-bold text-gray-800 mt-1">{formatCurrency(item.price)}</p>
-                  </div>
-                  <div className="flex flex-col items-end gap-2">
-                    <button onClick={() => removeItem(item.productId)} className="text-red-400 hover:text-red-600">
-                      <Trash2 size={16} />
-                    </button>
-                    <div className="flex items-center gap-2 border rounded-lg">
-                      <button
-                        onClick={() => updateQuantity(item.productId, item.quantity - 1)}
-                        className="px-2 py-1 hover:bg-gray-100 font-bold"
-                      >
-                        −
-                      </button>
-                      <span className="px-2 font-semibold">{item.quantity}</span>
-                      <button
-                        onClick={() => updateQuantity(item.productId, item.quantity + 1)}
-                        className="px-2 py-1 hover:bg-gray-100 font-bold"
-                      >
-                        +
-                      </button>
-                    </div>
-                    <p className="text-sm font-semibold text-gray-600">
-                      {formatCurrency(item.price * item.quantity)}
-                    </p>
-                  </div>
-                </div>
-              ))}
-            </div>
 
-            <div className="bg-white rounded-xl p-6 shadow-sm">
-              <div className="flex items-center justify-between mb-4">
-                <span className="text-lg font-semibold">Total</span>
-                <span className="text-2xl font-bold">{formatCurrency(total)}</span>
-              </div>
-              <Link
-                href="/checkout"
-                className="block w-full text-center bg-gray-900 text-white py-4 rounded-xl font-bold text-lg hover:bg-gray-700 transition-colors"
-              >
-                Proceed to Checkout
-              </Link>
+          {items.length === 0 ? (
+            <div className="cart-empty">
+              <p className="cart-empty-msg">Your cart is empty.</p>
+              <Link href="/products" className="mb-btn mb-btn-primary">Browse Products</Link>
             </div>
-          </>
-        )}
-      </main>
+          ) : (
+            <div className="cart-layout">
+              <div className="cart-items">
+                {items.map(({ product, quantity }) => (
+                  <div key={product.slug} className="cart-item">
+                    <div className="cart-item-img-wrap">
+                      <img src={product.images[0]} alt={product.name} className="cart-item-img" />
+                    </div>
+                    <div className="cart-item-info">
+                      <Link href={`/products/${product.slug}`} className="cart-item-name">{product.name}</Link>
+                      <p className="cart-item-price">{product.price}</p>
+                    </div>
+                    <div className="cart-item-qty">
+                      <button onClick={() => updateQuantity(product.slug, quantity - 1)} className="cart-qty-btn">−</button>
+                      <span className="cart-qty-num">{quantity}</span>
+                      <button onClick={() => updateQuantity(product.slug, quantity + 1)} className="cart-qty-btn">+</button>
+                    </div>
+                    <button onClick={() => removeFromCart(product.slug)} className="cart-remove">✕</button>
+                  </div>
+                ))}
+              </div>
+
+              <div className="cart-summary">
+                <div className="cart-summary-row">
+                  <span>Subtotal</span>
+                  <span>${total.toFixed(2)} CAD</span>
+                </div>
+                <div className="cart-summary-row cart-summary-total">
+                  <span>Total</span>
+                  <span>${total.toFixed(2)} CAD</span>
+                </div>
+                <button onClick={handleCheckout} className="mb-btn mb-btn-primary mb-btn-lg cart-checkout-btn">
+                  Checkout with Stripe
+                </button>
+                <p className="cart-secure-note">Secure payment powered by Stripe</p>
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
+
+      <footer className="mb-footer">
+        <div className="mb-footer-brand">
+          <span className="mb-logo-dot" />
+          MERCH BEAST
+        </div>
+        <p className="mb-footer-copy">© 2026 Merch Beast. All rights reserved.</p>
+        <nav className="mb-footer-links">
+          <a href="mailto:team@merchbeast.shop">team@merchbeast.shop</a>
+        </nav>
+      </footer>
+
     </div>
   )
 }

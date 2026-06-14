@@ -2,10 +2,13 @@
 
 import Link from 'next/link'
 import { products } from './products-data'
+import { useCart } from '../cart-context'
 import '../merch-homepage.css'
 import './products.css'
 
 export default function ProductsPage() {
+  const { count } = useCart()
+
   return (
     <div className="mb-page">
 
@@ -19,7 +22,9 @@ export default function ProductsPage() {
           <a href="/#work">Work</a>
           <a href="/#how">Process</a>
           <a href="/products" style={{color:'var(--green)'}}>Shop</a>
-          <a href="/#cta" className="mb-btn-nav">Get A Quote</a>
+          <a href="/cart" className="mb-btn-nav" style={{position:'relative'}}>
+            Cart{count > 0 && <span style={{position:'absolute',top:'-6px',right:'-8px',background:'var(--green)',color:'#000',borderRadius:'50%',width:'18px',height:'18px',fontSize:'11px',fontWeight:700,display:'flex',alignItems:'center',justifyContent:'center'}}>{count}</span>}
+          </a>
         </nav>
       </header>
 
