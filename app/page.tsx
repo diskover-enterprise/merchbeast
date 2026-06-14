@@ -242,7 +242,7 @@ export default function Home() {
         <div className="mb-cta-inner">
           <div className="mb-cta-glow" aria-hidden="true" />
           <p className="mb-cta-label">Let&apos;s Build Something</p>
-          <h2 className="mb-cta-title">Ready To Build<br />Something Beastly?</h2>
+          <h2 className="mb-cta-title">Ready To Build?</h2>
           <p className="mb-cta-text">
             Tell us what you need and we&apos;ll help turn your idea into
             high-quality custom merch.
