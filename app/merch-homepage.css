@@ -299,7 +299,7 @@
   background: var(--bg-card);
   overflow: hidden;
   cursor: pointer;
-  height: 280px;
+  height: 620px;
 }
 .mb-grid-img { width: 100%; height: 100%; object-fit: cover; transition: transform .4s ease; position: relative; z-index: 1; }
 .mb-grid-item:hover .mb-grid-img { transform: scale(1.06); }
