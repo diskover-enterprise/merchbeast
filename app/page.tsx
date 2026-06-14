@@ -16,6 +16,7 @@ export default function Home() {
           <a href="#services">Services</a>
           <a href="#work">Work</a>
           <a href="#how">Process</a>
+          <a href="/products">Shop</a>
           <a href="#cta" className="mb-btn-nav">Get A Quote</a>
         </nav>
       </header>
