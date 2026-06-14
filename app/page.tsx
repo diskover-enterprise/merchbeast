@@ -1,346 +1,273 @@
 'use client'
 
-import { useState, useRef } from 'react'
 import './merch-homepage.css'
 
-const PRODUCTS = ['Hat', 'Hoodie', 'T-Shirt', 'Crew Neck']
-const SIZES    = ['XS', 'S', 'M', 'L', 'XL', 'XXL']
-const COLORS   = ['Black', 'White', 'Grey', 'Navy', 'Olive', 'Red', 'Natural']
-
-interface OrderItem { id: number; product: string; size: string; color: string; qty: number }
-
 export default function Home() {
-  // Order form state
-  const [form, setForm] = useState({
-    fname: '', lname: '', email: '', phone: '',
-    address: '', address2: '', city: '', state: '', zip: '',
-    country: 'Canada', notes: '',
-  })
-  const [items, setItems] = useState<OrderItem[]>([
-    { id: 1, product: 'T-Shirt', size: 'M', color: 'Black', qty: 1 },
-  ])
-  const [submitted, setSubmitted] = useState(false)
-  const [errors, setErrors] = useState<string[]>([])
-  const nextId = useRef(2)
-
-  function setField(key: string, val: string) {
-    setForm(f => ({ ...f, [key]: val }))
-  }
-  function addItem() {
-    setItems(prev => [...prev, { id: nextId.current++, product: 'T-Shirt', size: 'M', color: 'Black', qty: 1 }])
-  }
-  function removeItem(id: number) {
-    setItems(prev => prev.filter(i => i.id !== id))
-  }
-  function updateItem(id: number, field: string, value: string | number) {
-    setItems(prev => prev.map(i => i.id === id ? { ...i, [field]: value } : i))
-  }
-  function handleSubmit(e: React.FormEvent) {
-    e.preventDefault()
-    const required = ['fname', 'lname', 'email', 'address', 'city', 'state', 'zip']
-    const missing = required.filter(k => !form[k as keyof typeof form].trim())
-    setErrors(missing)
-    if (missing.length > 0 || items.length === 0) return
-    setSubmitted(true)
-  }
-
-  const totalUnits = items.reduce((s, i) => s + i.qty, 0)
-
   return (
-    <div className="merch-page">
-      <div className="mb-bg-grid" />
-      <div className="mb-bg-scratches">
-        <svg viewBox="0 0 1600 1200" preserveAspectRatio="none">
-          <g stroke="#ffffff" strokeLinecap="round" fill="none">
-            <line x1="40"   y1="120" x2="180"  y2="60"  strokeWidth=".6" opacity=".18"/>
-            <line x1="220"  y1="380" x2="380"  y2="320" strokeWidth=".5" opacity=".15"/>
-            <line x1="900"  y1="80"  x2="1080" y2="40"  strokeWidth=".4" opacity=".2"/>
-            <line x1="1300" y1="220" x2="1480" y2="180" strokeWidth=".6" opacity=".15"/>
-            <line x1="80"   y1="640" x2="240"  y2="600" strokeWidth=".5" opacity=".18"/>
-            <line x1="1200" y1="540" x2="1420" y2="490" strokeWidth=".7" opacity=".14"/>
-            <line x1="500"  y1="780" x2="660"  y2="730" strokeWidth=".5" opacity=".18"/>
-            <line x1="780"  y1="980" x2="940"  y2="940" strokeWidth=".6" opacity=".15"/>
-          </g>
-        </svg>
-      </div>
+    <div className="mb-page">
 
-      {/* Nav */}
-      <header className="mb-top">
-        <div className="mb-brand">
-          <span className="dot" />
+      {/* ── Nav ── */}
+      <header className="mb-nav">
+        <a href="/" className="mb-logo">
+          <span className="mb-logo-dot" />
           MERCH&nbsp;BEAST
-        </div>
-        <nav className="mb-nav">
+        </a>
+        <nav className="mb-nav-links">
           <a href="#services">Services</a>
-          <a href="#quote">Order</a>
-          <a href="#contact">Contact</a>
-          <a href="/dashboard/login" className="mb-btn primary" style={{padding:'10px 20px',fontSize:'12px'}}>Owner Login</a>
+          <a href="#work">Work</a>
+          <a href="#how">Process</a>
+          <a href="#cta" className="mb-btn-nav">Get A Quote</a>
         </nav>
       </header>
 
-      {/* Marquee */}
-      <div className="mb-marquee">
-        <div className="mb-marquee-track">
-          <span><b>★</b>EMBROIDERY<b>★</b>SCREEN PRINT<b>★</b>DTG<b>★</b>PATCHES<b>★</b>HEAT TRANSFER<b>★</b>NO MINIMUMS<b>★</b>WORLDWIDE SHIPPING<b>★</b>TURNING IDEAS INTO MONSTERS<b>★</b></span>
-          <span><b>★</b>EMBROIDERY<b>★</b>SCREEN PRINT<b>★</b>DTG<b>★</b>PATCHES<b>★</b>HEAT TRANSFER<b>★</b>NO MINIMUMS<b>★</b>WORLDWIDE SHIPPING<b>★</b>TURNING IDEAS INTO MONSTERS<b>★</b></span>
+      {/* ── Marquee ── */}
+      <div className="mb-ticker" aria-hidden="true">
+        <div className="mb-ticker-track">
+          {[1, 2].map(i => (
+            <span key={i}>
+              ★ CUSTOM APPAREL &nbsp;·&nbsp; EMBROIDERY &nbsp;·&nbsp; SCREEN PRINT &nbsp;·&nbsp; BRANDED MERCH &nbsp;·&nbsp;
+              TEAM GEAR &nbsp;·&nbsp; EVENTS &nbsp;·&nbsp; NO MINIMUMS &nbsp;·&nbsp; FAST TURNAROUND &nbsp;·&nbsp;
+            </span>
+          ))}
         </div>
       </div>
 
-      {/* Hero */}
-      <section className="mb-hero">
-        <div className="mb-hero-copy">
-          <div className="mb-hero-eyebrow">PLAYER 1 // PRESS START</div>
-          <h1 className="mb-wordmark">
-            <span className="solid">Merch</span>
-            <span className="neon">Beast</span>
-          </h1>
-          <p className="mb-tagline"><em>Turning ideas into monsters.</em> Custom apparel &amp; merch built loud — embroidered, printed, and shipped fast from our workshop.</p>
-          <div className="mb-hero-ctas">
-            <a href="#quote" className="mb-btn primary">Get a Quote →</a>
-            <a href="#services" className="mb-btn ghost">See Services</a>
+      {/* ── Hero ── */}
+      <section className="mb-hero" id="home">
+        <div className="mb-hero-bg" />
+        <div className="mb-hero-inner">
+          <div className="mb-hero-copy">
+            <p className="mb-eyebrow">Custom Merch Studio</p>
+            <h1 className="mb-headline">
+              MERCH THAT<br />
+              <span className="mb-headline-accent">HITS DIFFERENT.</span>
+            </h1>
+            <p className="mb-subheadline">
+              Custom apparel, embroidery, and branded merch built for
+              businesses, teams, events, and brands that refuse to blend in.
+            </p>
+            <div className="mb-hero-ctas">
+              <a href="#cta" className="mb-btn mb-btn-primary">Start Your Project</a>
+              <a href="#work" className="mb-btn mb-btn-ghost">View Our Work</a>
+            </div>
+            <div className="mb-hero-stats">
+              <div className="mb-stat">
+                <span className="mb-stat-num">2,000+</span>
+                <span className="mb-stat-label">Orders Completed</span>
+              </div>
+              <div className="mb-stat-divider" />
+              <div className="mb-stat">
+                <span className="mb-stat-num">14 Day</span>
+                <span className="mb-stat-label">Avg. Turnaround</span>
+              </div>
+              <div className="mb-stat-divider" />
+              <div className="mb-stat">
+                <span className="mb-stat-num">No MOQ</span>
+                <span className="mb-stat-label">From 1 Piece Up</span>
+              </div>
+            </div>
           </div>
-          <div className="mb-hero-stats">
-            <div><b>14&nbsp;day</b>Avg. turnaround</div>
-            <div><b>2,400+</b>Beasts shipped</div>
-            <div><b>No&nbsp;MOQ</b>From 1 piece up</div>
+          <div className="mb-hero-visual">
+            <div className="mb-hero-img-wrap">
+              <img
+                src="/images/hero-merch.jpg"
+                alt="Premium custom merch"
+                className="mb-hero-img"
+                onError={(e) => { (e.target as HTMLImageElement).style.display = 'none' }}
+              />
+              <div className="mb-hero-img-overlay" />
+            </div>
           </div>
-        </div>
-
-        <div className="mb-mascot-wrap">
-          <div className="mb-mascot-frame" />
-          <div className="mb-mascot-corner-br" />
-          <div className="mb-mascot-corner-br2" />
-          <div className="mb-mascot-label">MASCOT.LIVE</div>
-          <div className="mb-mascot-readout">
-            <span>FPS <b>60</b></span>
-            <span>SYS <b>OK</b></span>
-            <span>HP <b>∞</b></span>
-          </div>
-          <div className="mb-mascot">
-            <img src="/godzilla.svg" alt="Merch Beast Godzilla mascot" />
-          </div>
-        </div>
-
-        {/* Claw gashes */}
-        <div className="mb-gashes">
-          <svg viewBox="0 0 1600 900" preserveAspectRatio="none">
-            <path className="mb-gash mb-gash-1" style={{'--len':'1700','--final':'.92'} as React.CSSProperties} d="M -40 120 C 400 200, 900 360, 1640 700"/>
-            <path className="mb-gash mb-gash-2" style={{'--len':'1700','--final':'.8','animationDelay':'.08s'} as React.CSSProperties} d="M -40 200 C 380 280, 900 440, 1640 780"/>
-            <path className="mb-gash mb-gash-3" style={{'--len':'1700','--final':'.55','animationDelay':'.16s'} as React.CSSProperties} d="M -40 280 C 380 340, 880 500, 1640 860"/>
-            <path className="mb-gash mb-gash-4" style={{'--len':'900','--final':'.85','animationDelay':'.5s'} as React.CSSProperties} d="M 1640 80 C 1200 180, 900 220, 500 360"/>
-            <path className="mb-gash mb-gash-3" style={{'--len':'900','--final':'.5','animationDelay':'.58s'} as React.CSSProperties} d="M 1640 150 C 1180 240, 880 300, 480 440"/>
-          </svg>
         </div>
       </section>
 
-      {/* Services */}
-      <div className="mb-sec-head">
-        <span className="num">[ 01 ]</span>
-        <span className="title">SERVICES</span>
-        <span className="spacer" />
-        <span>EMBROIDERY · PRINT</span>
-        <span className="blink" />
-      </div>
-
+      {/* ── Feed The Beast ── */}
       <section className="mb-services" id="services">
-        <div className="mb-svc-intro">
-          <h2>Two ways<br/>to bring<br/><span className="accent">the beast.</span></h2>
-          <p>Whether you need a heavyweight stitched patch or a vivid full-colour print, our workshop runs both lines under one roof. Sample first, ship fast, no surprises on quantity or quality.</p>
-        </div>
-        <div className="mb-svc-grid">
-          <article className="mb-svc">
-            <div className="mb-svc-head">
-              <span className="mb-svc-tag">// 01 — STITCH</span>
-              <div className="mb-svc-icon">
-                <svg viewBox="0 0 24 24"><path d="M3 12 L9 6 L15 18 L21 12" strokeLinecap="round" strokeLinejoin="round"/><circle cx="9" cy="6" r="1.4"/><circle cx="15" cy="18" r="1.4"/></svg>
+        <div className="mb-container">
+          <div className="mb-section-head">
+            <div className="mb-section-label">What We Do</div>
+            <h2 className="mb-section-title">Feed The Beast.</h2>
+            <p className="mb-section-sub">
+              From premium embroidery to bold apparel printing, we help bring
+              your brand to life with merch people actually want to wear.
+            </p>
+          </div>
+          <div className="mb-cards">
+
+            <article className="mb-card">
+              <div className="mb-card-img-wrap">
+                <img src="/images/service-printing.jpg" alt="Apparel Printing" className="mb-card-img" style={{objectPosition:'50% 40%'}} onError={(e) => { (e.target as HTMLImageElement).style.display = 'none' }} />
+                <div className="mb-card-img-overlay" />
               </div>
-            </div>
-            <h3>Embroidery</h3>
-            <p>Heavy-thread stitching with up to 15 colour heads. Built for caps, polos, jackets, and patches that need to outlive the wearer.</p>
-          </article>
-          <article className="mb-svc">
-            <div className="mb-svc-head">
-              <span className="mb-svc-tag">// 02 — INK</span>
-              <div className="mb-svc-icon">
-                <svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="6" rx="1"/><rect x="7" y="10" width="10" height="5"/><path d="M8 15 L8 21 L16 21 L16 15" strokeLinejoin="round"/></svg>
-              </div>
-            </div>
-            <h3>Print</h3>
-            <p>Screen print, DTG and DTF under one roof. Punchy ink lay-down on tees, hoodies, totes — gradient-friendly, washes like iron.</p>
-          </article>
-        </div>
-      </section>
-
-      {/* Order Form */}
-      <div className="mb-sec-head" id="quote">
-        <span className="num">[ 02 ]</span>
-        <span className="title">ORDER FORM</span>
-        <span className="spacer" />
-        <span>RESPONSE &lt; 24H</span>
-        <span className="blink" />
-      </div>
-
-      <section className="mb-of-wrap">
-        <div className="mb-of">
-          {submitted ? (
-            <div className="mb-of-success">
-              <div className="mb-of-success-icon">✓</div>
-              <h2>Order Received!</h2>
-              <p>Thanks! We&apos;ll review your order and reach out to confirm details shortly.</p>
-            </div>
-          ) : (
-            <form onSubmit={handleSubmit} autoComplete="off">
-
-              {/* Customer Info */}
-              <div className="mb-of-section">
-                <div className="mb-of-sec-label">Customer Info</div>
-                <div className="mb-of-grid">
-                  <div className={`mb-of-field${errors.includes('fname') ? ' error' : ''}`}>
-                    <label>First Name <span>*</span></label>
-                    <input type="text" value={form.fname} onChange={e => setField('fname', e.target.value)} placeholder="Jane" />
-                  </div>
-                  <div className={`mb-of-field${errors.includes('lname') ? ' error' : ''}`}>
-                    <label>Last Name <span>*</span></label>
-                    <input type="text" value={form.lname} onChange={e => setField('lname', e.target.value)} placeholder="Doe" />
-                  </div>
-                  <div className={`mb-of-field full${errors.includes('email') ? ' error' : ''}`}>
-                    <label>Email <span>*</span></label>
-                    <input type="email" value={form.email} onChange={e => setField('email', e.target.value)} placeholder="jane@example.com" />
-                  </div>
-                  <div className="mb-of-field full">
-                    <label>Phone</label>
-                    <input type="tel" value={form.phone} onChange={e => setField('phone', e.target.value)} placeholder="+44 (0) 7700 000000" />
-                  </div>
+              <div className="mb-card-body">
+                <div className="mb-card-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round">
+                    <rect x="3" y="3" width="18" height="13" rx="1" />
+                    <path d="M8 21h8M12 17v4" />
+                    <circle cx="18.5" cy="7.5" r="1" fill="currentColor" stroke="none" />
+                  </svg>
                 </div>
+                <h3 className="mb-card-title">Apparel Printing</h3>
+                <p className="mb-card-text">Bold designs. Premium quality. Made to stand out.</p>
               </div>
+            </article>
 
-              {/* Shipping Address */}
-              <div className="mb-of-section">
-                <div className="mb-of-sec-label">Shipping Address</div>
-                <div className="mb-of-grid">
-                  <div className={`mb-of-field full${errors.includes('address') ? ' error' : ''}`}>
-                    <label>Street Address <span>*</span></label>
-                    <input type="text" value={form.address} onChange={e => setField('address', e.target.value)} placeholder="123 Main St" />
-                  </div>
-                  <div className="mb-of-field full">
-                    <label>Apt / Suite / Unit</label>
-                    <input type="text" value={form.address2} onChange={e => setField('address2', e.target.value)} placeholder="Apt 4B" />
-                  </div>
-                  <div className={`mb-of-field${errors.includes('city') ? ' error' : ''}`}>
-                    <label>City <span>*</span></label>
-                    <input type="text" value={form.city} onChange={e => setField('city', e.target.value)} placeholder="London" />
-                  </div>
-                  <div className={`mb-of-field${errors.includes('state') ? ' error' : ''}`}>
-                    <label>County / State <span>*</span></label>
-                    <input type="text" value={form.state} onChange={e => setField('state', e.target.value)} placeholder="Greater London" />
-                  </div>
-                  <div className={`mb-of-field${errors.includes('zip') ? ' error' : ''}`}>
-                    <label>Postcode <span>*</span></label>
-                    <input type="text" value={form.zip} onChange={e => setField('zip', e.target.value)} placeholder="EC1A 1BB" />
-                  </div>
-                  <div className="mb-of-field">
-                    <label>Country</label>
-                    <select value={form.country} onChange={e => setField('country', e.target.value)}>
-                      <option>Canada</option>
-                      <option>United States</option>
-                    </select>
-                  </div>
+            <article className="mb-card">
+              <div className="mb-card-img-wrap">
+                <img src="/images/service-embroidery.jpg" alt="Embroidery" className="mb-card-img" style={{objectPosition:'50% 40%'}} onError={(e) => { (e.target as HTMLImageElement).style.display = 'none' }} />
+                <div className="mb-card-img-overlay" />
+              </div>
+              <div className="mb-card-body">
+                <div className="mb-card-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round">
+                    <path d="M3 12 L9 6 L15 18 L21 12" />
+                    <circle cx="9" cy="6" r="1.5" fill="currentColor" stroke="none" />
+                    <circle cx="15" cy="18" r="1.5" fill="currentColor" stroke="none" />
+                  </svg>
                 </div>
+                <h3 className="mb-card-title">Embroidery</h3>
+                <p className="mb-card-text">Clean stitching. Premium finishes. Built to last.</p>
               </div>
+            </article>
 
-              {/* Items */}
-              <div className="mb-of-section">
-                <div className="mb-of-sec-label">Items</div>
-                <div className="mb-of-rows">
-                  {items.map(item => (
-                    <div key={item.id} className="mb-of-item-row">
-                      <div className="mb-of-field">
-                        <label>Product</label>
-                        <select value={item.product} onChange={e => updateItem(item.id, 'product', e.target.value)}>
-                          {PRODUCTS.map(p => <option key={p}>{p}</option>)}
-                        </select>
-                      </div>
-                      <div className="mb-of-field">
-                        <label>Size</label>
-                        <select
-                          value={item.product === 'Hat' ? 'One Size' : item.size}
-                          disabled={item.product === 'Hat'}
-                          onChange={e => updateItem(item.id, 'size', e.target.value)}
-                          style={item.product === 'Hat' ? { opacity: .35, cursor: 'not-allowed' } : {}}
-                        >
-                          {item.product === 'Hat'
-                            ? <option>One Size</option>
-                            : SIZES.map(s => <option key={s}>{s}</option>)}
-                        </select>
-                      </div>
-                      <div className="mb-of-field">
-                        <label>Color</label>
-                        <select value={item.color} onChange={e => updateItem(item.id, 'color', e.target.value)}>
-                          {COLORS.map(c => <option key={c}>{c}</option>)}
-                        </select>
-                      </div>
-                      <div className="mb-of-field">
-                        <label>Qty</label>
-                        <input type="number" min={1} value={item.qty} style={{ textAlign: 'center' }}
-                          onChange={e => updateItem(item.id, 'qty', Math.max(1, parseInt(e.target.value) || 1))} />
-                      </div>
-                      <button type="button" className="mb-of-remove" onClick={() => removeItem(item.id)}>✕</button>
-                    </div>
-                  ))}
+            <article className="mb-card">
+              <div className="mb-card-img-wrap">
+                <img src="/images/service-team.jpg" alt="Team & Business Merch" className="mb-card-img" style={{objectPosition:'50% 30%'}} onError={(e) => { (e.target as HTMLImageElement).style.display = 'none' }} />
+                <div className="mb-card-img-overlay" />
+              </div>
+              <div className="mb-card-body">
+                <div className="mb-card-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round">
+                    <circle cx="9" cy="7" r="2.5" />
+                    <circle cx="17" cy="7" r="2.5" />
+                    <path d="M3 21v-1a6 6 0 0112 0v1" />
+                    <path d="M15 14a6 6 0 016 6v1" />
+                  </svg>
                 </div>
-                <button type="button" className="mb-of-add-btn" onClick={addItem}>+ Add Another Item</button>
+                <h3 className="mb-card-title">Team &amp; Business Merch</h3>
+                <p className="mb-card-text">Custom gear for teams, businesses, and organizations.</p>
               </div>
+            </article>
 
-              {/* Summary */}
-              <div className="mb-of-section">
-                <div className="mb-of-sec-label">Order Summary</div>
-                <div className="mb-of-summary">
-                  <div className="mb-of-sum-row"><span>Unique Items</span><span>{items.length}</span></div>
-                  <div className="mb-of-sum-row"><span>Total Units</span><span>{totalUnits}</span></div>
-                  <div className="mb-of-sum-row total"><span>Grand Total</span><span>{totalUnits} unit{totalUnits !== 1 ? 's' : ''}</span></div>
-                </div>
-              </div>
-
-              {/* Notes */}
-              <div className="mb-of-section">
-                <div className="mb-of-sec-label">Additional Notes</div>
-                <div className="mb-of-field">
-                  <label>Special Instructions</label>
-                  <textarea value={form.notes} rows={3} onChange={e => setField('notes', e.target.value)}
-                    placeholder="Any special requests, sizing notes, or delivery instructions…" />
-                </div>
-              </div>
-
-              {items.length === 0 && (
-                <p style={{ color: '#ff5050', fontSize: 12, marginBottom: 12, letterSpacing: '.1em' }}>
-                  Please add at least one item.
-                </p>
-              )}
-
-              <button type="submit" className="mb-btn primary mb-of-submit">
-                Submit Order →
-              </button>
-            </form>
-          )}
+          </div>
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="mb-footer" id="contact">
-        <div className="left">
-          <span className="mb-brand"><span className="dot" /> MERCH&nbsp;BEAST</span>
-          <span>© 2026 — ALL RIGHTS FERAL</span>
+      {/* ── Featured Work ── */}
+      <section className="mb-work" id="work">
+        <div className="mb-container">
+          <div className="mb-section-head mb-section-head--center">
+            <div className="mb-section-label">Portfolio</div>
+            <h2 className="mb-section-title">Beast Work</h2>
+            <p className="mb-section-sub mb-section-sub--center">
+              A look at custom merch created for businesses, teams, events, and brands.
+            </p>
+          </div>
+          <div className="mb-grid">
+            {[
+              { label: 'Embroidered Hats',  src: '/images/work-hats.jpg',    pos: '50% 30%' },
+              { label: 'Custom Hoodies',    src: '/images/work-hoodies.jpg', pos: '50% 40%' },
+              { label: 'Team Jerseys',      src: '/images/work-jerseys.jpg', pos: '50% 30%' },
+              { label: 'Business Apparel',  src: '/images/work-business.jpg', pos: '50% 30%' },
+              { label: 'Event Merch',       src: '/images/work-events.jpg',  pos: '50% 25%' },
+              { label: 'Promo Products',    src: '/images/work-promo.jpg',   pos: '50% 30%' },
+              { label: 'Custom Tees',       src: '/images/work-automotive.jpg', pos: '50% 20%' },
+              { label: 'Streetwear',        src: '/images/work-streetwear.jpg', pos: '50% 20%' },
+              { label: 'Embroidered Caps',  src: '/images/work-cap.jpg',        pos: '50% 30%' },
+              { label: 'Event Tees',        src: '/images/work-airport.jpg',    pos: '50% 20%' },
+            ].map(({ label, src, pos }) => (
+              <div className="mb-grid-item" key={label}>
+                <img src={src} alt={label} className="mb-grid-img" style={{objectPosition: pos}} onError={(e) => { (e.target as HTMLImageElement).style.display = 'none' }} />
+                <div className="mb-grid-overlay" />
+              </div>
+            ))}
+          </div>
         </div>
-        <div className="right">
+      </section>
+
+      {/* ── How It Works ── */}
+      <section className="mb-how" id="how">
+        <div className="mb-container">
+          <div className="mb-section-head mb-section-head--center">
+            <div className="mb-section-label">Process</div>
+            <h2 className="mb-section-title">How The Beast Works</h2>
+          </div>
+          <div className="mb-steps">
+
+            <div className="mb-step">
+              <div className="mb-step-num">01</div>
+              <div className="mb-step-connector" aria-hidden="true" />
+              <div className="mb-step-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4" />
+                  <polyline points="17 8 12 3 7 8" />
+                  <line x1="12" y1="3" x2="12" y2="15" />
+                </svg>
+              </div>
+              <h3 className="mb-step-title">Send Your Logo</h3>
+              <p className="mb-step-text">Upload your logo, artwork, or idea.</p>
+            </div>
+
+            <div className="mb-step">
+              <div className="mb-step-num">02</div>
+              <div className="mb-step-connector" aria-hidden="true" />
+              <div className="mb-step-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                  <rect x="2" y="3" width="20" height="14" rx="2" />
+                  <polyline points="8 21 12 17 16 21" />
+                  <line x1="12" y1="17" x2="12" y2="21" />
+                </svg>
+              </div>
+              <h3 className="mb-step-title">Approve Your Mockup</h3>
+              <p className="mb-step-text">We create a clean preview before production.</p>
+            </div>
+
+            <div className="mb-step">
+              <div className="mb-step-num">03</div>
+              <div className="mb-step-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M5 12h14M12 5l7 7-7 7" />
+                </svg>
+              </div>
+              <h3 className="mb-step-title">Get Your Merch</h3>
+              <p className="mb-step-text">Your custom merch is produced and ready to wear.</p>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      {/* ── Final CTA ── */}
+      <section className="mb-cta" id="cta">
+        <div className="mb-cta-inner">
+          <div className="mb-cta-glow" aria-hidden="true" />
+          <p className="mb-cta-label">Let&apos;s Build Something</p>
+          <h2 className="mb-cta-title">Ready To Build<br />Something Beastly?</h2>
+          <p className="mb-cta-text">
+            Tell us what you need and we&apos;ll help turn your idea into
+            high-quality custom merch.
+          </p>
+          <a href="mailto:team@merchbeast.shop" className="mb-btn mb-btn-primary mb-btn-lg">
+            Get A Quote
+          </a>
+        </div>
+      </section>
+
+      {/* ── Footer ── */}
+      <footer className="mb-footer">
+        <div className="mb-footer-brand">
+          <span className="mb-logo-dot" />
+          MERCH BEAST
+        </div>
+        <p className="mb-footer-copy">© 2026 Merch Beast. All rights reserved.</p>
+        <nav className="mb-footer-links">
+          <a href="mailto:team@merchbeast.shop">team@merchbeast.shop</a>
           <a href="#">Instagram</a>
           <a href="#">TikTok</a>
-          <a href="mailto:hello@merchbeast.co">hello@merchbeast.co</a>
           <a href="/admin/login">Admin</a>
-        </div>
+        </nav>
       </footer>
 
-      <div className="mb-bg-scan" />
-      <div className="mb-bg-vignette" />
     </div>
   )
 }

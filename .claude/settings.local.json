@@ -77,7 +77,27 @@
       "Bash(unzip -l \"/Users/mac/Downloads/home page merch.zip\")",
       "Bash(unzip -o \"/Users/mac/Downloads/home page merch.zip\" -d \"/tmp/merch-design/\")",
       "Bash(cp \"/tmp/merch-design/gorilla.svg\" \"/Users/mac/Downloads/restaurant-marketplace/public/gorilla.svg\" && echo \"copied\")",
-      "Bash(cp \"/Users/mac/Downloads/gorilla.svg\" \"/Users/mac/Downloads/restaurant-marketplace/public/gorilla.svg\" && echo \"updated\")"
+      "Bash(cp \"/Users/mac/Downloads/gorilla.svg\" \"/Users/mac/Downloads/restaurant-marketplace/public/gorilla.svg\" && echo \"updated\")",
+      "Bash(ls /opt/homebrew/bin/node 2>/dev/null; ls /usr/local/bin/node 2>/dev/null; find /Users/mac -name \"node\" -type f 2>/dev/null | head -5; ls /opt/homebrew/bin/ | grep -E \"node|npm|bun|pnpm\" 2>/dev/null)",
+      "Bash(find /usr /opt /Users/mac/.nvm /Users/mac/.volta /Users/mac/.fnm -name \"node\" -type f 2>/dev/null | head -5)",
+      "Bash(ls /usr/local/bin/ | grep -E \"node|npm\" 2>/dev/null; ls /opt/local/bin/ 2>/dev/null | grep node; find /Users/mac -maxdepth 4 -name \"npm\" 2>/dev/null; echo \"PATH=$PATH\")",
+      "Bash(find /Users/mac -maxdepth 5 \\\\\\( -name \"node\" -o -name \"npm\" -o -name \"bun\" \\\\\\) -type f 2>/dev/null; ls /usr/bin/node 2>/dev/null; cat /etc/paths 2>/dev/null; cat /Users/mac/.zshrc 2>/dev/null | grep -E \"nvm|volta|fnm|PATH\" | head -10)",
+      "Bash(find /Users/mac -maxdepth 8 -name \"node\" -type f 2>/dev/null; find /Applications -name \"node\" -type f 2>/dev/null | head -3; ls /Users/mac/.nvm 2>/dev/null; ls /Users/mac/.volta 2>/dev/null; ls /Users/mac/.fnm 2>/dev/null)",
+      "Bash(zsh -lc \"which node; which npm; which npx\")",
+      "Bash(ls /usr/bin/node 2>/dev/null; ls /usr/bin/npm 2>/dev/null; ls /opt/homebrew 2>/dev/null; ls /usr/local 2>/dev/null; find /Users/mac -maxdepth 6 -name \".node_repl_history\" -o -name \".nvmrc\" 2>/dev/null | head -5; ls /Users/mac/Library/Caches/node 2>/dev/null; ls /usr/local/lib 2>/dev/null)",
+      "Bash(curl -fsSL \"https://nodejs.org/dist/v20.18.0/node-v20.18.0-darwin-arm64.tar.gz\" -o /tmp/node.tar.gz)",
+      "Bash(mkdir -p /tmp/nodebin)",
+      "Bash(tar -xzf /tmp/node.tar.gz -C /tmp/nodebin --strip-components=1)",
+      "Bash(/tmp/nodebin/bin/node --version)",
+      "Bash(/tmp/nodebin/bin/npm install *)",
+      "Bash(/tmp/nodebin/bin/node /tmp/nodebin/bin/npm install @prisma/adapter-pg)",
+      "Bash(find /private/tmp/claude-501 -name \"*.jpg\" -o -name \"*.png\" -o -name \"*.webp\" 2>/dev/null | head -10; find /var/folders -name \"*.jpg\" -newer /tmp/node.tar.gz 2>/dev/null | head -5; ls ~/Downloads/ | grep -iE \"\\\\.\\(jpg|png|webp\\)\" | tail -10)",
+      "Bash(mkdir -p /Users/mac/Downloads/restaurant-marketplace/public/images && cp \"/Users/mac/Downloads/ChatGPT Image Jun 12, 2026, 12_29_38 PM.png\" /Users/mac/Downloads/restaurant-marketplace/public/images/hero-merch.jpg && echo \"done\")",
+      "Bash(xargs -I{} cp {} /Users/mac/Downloads/restaurant-marketplace/public/images/work-hoodies.jpg)",
+      "Bash(xargs -I{} cp {} /Users/mac/Downloads/restaurant-marketplace/public/images/work-jerseys.jpg)",
+      "Bash(xargs -I{} cp {} /Users/mac/Downloads/restaurant-marketplace/public/images/work-business.jpg)",
+      "Bash(xargs -I{} cp {} /Users/mac/Downloads/restaurant-marketplace/public/images/work-events.jpg)",
+      "Bash(xargs -I{} cp {} /Users/mac/Downloads/restaurant-marketplace/public/images/work-promo.jpg)"
     ]
   }
 }
