@@ -6,6 +6,13 @@ export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl
   const token = await getToken({ req: request, secret: process.env.NEXTAUTH_SECRET })
 
+  if (pathname.startsWith('/client') && pathname !== '/client/login') {
+    const auth = request.cookies.get('mb-client-auth')
+    if (!auth) {
+      return NextResponse.redirect(new URL('/client/login', request.url))
+    }
+  }
+
   if (pathname.startsWith('/dashboard') && pathname !== '/dashboard-login') {
     const auth = request.cookies.get('mb-dashboard-auth')
     if (!auth) {
@@ -29,5 +36,5 @@ export async function proxy(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/dashboard/:path*', '/admin/:path*', '/account/orders/:path*'],
+  matcher: ['/dashboard/:path*', '/admin/:path*', '/account/orders/:path*', '/client/:path*'],
 }
