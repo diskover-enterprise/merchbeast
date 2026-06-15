@@ -32,66 +32,41 @@ export function LunchLadyStorefront() {
       </nav>
 
       {/* HERO */}
-      <section style={{
-        paddingTop: 64,
-        display: 'grid',
-        gridTemplateColumns: '1fr 1fr',
-        minHeight: '90vh',
-      }}>
-        {/* Left — image */}
+      {/* HERO */}
+      <section style={{ position: 'relative', minHeight: '85vh', overflow: 'hidden' }}>
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src="/lunch-lady-hero.jpg"
+          alt="Lunch Lady Collection"
+          style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block', position: 'absolute', inset: 0 }}
+        />
+        {/* Overlay */}
+        <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(28,46,84,0.7) 0%, transparent 60%)' }} />
+        {/* Bottom text */}
         <div style={{
-          background: '#f5f2ee',
-          overflow: 'hidden',
-          position: 'relative',
+          position: 'absolute', bottom: 0, left: 0, right: 0,
+          padding: '48px 48px',
+          display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between',
         }}>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src={products[0].images[0]}
-            alt="Lunch Lady Tee"
-            style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
-          />
-          <div style={{
-            position: 'absolute', bottom: 24, left: 24,
-            background: '#C84020', color: '#fff',
-            fontSize: 10, letterSpacing: '0.3em', textTransform: 'uppercase',
-            padding: '6px 14px',
-          }}>
-            New Drop
+          <div>
+            <p style={{ fontSize: 11, letterSpacing: '0.4em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.6)', marginBottom: 12 }}>
+              Est. Sài Gòn · 1995
+            </p>
+            <p style={{
+              fontSize: 'clamp(1rem, 2vw, 1.4rem)', fontStyle: 'italic',
+              color: 'rgba(255,255,255,0.85)', maxWidth: 420, lineHeight: 1.6,
+            }}>
+              "Phở since the beginning. The original, the iconic, the irreplaceable."
+            </p>
           </div>
-        </div>
-
-        {/* Right — headline */}
-        <div style={{
-          display: 'flex', flexDirection: 'column', justifyContent: 'center',
-          padding: '80px 64px',
-          background: '#1C2E54',
-          color: '#fff',
-        }}>
-          <p style={{ fontSize: 11, letterSpacing: '0.4em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.5)', marginBottom: 24 }}>
-            Est. Sài Gòn
-          </p>
-          <h1 style={{
-            fontSize: 'clamp(3rem, 6vw, 6rem)',
-            fontWeight: 400, lineHeight: 0.95,
-            letterSpacing: '-0.02em',
-            marginBottom: 32,
-          }}>
-            Lunch<br />Lady
-          </h1>
-          <div style={{ width: 40, height: 2, background: '#C84020', marginBottom: 24 }} />
-          <p style={{
-            fontSize: 16, lineHeight: 1.7, fontStyle: 'italic',
-            color: 'rgba(255,255,255,0.7)', maxWidth: 360, marginBottom: 40,
-          }}>
-            "Phở since the beginning. The original, the iconic, the irreplaceable."
-          </p>
           <a href="#collection" style={{
-            display: 'inline-flex', alignItems: 'center', gap: 12,
             fontSize: 11, letterSpacing: '0.3em', textTransform: 'uppercase',
             color: '#fff', textDecoration: 'none',
             padding: '14px 28px',
-            border: '1px solid rgba(255,255,255,0.4)',
-            width: 'fit-content',
+            border: '1px solid rgba(255,255,255,0.6)',
+            background: 'rgba(28,46,84,0.4)',
+            backdropFilter: 'blur(4px)',
+            flexShrink: 0,
           }}>
             Shop the Collection
           </a>
