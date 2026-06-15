@@ -12,7 +12,7 @@ export function LunchLadyStorefront() {
       <nav style={{
         position: 'fixed', top: 0, left: 0, right: 0, zIndex: 100,
         display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-        padding: '0 40px', height: 120,
+        padding: '0 40px', height: 160,
         background: 'rgba(255,255,255,0.95)', backdropFilter: 'blur(8px)',
         borderBottom: '1px solid #e8e8e8',
       }}>
@@ -20,7 +20,7 @@ export function LunchLadyStorefront() {
           Merch Collection
         </div>
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src="/lunch-lady-logo.png" alt="Lunch Lady" style={{ height: 100, objectFit: 'contain' }} />
+        <img src="/lunch-lady-logo.png" alt="Lunch Lady" style={{ height: 140, objectFit: 'contain' }} />
         <div style={{ width: 140 }} />
         <Link href="/cart" style={{
           fontSize: 11, letterSpacing: '0.25em', textTransform: 'uppercase',
@@ -150,12 +150,12 @@ export function LunchLadyStorefront() {
 
       {/* FOOTER */}
       <footer style={{
-        padding: '32px 40px',
+        padding: '48px 40px',
         display: 'flex', alignItems: 'center', justifyContent: 'space-between',
         borderTop: '1px solid #e8e8e8',
       }}>
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src="/lunch-lady-logo.png" alt="Lunch Lady" style={{ height: 36, objectFit: 'contain' }} />
+        <img src="/lunch-lady-logo.png" alt="Lunch Lady" style={{ height: 80, objectFit: 'contain' }} />
         <p style={{ fontSize: 10, color: '#ccc', letterSpacing: '0.15em', textTransform: 'uppercase' }}>
           Powered by Merch Beast
         </p>
