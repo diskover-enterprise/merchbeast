@@ -97,7 +97,18 @@
       "Bash(xargs -I{} cp {} /Users/mac/Downloads/restaurant-marketplace/public/images/work-jerseys.jpg)",
       "Bash(xargs -I{} cp {} /Users/mac/Downloads/restaurant-marketplace/public/images/work-business.jpg)",
       "Bash(xargs -I{} cp {} /Users/mac/Downloads/restaurant-marketplace/public/images/work-events.jpg)",
-      "Bash(xargs -I{} cp {} /Users/mac/Downloads/restaurant-marketplace/public/images/work-promo.jpg)"
+      "Bash(xargs -I{} cp {} /Users/mac/Downloads/restaurant-marketplace/public/images/work-promo.jpg)",
+      "WebFetch(domain:merchbeast.shop)",
+      "Bash(mkdir -p /Users/mac/Downloads/restaurant-marketplace/app/products/\\\\[slug\\\\])",
+      "Bash(/tmp/nodebin/bin/node node_modules/next/dist/bin/next --version)",
+      "WebFetch(domain:thelunchlady.com)",
+      "Bash(/tmp/nodebin/bin/node node_modules/next/dist/bin/next build --webpack)",
+      "Bash(/tmp/nodebin/bin/node node_modules/next/dist/bin/next dev --webpack --port 3000)",
+      "Bash(curl -s http://localhost:3000/products)",
+      "Bash(pkill -f \"next dev\")",
+      "WebFetch(domain:restaurant-marketplace-two.vercel.app)",
+      "WebFetch(domain:merchbeast-sf54.vercel.app)",
+      "Bash(/tmp/nodebin/bin/node node_modules/.bin/prisma migrate dev --name add-merch-products --skip-seed)"
     ]
   }
 }

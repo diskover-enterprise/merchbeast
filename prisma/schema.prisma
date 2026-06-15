@@ -82,3 +82,18 @@ model AdminUser {
   passwordHash String
   createdAt    DateTime @default(now())
 }
+
+model MerchProduct {
+  id          String   @id @default(cuid())
+  slug        String   @unique
+  name        String
+  description String
+  price       String
+  images      String   @default("[]")
+  sizes       String   @default("[]")
+  colors      String   @default("[]")
+  tag         String?
+  active      Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
