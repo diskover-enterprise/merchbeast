@@ -25,8 +25,8 @@ export default function ProductPage({ params }: { params: Promise<{ slug: string
   function handleColorSelect(c: string) {
     setSelectedColor(c)
     if (product!.colors) {
-      if (c === 'White') setActiveImg(0)
-      if (c === 'Black') setActiveImg(2)
+      if (c === 'White') setActiveImg(1)
+      if (c === 'Black') setActiveImg(3)
     }
   }
 
