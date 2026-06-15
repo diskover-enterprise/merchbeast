@@ -1,10 +1,22 @@
 import { PrismaClient } from '@prisma/client'
 
-const prisma = new PrismaClient()
+function getDB() {
+  return new PrismaClient()
+}
+
+function deserialize(p: any) {
+  return {
+    ...p,
+    images: JSON.parse(p.images || '[]'),
+    sizes: JSON.parse(p.sizes || '[]'),
+    colors: JSON.parse(p.colors || '[]'),
+  }
+}
 
 export async function PUT(request: Request, { params }: { params: { id: string } }) {
+  const db = getDB()
   const body = await request.json()
-  const product = await prisma.merchProduct.update({
+  const product = await db.merchProduct.update({
     where: { id: params.id },
     data: {
       name: body.name,
@@ -21,15 +33,7 @@ export async function PUT(request: Request, { params }: { params: { id: string }
 }
 
 export async function DELETE(_: Request, { params }: { params: { id: string } }) {
-  await prisma.merchProduct.delete({ where: { id: params.id } })
+  const db = getDB()
+  await db.merchProduct.delete({ where: { id: params.id } })
   return Response.json({ ok: true })
-}
-
-function deserialize(p: any) {
-  return {
-    ...p,
-    images: JSON.parse(p.images || '[]'),
-    sizes: JSON.parse(p.sizes || '[]'),
-    colors: JSON.parse(p.colors || '[]'),
-  }
 }

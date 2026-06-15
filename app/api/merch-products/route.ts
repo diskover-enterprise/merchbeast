@@ -1,17 +1,30 @@
 import { PrismaClient } from '@prisma/client'
 import { slugify } from '@/lib/slugify'
 
-const prisma = new PrismaClient()
+function getDB() {
+  return new PrismaClient()
+}
+
+function deserialize(p: any) {
+  return {
+    ...p,
+    images: JSON.parse(p.images || '[]'),
+    sizes: JSON.parse(p.sizes || '[]'),
+    colors: JSON.parse(p.colors || '[]'),
+  }
+}
 
 export async function GET() {
-  const products = await prisma.merchProduct.findMany({ orderBy: { createdAt: 'asc' } })
+  const db = getDB()
+  const products = await db.merchProduct.findMany({ orderBy: { createdAt: 'asc' } })
   return Response.json(products.map(deserialize))
 }
 
 export async function POST(request: Request) {
+  const db = getDB()
   const body = await request.json()
   const slug = body.slug || slugify(body.name)
-  const product = await prisma.merchProduct.create({
+  const product = await db.merchProduct.create({
     data: {
       slug,
       name: body.name,
@@ -25,13 +38,4 @@ export async function POST(request: Request) {
     },
   })
   return Response.json(deserialize(product))
-}
-
-function deserialize(p: any) {
-  return {
-    ...p,
-    images: JSON.parse(p.images || '[]'),
-    sizes: JSON.parse(p.sizes || '[]'),
-    colors: JSON.parse(p.colors || '[]'),
-  }
 }
