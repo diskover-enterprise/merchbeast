@@ -3,7 +3,7 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import { usePathname } from 'next/navigation'
-import { LayoutDashboard, ShoppingBag, Package, Settings, LogOut } from 'lucide-react'
+import { LayoutDashboard, ShoppingBag, Package, Settings, LogOut, DollarSign } from 'lucide-react'
 import { signOut, useSession } from 'next-auth/react'
 import { cn } from '@/lib/utils'
 
@@ -11,6 +11,7 @@ const links = [
   { href: '/dashboard',          label: 'Overview', icon: LayoutDashboard },
   { href: '/dashboard/orders',   label: 'Orders',   icon: ShoppingBag },
   { href: '/dashboard/products', label: 'Products', icon: Package },
+  { href: '/dashboard/commissions', label: 'Commissions', icon: DollarSign },
   { href: '/dashboard/settings', label: 'Settings', icon: Settings },
 ]
 

@@ -28,6 +28,7 @@ model Restaurant {
   createdAt         DateTime  @default(now())
   products          Product[]
   orders            Order[]
+  commissions       CommissionPayment[]
 }
 
 model Product {
@@ -81,6 +82,18 @@ model AdminUser {
   email        String   @unique
   passwordHash String
   createdAt    DateTime @default(now())
+}
+
+model CommissionPayment {
+  id           String   @id @default(cuid())
+  restaurantId String
+  month        String   // e.g. "2026-06"
+  revenue      Int      // in cents
+  rate         Float    @default(0.25)
+  paidAt       DateTime?
+  note         String?
+  createdAt    DateTime @default(now())
+  restaurant   Restaurant @relation(fields: [restaurantId], references: [id])
 }
 
 model MerchProduct {
