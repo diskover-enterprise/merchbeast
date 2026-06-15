@@ -17,11 +17,11 @@ export function LunchLadyStorefront() {
         borderBottom: '1px solid #e8e8e8',
       }}>
         <div style={{ fontSize: 11, letterSpacing: '0.35em', textTransform: 'uppercase', color: '#888' }}>
-          Lunch Lady
-        </div>
-        <div style={{ fontSize: 11, letterSpacing: '0.35em', textTransform: 'uppercase', color: '#888' }}>
           Merch Collection
         </div>
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img src="/lunch-lady-logo.png" alt="Lunch Lady" style={{ height: 48, objectFit: 'contain' }} />
+        <div style={{ width: 140 }} />
         <Link href="/cart" style={{
           fontSize: 11, letterSpacing: '0.25em', textTransform: 'uppercase',
           color: '#111', textDecoration: 'none',
@@ -154,9 +154,8 @@ export function LunchLadyStorefront() {
         display: 'flex', alignItems: 'center', justifyContent: 'space-between',
         borderTop: '1px solid #e8e8e8',
       }}>
-        <p style={{ fontSize: 11, color: '#bbb', letterSpacing: '0.2em', textTransform: 'uppercase' }}>
-          Lunch Lady
-        </p>
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img src="/lunch-lady-logo.png" alt="Lunch Lady" style={{ height: 36, objectFit: 'contain' }} />
         <p style={{ fontSize: 10, color: '#ccc', letterSpacing: '0.15em', textTransform: 'uppercase' }}>
           Powered by Merch Beast
         </p>

@@ -66,11 +66,9 @@ export default function ProductPage({ params }: { params: Promise<{ slug: string
         }}>
           ← Lunch Lady
         </Link>
-        <Link href="/shop/lunch-lady" style={{
-          fontSize: 13, letterSpacing: '0.2em', textTransform: 'uppercase',
-          color: '#fff', textDecoration: 'none', fontWeight: 400,
-        }}>
-          Lunch Lady
+        <Link href="/shop/lunch-lady">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/lunch-lady-logo.png" alt="Lunch Lady" style={{ height: 44, objectFit: 'contain', display: 'block' }} />
         </Link>
         <Link href="/cart" style={{
           fontSize: 11, letterSpacing: '0.25em', textTransform: 'uppercase',
@@ -281,7 +279,8 @@ export default function ProductPage({ params }: { params: Promise<{ slug: string
         background: NAV, color: 'rgba(255,255,255,0.5)',
         display: 'flex', alignItems: 'center', justifyContent: 'space-between',
       }}>
-        <p style={{ fontSize: 11, letterSpacing: '0.2em', textTransform: 'uppercase' }}>Lunch Lady</p>
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img src="/lunch-lady-logo.png" alt="Lunch Lady" style={{ height: 36, objectFit: 'contain', opacity: 0.8 }} />
         <p style={{ fontSize: 10, letterSpacing: '0.15em', textTransform: 'uppercase' }}>Powered by Merch Beast</p>
       </footer>
     </div>
