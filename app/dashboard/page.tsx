@@ -15,10 +15,28 @@ interface Stats {
 
 export default function DashboardOverviewPage() {
   const [stats, setStats] = useState<Stats | null>(null)
+  const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
-    fetch('/api/dashboard/stats').then((r) => r.json()).then(setStats)
+    fetch('/api/dashboard/stats')
+      .then(async (r) => {
+        if (!r.ok) {
+          const text = await r.text()
+          throw new Error(`${r.status}: ${text.slice(0, 200)}`)
+        }
+        return r.json()
+      })
+      .then(setStats)
+      .catch((e) => setError(e.message))
   }, [])
+
+  if (error) {
+    return (
+      <div className="db-content" style={{ padding: '2rem' }}>
+        <p style={{ color: '#ff4444', fontFamily: 'monospace', whiteSpace: 'pre-wrap' }}>Stats error: {error}</p>
+      </div>
+    )
+  }
 
   if (!stats) {
     return (
