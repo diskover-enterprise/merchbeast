@@ -1,5 +1,6 @@
 'use client'
 
+import { useState } from 'react'
 import Link from 'next/link'
 import { useCart } from '../cart-context'
 import '../merch-homepage.css'
@@ -9,16 +10,31 @@ import './cart.css'
 export default function CartPage() {
   const { items, removeFromCart, updateQuantity, total } = useCart()
 
+  const [checkoutError, setCheckoutError] = useState<string | null>(null)
+  const [loading, setLoading] = useState(false)
+
   async function handleCheckout() {
-    const res = await fetch('/api/checkout', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        items: items.map(i => ({ slug: i.product.slug, quantity: i.quantity })),
-      }),
-    })
-    const data = await res.json()
-    if (data.url) window.location.href = data.url
+    setCheckoutError(null)
+    setLoading(true)
+    try {
+      const res = await fetch('/api/checkout', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          items: items.map(i => ({ slug: i.product.slug, quantity: i.quantity })),
+        }),
+      })
+      const data = await res.json()
+      if (data.url) {
+        window.location.href = data.url
+      } else {
+        setCheckoutError(data.error || 'Something went wrong. Please try again.')
+      }
+    } catch (e) {
+      setCheckoutError('Failed to connect to checkout. Please try again.')
+    } finally {
+      setLoading(false)
+    }
   }
 
   return (
@@ -82,9 +98,10 @@ export default function CartPage() {
                   <span>Total</span>
                   <span>${total.toFixed(2)} CAD</span>
                 </div>
-                <button onClick={handleCheckout} className="mb-btn mb-btn-primary mb-btn-lg cart-checkout-btn">
-                  Checkout with Stripe
+                <button onClick={handleCheckout} disabled={loading} className="mb-btn mb-btn-primary mb-btn-lg cart-checkout-btn">
+                  {loading ? 'Redirecting...' : 'Checkout'}
                 </button>
+                {checkoutError && <p style={{color:'#ff4444',fontSize:'0.85rem',textAlign:'center',marginTop:'0.5rem'}}>{checkoutError}</p>}
                 <p className="cart-secure-note">Secure payment powered by Stripe</p>
               </div>
             </div>
