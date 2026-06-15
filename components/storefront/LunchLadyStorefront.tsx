@@ -59,17 +59,6 @@ export function LunchLadyStorefront() {
               "Phở since the beginning. The original, the iconic, the irreplaceable."
             </p>
           </div>
-          <a href="#collection" style={{
-            fontSize: 11, letterSpacing: '0.3em', textTransform: 'uppercase',
-            color: '#fff', textDecoration: 'none',
-            padding: '14px 28px',
-            border: '1px solid rgba(255,255,255,0.6)',
-            background: 'rgba(28,46,84,0.4)',
-            backdropFilter: 'blur(4px)',
-            flexShrink: 0,
-          }}>
-            Shop the Collection
-          </a>
         </div>
       </section>
 
