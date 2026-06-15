@@ -2,6 +2,7 @@ import { prisma } from '@/lib/prisma'
 import { notFound } from 'next/navigation'
 import { ProductCard } from '@/components/storefront/ProductCard'
 import { ArcadeStorefront } from '@/components/storefront/ArcadeStorefront'
+import { LunchLadyStorefront } from '@/components/storefront/LunchLadyStorefront'
 import { Product, Restaurant } from '@/types'
 import Image from 'next/image'
 
@@ -27,6 +28,11 @@ export default async function StorefrontPage({
   })
 
   if (!restaurant) notFound()
+
+  // Lunch Lady — custom editorial storefront with real products
+  if (slug === 'lunch-lady') {
+    return <LunchLadyStorefront />
+  }
 
   // Arcade theme — custom layout for Quazar Arcade
   if (slug === 'quazar-arcade') {
