@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react'
 import { ImageIcon, Plus, Pencil, Trash2, X, Check, Upload } from 'lucide-react'
+import { products as staticProducts } from '@/app/products/products-data'
 
 type MerchProduct = {
   id: string
@@ -131,9 +132,38 @@ export default function ProductsPage() {
     try {
       const res = await fetch('/api/merch-products')
       if (!res.ok) throw new Error(`${res.status}`)
-      setProducts(await res.json())
-    } catch (e: any) {
-      setError(e.message)
+      const data = await res.json()
+      if (data.length === 0) {
+        // Fall back to hardcoded products before DB is connected
+        setProducts(staticProducts.map((p, i) => ({
+          id: p.slug,
+          slug: p.slug,
+          name: p.name,
+          description: p.description,
+          price: p.price,
+          images: p.images,
+          sizes: p.sizes || [],
+          colors: p.colors || [],
+          tag: p.tag || null,
+          active: true,
+        })))
+      } else {
+        setProducts(data)
+      }
+    } catch {
+      // API not available yet — show static products
+      setProducts(staticProducts.map((p) => ({
+        id: p.slug,
+        slug: p.slug,
+        name: p.name,
+        description: p.description,
+        price: p.price,
+        images: p.images,
+        sizes: p.sizes || [],
+        colors: p.colors || [],
+        tag: p.tag || null,
+        active: true,
+      })))
     } finally {
       setLoading(false)
     }
