@@ -15,10 +15,19 @@ export default function ProductPage({ params }: { params: Promise<{ slug: string
 
   const { addToCart, count } = useCart()
   const [activeImg, setActiveImg] = useState(0)
+  const [selectedSize, setSelectedSize] = useState<string | undefined>(
+    product!.sizes ? undefined : undefined
+  )
   const [added, setAdded] = useState(false)
+  const [sizeError, setSizeError] = useState(false)
 
   function handleAddToCart() {
-    addToCart(product!)
+    if (product!.sizes && !selectedSize) {
+      setSizeError(true)
+      setTimeout(() => setSizeError(false), 2000)
+      return
+    }
+    addToCart(product!, selectedSize)
     setAdded(true)
     setTimeout(() => setAdded(false), 2000)
   }
@@ -35,10 +44,10 @@ export default function ProductPage({ params }: { params: Promise<{ slug: string
           <a href="/#services">Services</a>
           <a href="/#work">Work</a>
           <a href="/#how">Process</a>
-          <a href="/products" style={{color:'var(--green)'}}>Shop</a>
-          <a href="/cart" className="mb-btn-nav" style={{position:'relative'}}>
+          <Link href="/products" style={{color:'var(--green)'}}>Shop</Link>
+          <Link href="/cart" className="mb-btn-nav" style={{position:'relative'}}>
             Cart{count > 0 && <span style={{position:'absolute',top:'-6px',right:'-8px',background:'var(--green)',color:'#000',borderRadius:'50%',width:'18px',height:'18px',fontSize:'11px',fontWeight:700,display:'flex',alignItems:'center',justifyContent:'center'}}>{count}</span>}
-          </a>
+          </Link>
         </nav>
       </header>
 
@@ -55,20 +64,20 @@ export default function ProductPage({ params }: { params: Promise<{ slug: string
             <div className="product-gallery">
               <div className="product-main-img-wrap">
                 <img
-                  src={product.images[activeImg]}
-                  alt={product.name}
+                  src={product!.images[activeImg]}
+                  alt={product!.name}
                   className="product-main-img"
                 />
               </div>
-              {product.images.length > 1 && (
+              {product!.images.length > 1 && (
                 <div className="product-thumbs">
-                  {product.images.map((img, i) => (
+                  {product!.images.map((img, i) => (
                     <button
                       key={i}
                       className={`product-thumb ${i === activeImg ? 'active' : ''}`}
                       onClick={() => setActiveImg(i)}
                     >
-                      <img src={img} alt={`${product.name} ${i + 1}`} />
+                      <img src={img} alt={`${product!.name} ${i + 1}`} />
                     </button>
                   ))}
                 </div>
@@ -77,17 +86,31 @@ export default function ProductPage({ params }: { params: Promise<{ slug: string
 
             {/* Info */}
             <div className="product-info">
-              {product.tag && <div className="mb-section-label">{product.tag}</div>}
-              <h1 className="product-name">{product.name}</h1>
-              <p className="product-price">{product.price}</p>
-              <p className="product-desc">{product.description}</p>
+              {product!.tag && <div className="mb-section-label">{product!.tag}</div>}
+              <h1 className="product-name">{product!.name}</h1>
+              <p className="product-price">{product!.price}</p>
+              <p className="product-desc">{product!.description}</p>
 
-              {product.sizes && (
+              {product!.sizes && (
                 <div className="product-sizes">
-                  <p className="product-sizes-label">Available Sizes</p>
+                  <p className="product-sizes-label" style={{color: sizeError ? '#ff4444' : undefined}}>
+                    {sizeError ? 'Please select a size' : 'Select Size'}
+                  </p>
                   <div className="product-sizes-grid">
-                    {product.sizes.map(s => (
-                      <span key={s} className="product-size-chip">{s}</span>
+                    {product!.sizes.map(s => (
+                      <button
+                        key={s}
+                        onClick={() => setSelectedSize(s)}
+                        className="product-size-chip"
+                        style={{
+                          cursor: 'pointer',
+                          border: selectedSize === s ? '2px solid var(--green)' : '2px solid rgba(255,255,255,0.15)',
+                          background: selectedSize === s ? 'rgba(57,255,20,0.1)' : 'transparent',
+                          color: selectedSize === s ? 'var(--green)' : '#fff',
+                        }}
+                      >
+                        {s}
+                      </button>
                     ))}
                   </div>
                 </div>
@@ -96,13 +119,14 @@ export default function ProductPage({ params }: { params: Promise<{ slug: string
               <button
                 onClick={handleAddToCart}
                 className="mb-btn mb-btn-primary mb-btn-lg product-buy-btn"
+                style={{marginTop: '1.5rem'}}
               >
                 {added ? '✓ Added to Cart' : 'Add to Cart'}
               </button>
 
-              <a href="/cart" className="mb-btn mb-btn-ghost mb-btn-lg product-buy-btn" style={{marginTop:'0.75rem',textAlign:'center',display:'block'}}>
+              <Link href="/cart" className="mb-btn mb-btn-ghost mb-btn-lg product-buy-btn" style={{marginTop:'0.75rem',textAlign:'center',display:'block'}}>
                 View Cart{count > 0 ? ` (${count})` : ''}
-              </a>
+              </Link>
 
               <p className="product-note">Secure checkout powered by Stripe.</p>
             </div>
@@ -113,7 +137,7 @@ export default function ProductPage({ params }: { params: Promise<{ slug: string
           <div className="product-related">
             <h2 className="product-related-title">More Drops</h2>
             <div className="shop-grid">
-              {products.filter(p => p.slug !== product.slug).slice(0, 3).map(p => (
+              {products.filter(p => p.slug !== product!.slug).slice(0, 3).map(p => (
                 <Link href={`/products/${p.slug}`} key={p.slug} className="shop-card">
                   <div className="shop-card-img-wrap">
                     <img src={p.images[0]} alt={p.name} className="shop-card-img" />

@@ -1,18 +1,19 @@
 'use client'
 
-import { createContext, useContext, useState, useCallback } from 'react'
+import { createContext, useContext, useState, useCallback, useEffect } from 'react'
 import type { Product } from './products/products-data'
 
 export type CartItem = {
   product: Product
   quantity: number
+  size?: string
 }
 
 type CartContextType = {
   items: CartItem[]
-  addToCart: (product: Product) => void
-  removeFromCart: (slug: string) => void
-  updateQuantity: (slug: string, quantity: number) => void
+  addToCart: (product: Product, size?: string) => void
+  removeFromCart: (slug: string, size?: string) => void
+  updateQuantity: (slug: string, quantity: number, size?: string) => void
   clearCart: () => void
   total: number
   count: number
@@ -20,29 +21,53 @@ type CartContextType = {
 
 const CartContext = createContext<CartContextType | null>(null)
 
+function itemKey(slug: string, size?: string) {
+  return size ? `${slug}__${size}` : slug
+}
+
 export function CartProvider({ children }: { children: React.ReactNode }) {
   const [items, setItems] = useState<CartItem[]>([])
 
-  const addToCart = useCallback((product: Product) => {
+  // Persist cart to localStorage
+  useEffect(() => {
+    try {
+      const saved = localStorage.getItem('mb-cart')
+      if (saved) setItems(JSON.parse(saved))
+    } catch {}
+  }, [])
+
+  useEffect(() => {
+    try {
+      localStorage.setItem('mb-cart', JSON.stringify(items))
+    } catch {}
+  }, [items])
+
+  const addToCart = useCallback((product: Product, size?: string) => {
     setItems(prev => {
-      const existing = prev.find(i => i.product.slug === product.slug)
+      const key = itemKey(product.slug, size)
+      const existing = prev.find(i => itemKey(i.product.slug, i.size) === key)
       if (existing) {
-        return prev.map(i => i.product.slug === product.slug ? { ...i, quantity: i.quantity + 1 } : i)
+        return prev.map(i => itemKey(i.product.slug, i.size) === key ? { ...i, quantity: i.quantity + 1 } : i)
       }
-      return [...prev, { product, quantity: 1 }]
+      return [...prev, { product, quantity: 1, size }]
     })
   }, [])
 
-  const removeFromCart = useCallback((slug: string) => {
-    setItems(prev => prev.filter(i => i.product.slug !== slug))
+  const removeFromCart = useCallback((slug: string, size?: string) => {
+    const key = itemKey(slug, size)
+    setItems(prev => prev.filter(i => itemKey(i.product.slug, i.size) !== key))
   }, [])
 
-  const updateQuantity = useCallback((slug: string, quantity: number) => {
+  const updateQuantity = useCallback((slug: string, quantity: number, size?: string) => {
     if (quantity < 1) return
-    setItems(prev => prev.map(i => i.product.slug === slug ? { ...i, quantity } : i))
+    const key = itemKey(slug, size)
+    setItems(prev => prev.map(i => itemKey(i.product.slug, i.size) === key ? { ...i, quantity } : i))
   }, [])
 
-  const clearCart = useCallback(() => setItems([]), [])
+  const clearCart = useCallback(() => {
+    setItems([])
+    try { localStorage.removeItem('mb-cart') } catch {}
+  }, [])
 
   const total = items.reduce((sum, i) => {
     const price = parseFloat(i.product.price.replace(/[^0-9.]/g, ''))
