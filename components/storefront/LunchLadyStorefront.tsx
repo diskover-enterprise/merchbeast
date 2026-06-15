@@ -38,7 +38,7 @@ export function LunchLadyStorefront() {
         <img
           src="/lunch-lady-hero.jpg"
           alt="Lunch Lady Collection"
-          style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block', position: 'absolute', inset: 0 }}
+          style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center top', display: 'block', position: 'absolute', inset: 0 }}
         />
         {/* Overlay */}
         <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(28,46,84,0.7) 0%, transparent 60%)' }} />
