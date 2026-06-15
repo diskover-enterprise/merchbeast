@@ -6,6 +6,7 @@ export type Product = {
   shopifyUrl: string
   images: string[]
   sizes?: string[]
+  colors?: string[]
   tag?: string
 }
 
@@ -23,6 +24,7 @@ export const products: Product[] = [
       'https://cdn.shopify.com/s/files/1/0831/9654/3268/files/4_265960c1-fe2c-46b6-8a6a-d345731a01c9.png?v=1749521801',
     ],
     sizes: ['S', 'M', 'L', 'XL'],
+    colors: ['Black', 'White'],
     tag: 'Tee',
   },
   {

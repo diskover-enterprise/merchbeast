@@ -15,11 +15,11 @@ export default function ProductPage({ params }: { params: Promise<{ slug: string
 
   const { addToCart, count } = useCart()
   const [activeImg, setActiveImg] = useState(0)
-  const [selectedSize, setSelectedSize] = useState<string | undefined>(
-    product!.sizes ? undefined : undefined
-  )
+  const [selectedSize, setSelectedSize] = useState<string | undefined>()
+  const [selectedColor, setSelectedColor] = useState<string | undefined>()
   const [added, setAdded] = useState(false)
   const [sizeError, setSizeError] = useState(false)
+  const [colorError, setColorError] = useState(false)
 
   function handleAddToCart() {
     if (product!.sizes && !selectedSize) {
@@ -27,7 +27,12 @@ export default function ProductPage({ params }: { params: Promise<{ slug: string
       setTimeout(() => setSizeError(false), 2000)
       return
     }
-    addToCart(product!, selectedSize)
+    if (product!.colors && !selectedColor) {
+      setColorError(true)
+      setTimeout(() => setColorError(false), 2000)
+      return
+    }
+    addToCart(product!, selectedSize, selectedColor)
     setAdded(true)
     setTimeout(() => setAdded(false), 2000)
   }
@@ -110,6 +115,42 @@ export default function ProductPage({ params }: { params: Promise<{ slug: string
                         }}
                       >
                         {s}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {product!.colors && (
+                <div className="product-sizes" style={{marginTop: '1.25rem'}}>
+                  <p className="product-sizes-label" style={{color: colorError ? '#ff4444' : undefined}}>
+                    {colorError ? 'Please select a colour' : 'Select Colour'}
+                  </p>
+                  <div className="product-sizes-grid">
+                    {product!.colors.map(c => (
+                      <button
+                        key={c}
+                        onClick={() => setSelectedColor(c)}
+                        className="product-size-chip"
+                        style={{
+                          cursor: 'pointer',
+                          border: selectedColor === c ? '2px solid var(--green)' : '2px solid rgba(255,255,255,0.15)',
+                          background: selectedColor === c ? 'rgba(57,255,20,0.1)' : 'transparent',
+                          color: selectedColor === c ? 'var(--green)' : '#fff',
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: '6px',
+                        }}
+                      >
+                        <span style={{
+                          width: 12,
+                          height: 12,
+                          borderRadius: '50%',
+                          background: c === 'Black' ? '#111' : '#fff',
+                          border: '1px solid rgba(255,255,255,0.3)',
+                          flexShrink: 0,
+                        }} />
+                        {c}
                       </button>
                     ))}
                   </div>

@@ -69,22 +69,22 @@ export default function CartPage() {
           ) : (
             <div className="cart-layout">
               <div className="cart-items">
-                {items.map(({ product, quantity, size }) => (
-                  <div key={`${product.slug}-${size}`} className="cart-item">
+                {items.map(({ product, quantity, size, color }) => (
+                  <div key={`${product.slug}-${size}-${color}`} className="cart-item">
                     <div className="cart-item-img-wrap">
                       <img src={product.images[0]} alt={product.name} className="cart-item-img" />
                     </div>
                     <div className="cart-item-info">
                       <Link href={`/products/${product.slug}`} className="cart-item-name">{product.name}</Link>
-                      {size && <p style={{color:'rgba(255,255,255,0.5)',fontSize:'0.8rem',fontFamily:'var(--font-space)',marginTop:'2px'}}>Size: {size}</p>}
+                      {(size || color) && <p style={{color:'rgba(255,255,255,0.5)',fontSize:'0.8rem',fontFamily:'var(--font-space)',marginTop:'2px'}}>{[size, color].filter(Boolean).join(' · ')}</p>}
                       <p className="cart-item-price">{product.price}</p>
                     </div>
                     <div className="cart-item-qty">
-                      <button onClick={() => updateQuantity(product.slug, quantity - 1, size)} className="cart-qty-btn">−</button>
+                      <button onClick={() => updateQuantity(product.slug, quantity - 1, size, color)} className="cart-qty-btn">−</button>
                       <span className="cart-qty-num">{quantity}</span>
-                      <button onClick={() => updateQuantity(product.slug, quantity + 1, size)} className="cart-qty-btn">+</button>
+                      <button onClick={() => updateQuantity(product.slug, quantity + 1, size, color)} className="cart-qty-btn">+</button>
                     </div>
-                    <button onClick={() => removeFromCart(product.slug, size)} className="cart-remove">✕</button>
+                    <button onClick={() => removeFromCart(product.slug, size, color)} className="cart-remove">✕</button>
                   </div>
                 ))}
               </div>
