@@ -61,10 +61,6 @@ export default function CheckoutSuccessPage() {
           }}>
             Thanks for your order. You&apos;ll receive a confirmation email shortly. We&apos;ll get your merch into production right away.
           </p>
-          <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
-            <Link href="/products" className="mb-btn mb-btn-primary">Shop More</Link>
-            <Link href="/" className="mb-btn mb-btn-ghost">Back to Home</Link>
-          </div>
         </div>
       </div>
 
