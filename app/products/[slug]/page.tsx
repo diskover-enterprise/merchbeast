@@ -56,7 +56,7 @@ export default function ProductPage({ params }: { params: Promise<{ slug: string
       <nav style={{
         position: 'sticky', top: 0, zIndex: 100,
         display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-        padding: '0 40px', height: 160,
+        padding: '0 40px', height: 220,
         background: NAV,
         borderBottom: `1px solid rgba(255,255,255,0.1)`,
       }}>
@@ -68,7 +68,7 @@ export default function ProductPage({ params }: { params: Promise<{ slug: string
         </Link>
         <Link href="/shop/lunch-lady">
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/lunch-lady-logo.png" alt="Lunch Lady" style={{ height: 140, objectFit: 'contain', display: 'block' }} />
+          <img src="/lunch-lady-logo.png" alt="Lunch Lady" style={{ height: 200, objectFit: 'contain', display: 'block' }} />
         </Link>
         <Link href="/cart" style={{
           fontSize: 11, letterSpacing: '0.25em', textTransform: 'uppercase',
@@ -280,7 +280,7 @@ export default function ProductPage({ params }: { params: Promise<{ slug: string
         display: 'flex', alignItems: 'center', justifyContent: 'space-between',
       }}>
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src="/lunch-lady-logo.png" alt="Lunch Lady" style={{ height: 80, objectFit: 'contain', opacity: 0.8 }} />
+        <img src="/lunch-lady-logo.png" alt="Lunch Lady" style={{ height: 120, objectFit: 'contain', opacity: 0.8 }} />
         <p style={{ fontSize: 10, letterSpacing: '0.15em', textTransform: 'uppercase' }}>Powered by Merch Beast</p>
       </footer>
     </div>
