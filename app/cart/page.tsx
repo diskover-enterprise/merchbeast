@@ -24,14 +24,16 @@ export default function CartPage() {
           items: items.map(i => ({ slug: i.product.slug, quantity: i.quantity })),
         }),
       })
-      const data = await res.json()
+      const text = await res.text()
+      let data: any
+      try { data = JSON.parse(text) } catch { data = { error: text.slice(0, 200) } }
       if (data.url) {
         window.location.href = data.url
       } else {
-        setCheckoutError(data.error || 'Something went wrong. Please try again.')
+        setCheckoutError(`Error ${res.status}: ${data.error || 'Unknown error'}`)
       }
-    } catch (e) {
-      setCheckoutError('Failed to connect to checkout. Please try again.')
+    } catch (e: any) {
+      setCheckoutError(`Network error: ${e?.message || e}`)
     } finally {
       setLoading(false)
     }
