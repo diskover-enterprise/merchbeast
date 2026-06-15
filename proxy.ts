@@ -6,9 +6,10 @@ export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl
   const token = await getToken({ req: request, secret: process.env.NEXTAUTH_SECRET })
 
-  if (pathname.startsWith('/dashboard') && pathname !== '/dashboard/login') {
-    if (!token || token.role !== 'owner') {
-      return NextResponse.redirect(new URL('/dashboard/login', request.url))
+  if (pathname.startsWith('/dashboard') && pathname !== '/dashboard-login') {
+    const auth = request.cookies.get('mb-dashboard-auth')
+    if (!auth) {
+      return NextResponse.redirect(new URL('/dashboard-login', request.url))
     }
   }
 
