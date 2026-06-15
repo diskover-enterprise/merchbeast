@@ -18,10 +18,11 @@ export async function GET() {
     orderBy: { createdAt: 'desc' },
   })
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   return Response.json(
-    orders.map((o) => ({
+    orders.map((o: any) => ({
       ...o,
-      items: o.items.map((i) => ({
+      items: o.items.map((i: any) => ({
         ...i,
         product: i.product ? { ...i.product, images: JSON.parse(i.product.images) } : null,
       })),
