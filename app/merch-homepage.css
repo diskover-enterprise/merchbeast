@@ -437,8 +437,8 @@
 @media (max-width: 600px) {
   .mb-hero-inner { padding: 48px 20px; }
   .mb-container { padding: 0 20px; }
-  .mb-grid { grid-template-columns: 1fr; grid-template-rows: auto; }
-  .mb-grid-item { height: 200px; }
+  .mb-grid { grid-template-columns: 1fr; grid-template-rows: auto; justify-items: center; }
+  .mb-grid-item { height: 200px; width: 100%; }
   .mb-grid-item:first-child { grid-row: span 1; }
   .mb-hero-ctas { flex-direction: column; }
   .mb-btn { text-align: center; }
