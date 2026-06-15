@@ -6,7 +6,7 @@ import { DashboardSidebar } from '@/components/dashboard/DashboardSidebar'
 export default async function DashboardLayout({ children }: { children: React.ReactNode }) {
   const cookieStore = await cookies()
   const auth = cookieStore.get('mb-dashboard-auth')
-  if (!auth) redirect('/dashboard/login')
+  if (!auth) redirect('/dashboard-login')
 
   return (
     <div className="db-shell">
