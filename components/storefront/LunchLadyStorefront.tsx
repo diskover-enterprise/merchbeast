@@ -49,14 +49,18 @@ export function LunchLadyStorefront() {
           display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between',
         }}>
           <div>
-            <p style={{ fontSize: 11, letterSpacing: '0.4em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.6)', marginBottom: 12 }}>
-              Est. Sài Gòn · 1995
-            </p>
-            <p style={{
-              fontSize: 'clamp(1rem, 2vw, 1.4rem)', fontStyle: 'italic',
-              color: 'rgba(255,255,255,0.85)', maxWidth: 420, lineHeight: 1.6,
+            <h1 style={{
+              fontSize: 'clamp(2rem, 4vw, 3.5rem)', fontWeight: 400,
+              letterSpacing: '0.05em', textTransform: 'uppercase',
+              color: '#fff', marginBottom: 10, lineHeight: 1,
             }}>
-              "Phở since the beginning. The original, the iconic, the irreplaceable."
+              The Lunch Lady
+            </h1>
+            <p style={{ fontSize: 15, fontStyle: 'italic', color: 'rgba(255,255,255,0.85)', marginBottom: 8 }}>
+              Born in Saigon. Worn Everywhere.
+            </p>
+            <p style={{ fontSize: 11, letterSpacing: '0.3em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.55)' }}>
+              Est. 1995 •
             </p>
           </div>
         </div>
