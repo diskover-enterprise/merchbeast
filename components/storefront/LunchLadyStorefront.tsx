@@ -33,12 +33,12 @@ export function LunchLadyStorefront() {
 
       {/* HERO */}
       {/* HERO */}
-      <section style={{ position: 'relative', minHeight: '85vh', overflow: 'hidden' }}>
+      <section style={{ position: 'relative' }}>
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src="/lunch-lady-hero.jpg"
           alt="Lunch Lady Collection"
-          style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center top', display: 'block', position: 'absolute', inset: 0 }}
+          style={{ width: '100%', height: 'auto', display: 'block' }}
         />
         {/* Overlay */}
         <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(28,46,84,0.7) 0%, transparent 60%)' }} />
