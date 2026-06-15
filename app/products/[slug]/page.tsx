@@ -50,7 +50,7 @@ export default function ProductPage({ params }: { params: Promise<{ slug: string
   const related = products.filter(p => p.slug !== product!.slug).slice(0, 3)
 
   return (
-    <div style={{ fontFamily: 'Georgia, serif', background: '#fff', color: '#111', minHeight: '100vh' }}>
+    <div style={{ fontFamily: 'Georgia, serif', background: '#fff', color: '#111', minHeight: '100vh', border: '12px solid #D4911E', boxSizing: 'border-box' }}>
 
       {/* NAV */}
       <nav style={{

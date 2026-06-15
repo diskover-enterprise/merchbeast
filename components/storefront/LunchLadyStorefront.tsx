@@ -6,7 +6,7 @@ import { products, type Product } from '@/app/products/products-data'
 
 export function LunchLadyStorefront() {
   return (
-    <div style={{ fontFamily: 'Georgia, serif', background: '#fff', color: '#111', minHeight: '100vh' }}>
+    <div style={{ fontFamily: 'Georgia, serif', background: '#fff', color: '#111', minHeight: '100vh', border: '12px solid #D4911E', boxSizing: 'border-box' }}>
 
       {/* NAV */}
       <nav style={{
