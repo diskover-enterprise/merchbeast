@@ -21,6 +21,15 @@ export default function ProductPage({ params }: { params: Promise<{ slug: string
   const [sizeError, setSizeError] = useState(false)
   const [colorError, setColorError] = useState(false)
 
+  // Sync active image with selected colour for the tee
+  function handleColorSelect(c: string) {
+    setSelectedColor(c)
+    if (product!.colors) {
+      if (c === 'White') setActiveImg(0)
+      if (c === 'Black') setActiveImg(2)
+    }
+  }
+
   function handleAddToCart() {
     if (product!.sizes && !selectedSize) {
       setSizeError(true)
@@ -130,7 +139,7 @@ export default function ProductPage({ params }: { params: Promise<{ slug: string
                     {product!.colors.map(c => (
                       <button
                         key={c}
-                        onClick={() => setSelectedColor(c)}
+                        onClick={() => handleColorSelect(c)}
                         className="product-size-chip"
                         style={{
                           cursor: 'pointer',
