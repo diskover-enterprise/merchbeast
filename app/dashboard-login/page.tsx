@@ -12,17 +12,25 @@ export default function DashboardLoginPage() {
     setLoading(true)
     setError('')
 
-    const res = await fetch('/api/dashboard/auth', {
+    let res: Response
+    try {
+      res = await fetch('/api/dashboard/auth', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ password }),
     })
+    } catch (e: any) {
+      setLoading(false)
+      setError(`Network error: ${e?.message}`)
+      return
+    }
 
     setLoading(false)
     if (res.ok) {
       window.location.href = '/dashboard'
     } else {
-      setError('Incorrect password.')
+      const data = await res.json().catch(() => ({}))
+      setError(data.error || `Error ${res.status}`)
     }
   }
 
