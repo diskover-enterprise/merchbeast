@@ -1,69 +1,49 @@
-import { prisma } from '@/lib/prisma'
-import { getAuthSession } from '@/lib/auth'
+import Stripe from 'stripe'
 
 export async function GET() {
-  const session = await getAuthSession()
-  if (!session?.user?.restaurantId)
-    return Response.json({ error: 'Unauthorized' }, { status: 401 })
+  const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!)
 
-  const restaurantId = session.user.restaurantId
-  const thirtyDaysAgo = new Date()
-  thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30)
+  const thirtyDaysAgo = Math.floor(Date.now() / 1000) - 30 * 24 * 60 * 60
+  const sevenDaysAgo = Math.floor(Date.now() / 1000) - 7 * 24 * 60 * 60
 
-  const [totalOrders, recentOrders, topProducts, weeklyRevenue] = await Promise.all([
-    prisma.order.count({ where: { restaurantId } }),
-    prisma.order.findMany({
-      where: { restaurantId, createdAt: { gte: thirtyDaysAgo } },
-      include: { items: { include: { product: true } } },
-    }),
-    prisma.orderItem.groupBy({
-      by: ['productId'],
-      where: { order: { restaurantId } },
-      _sum: { quantity: true },
-      orderBy: { _sum: { quantity: 'desc' } },
-      take: 5,
-    }),
-    prisma.order.findMany({
-      where: {
-        restaurantId,
-        createdAt: { gte: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000) },
-      },
-      select: { total: true, createdAt: true },
-    }),
+  const [allSessions, recentSessions] = await Promise.all([
+    stripe.checkout.sessions.list({ limit: 100, status: 'complete' }),
+    stripe.checkout.sessions.list({ limit: 100, status: 'complete', created: { gte: thirtyDaysAgo } }),
   ])
 
-  const totalRevenue = recentOrders.reduce((sum, o) => sum + o.total, 0)
+  const totalOrders = allSessions.data.length
+  const recentOrdersCount = recentSessions.data.length
+  const totalRevenue = recentSessions.data.reduce((sum, s) => sum + (s.amount_total || 0), 0) / 100
 
-  const productIds = topProducts.map((p) => p.productId)
-  const productDetails = await prisma.product.findMany({
-    where: { id: { in: productIds } },
-  })
-
-  const top = topProducts.map((p) => ({
-    ...productDetails.find((d) => d.id === p.productId),
-    soldCount: p._sum.quantity,
-  }))
-
+  // Daily revenue for last 7 days
   const dailyMap: Record<string, number> = {}
   for (let i = 6; i >= 0; i--) {
     const d = new Date()
     d.setDate(d.getDate() - i)
     dailyMap[d.toISOString().split('T')[0]] = 0
   }
-  for (const order of weeklyRevenue) {
-    const key = order.createdAt.toISOString().split('T')[0]
-    if (key in dailyMap) dailyMap[key] += order.total
+  for (const session of allSessions.data) {
+    if (session.created >= sevenDaysAgo) {
+      const key = new Date(session.created * 1000).toISOString().split('T')[0]
+      if (key in dailyMap) dailyMap[key] += (session.amount_total || 0) / 100
+    }
   }
-  const dailyRevenue = Object.entries(dailyMap).map(([date, revenue]) => ({
-    date,
-    revenue,
-  }))
+  const dailyRevenue = Object.entries(dailyMap).map(([date, revenue]) => ({ date, revenue }))
 
-  return Response.json({
-    totalOrders,
-    totalRevenue,
-    recentOrdersCount: recentOrders.length,
-    topProducts: top,
-    dailyRevenue,
-  })
+  // Top products from line items
+  const productCounts: Record<string, { name: string; count: number }> = {}
+  for (const session of allSessions.data) {
+    const lineItems = await stripe.checkout.sessions.listLineItems(session.id, { limit: 10 })
+    for (const item of lineItems.data) {
+      const name = item.description || 'Unknown'
+      if (!productCounts[name]) productCounts[name] = { name, count: 0 }
+      productCounts[name].count += item.quantity || 1
+    }
+  }
+  const topProducts = Object.values(productCounts)
+    .sort((a, b) => b.count - a.count)
+    .slice(0, 5)
+    .map((p, i) => ({ id: String(i), name: p.name, soldCount: p.count }))
+
+  return Response.json({ totalOrders, totalRevenue, recentOrdersCount, topProducts, dailyRevenue })
 }

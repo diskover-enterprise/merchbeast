@@ -1,29 +1,29 @@
-import { prisma } from '@/lib/prisma'
-import { getAuthSession } from '@/lib/auth'
+import Stripe from 'stripe'
 
 export async function GET() {
-  const session = await getAuthSession()
-  if (!session?.user?.restaurantId)
-    return Response.json({ error: 'Unauthorized' }, { status: 401 })
+  const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!)
 
-  const orders = await prisma.order.findMany({
-    where: { restaurantId: session.user.restaurantId },
-    include: {
-      customer: true,
-      items: { include: { product: true } },
-    },
-    orderBy: { createdAt: 'desc' },
-  })
+  const sessions = await stripe.checkout.sessions.list({ limit: 100, status: 'complete' })
 
-  return Response.json(
-    orders.map((o) => ({
-      ...o,
-      items: o.items.map((i) => ({
-        ...i,
-        product: i.product
-          ? { ...i.product, images: JSON.parse(i.product.images) }
-          : null,
-      })),
-    }))
+  const orders = await Promise.all(
+    sessions.data.map(async (session) => {
+      const lineItems = await stripe.checkout.sessions.listLineItems(session.id, { limit: 10 })
+      return {
+        id: session.id,
+        customer: {
+          name: session.customer_details?.name || '—',
+          email: session.customer_details?.email || '—',
+        },
+        items: lineItems.data.map((item) => ({
+          product: { name: item.description },
+          quantity: item.quantity,
+        })),
+        total: (session.amount_total || 0) / 100,
+        status: 'paid',
+        createdAt: new Date(session.created * 1000).toISOString(),
+      }
+    })
   )
+
+  return Response.json(orders)
 }
