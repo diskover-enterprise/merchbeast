@@ -1,9 +1,8 @@
 import Stripe from 'stripe'
 import { getProduct } from '@/app/products/products-data'
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!)
-
 export async function POST(request: Request) {
+  const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!)
   const { items } = await request.json() as {
     items: { slug: string; quantity: number }[]
   }
