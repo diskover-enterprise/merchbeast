@@ -111,7 +111,7 @@ export function LunchLadyStorefront() {
           color: 'rgba(255,255,255,0.8)',
           lineHeight: 1.5, maxWidth: 640, margin: '0 auto',
         }}>
-          "The original Saigon street hawker.<br />Worn by those who know."
+          Est. 1995 • Saigon, Vietnam
         </p>
         <div style={{ width: 40, height: 2, background: '#C84020', margin: '32px auto 0' }} />
       </section>
