@@ -3,8 +3,8 @@
 import { useState, use } from 'react'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
-import { products, getProduct } from '../products-data'
-import { useCart } from '../../cart-context'
+import { products, getProduct } from '../../../../products/products-data'
+import { useCart } from '../../../../cart-context'
 
 const NAV = '#1C2E54'
 const RED = '#C84020'

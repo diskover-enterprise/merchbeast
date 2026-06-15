@@ -130,7 +130,7 @@ function ProductCard({ product }: { product: Product }) {
 
   return (
     <Link
-      href={`/products/${product.slug}`}
+      href={product.path}
       style={{ textDecoration: 'none', color: 'inherit', display: 'block' }}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
