@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
-import { LayoutDashboard, ShoppingBag, LogOut } from 'lucide-react'
+import { LayoutDashboard, ShoppingBag, DollarSign, LogOut } from 'lucide-react'
 import '../client.css'
 
 type Stats = {
@@ -46,6 +46,9 @@ export default function ClientDashboard() {
           </Link>
           <Link href="/client/orders" className="cl-nav-item">
             <ShoppingBag size={14} /> Orders
+          </Link>
+          <Link href="/client/commissions" className="cl-nav-item">
+            <DollarSign size={14} /> Commissions
           </Link>
         </nav>
         <button className="cl-signout" onClick={signOut}>
