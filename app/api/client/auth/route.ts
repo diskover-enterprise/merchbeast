@@ -1,9 +1,9 @@
-import { PrismaClient } from '@prisma/client'
+import { prisma } from '@/lib/prisma'
 import bcrypt from 'bcryptjs'
 
 export async function POST(request: Request) {
   const { email, password } = await request.json()
-  const db = new PrismaClient()
+  const db = prisma
 
   const shop = await db.restaurant.findUnique({ where: { ownerEmail: email } })
   if (!shop) {

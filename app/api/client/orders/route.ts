@@ -1,4 +1,4 @@
-import { PrismaClient } from '@prisma/client'
+import { prisma } from '@/lib/prisma'
 import { cookies } from 'next/headers'
 
 export async function GET() {
@@ -6,7 +6,7 @@ export async function GET() {
   const shopId = cookieStore.get('mb-client-auth')?.value
   if (!shopId) return Response.json({ error: 'Unauthorized' }, { status: 401 })
 
-  const db = new PrismaClient()
+  const db = prisma
 
   const orders = await db.order.findMany({
     where: { restaurantId: shopId },

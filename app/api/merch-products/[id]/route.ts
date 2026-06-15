@@ -1,7 +1,7 @@
-import { PrismaClient } from '@prisma/client'
+import { prisma } from '@/lib/prisma'
 
 function getDB() {
-  return new PrismaClient()
+  return prisma
 }
 
 function deserialize(p: any) {

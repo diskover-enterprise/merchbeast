@@ -1,8 +1,8 @@
-import { PrismaClient } from '@prisma/client'
+import { prisma } from '@/lib/prisma'
 import { slugify } from '@/lib/slugify'
 
 function getDB() {
-  return new PrismaClient()
+  return prisma
 }
 
 function deserialize(p: any) {
