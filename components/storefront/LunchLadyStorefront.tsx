@@ -8,31 +8,36 @@ export function LunchLadyStorefront() {
   return (
     <div style={{ fontFamily: 'Georgia, serif', background: '#fff', color: '#111', minHeight: '100vh', border: '12px solid #D4911E', boxSizing: 'border-box' }}>
 
+      <style>{`
+        .ll-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 0 32px; height: 100px; background: rgba(255,255,255,0.97); backdrop-filter: blur(8px); border-bottom: 1px solid #e8e8e8; }
+        .ll-nav-logo { height: 80px; object-fit: contain; }
+        .ll-nav-label { font-size: 11px; letter-spacing: 0.35em; text-transform: uppercase; color: #888; }
+        .ll-nav-cart { font-size: 11px; letter-spacing: 0.25em; text-transform: uppercase; color: #111; text-decoration: none; padding: 8px 18px; border: 1px solid #111; white-space: nowrap; }
+        .ll-hero-pad { padding-top: 100px; }
+        .ll-product-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 48px 24px; }
+        @media (max-width: 768px) {
+          .ll-nav { padding: 0 16px; height: 72px; }
+          .ll-nav-logo { height: 52px; }
+          .ll-nav-label { display: none; }
+          .ll-nav-cart { font-size: 12px; padding: 8px 14px; }
+          .ll-hero-pad { padding-top: 72px; }
+          .ll-product-grid { grid-template-columns: repeat(2, 1fr); gap: 24px 16px; }
+        }
+        @media (max-width: 480px) {
+          .ll-product-grid { grid-template-columns: 1fr; }
+        }
+      `}</style>
+
       {/* NAV */}
-      <nav style={{
-        position: 'fixed', top: 0, left: 0, right: 0, zIndex: 100,
-        display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-        padding: '0 40px', height: 120,
-        background: 'rgba(255,255,255,0.95)', backdropFilter: 'blur(8px)',
-        borderBottom: '1px solid #e8e8e8',
-      }}>
-        <div style={{ fontSize: 11, letterSpacing: '0.35em', textTransform: 'uppercase', color: '#888' }}>
-          Merch Collection
-        </div>
+      <nav className="ll-nav">
+        <span className="ll-nav-label">Merch Collection</span>
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src="/lunch-lady-logo.png" alt="Lunch Lady" style={{ height: 216, objectFit: 'contain' }} />
-        <div style={{ width: 140 }} />
-        <Link href="/cart" style={{
-          fontSize: 11, letterSpacing: '0.25em', textTransform: 'uppercase',
-          color: '#111', textDecoration: 'none',
-          padding: '8px 20px', border: '1px solid #111',
-        }}>
-          Cart
-        </Link>
+        <img src="/lunch-lady-logo.png" alt="Lunch Lady" className="ll-nav-logo" />
+        <Link href="/cart" className="ll-nav-cart">Cart</Link>
       </nav>
 
       {/* HERO */}
-      <section style={{ position: 'relative', paddingTop: 120 }}>
+      <section style={{ position: 'relative' }} className="ll-hero-pad">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src="/lunch-lady-hero.jpg"
@@ -79,12 +84,7 @@ export function LunchLadyStorefront() {
 
       {/* PRODUCTS GRID */}
       <section style={{ padding: '0 40px 100px' }}>
-        <div style={{
-          maxWidth: 1200, margin: '0 auto',
-          display: 'grid',
-          gridTemplateColumns: 'repeat(3, 1fr)',
-          gap: '48px 32px',
-        }}>
+        <div style={{ maxWidth: 1200, margin: '0 auto' }} className="ll-product-grid">
           {products.map((product) => (
             <ProductCard key={product.slug} product={product} />
           ))}
