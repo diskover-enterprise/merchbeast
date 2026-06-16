@@ -53,7 +53,7 @@ export const the1982Products: The1982Product[] = [
     ],
     sizes: ['S', 'M', 'L', 'XL', '2XL'],
     colors: ['Black'],
-    category: 'Tee',
+    category: 'Draft Day',
   },
   {
     slug: 'ja-morant',
@@ -126,7 +126,7 @@ export const the1982Products: The1982Product[] = [
     ],
     sizes: ['S', 'M', 'L', 'XL', '2XL'],
     colors: ['Black'],
-    category: 'Tee',
+    category: 'Draft Day',
   },
   {
     slug: 'stephen-curry-draft-day-tee',
@@ -139,7 +139,7 @@ export const the1982Products: The1982Product[] = [
     ],
     sizes: ['S', 'M', 'L', 'XL', '2XL'],
     colors: ['Black'],
-    category: 'Tee',
+    category: 'Draft Day',
   },
   {
     slug: 'kobe-bryant-draft-day-tee',
@@ -152,7 +152,7 @@ export const the1982Products: The1982Product[] = [
     ],
     sizes: ['S', 'M', 'L', 'XL', '2XL'],
     colors: ['Black'],
-    category: 'Tee',
+    category: 'Draft Day',
   },
   {
     slug: 'the-goats-kobe-x-mike',
