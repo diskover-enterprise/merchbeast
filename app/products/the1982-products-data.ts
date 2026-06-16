@@ -25,7 +25,6 @@ export const the1982Products: The1982Product[] = [
     ],
     sizes: ['S', 'M', 'L', 'XL', '2XL'],
     colors: ['Black', 'White', 'Vintage Black'],
-    tag: 'Signature',
     category: 'Tee',
   },
   {
@@ -54,7 +53,6 @@ export const the1982Products: The1982Product[] = [
     ],
     sizes: ['S', 'M', 'L', 'XL', '2XL'],
     colors: ['Black'],
-    tag: 'Draft Day',
     category: 'Tee',
   },
   {
@@ -128,7 +126,6 @@ export const the1982Products: The1982Product[] = [
     ],
     sizes: ['S', 'M', 'L', 'XL', '2XL'],
     colors: ['Black'],
-    tag: 'Draft Day',
     category: 'Tee',
   },
   {
@@ -142,7 +139,6 @@ export const the1982Products: The1982Product[] = [
     ],
     sizes: ['S', 'M', 'L', 'XL', '2XL'],
     colors: ['Black'],
-    tag: 'Draft Day',
     category: 'Tee',
   },
   {
@@ -156,7 +152,6 @@ export const the1982Products: The1982Product[] = [
     ],
     sizes: ['S', 'M', 'L', 'XL', '2XL'],
     colors: ['Black'],
-    tag: 'Draft Day',
     category: 'Tee',
   },
   {
@@ -172,7 +167,6 @@ export const the1982Products: The1982Product[] = [
     ],
     sizes: ['S', 'M', 'L', 'XL', '2XL'],
     colors: ['Vintage Black', 'White', 'Black'],
-    tag: 'Limited',
     category: 'Tee',
   },
   {
