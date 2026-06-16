@@ -84,7 +84,6 @@ export function LunchLadyStorefront() {
       <section id="collection" className="ll-collection-head">
         <div style={{ maxWidth: 1200, margin: '0 auto', borderBottom: '1px solid #e8e8e8', paddingBottom: 20, display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between' }}>
           <div>
-            <p style={{ fontSize: 10, letterSpacing: '0.4em', textTransform: 'uppercase', color: '#C84020', marginBottom: 8 }}>Current Drop</p>
             <h2 className="ll-collection-title">The Collection</h2>
           </div>
           <p style={{ fontSize: 12, color: '#999' }}>{products.length} pieces</p>
