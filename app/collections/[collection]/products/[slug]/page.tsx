@@ -56,7 +56,7 @@ export default function ProductPage({ params }: { params: Promise<{ slug: string
       <nav style={{
         position: 'sticky', top: 0, zIndex: 100,
         display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-        padding: '0 40px', height: 230,
+        padding: '0 40px', height: 140,
         background: NAV,
         borderBottom: `1px solid rgba(255,255,255,0.1)`,
       }}>
