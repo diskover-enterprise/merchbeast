@@ -4,6 +4,14 @@ import { getToken } from 'next-auth/jwt'
 
 export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl
+  const host = request.headers.get('host') || ''
+
+  if (host.startsWith('the1982.') && pathname === '/') {
+    const url = request.nextUrl.clone()
+    url.pathname = '/shop/the-1982'
+    return NextResponse.rewrite(url)
+  }
+
   const token = await getToken({ req: request, secret: process.env.NEXTAUTH_SECRET })
 
   if (pathname.startsWith('/client') && pathname !== '/client/login') {
