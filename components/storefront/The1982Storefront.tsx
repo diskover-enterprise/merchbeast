@@ -24,10 +24,9 @@ export function The1982Storefront() {
         .n82-nav-cart:hover { border-color: #fff; }
 
         /* HERO */
-        .n82-hero { padding-top: 64px; background: #000; display: flex; align-items: center; justify-content: center; flex-direction: column; text-align: center; padding-bottom: 80px; padding-left: 24px; padding-right: 24px; min-height: 420px; }
-        .n82-hero-tag { font-size: 10px; letter-spacing: 0.5em; text-transform: uppercase; color: rgba(255,255,255,0.4); margin-bottom: 24px; }
-        .n82-hero-title { font-size: clamp(48px, 8vw, 96px); font-weight: 900; color: #fff; letter-spacing: -0.03em; line-height: 1; margin-bottom: 16px; text-transform: uppercase; }
-        .n82-hero-sub { font-size: 14px; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(255,255,255,0.5); }
+        .n82-hero { padding-top: 64px; position: relative; overflow: hidden; }
+        .n82-hero-img { width: 100%; height: auto; display: block; }
+        .n82-hero-overlay { position: absolute; inset: 0; background: linear-gradient(to bottom, transparent 60%, rgba(0,0,0,0.5) 100%); pointer-events: none; }
 
         /* SECTION */
         .n82-section { padding: 80px 40px; }
@@ -72,9 +71,9 @@ export function The1982Storefront() {
 
       {/* HERO */}
       <section className="n82-hero">
-        <p className="n82-hero-tag">Vintage by Design</p>
-        <h1 className="n82-hero-title">nineteen82</h1>
-        <p className="n82-hero-sub">Legendary moments. Worn forever.</p>
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img src="/1982-hero.jpg" alt="The 1982" className="n82-hero-img" />
+        <div className="n82-hero-overlay" />
       </section>
 
       {/* TEES */}
