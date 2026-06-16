@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation'
 import { ProductCard } from '@/components/storefront/ProductCard'
 import { ArcadeStorefront } from '@/components/storefront/ArcadeStorefront'
 import { LunchLadyStorefront } from '@/components/storefront/LunchLadyStorefront'
+import { The1982Storefront } from '@/components/storefront/The1982Storefront'
 import { Product, Restaurant } from '@/types'
 import Image from 'next/image'
 
@@ -14,6 +15,16 @@ export default async function StorefrontPage({
   params: Promise<{ slug: string }>
 }) {
   const { slug } = await params
+
+  // Lunch Lady — custom editorial storefront with real products
+  if (slug === 'lunch-lady') {
+    return <LunchLadyStorefront />
+  }
+
+  // The 1982 — vintage sports apparel
+  if (slug === 'the-1982') {
+    return <The1982Storefront />
+  }
 
   const restaurant = await prisma.restaurant.findUnique({
     where: { slug },
@@ -28,11 +39,6 @@ export default async function StorefrontPage({
   })
 
   if (!restaurant) notFound()
-
-  // Lunch Lady — custom editorial storefront with real products
-  if (slug === 'lunch-lady') {
-    return <LunchLadyStorefront />
-  }
 
   // Arcade theme — custom layout for Quazar Arcade
   if (slug === 'quazar-arcade') {
