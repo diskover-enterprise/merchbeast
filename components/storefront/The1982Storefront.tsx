@@ -45,7 +45,7 @@ export function The1982Storefront() {
         /* FOOTER */
         .n82-footer { background: #000; padding: 48px 40px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; }
         .n82-footer-logo { height: 40px; object-fit: contain; mix-blend-mode: screen; }
-        .n82-footer-copy { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(255,255,255,0.3); }
+        .n82-footer-copy { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: #fff; }
 
         /* TABLET */
         @media (max-width: 1024px) {
