@@ -56,7 +56,7 @@ export default function ProductPage({ params }: { params: Promise<{ slug: string
       <nav style={{
         position: 'sticky', top: 0, zIndex: 100,
         display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-        padding: '0 40px', height: 90,
+        padding: '0 40px', height: 230,
         background: NAV,
         borderBottom: `1px solid rgba(255,255,255,0.1)`,
       }}>
@@ -68,7 +68,7 @@ export default function ProductPage({ params }: { params: Promise<{ slug: string
         </Link>
         <Link href="/shop/lunch-lady">
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/lunch-lady-logo.png" alt="Lunch Lady" style={{ height: 72, objectFit: 'contain', display: 'block' }} />
+          <img src="/lunch-lady-logo.png" alt="Lunch Lady" style={{ height: 216, objectFit: 'contain', display: 'block' }} />
         </Link>
         <Link href="/cart" style={{
           fontSize: 11, letterSpacing: '0.25em', textTransform: 'uppercase',
