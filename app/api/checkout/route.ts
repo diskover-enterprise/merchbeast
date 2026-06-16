@@ -43,11 +43,16 @@ export async function POST(request: Request) {
     ? new URL(origin).origin
     : (process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000')
 
+  const host = new URL(baseUrl).hostname
+  const shop = host.startsWith('the1982.') ? 'the-1982'
+    : host.startsWith('nomo-nomo.') ? 'nomo-nomo'
+    : 'lunch-lady'
+
   const session = await stripe.checkout.sessions.create({
     payment_method_types: ['card'],
     line_items: lineItems,
     mode: 'payment',
-    success_url: `${baseUrl}/checkout/success?session_id={CHECKOUT_SESSION_ID}`,
+    success_url: `${baseUrl}/checkout/success?session_id={CHECKOUT_SESSION_ID}&shop=${shop}`,
     cancel_url: `${baseUrl}/cart`,
   })
 
