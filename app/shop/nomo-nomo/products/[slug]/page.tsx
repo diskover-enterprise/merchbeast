@@ -11,7 +11,7 @@ export default function NomoProductPage({ params }: { params: Promise<{ slug: st
   const product = getNomoProduct(slug)
   if (!product) notFound()
 
-  const { addToCart, count, setBrandColor } = useCart()
+  const { addToCart, count, setBrandColor, setShopPath } = useCart()
   const [activeImg, setActiveImg] = useState(0)
   const [selectedSize, setSelectedSize] = useState<string | undefined>()
   const [selectedColor, setSelectedColor] = useState<string | undefined>()
@@ -25,6 +25,7 @@ export default function NomoProductPage({ params }: { params: Promise<{ slug: st
       return
     }
     setBrandColor('#C41E1E')
+    setShopPath('/shop/nomo-nomo')
     addToCart(product! as any, selectedSize || product!.sizes?.[0], selectedColor || product!.colors?.[0])
     setAdded(true)
     setTimeout(() => setAdded(false), 2000)

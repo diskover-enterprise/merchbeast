@@ -5,7 +5,7 @@ import Link from 'next/link'
 import { useCart } from '../cart-context'
 
 export default function CartPage() {
-  const { items, removeFromCart, updateQuantity, total, brandColor } = useCart()
+  const { items, removeFromCart, updateQuantity, total, brandColor, shopPath } = useCart()
   const [checkoutError, setCheckoutError] = useState<string | null>(null)
   const [loading, setLoading] = useState(false)
 
@@ -86,7 +86,7 @@ export default function CartPage() {
 
       {/* NAV */}
       <nav className="cart-nav">
-        <Link href="/shop/lunch-lady" className="cart-nav-back">← Continue Shopping</Link>
+        <Link href={shopPath} className="cart-nav-back">← Continue Shopping</Link>
         <span className="cart-nav-brand">Merch Beast</span>
       </nav>
 
@@ -97,7 +97,7 @@ export default function CartPage() {
         {items.length === 0 ? (
           <div className="cart-empty-wrap">
             <p className="cart-empty-msg">Your cart is empty.</p>
-            <Link href="/shop/lunch-lady" className="cart-browse-btn" style={{ background: brandColor }}>Browse Products</Link>
+            <Link href={shopPath} className="cart-browse-btn" style={{ background: brandColor }}>Browse Products</Link>
           </div>
         ) : (
           <div className="cart-layout">

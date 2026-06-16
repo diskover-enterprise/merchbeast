@@ -13,7 +13,7 @@ export default function The1982ProductPage({ params }: { params: Promise<{ slug:
   const product = getThe1982Product(slug)
   if (!product) notFound()
 
-  const { addToCart, count, setBrandColor } = useCart()
+  const { addToCart, count, setBrandColor, setShopPath } = useCart()
   const [activeImg, setActiveImg] = useState(0)
   const [selectedSize, setSelectedSize] = useState<string | undefined>()
   const [selectedColor, setSelectedColor] = useState<string | undefined>()
@@ -33,6 +33,7 @@ export default function The1982ProductPage({ params }: { params: Promise<{ slug:
       return
     }
     setBrandColor('#000000')
+    setShopPath('/shop/the-1982')
     addToCart(product! as any, selectedSize, selectedColor)
     setAdded(true)
     setTimeout(() => setAdded(false), 2000)
