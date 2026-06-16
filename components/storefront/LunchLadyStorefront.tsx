@@ -32,8 +32,7 @@ export function LunchLadyStorefront() {
       </nav>
 
       {/* HERO */}
-      {/* HERO */}
-      <section style={{ position: 'relative' }}>
+      <section style={{ position: 'relative', paddingTop: 120 }}>
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src="/lunch-lady-hero.jpg"
