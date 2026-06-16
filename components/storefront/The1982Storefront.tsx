@@ -74,6 +74,11 @@ export function The1982Storefront() {
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src="/1982-hero.jpg" alt="The 1982" className="n82-hero-img" />
         <div className="n82-hero-overlay" />
+        <div style={{ position: 'absolute', bottom: 32, left: 40, zIndex: 2 }}>
+          <span style={{ fontSize: 13, letterSpacing: '0.35em', textTransform: 'uppercase', fontWeight: 700, color: '#F5C518', fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif" }}>
+            Vintage by Design
+          </span>
+        </div>
       </section>
 
       {/* TEES */}
