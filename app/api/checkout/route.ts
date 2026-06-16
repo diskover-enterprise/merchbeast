@@ -1,5 +1,15 @@
 import Stripe from 'stripe'
 import { getProduct } from '@/app/products/products-data'
+import { the1982Products } from '@/app/products/the1982-products-data'
+import { nomoProducts } from '@/app/products/nomo-nomo-products-data'
+
+function findProduct(slug: string) {
+  const main = getProduct(slug)
+  if (main) return main
+  const t = the1982Products.find(p => p.slug === slug)
+  if (t) return t
+  return nomoProducts.find(p => p.slug === slug) ?? null
+}
 
 export async function POST(request: Request) {
   const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!)
@@ -12,7 +22,7 @@ export async function POST(request: Request) {
   }
 
   const lineItems = items.map((item) => {
-    const product = getProduct(item.slug)
+    const product = findProduct(item.slug)
     if (!product) throw new Error(`Product not found: ${item.slug}`)
     const unitAmount = Math.round(parseFloat(product.price.replace(/[^0-9.]/g, '')) * 100)
     return {
