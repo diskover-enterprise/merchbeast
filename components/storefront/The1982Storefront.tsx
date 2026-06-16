@@ -32,7 +32,7 @@ export function The1982Storefront() {
         /* SECTION */
         .n82-section { padding: 80px 40px; }
         .n82-section-head { display: flex; align-items: flex-end; justify-content: space-between; max-width: 1200px; margin: 0 auto 48px; border-bottom: 1px solid #e8e8e8; padding-bottom: 20px; }
-        .n82-section-title { font-size: 11px; font-weight: 700; letter-spacing: 0.4em; text-transform: uppercase; color: #111; }
+        .n82-section-title { font-size: 28px; font-weight: 900; letter-spacing: 0.08em; text-transform: uppercase; color: #111; }
         .n82-section-count { font-size: 11px; color: #999; }
         .n82-section.dark { background: #0a0a0a; }
         .n82-section.dark .n82-section-head { border-bottom-color: rgba(255,255,255,0.1); }
