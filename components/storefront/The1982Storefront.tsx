@@ -154,7 +154,7 @@ function ProductCard({ product, dark }: { product: The1982Product; dark?: boolea
           {product.name}
         </h3>
         <span style={{ fontSize: 13, color: dark ? 'rgba(255,255,255,0.6)' : '#555', fontWeight: 600, flexShrink: 0 }}>
-          {product.price.replace(' CAD', '')}
+          {product.price}
         </span>
       </div>
       {product.colors && (

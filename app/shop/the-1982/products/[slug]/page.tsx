@@ -251,7 +251,7 @@ export default function The1982ProductPage({ params }: { params: Promise<{ slug:
                   </div>
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
                     <h3 style={{ fontSize: 13, fontWeight: 500, lineHeight: 1.4, flex: 1, marginRight: 8 }}>{p.name}</h3>
-                    <span style={{ fontSize: 13, fontWeight: 700, flexShrink: 0, marginLeft: 8 }}>{p.price.replace(' CAD', '')}</span>
+                    <span style={{ fontSize: 13, fontWeight: 700, flexShrink: 0, marginLeft: 8 }}>{p.price}</span>
                   </div>
                 </Link>
               ))}

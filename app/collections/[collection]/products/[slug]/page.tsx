@@ -272,7 +272,7 @@ export default function ProductPage({ params }: { params: Promise<{ collection: 
                       {p.name.replace('Lunch Lady — ', '')}
                     </h3>
                     <span style={{ fontSize: 13, color: RED, fontWeight: 600, flexShrink: 0, marginLeft: 8 }}>
-                      {p.price.replace(' CAD', '')}
+                      {p.price}
                     </span>
                   </div>
                 </Link>

@@ -151,7 +151,7 @@ function ProductCard({ product }: { product: Product }) {
           )}
         </div>
         <span style={{ fontSize: 13, color: '#C84020', fontWeight: 600, flexShrink: 0 }}>
-          {product.price.replace(' CAD', '')}
+          {product.price}
         </span>
       </div>
     </Link>
