@@ -262,8 +262,7 @@ export default function The1982ProductPage({ params }: { params: Promise<{ slug:
 
       {/* FOOTER */}
       <footer className="n82p-footer">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={LOGO} alt="nineteen82" className="n82p-footer-logo" />
+        <span style={{ fontSize: 20, fontWeight: 900, color: '#fff', letterSpacing: '0.05em' }}>1982</span>
         <p className="n82p-footer-copy">Powered by Merch Beast</p>
       </footer>
     </div>
