@@ -191,22 +191,6 @@ export const the1982Products: The1982Product[] = [
     category: 'Tee',
   },
   {
-    slug: '1982-youth-tee',
-    name: '1982 Youth Tee (Any Design)',
-    price: '$30.00 CAD',
-    description: 'Get the kids involved. Available in any design — choose your favourite player and we\'ll print it for your youth.',
-    path: '/shop/the-1982/products/1982-youth-tee',
-    images: [
-      'https://cdn.shopify.com/s/files/1/0633/8258/5529/files/kbblack_d9b196e3-65c1-4098-861e-11074b79f76e.png',
-      'https://cdn.shopify.com/s/files/1/0633/8258/5529/files/iversonblack_2bb62afe-92bc-4089-beb1-5c321d80355b.jpg',
-      'https://cdn.shopify.com/s/files/1/0633/8258/5529/files/lebronjamesblack_43f30d51-c050-4608-a0da-d57151b22acd.jpg',
-    ],
-    sizes: ['S', 'M', 'L', 'XL'],
-    colors: ['Black'],
-    tag: 'Youth',
-    category: 'Tee',
-  },
-  {
     slug: 'charlotte-hornets-crewneck',
     name: 'Charlotte Hornets Crewneck',
     price: '$50.00 CAD',
