@@ -15,7 +15,7 @@ export default function ProductPage({ params }: { params: Promise<{ collection: 
   const product = getProduct(slug)
   if (!product) notFound()
 
-  const { addToCart, count, setBrandColor } = useCart()
+  const { addToCart, count, setBrandColor, setShopPath } = useCart()
   const [activeImg, setActiveImg] = useState(0)
   const [selectedSize, setSelectedSize] = useState<string | undefined>()
   const [selectedColor, setSelectedColor] = useState<string | undefined>()
@@ -43,6 +43,7 @@ export default function ProductPage({ params }: { params: Promise<{ collection: 
       return
     }
     setBrandColor('#1C2E54')
+    setShopPath('/shop/lunch-lady')
     addToCart(product!, selectedSize, selectedColor)
     setAdded(true)
     setTimeout(() => setAdded(false), 2000)
