@@ -74,7 +74,7 @@ export default function The1982ProductPage({ params }: { params: Promise<{ slug:
 
       {/* NAV */}
       <nav className="n82p-nav">
-        <Link href="/shop/the-1982" className="n82p-nav-back">← Shop</Link>
+        <Link href="/" className="n82p-nav-back">← Shop</Link>
         <Link href="/cart" className="n82p-nav-cart">
           Cart{count > 0 ? ` (${count})` : ''}
         </Link>
