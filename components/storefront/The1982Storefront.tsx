@@ -18,13 +18,13 @@ export function The1982Storefront() {
 
       <style>{`
         /* NAV */
-        .n82-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; height: 72px; background: #000; display: flex; align-items: center; justify-content: space-between; padding: 0 40px; }
-        .n82-nav-logo { height: 44px; object-fit: contain; }
+        .n82-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; height: 220px; background: #000; display: flex; align-items: center; justify-content: space-between; padding: 0 40px; }
+        .n82-nav-logo { height: 200px; object-fit: contain; mix-blend-mode: screen; }
         .n82-nav-cart { font-size: 11px; letter-spacing: 0.25em; text-transform: uppercase; color: #fff; text-decoration: none; padding: 9px 20px; border: 1px solid rgba(255,255,255,0.4); white-space: nowrap; transition: border-color 0.2s; }
         .n82-nav-cart:hover { border-color: #fff; }
 
         /* HERO */
-        .n82-hero { padding-top: 72px; background: #000; display: flex; align-items: center; justify-content: center; flex-direction: column; text-align: center; padding-bottom: 80px; padding-left: 24px; padding-right: 24px; min-height: 420px; }
+        .n82-hero { padding-top: 220px; background: #000; display: flex; align-items: center; justify-content: center; flex-direction: column; text-align: center; padding-bottom: 80px; padding-left: 24px; padding-right: 24px; min-height: 420px; }
         .n82-hero-tag { font-size: 10px; letter-spacing: 0.5em; text-transform: uppercase; color: rgba(255,255,255,0.4); margin-bottom: 24px; }
         .n82-hero-title { font-size: clamp(48px, 8vw, 96px); font-weight: 900; color: #fff; letter-spacing: -0.03em; line-height: 1; margin-bottom: 16px; text-transform: uppercase; }
         .n82-hero-sub { font-size: 14px; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(255,255,255,0.5); }
@@ -52,8 +52,8 @@ export function The1982Storefront() {
           .n82-grid { grid-template-columns: repeat(3, 1fr); }
         }
         @media (max-width: 768px) {
-          .n82-nav { padding: 0 20px; height: 60px; }
-          .n82-nav-logo { height: 36px; }
+          .n82-nav { padding: 0 20px; height: 120px; }
+          .n82-nav-logo { height: 100px; }
           .n82-hero { min-height: 300px; }
           .n82-section { padding: 48px 20px; }
           .n82-grid { grid-template-columns: repeat(2, 1fr); gap: 24px 12px; }
