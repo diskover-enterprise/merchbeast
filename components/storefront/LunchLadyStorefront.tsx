@@ -9,21 +9,55 @@ export function LunchLadyStorefront() {
     <div style={{ fontFamily: 'Georgia, serif', background: '#fff', color: '#111', minHeight: '100vh', border: '12px solid #D4911E', boxSizing: 'border-box' }}>
 
       <style>{`
+        /* ── NAV ── */
         .ll-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 0 32px; height: 100px; background: rgba(255,255,255,0.97); backdrop-filter: blur(8px); border-bottom: 1px solid #e8e8e8; }
         .ll-nav-logo { height: 80px; object-fit: contain; }
         .ll-nav-label { font-size: 11px; letter-spacing: 0.35em; text-transform: uppercase; color: #888; }
-        .ll-nav-cart { font-size: 11px; letter-spacing: 0.25em; text-transform: uppercase; color: #111; text-decoration: none; padding: 8px 18px; border: 1px solid #111; white-space: nowrap; }
-        .ll-hero-pad { padding-top: 100px; }
-        .ll-product-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 48px 24px; }
-        @media (max-width: 768px) {
-          .ll-nav { padding: 0 16px; height: 72px; }
-          .ll-nav-logo { height: 52px; }
+        .ll-nav-cart { font-size: 11px; letter-spacing: 0.25em; text-transform: uppercase; color: #111; text-decoration: none; padding: 10px 20px; border: 1px solid #111; white-space: nowrap; }
+        /* ── HERO ── */
+        .ll-hero-pad { padding-top: 100px; position: relative; }
+        .ll-hero-text { position: absolute; bottom: 0; left: 0; right: 0; padding: 40px; background: linear-gradient(to top, rgba(28,46,84,0.75) 0%, transparent 100%); }
+        .ll-hero-tagline { font-size: 16px; font-style: italic; color: rgba(255,255,255,0.9); margin-bottom: 6px; }
+        .ll-hero-est { font-size: 11px; letter-spacing: 0.3em; text-transform: uppercase; color: rgba(255,255,255,0.55); }
+        /* ── COLLECTION ── */
+        .ll-collection-head { padding: 64px 40px 32px; }
+        .ll-collection-title { font-size: 32px; font-weight: 400; letter-spacing: -0.01em; }
+        /* ── GRID ── */
+        .ll-grid-wrap { padding: 0 40px 80px; }
+        .ll-product-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 48px 24px; max-width: 1200px; margin: 0 auto; }
+        /* ── BRAND BAND ── */
+        .ll-brand-band { background: #1C2E54; padding: 64px 40px; text-align: center; }
+        .ll-brand-band p { font-size: clamp(1.1rem, 2.5vw, 1.8rem); font-style: italic; color: rgba(255,255,255,0.8); line-height: 1.5; max-width: 600px; margin: 0 auto; }
+        /* ── FOOTER ── */
+        .ll-footer { padding: 40px; display: flex; align-items: center; justify-content: space-between; border-top: 1px solid #e8e8e8; flex-wrap: wrap; gap: 16px; }
+        .ll-footer-logo { height: 80px; object-fit: contain; }
+        .ll-footer-copy { font-size: 10px; color: #ccc; letter-spacing: 0.15em; text-transform: uppercase; }
+
+        /* ── TABLET ── */
+        @media (max-width: 900px) {
+          .ll-product-grid { grid-template-columns: repeat(2, 1fr); gap: 32px 20px; }
+        }
+
+        /* ── MOBILE ── */
+        @media (max-width: 640px) {
+          .ll-nav { padding: 0 16px; height: 64px; }
+          .ll-nav-logo { height: 46px; }
           .ll-nav-label { display: none; }
           .ll-nav-cart { font-size: 12px; padding: 8px 14px; }
-          .ll-hero-pad { padding-top: 72px; }
-          .ll-product-grid { grid-template-columns: repeat(2, 1fr); gap: 24px 16px; }
+          .ll-hero-pad { padding-top: 64px; }
+          .ll-hero-text { padding: 20px; }
+          .ll-hero-tagline { font-size: 14px; }
+          .ll-hero-est { font-size: 10px; }
+          .ll-collection-head { padding: 40px 20px 24px; }
+          .ll-collection-title { font-size: 24px; }
+          .ll-grid-wrap { padding: 0 20px 60px; }
+          .ll-product-grid { grid-template-columns: repeat(2, 1fr); gap: 24px 12px; }
+          .ll-brand-band { padding: 48px 20px; }
+          .ll-footer { padding: 28px 20px; }
+          .ll-footer-logo { height: 56px; }
         }
-        @media (max-width: 480px) {
+
+        @media (max-width: 380px) {
           .ll-product-grid { grid-template-columns: 1fr; }
         }
       `}</style>
@@ -37,54 +71,29 @@ export function LunchLadyStorefront() {
       </nav>
 
       {/* HERO */}
-      <section style={{ position: 'relative' }} className="ll-hero-pad">
+      <section className="ll-hero-pad">
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src="/lunch-lady-hero.jpg"
-          alt="Lunch Lady Collection"
-          style={{ width: '100%', height: 'auto', display: 'block' }}
-        />
-        {/* Overlay */}
-        <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(28,46,84,0.7) 0%, transparent 60%)' }} />
-        {/* Bottom text */}
-        <div style={{
-          position: 'absolute', bottom: 0, left: 0, right: 0,
-          padding: '48px 48px',
-          display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between',
-        }}>
-          <div>
-<p style={{ fontSize: 15, fontStyle: 'italic', color: 'rgba(255,255,255,0.85)', marginBottom: 8 }}>
-              Born in Saigon. Worn Everywhere.
-            </p>
-            <p style={{ fontSize: 11, letterSpacing: '0.3em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.55)' }}>
-              Est. 1995 •
-            </p>
-          </div>
+        <img src="/lunch-lady-hero.jpg" alt="Lunch Lady Collection" style={{ width: '100%', height: 'auto', display: 'block' }} />
+        <div className="ll-hero-text">
+          <p className="ll-hero-tagline">Born in Saigon. Worn Everywhere.</p>
+          <p className="ll-hero-est">Est. 1995 •</p>
         </div>
       </section>
 
       {/* COLLECTION HEADER */}
-      <section id="collection" style={{ padding: '80px 40px 48px' }}>
-        <div style={{ maxWidth: 1200, margin: '0 auto' }}>
-          <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', borderBottom: '1px solid #e8e8e8', paddingBottom: 24 }}>
-            <div>
-              <p style={{ fontSize: 10, letterSpacing: '0.4em', textTransform: 'uppercase', color: '#C84020', marginBottom: 8 }}>
-                Current Drop
-              </p>
-              <h2 style={{ fontSize: 32, fontWeight: 400, letterSpacing: '-0.01em' }}>
-                The Collection
-              </h2>
-            </div>
-            <p style={{ fontSize: 12, color: '#999', letterSpacing: '0.1em' }}>
-              {products.length} pieces
-            </p>
+      <section id="collection" className="ll-collection-head">
+        <div style={{ maxWidth: 1200, margin: '0 auto', borderBottom: '1px solid #e8e8e8', paddingBottom: 20, display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between' }}>
+          <div>
+            <p style={{ fontSize: 10, letterSpacing: '0.4em', textTransform: 'uppercase', color: '#C84020', marginBottom: 8 }}>Current Drop</p>
+            <h2 className="ll-collection-title">The Collection</h2>
           </div>
+          <p style={{ fontSize: 12, color: '#999' }}>{products.length} pieces</p>
         </div>
       </section>
 
       {/* PRODUCTS GRID */}
-      <section style={{ padding: '0 40px 100px' }}>
-        <div style={{ maxWidth: 1200, margin: '0 auto' }} className="ll-product-grid">
+      <section className="ll-grid-wrap">
+        <div className="ll-product-grid">
           {products.map((product) => (
             <ProductCard key={product.slug} product={product} />
           ))}
@@ -92,33 +101,16 @@ export function LunchLadyStorefront() {
       </section>
 
       {/* BRAND BAND */}
-      <section style={{
-        background: '#1C2E54',
-        padding: '80px 40px',
-        textAlign: 'center',
-      }}>
-        <p style={{
-          fontSize: 'clamp(1.2rem, 2.5vw, 2rem)',
-          fontStyle: 'italic', fontWeight: 400,
-          color: 'rgba(255,255,255,0.8)',
-          lineHeight: 1.5, maxWidth: 640, margin: '0 auto',
-        }}>
-          Est. 1995 • Saigon, Vietnam
-        </p>
-        <div style={{ width: 40, height: 2, background: '#C84020', margin: '32px auto 0' }} />
+      <section className="ll-brand-band">
+        <p>Est. 1995 • Saigon, Vietnam</p>
+        <div style={{ width: 40, height: 2, background: '#C84020', margin: '28px auto 0' }} />
       </section>
 
       {/* FOOTER */}
-      <footer style={{
-        padding: '48px 40px',
-        display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-        borderTop: '1px solid #e8e8e8',
-      }}>
+      <footer className="ll-footer">
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src="/lunch-lady-logo.png" alt="Lunch Lady" style={{ height: 120, objectFit: 'contain' }} />
-        <p style={{ fontSize: 10, color: '#ccc', letterSpacing: '0.15em', textTransform: 'uppercase' }}>
-          Powered by Merch Beast
-        </p>
+        <img src="/lunch-lady-logo.png" alt="Lunch Lady" className="ll-footer-logo" />
+        <p className="ll-footer-copy">Powered by Merch Beast</p>
       </footer>
     </div>
   )
@@ -134,64 +126,32 @@ function ProductCard({ product }: { product: Product }) {
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
-      {/* Image */}
-      <div style={{
-        aspectRatio: '4/5',
-        background: '#f5f2ee',
-        overflow: 'hidden',
-        marginBottom: 16,
-        position: 'relative',
-      }}>
+      <div style={{ aspectRatio: '4/5', background: '#f5f2ee', overflow: 'hidden', marginBottom: 12, position: 'relative' }}>
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src={product.images[0]}
           alt={product.name}
-          style={{
-            width: '100%', height: '100%', objectFit: 'cover', display: 'block',
-            transform: hovered ? 'scale(1.04)' : 'scale(1)',
-            transition: 'transform 0.5s ease',
-          }}
+          style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block', transform: hovered ? 'scale(1.04)' : 'scale(1)', transition: 'transform 0.5s ease' }}
         />
         {product.tag && (
-          <div style={{
-            position: 'absolute', top: 12, left: 12,
-            fontSize: 9, letterSpacing: '0.25em', textTransform: 'uppercase',
-            background: '#fff', color: '#111',
-            padding: '4px 10px',
-          }}>
+          <div style={{ position: 'absolute', top: 10, left: 10, fontSize: 9, letterSpacing: '0.2em', textTransform: 'uppercase', background: '#fff', color: '#111', padding: '3px 8px' }}>
             {product.tag}
           </div>
         )}
-        <div style={{
-          position: 'absolute', inset: 0,
-          background: 'rgba(28,46,84,0.5)',
-          display: 'flex', alignItems: 'center', justifyContent: 'center',
-          opacity: hovered ? 1 : 0,
-          transition: 'opacity 0.3s ease',
-        }}>
-          <span style={{
-            fontSize: 11, letterSpacing: '0.3em', textTransform: 'uppercase',
-            color: '#fff', border: '1px solid rgba(255,255,255,0.8)',
-            padding: '12px 24px',
-          }}>
-            View Product
-          </span>
+        <div style={{ position: 'absolute', inset: 0, background: 'rgba(28,46,84,0.5)', display: 'flex', alignItems: 'center', justifyContent: 'center', opacity: hovered ? 1 : 0, transition: 'opacity 0.3s ease' }}>
+          <span style={{ fontSize: 10, letterSpacing: '0.3em', textTransform: 'uppercase', color: '#fff', border: '1px solid rgba(255,255,255,0.8)', padding: '10px 18px' }}>View Product</span>
         </div>
       </div>
-
-      {/* Info */}
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
-        <div style={{ flex: 1, marginRight: 12 }}>
-          <h3 style={{ fontSize: 14, fontWeight: 400, lineHeight: 1.4, marginBottom: 4 }}>
+        <div style={{ flex: 1, marginRight: 8 }}>
+          <h3 style={{ fontSize: 13, fontWeight: 400, lineHeight: 1.4, marginBottom: 3 }}>
             {product.name.replace('Lunch Lady — ', '')}
           </h3>
           {product.sizes && product.sizes.length > 0 && (
-            <p style={{ fontSize: 11, color: '#999', letterSpacing: '0.1em' }}>
-              {product.sizes.join(' · ')}
-            </p>
+            <p style={{ fontSize: 10, color: '#999', letterSpacing: '0.08em' }}>{product.sizes.join(' · ')}</p>
           )}
         </div>
-        <span style={{ fontSize: 14, color: '#C84020', fontWeight: 600, flexShrink: 0 }}>
+        <span style={{ fontSize: 13, color: '#C84020', fontWeight: 600, flexShrink: 0 }}>
           {product.price.replace(' CAD', '')}
         </span>
       </div>

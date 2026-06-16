@@ -57,15 +57,23 @@ export default function ProductPage({ params }: { params: Promise<{ slug: string
         .llp-nav-logo { height: 80px; object-fit: contain; display: block; }
         .llp-nav-back { font-size: 11px; letter-spacing: 0.35em; text-transform: uppercase; color: rgba(255,255,255,0.6); text-decoration: none; white-space: nowrap; }
         .llp-nav-cart { font-size: 11px; letter-spacing: 0.25em; text-transform: uppercase; color: #fff; text-decoration: none; padding: 8px 18px; border: 1px solid rgba(255,255,255,0.4); white-space: nowrap; }
+        .llp-wrap { max-width: 1200px; margin: 0 auto; padding: 60px 40px; }
         .llp-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: start; }
+        .llp-related { margin-top: 80px; }
         .llp-related-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px 24px; }
+        .llp-footer { margin-top: 80px; padding: 40px; background: #1C2E54; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+        .llp-footer-logo { height: 56px; object-fit: contain; opacity: 0.85; }
+        .llp-footer-copy { font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(255,255,255,0.4); }
         @media (max-width: 768px) {
-          .llp-nav { padding: 0 16px; height: 72px; }
-          .llp-nav-logo { height: 52px; }
-          .llp-nav-back { font-size: 10px; letter-spacing: 0.2em; }
+          .llp-nav { padding: 0 16px; height: 68px; }
+          .llp-nav-logo { height: 48px; }
+          .llp-nav-back { font-size: 10px; letter-spacing: 0.15em; }
           .llp-nav-cart { font-size: 11px; padding: 7px 12px; }
-          .llp-layout { grid-template-columns: 1fr; gap: 32px; }
-          .llp-related-grid { grid-template-columns: repeat(2, 1fr); }
+          .llp-wrap { padding: 32px 20px; }
+          .llp-layout { grid-template-columns: 1fr; gap: 28px; }
+          .llp-related-grid { grid-template-columns: repeat(2, 1fr); gap: 20px; }
+          .llp-related { margin-top: 48px; }
+          .llp-footer { padding: 28px 20px; margin-top: 48px; }
         }
         @media (max-width: 480px) {
           .llp-related-grid { grid-template-columns: 1fr; }
@@ -85,7 +93,7 @@ export default function ProductPage({ params }: { params: Promise<{ slug: string
       </nav>
 
       {/* PRODUCT LAYOUT */}
-      <div style={{ maxWidth: 1200, margin: '0 auto', padding: '60px 40px' }}>
+      <div className="llp-wrap">
         <div className="llp-layout">
 
           {/* GALLERY */}
@@ -244,14 +252,14 @@ export default function ProductPage({ params }: { params: Promise<{ slug: string
 
         {/* RELATED */}
         {related.length > 0 && (
-          <div style={{ marginTop: 100 }}>
+          <div className="llp-related">
             <div style={{ display: 'flex', alignItems: 'center', gap: 16, marginBottom: 40 }}>
               <div style={{ width: 24, height: 2, background: RED }} />
               <p style={{ fontSize: 10, letterSpacing: '0.4em', textTransform: 'uppercase', color: RED }}>
                 More from the Collection
               </p>
             </div>
-            <div className="llp-related-grid">
+            <div className="llp-related-grid" style={{ marginTop: 24 }}>
               {related.map(p => (
                 <Link key={p.slug} href={p.path} style={{ textDecoration: 'none', color: 'inherit' }}>
                   <div style={{ aspectRatio: '4/5', background: CREAM, overflow: 'hidden', marginBottom: 12 }}>
@@ -274,14 +282,10 @@ export default function ProductPage({ params }: { params: Promise<{ slug: string
       </div>
 
       {/* FOOTER */}
-      <footer style={{
-        marginTop: 80, padding: '48px 40px',
-        background: NAV, color: 'rgba(255,255,255,0.5)',
-        display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-      }}>
+      <footer className="llp-footer">
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src="/lunch-lady-logo.png" alt="Lunch Lady" style={{ height: 120, objectFit: 'contain', opacity: 0.8 }} />
-        <p style={{ fontSize: 10, letterSpacing: '0.15em', textTransform: 'uppercase' }}>Powered by Merch Beast</p>
+        <img src="/lunch-lady-logo.png" alt="Lunch Lady" className="llp-footer-logo" />
+        <p className="llp-footer-copy">Powered by Merch Beast</p>
       </footer>
     </div>
   )
