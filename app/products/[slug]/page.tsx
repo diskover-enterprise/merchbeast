@@ -52,41 +52,41 @@ export default function ProductPage({ params }: { params: Promise<{ slug: string
   return (
     <div style={{ fontFamily: 'Georgia, serif', background: '#fff', color: '#111', minHeight: '100vh', border: '12px solid #D4911E', boxSizing: 'border-box' }}>
 
+      <style>{`
+        .llp-nav { position: sticky; top: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 0 40px; height: 100px; background: #1C2E54; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        .llp-nav-logo { height: 80px; object-fit: contain; display: block; }
+        .llp-nav-back { font-size: 11px; letter-spacing: 0.35em; text-transform: uppercase; color: rgba(255,255,255,0.6); text-decoration: none; white-space: nowrap; }
+        .llp-nav-cart { font-size: 11px; letter-spacing: 0.25em; text-transform: uppercase; color: #fff; text-decoration: none; padding: 8px 18px; border: 1px solid rgba(255,255,255,0.4); white-space: nowrap; }
+        .llp-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: start; }
+        .llp-related-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px 24px; }
+        @media (max-width: 768px) {
+          .llp-nav { padding: 0 16px; height: 72px; }
+          .llp-nav-logo { height: 52px; }
+          .llp-nav-back { font-size: 10px; letter-spacing: 0.2em; }
+          .llp-nav-cart { font-size: 11px; padding: 7px 12px; }
+          .llp-layout { grid-template-columns: 1fr; gap: 32px; }
+          .llp-related-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (max-width: 480px) {
+          .llp-related-grid { grid-template-columns: 1fr; }
+        }
+      `}</style>
+
       {/* NAV */}
-      <nav style={{
-        position: 'sticky', top: 0, zIndex: 100,
-        display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-        padding: '0 40px', height: 140,
-        background: NAV,
-        borderBottom: `1px solid rgba(255,255,255,0.1)`,
-      }}>
-        <Link href="/shop/lunch-lady" style={{
-          fontSize: 11, letterSpacing: '0.35em', textTransform: 'uppercase',
-          color: 'rgba(255,255,255,0.6)', textDecoration: 'none',
-        }}>
-          ← Lunch Lady
-        </Link>
+      <nav className="llp-nav">
+        <Link href="/shop/lunch-lady" className="llp-nav-back">← Lunch Lady</Link>
         <Link href="/shop/lunch-lady">
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/lunch-lady-logo.png" alt="Lunch Lady" style={{ height: 216, objectFit: 'contain', display: 'block' }} />
+          <img src="/lunch-lady-logo.png" alt="Lunch Lady" className="llp-nav-logo" />
         </Link>
-        <Link href="/cart" style={{
-          fontSize: 11, letterSpacing: '0.25em', textTransform: 'uppercase',
-          color: '#fff', textDecoration: 'none',
-          padding: '8px 20px', border: '1px solid rgba(255,255,255,0.4)',
-        }}>
+        <Link href="/cart" className="llp-nav-cart">
           Cart{count > 0 ? ` (${count})` : ''}
         </Link>
       </nav>
 
       {/* PRODUCT LAYOUT */}
       <div style={{ maxWidth: 1200, margin: '0 auto', padding: '60px 40px' }}>
-        <div style={{
-          display: 'grid',
-          gridTemplateColumns: '1fr 1fr',
-          gap: 64,
-          alignItems: 'start',
-        }}>
+        <div className="llp-layout">
 
           {/* GALLERY */}
           <div>
@@ -251,7 +251,7 @@ export default function ProductPage({ params }: { params: Promise<{ slug: string
                 More from the Collection
               </p>
             </div>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '32px 24px' }}>
+            <div className="llp-related-grid">
               {related.map(p => (
                 <Link key={p.slug} href={p.path} style={{ textDecoration: 'none', color: 'inherit' }}>
                   <div style={{ aspectRatio: '4/5', background: CREAM, overflow: 'hidden', marginBottom: 12 }}>
