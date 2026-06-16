@@ -10,12 +10,12 @@ export function LunchLadyStorefront() {
 
       <style>{`
         /* ── NAV ── */
-        .ll-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 0 32px; height: 100px; background: rgba(255,255,255,0.97); backdrop-filter: blur(8px); border-bottom: 1px solid #e8e8e8; }
-        .ll-nav-logo { height: 80px; object-fit: contain; }
+        .ll-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 0 32px; height: 260px; background: rgba(255,255,255,0.97); backdrop-filter: blur(8px); border-bottom: 1px solid #e8e8e8; }
+        .ll-nav-logo { height: 240px; object-fit: contain; }
         .ll-nav-label { font-size: 11px; letter-spacing: 0.35em; text-transform: uppercase; color: #888; }
         .ll-nav-cart { font-size: 11px; letter-spacing: 0.25em; text-transform: uppercase; color: #111; text-decoration: none; padding: 10px 20px; border: 1px solid #111; white-space: nowrap; }
         /* ── HERO ── */
-        .ll-hero-pad { padding-top: 100px; position: relative; }
+        .ll-hero-pad { padding-top: 260px; position: relative; }
         .ll-hero-text { position: absolute; bottom: 0; left: 0; right: 0; padding: 40px; background: linear-gradient(to top, rgba(28,46,84,0.75) 0%, transparent 100%); }
         .ll-hero-tagline { font-size: 16px; font-style: italic; color: rgba(255,255,255,0.9); margin-bottom: 6px; }
         .ll-hero-est { font-size: 11px; letter-spacing: 0.3em; text-transform: uppercase; color: rgba(255,255,255,0.55); }
