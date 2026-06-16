@@ -44,7 +44,7 @@ export default function The1982ProductPage({ params }: { params: Promise<{ slug:
     <div style={{ fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif", background: '#fff', color: '#111', minHeight: '100vh' }}>
 
       <style>{`
-        .n82p-nav { position: sticky; top: 0; z-index: 100; height: 220px; background: #000; display: flex; align-items: center; justify-content: space-between; padding: 0 40px; }
+        .n82p-nav { position: sticky; top: 0; z-index: 100; height: 64px; background: #000; display: flex; align-items: center; justify-content: space-between; padding: 0 40px; }
         .n82p-nav-logo { height: 200px; object-fit: contain; mix-blend-mode: screen; }
         .n82p-nav-back { font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(255,255,255,0.5); text-decoration: none; }
         .n82p-nav-back:hover { color: #fff; }
@@ -59,8 +59,7 @@ export default function The1982ProductPage({ params }: { params: Promise<{ slug:
         .n82p-footer-logo { height: 40px; object-fit: contain; mix-blend-mode: screen; }
         .n82p-footer-copy { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: #fff; }
         @media (max-width: 768px) {
-          .n82p-nav { padding: 0 16px; height: 120px; }
-          .n82p-nav-logo { height: 100px; }
+          .n82p-nav { padding: 0 16px; height: 56px; }
           .n82p-wrap { padding: 32px 20px; }
           .n82p-layout { grid-template-columns: 1fr; gap: 28px; }
           .n82p-related-grid { grid-template-columns: repeat(2, 1fr); gap: 20px; }
@@ -75,10 +74,6 @@ export default function The1982ProductPage({ params }: { params: Promise<{ slug:
       {/* NAV */}
       <nav className="n82p-nav">
         <Link href="/shop/the-1982" className="n82p-nav-back">← Shop</Link>
-        <Link href="/shop/the-1982">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={LOGO} alt="nineteen82" className="n82p-nav-logo" />
-        </Link>
         <Link href="/cart" className="n82p-nav-cart">
           Cart{count > 0 ? ` (${count})` : ''}
         </Link>
