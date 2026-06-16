@@ -92,24 +92,24 @@ export function The1982Storefront() {
       </section>
 
       {/* DRAFT DAY */}
-      <section className="n82-section dark">
+      <section className="n82-section">
         <div className="n82-section-head">
           <h2 className="n82-section-title">Draft Day Tees</h2>
           <span className="n82-section-count">{draftDay.length} styles</span>
         </div>
         <div className="n82-grid">
-          {draftDay.map(p => <ProductCard key={p.slug} product={p} dark />)}
+          {draftDay.map(p => <ProductCard key={p.slug} product={p} />)}
         </div>
       </section>
 
       {/* CREWNECKS */}
-      <section className="n82-section dark">
+      <section className="n82-section">
         <div className="n82-section-head">
           <h2 className="n82-section-title">Crewnecks</h2>
           <span className="n82-section-count">{crewnecks.length} styles</span>
         </div>
         <div className="n82-grid">
-          {crewnecks.map(p => <ProductCard key={p.slug} product={p} dark />)}
+          {crewnecks.map(p => <ProductCard key={p.slug} product={p} />)}
         </div>
       </section>
 
