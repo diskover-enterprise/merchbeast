@@ -5,7 +5,7 @@ import Link from 'next/link'
 import { useCart } from '../cart-context'
 
 export default function CartPage() {
-  const { items, removeFromCart, updateQuantity, total } = useCart()
+  const { items, removeFromCart, updateQuantity, total, brandColor } = useCart()
   const [checkoutError, setCheckoutError] = useState<string | null>(null)
   const [loading, setLoading] = useState(false)
 
@@ -60,8 +60,7 @@ export default function CartPage() {
         .cart-summary-title { font-size: 12px; letter-spacing: 0.3em; text-transform: uppercase; color: #888; margin-bottom: 24px; }
         .cart-summary-row { display: flex; justify-content: space-between; font-size: 14px; color: #555; margin-bottom: 12px; }
         .cart-summary-total { font-size: 16px; font-weight: 600; color: #111; border-top: 1px solid #e8e8e8; padding-top: 16px; margin-top: 8px; }
-        .cart-checkout-btn { width: 100%; margin-top: 24px; padding: 16px; background: #1C2E54; color: #fff; border: none; font-size: 12px; letter-spacing: 0.3em; text-transform: uppercase; font-family: Georgia, serif; cursor: pointer; transition: background 0.2s; }
-        .cart-checkout-btn:hover { background: #243a6a; }
+        .cart-checkout-btn { width: 100%; margin-top: 24px; padding: 16px; color: #fff; border: none; font-size: 12px; letter-spacing: 0.3em; text-transform: uppercase; font-family: Georgia, serif; cursor: pointer; transition: opacity 0.2s; }
         .cart-checkout-btn:disabled { opacity: 0.6; cursor: not-allowed; }
         .cart-secure { font-size: 11px; color: #bbb; text-align: center; margin-top: 14px; letter-spacing: 0.1em; }
         .cart-empty-wrap { text-align: center; padding: 80px 20px; }
@@ -98,7 +97,7 @@ export default function CartPage() {
         {items.length === 0 ? (
           <div className="cart-empty-wrap">
             <p className="cart-empty-msg">Your cart is empty.</p>
-            <Link href="/shop/lunch-lady" className="cart-browse-btn">Browse Products</Link>
+            <Link href="/shop/lunch-lady" className="cart-browse-btn" style={{ background: brandColor }}>Browse Products</Link>
           </div>
         ) : (
           <div className="cart-layout">
@@ -118,7 +117,7 @@ export default function CartPage() {
                     <p className="cart-item-price">{product.price}</p>
                   </div>
                   <div className="cart-qty">
-                    <button className="cart-qty-btn" onClick={() => updateQuantity(product.slug, quantity - 1, size, color)}>−</button>
+                    <button className="cart-qty-btn" onClick={() => quantity === 1 ? removeFromCart(product.slug, size, color) : updateQuantity(product.slug, quantity - 1, size, color)}>−</button>
                     <span className="cart-qty-num">{quantity}</span>
                     <button className="cart-qty-btn" onClick={() => updateQuantity(product.slug, quantity + 1, size, color)}>+</button>
                   </div>
@@ -142,7 +141,7 @@ export default function CartPage() {
                 <span>Total</span>
                 <span>${total.toFixed(2)} CAD</span>
               </div>
-              <button className="cart-checkout-btn" onClick={handleCheckout} disabled={loading}>
+              <button className="cart-checkout-btn" style={{ background: brandColor }} onClick={handleCheckout} disabled={loading}>
                 {loading ? 'Redirecting...' : 'Proceed to Checkout'}
               </button>
               {checkoutError && (

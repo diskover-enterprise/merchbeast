@@ -18,6 +18,8 @@ type CartContextType = {
   clearCart: () => void
   total: number
   count: number
+  brandColor: string
+  setBrandColor: (color: string) => void
 }
 
 const CartContext = createContext<CartContextType | null>(null)
@@ -28,11 +30,14 @@ function itemKey(slug: string, size?: string, color?: string) {
 
 export function CartProvider({ children }: { children: React.ReactNode }) {
   const [items, setItems] = useState<CartItem[]>([])
+  const [brandColor, setBrandColorState] = useState('#1C2E54')
 
   useEffect(() => {
     try {
       const saved = localStorage.getItem('mb-cart')
       if (saved) setItems(JSON.parse(saved))
+      const savedColor = localStorage.getItem('mb-cart-brand-color')
+      if (savedColor) setBrandColorState(savedColor)
     } catch {}
   }, [])
 
@@ -41,6 +46,11 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
       localStorage.setItem('mb-cart', JSON.stringify(items))
     } catch {}
   }, [items])
+
+  const setBrandColor = useCallback((color: string) => {
+    setBrandColorState(color)
+    try { localStorage.setItem('mb-cart-brand-color', color) } catch {}
+  }, [])
 
   const addToCart = useCallback((product: Product, size?: string, color?: string) => {
     setItems(prev => {
@@ -77,7 +87,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   const count = items.reduce((sum, i) => sum + i.quantity, 0)
 
   return (
-    <CartContext.Provider value={{ items, addToCart, removeFromCart, updateQuantity, clearCart, total, count }}>
+    <CartContext.Provider value={{ items, addToCart, removeFromCart, updateQuantity, clearCart, total, count, brandColor, setBrandColor }}>
       {children}
     </CartContext.Provider>
   )

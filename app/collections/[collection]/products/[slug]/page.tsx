@@ -15,7 +15,7 @@ export default function ProductPage({ params }: { params: Promise<{ collection: 
   const product = getProduct(slug)
   if (!product) notFound()
 
-  const { addToCart, count } = useCart()
+  const { addToCart, count, setBrandColor } = useCart()
   const [activeImg, setActiveImg] = useState(0)
   const [selectedSize, setSelectedSize] = useState<string | undefined>()
   const [selectedColor, setSelectedColor] = useState<string | undefined>()
@@ -42,6 +42,7 @@ export default function ProductPage({ params }: { params: Promise<{ collection: 
       setTimeout(() => setColorError(false), 2000)
       return
     }
+    setBrandColor('#1C2E54')
     addToCart(product!, selectedSize, selectedColor)
     setAdded(true)
     setTimeout(() => setAdded(false), 2000)
