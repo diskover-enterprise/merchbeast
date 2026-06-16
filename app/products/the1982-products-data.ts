@@ -211,7 +211,7 @@ export const the1982Products: The1982Product[] = [
     ],
     sizes: ['S', 'M', 'L', 'XL', '2XL'],
     colors: ['White', 'Black', 'Vintage Black'],
-    category: 'Crewneck',
+    category: 'Tee',
   },
   {
     slug: 'unlv-running-rebels-crewneck',
