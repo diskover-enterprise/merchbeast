@@ -56,7 +56,7 @@ export default function The1982ProductPage({ params }: { params: Promise<{ slug:
         .n82p-related-title { font-size: 11px; font-weight: 700; letter-spacing: 0.4em; text-transform: uppercase; color: #111; }
         .n82p-related-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px 24px; }
         .n82p-footer { margin-top: 80px; padding: 48px 40px; background: #000; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
-        .n82p-footer-logo { height: 40px; object-fit: contain; opacity: 0.7; }
+        .n82p-footer-logo { height: 40px; object-fit: contain; mix-blend-mode: screen; }
         .n82p-footer-copy { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(255,255,255,0.3); }
         @media (max-width: 768px) {
           .n82p-nav { padding: 0 16px; height: 120px; }
