@@ -32,7 +32,7 @@ export const products: Product[] = [
   {
     slug: 'copy-of-lunch-lady-legacy-crewneck-grey',
     name: 'Lunch Lady — Legacy Crewneck Grey',
-    price: '$65.00 CAD',
+    price: '$60.00 CAD',
     description: 'The Legacy Crewneck in grey. Premium heavyweight fleece built to last.',
     shopifyUrl: 'https://merchbeast.shop/products/copy-of-lunch-lady-legacy-crewneck-grey',
     path: '/products/copy-of-lunch-lady-legacy-crewneck-grey',
@@ -45,7 +45,7 @@ export const products: Product[] = [
   {
     slug: 'lunch-lady-legacy-crewneck-black',
     name: 'Lunch Lady — Legacy Crewneck Black',
-    price: '$65.00 CAD',
+    price: '$60.00 CAD',
     description: 'The Legacy Crewneck in black. Premium heavyweight fleece built to last.',
     shopifyUrl: 'https://merchbeast.shop/products/lunch-lady-legacy-crewneck-black',
     path: '/products/lunch-lady-legacy-crewneck-black',
@@ -58,7 +58,7 @@ export const products: Product[] = [
   {
     slug: 'lunch-lady-legacy-crewneck-navy',
     name: 'Lunch Lady — Legacy Crewneck Royal',
-    price: '$65.00 CAD',
+    price: '$60.00 CAD',
     description: 'The Legacy Crewneck in royal blue. Premium heavyweight fleece built to last.',
     shopifyUrl: 'https://merchbeast.shop/products/lunch-lady-legacy-crewneck-navy',
     path: '/products/lunch-lady-legacy-crewneck-navy',
