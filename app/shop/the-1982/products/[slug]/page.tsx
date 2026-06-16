@@ -6,7 +6,7 @@ import Link from 'next/link'
 import { the1982Products, getThe1982Product } from '@/app/products/the1982-products-data'
 import { useCart } from '@/app/cart-context'
 
-const LOGO = 'https://the1982.com/cdn/shop/files/Untitled_design_74.png?v=1684894446'
+const LOGO = '/1982-logo.avif'
 
 export default function The1982ProductPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = use(params)

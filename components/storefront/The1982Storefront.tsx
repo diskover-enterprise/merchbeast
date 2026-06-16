@@ -5,7 +5,7 @@ import { useState } from 'react'
 import { the1982Products, type The1982Product } from '@/app/products/the1982-products-data'
 import { useCart } from '@/app/cart-context'
 
-const LOGO = 'https://the1982.com/cdn/shop/files/Untitled_design_74.png?v=1684894446'
+const LOGO = '/1982-logo.avif'
 
 export function The1982Storefront() {
   const { count } = useCart()
