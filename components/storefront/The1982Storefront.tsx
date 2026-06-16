@@ -54,6 +54,7 @@ export function The1982Storefront() {
           .n82-nav { padding: 0 20px; height: 56px; }
           .n82-hero { min-height: 300px; }
           .n82-section { padding: 48px 20px; }
+          .n82-section-title { font-size: 18px; }
           .n82-grid { grid-template-columns: repeat(2, 1fr); gap: 24px 12px; }
           .n82-footer { padding: 32px 20px; }
         }
