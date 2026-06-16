@@ -10,7 +10,7 @@ const NAV = '#1C2E54'
 const RED = '#C84020'
 const CREAM = '#f5f2ee'
 
-export default function ProductPage({ params }: { params: Promise<{ slug: string }> }) {
+export default function ProductPage({ params }: { params: Promise<{ collection: string; slug: string }> }) {
   const { slug } = use(params)
   const product = getProduct(slug)
   if (!product) notFound()
