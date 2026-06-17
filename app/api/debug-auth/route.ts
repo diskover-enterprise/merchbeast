@@ -4,9 +4,10 @@ import bcrypt from 'bcryptjs'
 
 export async function GET() {
   try {
-    const admin = await prisma.adminUser.findUnique({ where: { email: 'admin@afterdessert.com' } })
-    const valid = admin ? await bcrypt.compare('admin123', admin.passwordHash) : false
-    return NextResponse.json({ found: !!admin, valid, cwd: process.cwd() })
+    const shop = await prisma.shop.findUnique({ where: { slug: 'the-1982' } })
+    if (!shop) return NextResponse.json({ error: 'shop not found' })
+    const valid = await bcrypt.compare('password123', shop.ownerPasswordHash)
+    return NextResponse.json({ found: true, email: shop.ownerEmail, hashPrefix: shop.ownerPasswordHash.slice(0, 20), valid })
   } catch (e: unknown) {
     return NextResponse.json({ error: e instanceof Error ? e.message : String(e) }, { status: 500 })
   }
