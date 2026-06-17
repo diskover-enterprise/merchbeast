@@ -2,13 +2,17 @@ import Stripe from 'stripe'
 import { getProduct } from '@/app/products/products-data'
 import { the1982Products } from '@/app/products/the1982-products-data'
 import { nomoProducts } from '@/app/products/nomo-nomo-products-data'
+import { islandProducts } from '@/app/products/island-apparel-products-data'
 
 function findProduct(slug: string) {
   const main = getProduct(slug)
   if (main) return main
-  const t = the1982Products.find(p => p.slug === slug)
-  if (t) return t
-  return nomoProducts.find(p => p.slug === slug) ?? null
+  return (
+    the1982Products.find(p => p.slug === slug) ||
+    nomoProducts.find(p => p.slug === slug) ||
+    islandProducts.find(p => p.slug === slug) ||
+    null
+  )
 }
 
 export async function POST(request: Request) {

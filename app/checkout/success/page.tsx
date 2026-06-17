@@ -22,6 +22,14 @@ const BRANDS: Record<string, { name: string; shopPath: string; bg: string; color
     accent: '#C41E1E',
     font: "'Helvetica Neue', Helvetica, Arial, sans-serif",
   },
+  'island-apparel': {
+    name: 'Island Apparel',
+    shopPath: '/shop/island-apparel',
+    bg: '#f9f6f0',
+    color: '#1a1a2e',
+    accent: '#003A5C',
+    font: "'Helvetica Neue', Helvetica, Arial, sans-serif",
+  },
   'lunch-lady': {
     name: 'Lunch Lady',
     shopPath: '/shop/lunch-lady',

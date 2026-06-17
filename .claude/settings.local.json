@@ -111,7 +111,24 @@
       "Bash(/tmp/nodebin/bin/node node_modules/.bin/prisma migrate dev --name add-merch-products --skip-seed)",
       "Bash(curl -X POST \"https://api.vercel.com/v1/integrations/deploy/prj_Zzx1RQ8XP4jON0ZgmYMQUtsDuPVT/6gpI0pElj1\")",
       "Bash(curl -s \"https://merchbeast.vercel.app/api/seed?token=seed-merchbeast-2026\")",
-      "Bash(python3 -m json.tool)"
+      "Bash(python3 -m json.tool)",
+      "Bash(curl -s -X POST \"https://api.vercel.com/v1/integrations/deploy/prj_Zzx1RQ8XP4jON0ZgmYMQUtsDuPVT/6gpI0pElj1\")",
+      "Bash(cp \"/Users/mac/Downloads/restaurant-marketplace/app/products/[slug]/page.tsx\" \"/Users/mac/Downloads/restaurant-marketplace/app/collections/[collection]/products/[slug]/page.tsx\")",
+      "Bash(sed -i '' \"s|from '../products-data'|from '../../../../products/products-data'|g\" \"/Users/mac/Downloads/restaurant-marketplace/app/collections/[collection]/products/[slug]/page.tsx\")",
+      "Bash(sed -i '' \"s|from '../../cart-context'|from '../../../../cart-context'|g\" \"/Users/mac/Downloads/restaurant-marketplace/app/collections/[collection]/products/[slug]/page.tsx\")",
+      "Bash(sed -i '' \"s|from '../products-data'|from '../../../../products/products-data'|g; s|from '../../cart-context'|from '../../../../cart-context'|g\" \"/Users/mac/Downloads/restaurant-marketplace/app/collections/[collection]/products/[slug]/page.tsx\")",
+      "Bash(/tmp/nodebin/bin/node node_modules/.bin/next build)",
+      "Bash(/tmp/nodebin/bin/node node_modules/next/dist/bin/next build)",
+      "Bash(cp ~/Downloads/\"Symbol_Logo \\(Susie_s\\) [green].png\" /Users/mac/Downloads/restaurant-marketplace/app/icon.png)",
+      "Bash(sips -z 64 64 ~/Downloads/\"Symbol_Logo \\(Susie_s\\) [green].png\" --out /tmp/favicon-64.png)",
+      "Bash(cp /tmp/favicon-64.png /Users/mac/Downloads/restaurant-marketplace/public/favicon.png)",
+      "WebFetch(domain:the1982.com)",
+      "Bash(sips -g pixelWidth -g pixelHeight /Users/mac/Downloads/restaurant-marketplace/public/1982-logo.avif)",
+      "Bash(PATH=/tmp/nodebin/bin:__TRACKED_VAR__ npx next build)",
+      "Bash(sed -i '' \"s/const { addToCart, count, setBrandColor } = useCart\\(\\)/const { addToCart, count, setBrandColor, setShopPath } = useCart\\(\\)/\" /Users/mac/Downloads/restaurant-marketplace/app/shop/nomo-nomo/products/\\\\[slug\\\\]/page.tsx)",
+      "Bash(sed -i '' \"s/setBrandColor\\('#C41E1E'\\)/setBrandColor\\('#C41E1E'\\)\\\\n    setShopPath\\('\\\\/shop\\\\/nomo-nomo'\\)/\" /Users/mac/Downloads/restaurant-marketplace/app/shop/nomo-nomo/products/\\\\[slug\\\\]/page.tsx)",
+      "Bash(sed -i '' \"s/const { addToCart, count, setBrandColor } = useCart\\(\\)/const { addToCart, count, setBrandColor, setShopPath } = useCart\\(\\)/\" /Users/mac/Downloads/restaurant-marketplace/app/products/\\\\[slug\\\\]/page.tsx /Users/mac/Downloads/restaurant-marketplace/app/collections/\\\\[collection\\\\]/products/\\\\[slug\\\\]/page.tsx)",
+      "Bash(sed -i '' \"s/setBrandColor\\('#1C2E54'\\)/setBrandColor\\('#1C2E54'\\)\\\\n    setShopPath\\('\\\\/shop\\\\/lunch-lady'\\)/\" /Users/mac/Downloads/restaurant-marketplace/app/products/\\\\[slug\\\\]/page.tsx /Users/mac/Downloads/restaurant-marketplace/app/collections/\\\\[collection\\\\]/products/\\\\[slug\\\\]/page.tsx)"
     ]
   }
 }

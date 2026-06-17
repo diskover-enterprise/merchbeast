@@ -4,6 +4,7 @@ import { ProductCard } from '@/components/storefront/ProductCard'
 import { ArcadeStorefront } from '@/components/storefront/ArcadeStorefront'
 import { LunchLadyStorefront } from '@/components/storefront/LunchLadyStorefront'
 import { The1982Storefront } from '@/components/storefront/The1982Storefront'
+import { IslandApparelStorefront } from '@/components/storefront/IslandApparelStorefront'
 import { Product, Restaurant } from '@/types'
 import Image from 'next/image'
 
@@ -24,6 +25,11 @@ export default async function StorefrontPage({
   // The 1982 — vintage sports apparel
   if (slug === 'the-1982') {
     return <The1982Storefront />
+  }
+
+  // Island Apparel — Caribbean-inspired apparel
+  if (slug === 'island-apparel') {
+    return <IslandApparelStorefront />
   }
 
   const restaurant = await prisma.restaurant.findUnique({
