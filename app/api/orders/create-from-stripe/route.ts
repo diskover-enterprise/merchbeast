@@ -36,6 +36,11 @@ export async function POST(req: Request) {
     create: { email, name },
   })
 
+  const shipping = session.shipping_details?.address
+  const shippingAddress = shipping
+    ? [shipping.line1, shipping.line2, shipping.city, shipping.state, shipping.postal_code, shipping.country].filter(Boolean).join(', ')
+    : null
+
   const order = await prisma.order.create({
     data: {
       customerId: customer.id,
@@ -43,6 +48,7 @@ export async function POST(req: Request) {
       status: 'paid',
       total: session.amount_total ?? 0,
       stripePaymentId: paymentIntent,
+      shippingAddress,
       items: {
         create: cartItems.map(i => ({
           productName: i.name,

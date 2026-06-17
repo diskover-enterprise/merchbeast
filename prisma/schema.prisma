@@ -63,6 +63,7 @@ model Order {
   status          String      @default("pending")
   total           Int
   stripePaymentId String?
+  shippingAddress String?
   createdAt       DateTime    @default(now())
   customer        Customer    @relation(fields: [customerId], references: [id])
   shop            Shop        @relation(fields: [shopId], references: [id])

@@ -69,6 +69,9 @@ export async function POST(request: Request) {
     mode: 'payment',
     success_url: `${baseUrl}/checkout/success?session_id={CHECKOUT_SESSION_ID}&shop=${shopSlug}`,
     cancel_url: `${baseUrl}/cart`,
+    shipping_address_collection: {
+      allowed_countries: ['US', 'CA', 'GB', 'AU'],
+    },
     metadata: {
       shopSlug,
       cartItems: JSON.stringify(cartMeta),
