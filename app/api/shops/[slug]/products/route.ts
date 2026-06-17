@@ -5,11 +5,11 @@ export async function GET(
   { params }: { params: Promise<{ slug: string }> }
 ) {
   const { slug } = await params
-  const restaurant = await prisma.restaurant.findUnique({ where: { slug } })
-  if (!restaurant) return Response.json({ error: 'Not found' }, { status: 404 })
+  const shop = await prisma.shop.findUnique({ where: { slug } })
+  if (!shop) return Response.json({ error: 'Not found' }, { status: 404 })
 
   const products = await prisma.product.findMany({
-    where: { restaurantId: restaurant.id },
+    where: { shopId: shop.id },
     orderBy: { createdAt: 'asc' },
   })
 

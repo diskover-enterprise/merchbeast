@@ -8,15 +8,15 @@ export async function GET() {
 
   const db = prisma
 
-  const shop = await db.restaurant.findUnique({ where: { id: shopId } })
+  const shop = await db.shop.findUnique({ where: { id: shopId } })
   if (!shop) return Response.json({ error: 'Not found' }, { status: 404 })
 
   const thirtyDaysAgo = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000)
 
   const [allOrders, recentOrders, products] = await Promise.all([
-    db.order.findMany({ where: { restaurantId: shopId } }),
-    db.order.findMany({ where: { restaurantId: shopId, createdAt: { gte: thirtyDaysAgo } } }),
-    db.product.findMany({ where: { restaurantId: shopId } }),
+    db.order.findMany({ where: { shopId } }),
+    db.order.findMany({ where: { shopId, createdAt: { gte: thirtyDaysAgo } } }),
+    db.product.findMany({ where: { shopId } }),
   ])
 
   const totalOrders = allOrders.length

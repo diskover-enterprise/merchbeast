@@ -8,14 +8,14 @@ export async function GET() {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
   }
 
-  const [restaurants, orders] = await Promise.all([
-    prisma.restaurant.findMany({
+  const [shops, orders] = await Promise.all([
+    prisma.shop.findMany({
       select: { id: true, name: true },
     }),
     prisma.order.findMany({
       select: {
         id: true,
-        restaurantId: true,
+        shopId: true,
         total: true,
       },
     }),
@@ -23,21 +23,21 @@ export async function GET() {
 
   const totalRevenue = orders.reduce((sum, o) => sum + o.total, 0)
   const totalOrders = orders.length
-  const totalRestaurants = restaurants.length
+  const totalRestaurants = shops.length
 
   const revenueMap = new Map<string, { revenue: number; orderCount: number; name: string }>()
-  for (const r of restaurants) {
+  for (const r of shops) {
     revenueMap.set(r.id, { revenue: 0, orderCount: 0, name: r.name })
   }
   for (const o of orders) {
-    const entry = revenueMap.get(o.restaurantId)
+    const entry = revenueMap.get(o.shopId)
     if (entry) {
       entry.revenue += o.total
       entry.orderCount += 1
     }
   }
-  const revenueByRestaurant = Array.from(revenueMap.entries()).map(([restaurantId, data]) => ({
-    restaurantId,
+  const revenueByRestaurant = Array.from(revenueMap.entries()).map(([shopId, data]) => ({
+    shopId: shopId,
     name: data.name,
     revenue: data.revenue,
     orderCount: data.orderCount,
@@ -48,7 +48,7 @@ export async function GET() {
     orderBy: { createdAt: 'desc' },
     include: {
       customer: { select: { name: true, email: true } },
-      restaurant: { select: { name: true, slug: true } },
+      shop: { select: { name: true, slug: true } },
       items: {
         include: {
           product: { select: { name: true } },
@@ -57,11 +57,17 @@ export async function GET() {
     },
   })
 
+  // Remap shop to restaurant for UI compatibility
+  const recentOrdersMapped = recentOrders.map((o) => ({
+    ...o,
+    restaurant: o.shop,
+  }))
+
   return NextResponse.json({
     totalRevenue,
     totalOrders,
     totalRestaurants,
     revenueByRestaurant,
-    recentOrders,
+    recentOrders: recentOrdersMapped,
   })
 }

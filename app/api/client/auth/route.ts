@@ -5,7 +5,7 @@ export async function POST(request: Request) {
   const { email, password } = await request.json()
   const db = prisma
 
-  const shop = await db.restaurant.findUnique({ where: { ownerEmail: email } })
+  const shop = await db.shop.findUnique({ where: { ownerEmail: email } })
   if (!shop) {
     return Response.json({ error: 'Invalid email or password' }, { status: 401 })
   }

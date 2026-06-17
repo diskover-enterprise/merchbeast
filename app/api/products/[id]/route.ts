@@ -6,12 +6,12 @@ export async function PUT(
   { params }: { params: Promise<{ id: string }> }
 ) {
   const session = await getAuthSession()
-  if (!session?.user?.restaurantId)
+  if (!session?.user?.shopId)
     return Response.json({ error: 'Unauthorized' }, { status: 401 })
 
   const { id } = await params
   const existing = await prisma.product.findUnique({ where: { id } })
-  if (!existing || existing.restaurantId !== session.user.restaurantId)
+  if (!existing || existing.shopId !== session.user.shopId)
     return Response.json({ error: 'Not found' }, { status: 404 })
 
   const body = await req.json()
@@ -34,12 +34,12 @@ export async function DELETE(
   { params }: { params: Promise<{ id: string }> }
 ) {
   const session = await getAuthSession()
-  if (!session?.user?.restaurantId)
+  if (!session?.user?.shopId)
     return Response.json({ error: 'Unauthorized' }, { status: 401 })
 
   const { id } = await params
   const existing = await prisma.product.findUnique({ where: { id } })
-  if (!existing || existing.restaurantId !== session.user.restaurantId)
+  if (!existing || existing.shopId !== session.user.shopId)
     return Response.json({ error: 'Not found' }, { status: 404 })
 
   await prisma.product.delete({ where: { id } })

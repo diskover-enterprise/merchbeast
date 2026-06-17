@@ -2,13 +2,13 @@
 
 import Link from 'next/link'
 
-import { Restaurant } from '@/types'
+import { Shop } from '@/types'
 import { CartDrawer } from './CartDrawer'
 import { ShoppingCart } from 'lucide-react'
 import { useState, useEffect } from 'react'
 import { useCart } from '@/hooks/useCart'
 
-export function BrandedNavbar({ restaurant }: { restaurant: Restaurant }) {
+export function BrandedNavbar({ shop }: { shop: Shop }) {
   const [cartOpen, setCartOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
   const { itemCount } = useCart()
@@ -32,14 +32,14 @@ export function BrandedNavbar({ restaurant }: { restaurant: Restaurant }) {
       >
         <div className="max-w-7xl mx-auto px-6 sm:px-14 h-14 flex items-center justify-between">
           <Link
-            href={`/shop/${restaurant.slug}`}
+            href={`/shop/${shop.slug}`}
             className="flex items-center gap-3 hover:opacity-70 transition-opacity"
           >
-            {restaurant.logo && (
+            {shop.logo && (
               // eslint-disable-next-line @next/next/no-img-element
               <img
-                src={restaurant.logo}
-                alt={restaurant.name}
+                src={shop.logo}
+                alt={shop.name}
                 style={{ height: '80px', width: 'auto' }}
               />
             )}
@@ -47,7 +47,7 @@ export function BrandedNavbar({ restaurant }: { restaurant: Restaurant }) {
               className="text-xs font-medium tracking-[0.2em] uppercase"
               style={{ color: 'var(--color-secondary)' }}
             >
-              {restaurant.name}
+              {shop.name}
             </span>
           </Link>
 

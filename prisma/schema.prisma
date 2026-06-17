@@ -6,7 +6,7 @@ datasource db {
   provider = "postgresql"
 }
 
-model Restaurant {
+model Shop {
   id                String    @id @default(cuid())
   name              String
   slug              String    @unique
@@ -29,11 +29,13 @@ model Restaurant {
   products          Product[]
   orders            Order[]
   commissions       CommissionPayment[]
+
+  @@map("Restaurant")
 }
 
 model Product {
   id           String      @id @default(cuid())
-  restaurantId String
+  shopId       String      @map("restaurantId")
   name         String
   description  String
   price        Int
@@ -41,7 +43,7 @@ model Product {
   category     String
   stock        Int         @default(0)
   createdAt    DateTime    @default(now())
-  restaurant   Restaurant  @relation(fields: [restaurantId], references: [id])
+  shop         Shop        @relation(fields: [shopId], references: [id])
   orderItems   OrderItem[]
 }
 
@@ -57,13 +59,13 @@ model Customer {
 model Order {
   id              String      @id @default(cuid())
   customerId      String
-  restaurantId    String
+  shopId          String      @map("restaurantId")
   status          String      @default("pending")
   total           Int
   stripePaymentId String?
   createdAt       DateTime    @default(now())
   customer        Customer    @relation(fields: [customerId], references: [id])
-  restaurant      Restaurant  @relation(fields: [restaurantId], references: [id])
+  shop            Shop        @relation(fields: [shopId], references: [id])
   items           OrderItem[]
 }
 
@@ -86,14 +88,14 @@ model AdminUser {
 
 model CommissionPayment {
   id           String   @id @default(cuid())
-  restaurantId String
+  shopId       String   @map("restaurantId")
   month        String   // e.g. "2026-06"
   revenue      Int      // in cents
   rate         Float    @default(0.25)
   paidAt       DateTime?
   note         String?
   createdAt    DateTime @default(now())
-  restaurant   Restaurant @relation(fields: [restaurantId], references: [id])
+  shop         Shop     @relation(fields: [shopId], references: [id])
 }
 
 model MerchProduct {

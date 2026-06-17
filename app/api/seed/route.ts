@@ -116,7 +116,7 @@ export async function GET(req: NextRequest) {
     await prisma.orderItem.deleteMany()
     await prisma.order.deleteMany()
     await prisma.product.deleteMany()
-    await prisma.restaurant.deleteMany()
+    await prisma.shop.deleteMany()
     await prisma.customer.deleteMany()
     await prisma.adminUser.deleteMany()
 
@@ -127,7 +127,7 @@ export async function GET(req: NextRequest) {
 
     // Shops + products
     for (const s of shops) {
-      const shop = await prisma.restaurant.create({
+      const shop = await prisma.shop.create({
         data: {
           name: s.name, slug: s.slug, description: s.description,
           primaryColor: s.primaryColor, secondaryColor: s.secondaryColor,
@@ -140,7 +140,7 @@ export async function GET(req: NextRequest) {
       for (const p of s.products) {
         await prisma.product.create({
           data: {
-            restaurantId: shop.id,
+            shopId: shop.id,
             name: p.name, description: p.description,
             price: p.price, category: p.category, stock: p.stock,
             images: JSON.stringify(p.images),

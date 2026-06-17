@@ -1,8 +1,7 @@
 import { prisma } from '@/lib/prisma'
-import { NextRequest } from 'next/server'
 
 export async function GET() {
-  const restaurants = await prisma.restaurant.findMany({
+  const shops = await prisma.shop.findMany({
     select: {
       id: true,
       name: true,
@@ -18,5 +17,5 @@ export async function GET() {
     },
     orderBy: { createdAt: 'asc' },
   })
-  return Response.json(restaurants)
+  return Response.json(shops)
 }

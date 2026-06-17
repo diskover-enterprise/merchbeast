@@ -3,11 +3,11 @@ import { getAuthSession } from '@/lib/auth'
 
 export async function GET() {
   const session = await getAuthSession()
-  if (!session?.user?.restaurantId)
+  if (!session?.user?.shopId)
     return Response.json({ error: 'Unauthorized' }, { status: 401 })
 
-  const restaurant = await prisma.restaurant.findUnique({
-    where: { id: session.user.restaurantId },
+  const shop = await prisma.shop.findUnique({
+    where: { id: session.user.shopId },
     select: {
       id: true, name: true, slug: true, description: true,
       logo: true, bannerImage: true, primaryColor: true,
@@ -16,17 +16,17 @@ export async function GET() {
       instagram: true, websiteUrl: true, address: true,
     },
   })
-  return Response.json(restaurant)
+  return Response.json(shop)
 }
 
 export async function PUT(req: Request) {
   const session = await getAuthSession()
-  if (!session?.user?.restaurantId)
+  if (!session?.user?.shopId)
     return Response.json({ error: 'Unauthorized' }, { status: 401 })
 
   const body = await req.json()
-  const updated = await prisma.restaurant.update({
-    where: { id: session.user.restaurantId },
+  const updated = await prisma.shop.update({
+    where: { id: session.user.shopId },
     data: {
       name: body.name,
       description: body.description,

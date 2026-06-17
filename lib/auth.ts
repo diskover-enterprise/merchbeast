@@ -18,17 +18,17 @@ export const authOptions: NextAuthOptions = {
       },
       async authorize(credentials) {
         if (!credentials?.email || !credentials?.password) return null
-        const restaurant = await prisma.restaurant.findUnique({
+        const shop = await prisma.shop.findUnique({
           where: { ownerEmail: credentials.email },
         })
-        if (!restaurant) return null
-        const valid = await bcrypt.compare(credentials.password, restaurant.ownerPasswordHash)
+        if (!shop) return null
+        const valid = await bcrypt.compare(credentials.password, shop.ownerPasswordHash)
         if (!valid) return null
         return {
-          id: restaurant.id,
-          email: restaurant.ownerEmail,
-          name: restaurant.name,
-          image: restaurant.logo,
+          id: shop.id,
+          email: shop.ownerEmail,
+          name: shop.name,
+          image: shop.logo,
           role: 'owner',
         }
       },
@@ -87,7 +87,7 @@ export const authOptions: NextAuthOptions = {
       if (user) {
         const u = user as typeof user & { role: string }
         token.role = u.role
-        if (u.role === 'owner') token.restaurantId = u.id
+        if (u.role === 'owner') token.shopId = u.id
         if (u.role === 'customer') token.customerId = u.id
       }
       return token
@@ -95,7 +95,7 @@ export const authOptions: NextAuthOptions = {
     async session({ session, token }) {
       if (session.user) {
         session.user.role = token.role as string
-        if (token.role === 'owner') session.user.restaurantId = token.restaurantId as string
+        if (token.role === 'owner') session.user.shopId = token.shopId as string
         if (token.role === 'customer') session.user.customerId = token.customerId as string
       }
       return session

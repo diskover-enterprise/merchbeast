@@ -1,4 +1,4 @@
-export interface Restaurant {
+export interface Shop {
   id: string
   name: string
   slug: string
@@ -21,7 +21,7 @@ export interface Restaurant {
 
 export interface Product {
   id: string
-  restaurantId: string
+  shopId: string
   name: string
   description: string
   price: number
@@ -29,7 +29,7 @@ export interface Product {
   category: string
   stock: number
   createdAt: Date
-  restaurant?: Restaurant
+  shop?: Shop
 }
 
 export interface Customer {
@@ -51,21 +51,21 @@ export interface OrderItem {
 export interface Order {
   id: string
   customerId: string
-  restaurantId: string
+  shopId: string
   status: 'pending' | 'paid' | 'fulfilled' | 'cancelled'
   total: number
   stripePaymentId: string | null
   createdAt: Date
   customer?: Customer
   items?: OrderItem[]
-  restaurant?: Restaurant
+  shop?: Shop
 }
 
 export interface CartItem {
   productId: string
-  restaurantId: string
-  restaurantSlug: string
-  restaurantName: string
+  shopId: string
+  shopSlug: string
+  shopName: string
   name: string
   price: number
   image: string | null
@@ -80,7 +80,7 @@ declare module 'next-auth' {
   interface Session {
     user: {
       role?: string
-      restaurantId?: string
+      shopId?: string
       customerId?: string
       name?: string | null
       email?: string | null

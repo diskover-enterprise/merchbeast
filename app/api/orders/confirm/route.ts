@@ -19,7 +19,7 @@ export async function POST(req: Request) {
   })
   if (existing) return Response.json({ alreadyCreated: true, orderId: existing.id })
 
-  const cartItems: { productId: string; restaurantId: string; quantity: number; price: number }[] =
+  const cartItems: { productId: string; shopId: string; quantity: number; price: number }[] =
     JSON.parse(stripeSession.metadata?.cartItems ?? '[]')
 
   if (!cartItems.length) return Response.json({ error: 'No items in session' }, { status: 400 })
@@ -33,20 +33,20 @@ export async function POST(req: Request) {
     create: { email, name },
   })
 
-  const restaurantGroups = cartItems.reduce<Record<string, typeof cartItems>>((acc, item) => {
-    if (!acc[item.restaurantId]) acc[item.restaurantId] = []
-    acc[item.restaurantId].push(item)
+  const shopGroups = cartItems.reduce<Record<string, typeof cartItems>>((acc, item) => {
+    if (!acc[item.shopId]) acc[item.shopId] = []
+    acc[item.shopId].push(item)
     return acc
   }, {})
 
   const orders = []
-  for (const [restaurantId, groupItems] of Object.entries(restaurantGroups)) {
+  for (const [shopId, groupItems] of Object.entries(shopGroups)) {
     // Use Stripe's amount_total (in cents) as the authoritative total
     const total = stripeSession.amount_total ?? groupItems.reduce((sum, i) => sum + i.price * i.quantity, 0)
     const order = await prisma.order.create({
       data: {
         customerId: customer.id,
-        restaurantId,
+        shopId,
         status: 'paid',
         total,
         stripePaymentId: stripeSession.payment_intent as string,
@@ -58,14 +58,14 @@ export async function POST(req: Request) {
           })),
         },
       },
-      include: { items: { include: { product: true } }, restaurant: true },
+      include: { items: { include: { product: true } }, shop: true },
     })
     orders.push(order)
 
     if (email) {
       const { subject, html } = buildOrderConfirmationEmail({
         customerName: name,
-        restaurantName: order.restaurant.name,
+        restaurantName: order.shop.name,
         items: order.items.map((i) => ({
           name: i.product?.name ?? 'Item',
           quantity: i.quantity,
@@ -82,9 +82,9 @@ export async function POST(req: Request) {
       }).catch(console.error)
     }
 
-    // Notify the restaurant owner
+    // Notify the shop owner
     const { subject: ownerSubject, html: ownerHtml } = buildNewOrderEmail({
-      restaurantName: order.restaurant.name,
+      restaurantName: order.shop.name,
       customerName: name,
       customerEmail: email,
       items: order.items.map((i) => ({
@@ -97,7 +97,7 @@ export async function POST(req: Request) {
     })
     resend.emails.send({
       from: 'MerchMarket <orders@' + (process.env.RESEND_FROM_DOMAIN ?? 'resend.dev') + '>',
-      to: order.restaurant.ownerEmail,
+      to: order.shop.ownerEmail,
       subject: ownerSubject,
       html: ownerHtml,
     }).catch(console.error)

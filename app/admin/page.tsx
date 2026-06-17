@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react'
 import { formatCurrency } from '@/lib/utils'
 
 interface RevenueByRestaurant {
-  restaurantId: string
+  shopId: string
   name: string
   revenue: number
   orderCount: number
@@ -103,7 +103,7 @@ export default function AdminOverviewPage() {
               {stats.revenueByRestaurant
                 .sort((a, b) => b.revenue - a.revenue)
                 .map((r) => (
-                  <tr key={r.restaurantId} className="hover:bg-gray-50 transition-colors">
+                  <tr key={r.shopId} className="hover:bg-gray-50 transition-colors">
                     <td className="px-4 py-3 text-gray-900 font-medium">{r.name}</td>
                     <td className="px-4 py-3 text-right text-gray-600">{r.orderCount}</td>
                     <td className="px-4 py-3 text-right text-gray-900 font-medium">{formatCurrency(r.revenue)}</td>

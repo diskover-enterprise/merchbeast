@@ -4,7 +4,7 @@ import { use, useState, useEffect } from 'react'
 import { notFound } from 'next/navigation'
 import Image from 'next/image'
 import Link from 'next/link'
-import { Product, Restaurant } from '@/types'
+import { Product, Shop } from '@/types'
 import { formatCurrency } from '@/lib/utils'
 import { useCart } from '@/hooks/useCart'
 import { ProductCard } from '@/components/storefront/ProductCard'
@@ -15,11 +15,11 @@ async function fetchData(slug: string, productId: string) {
     fetch(`/api/shops/${slug}/products`),
   ])
   if (!rRes.ok) return null
-  const restaurant: Restaurant = await rRes.json()
+  const shop: Shop = await rRes.json()
   const products: Product[] = await pRes.json()
   const product = products.find((p) => p.id === productId) ?? null
   const related = products.filter((p) => p.id !== productId).slice(0, 4)
-  return { restaurant, product, related }
+  return { shop, product, related }
 }
 
 export default function ProductDetailPage({
@@ -29,7 +29,7 @@ export default function ProductDetailPage({
 }) {
   const { slug, productId } = use(params)
   const { addItem } = useCart()
-  const [data, setData] = useState<{ restaurant: Restaurant; product: Product; related: Product[] } | null>(null)
+  const [data, setData] = useState<{ shop: Shop; product: Product; related: Product[] } | null>(null)
   const [selectedImage, setSelectedImage] = useState(0)
   const [qty, setQty] = useState(1)
   const [added, setAdded] = useState(false)
@@ -37,7 +37,7 @@ export default function ProductDetailPage({
   useEffect(() => {
     fetchData(slug, productId).then((d) => {
       if (!d || !d.product) notFound()
-      setData(d as { restaurant: Restaurant; product: Product; related: Product[] })
+      setData(d as { shop: Shop; product: Product; related: Product[] })
     })
   }, [slug, productId])
 
@@ -60,14 +60,14 @@ export default function ProductDetailPage({
     )
   }
 
-  const { restaurant, product, related } = data
+  const { shop, product, related } = data
 
   function handleAdd() {
     addItem({
       productId: product.id,
-      restaurantId: restaurant.id,
-      restaurantSlug: restaurant.slug,
-      restaurantName: restaurant.name,
+      shopId: shop.id,
+      shopSlug: shop.slug,
+      shopName: shop.name,
       name: product.name,
       price: product.price,
       image: product.images[0] ?? null,
@@ -82,10 +82,10 @@ export default function ProductDetailPage({
       {/* Back link */}
       <div className="max-w-7xl mx-auto px-6 pt-6 pb-0">
         <Link
-          href={`/shop/${restaurant.slug}`}
+          href={`/shop/${shop.slug}`}
           className="text-xs tracking-[0.2em] uppercase text-[#6B6B6B] hover:text-[#0A0A0A] transition-colors"
         >
-          ← {restaurant.name}
+          ← {shop.name}
         </Link>
       </div>
 
@@ -230,7 +230,7 @@ export default function ProductDetailPage({
             </p>
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-x-4 gap-y-10">
               {related.map((p) => (
-                <ProductCard key={p.id} product={p} restaurant={restaurant} />
+                <ProductCard key={p.id} product={p} shop={shop} />
               ))}
             </div>
           </div>

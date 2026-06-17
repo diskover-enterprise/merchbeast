@@ -9,16 +9,16 @@ const U = (id: string, w = 800, h = 800) =>
   `https://images.unsplash.com/photo-${id}?w=${w}&h=${h}&auto=format&fit=crop&q=80`
 
 async function main() {
-  const existing = await prisma.restaurant.findUnique({ where: { slug: 'quazar-arcade' } })
+  const existing = await prisma.shop.findUnique({ where: { slug: 'quazar-arcade' } })
   if (existing) {
     console.log('Quazar Arcade already exists — deleting and recreating...')
-    await prisma.orderItem.deleteMany({ where: { order: { restaurantId: existing.id } } })
-    await prisma.order.deleteMany({ where: { restaurantId: existing.id } })
-    await prisma.product.deleteMany({ where: { restaurantId: existing.id } })
-    await prisma.restaurant.delete({ where: { id: existing.id } })
+    await prisma.orderItem.deleteMany({ where: { order: { shopId: existing.id } } })
+    await prisma.order.deleteMany({ where: { shopId: existing.id } })
+    await prisma.product.deleteMany({ where: { shopId: existing.id } })
+    await prisma.shop.delete({ where: { id: existing.id } })
   }
 
-  const restaurant = await prisma.restaurant.create({
+  const restaurant = await prisma.shop.create({
     data: {
       name: 'Quazar Arcade',
       slug: 'quazar-arcade',
@@ -36,7 +36,7 @@ async function main() {
 
   const products = await Promise.all([
     prisma.product.create({ data: {
-      restaurantId: restaurant.id,
+      shopId: restaurant.id,
       name: 'Neon Nights Hoodie',
       description: 'Oversized black hoodie with neon pink arcade graphic print. Garment-washed finish.',
       price: 8800,
@@ -45,7 +45,7 @@ async function main() {
       stock: 40,
     }}),
     prisma.product.create({ data: {
-      restaurantId: restaurant.id,
+      shopId: restaurant.id,
       name: 'High Score Tee',
       description: '100% cotton heavyweight tee. Pixel art scoreboard graphic on the back.',
       price: 4200,
@@ -54,7 +54,7 @@ async function main() {
       stock: 60,
     }}),
     prisma.product.create({ data: {
-      restaurantId: restaurant.id,
+      shopId: restaurant.id,
       name: 'Player 1 Snapback',
       description: 'Black structured 6-panel cap with embroidered neon pink "P1" logo.',
       price: 3200,
@@ -63,7 +63,7 @@ async function main() {
       stock: 50,
     }}),
     prisma.product.create({ data: {
-      restaurantId: restaurant.id,
+      shopId: restaurant.id,
       name: 'Arcade Token Keychain',
       description: 'Die-cast metal token with Quazar logo. Comes on a heavy-gauge keyring.',
       price: 1200,
@@ -72,7 +72,7 @@ async function main() {
       stock: 120,
     }}),
     prisma.product.create({ data: {
-      restaurantId: restaurant.id,
+      shopId: restaurant.id,
       name: 'Cabinet Enamel Pin Set',
       description: 'Set of 4 hard enamel pins: joystick, coin slot, CRT screen, and Quazar logo.',
       price: 2200,
@@ -81,7 +81,7 @@ async function main() {
       stock: 80,
     }}),
     prisma.product.create({ data: {
-      restaurantId: restaurant.id,
+      shopId: restaurant.id,
       name: 'Neon Grid Tote',
       description: 'Heavy canvas tote with neon cyan grid print. Reinforced handles.',
       price: 2800,
@@ -90,7 +90,7 @@ async function main() {
       stock: 70,
     }}),
     prisma.product.create({ data: {
-      restaurantId: restaurant.id,
+      shopId: restaurant.id,
       name: 'Pixel Art Poster — Vol.1',
       description: 'Limited edition 18×24" print on 200gsm matte stock. Numbered and signed.',
       price: 3500,
@@ -99,7 +99,7 @@ async function main() {
       stock: 50,
     }}),
     prisma.product.create({ data: {
-      restaurantId: restaurant.id,
+      shopId: restaurant.id,
       name: 'Quazar Insulated Tumbler',
       description: '20oz double-wall stainless tumbler. Matte black with neon pink logo.',
       price: 3800,

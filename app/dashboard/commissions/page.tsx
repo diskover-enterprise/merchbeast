@@ -44,7 +44,7 @@ export default function CommissionsPage() {
     await fetch('/api/dashboard/commissions', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ restaurantId: shopId, month, note: noteInputs[key] || null }),
+      body: JSON.stringify({ shopId: shopId, month, note: noteInputs[key] || null }),
     })
     setSaving(null)
     load()
@@ -56,7 +56,7 @@ export default function CommissionsPage() {
     await fetch('/api/dashboard/commissions', {
       method: 'DELETE',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ restaurantId: shopId, month }),
+      body: JSON.stringify({ shopId: shopId, month }),
     })
     setSaving(null)
     load()

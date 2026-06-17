@@ -110,7 +110,7 @@ export default function AdminProductsPage() {
   useEffect(() => {
     if (!selectedId) return
     setLoadingProducts(true)
-    fetch(`/api/admin/products?restaurantId=${selectedId}`)
+    fetch(`/api/admin/products?shopId=${selectedId}`)
       .then((r) => r.json())
       .then((data) => { setProducts(data); setLoadingProducts(false) })
   }, [selectedId])
@@ -137,7 +137,7 @@ export default function AdminProductsPage() {
   async function handleSave() {
     setSaving(true)
     const payload = {
-      restaurantId: selectedId,
+      shopId: selectedId,
       name: form.name,
       description: form.description,
       price: form.price,
@@ -162,7 +162,7 @@ export default function AdminProductsPage() {
 
     setSaving(false)
     setShowForm(false)
-    fetch(`/api/admin/products?restaurantId=${selectedId}`)
+    fetch(`/api/admin/products?shopId=${selectedId}`)
       .then((r) => r.json())
       .then(setProducts)
   }

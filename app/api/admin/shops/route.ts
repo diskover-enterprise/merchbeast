@@ -8,7 +8,7 @@ export async function GET() {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
   }
 
-  const restaurants = await prisma.restaurant.findMany({
+  const shops = await prisma.shop.findMany({
     orderBy: { createdAt: 'asc' },
     include: {
       orders: {
@@ -17,7 +17,7 @@ export async function GET() {
     },
   })
 
-  const result = restaurants.map((r) => ({
+  const result = shops.map((r) => ({
     id: r.id,
     name: r.name,
     slug: r.slug,

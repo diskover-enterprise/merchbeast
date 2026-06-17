@@ -3,7 +3,7 @@ import { prisma } from '@/lib/prisma'
 export async function POST(req: Request) {
   const body = await req.json()
   const { items, customerEmail, customerName, stripePaymentId } = body as {
-    items: { productId: string; restaurantId: string; quantity: number }[]
+    items: { productId: string; shopId: string; quantity: number }[]
     customerEmail: string
     customerName: string
     stripePaymentId: string
@@ -23,11 +23,11 @@ export async function POST(req: Request) {
   }
   const productMap = new Map(products.map((p) => [p.id, p]))
 
-  // Verify each item's restaurantId matches the product's actual restaurantId
+  // Verify each item's shopId matches the product's actual shopId
   for (const item of items) {
     const product = productMap.get(item.productId)
-    if (!product || product.restaurantId !== item.restaurantId) {
-      return Response.json({ error: 'Product/restaurant mismatch' }, { status: 400 })
+    if (!product || product.shopId !== item.shopId) {
+      return Response.json({ error: 'Product/shop mismatch' }, { status: 400 })
     }
   }
 
@@ -37,14 +37,14 @@ export async function POST(req: Request) {
     create: { email: customerEmail, name: customerName },
   })
 
-  const restaurantGroups = items.reduce<Record<string, typeof items>>((acc, item) => {
-    if (!acc[item.restaurantId]) acc[item.restaurantId] = []
-    acc[item.restaurantId].push(item)
+  const shopGroups = items.reduce<Record<string, typeof items>>((acc, item) => {
+    if (!acc[item.shopId]) acc[item.shopId] = []
+    acc[item.shopId].push(item)
     return acc
   }, {})
 
   const orders = []
-  for (const [restaurantId, groupItems] of Object.entries(restaurantGroups)) {
+  for (const [shopId, groupItems] of Object.entries(shopGroups)) {
     const total = groupItems.reduce((sum, i) => {
       return sum + productMap.get(i.productId)!.price * i.quantity
     }, 0)
@@ -52,7 +52,7 @@ export async function POST(req: Request) {
     const order = await prisma.order.create({
       data: {
         customerId: customer.id,
-        restaurantId,
+        shopId,
         status: 'paid',
         total,
         stripePaymentId,

@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
-import { Product, Restaurant } from '@/types'
+import { Product, Shop } from '@/types'
 import { formatCurrency } from '@/lib/utils'
 import { useCart } from '@/hooks/useCart'
 import { CartDrawer } from './CartDrawer'
@@ -52,12 +52,12 @@ function Ticker() {
 // ── Arcade product card ───────────────────────────────────────────────────
 interface CardProps {
   product: Product
-  restaurant: Restaurant
+  shop: Shop
   index: number
   onConflict: (item: Parameters<ReturnType<typeof useCart>['addItem']>[0]) => void
 }
 
-function ArcadeCard({ product, restaurant, index, onConflict }: CardProps) {
+function ArcadeCard({ product, shop, index, onConflict }: CardProps) {
   const { addItem } = useCart()
   const firstImage = product.images[0] ?? null
   const stageLabel = `STAGE ${String(index + 1).padStart(2, '0')}`
@@ -67,9 +67,9 @@ function ArcadeCard({ product, restaurant, index, onConflict }: CardProps) {
     e.preventDefault()
     const item = {
       productId: product.id,
-      restaurantId: restaurant.id,
-      restaurantSlug: restaurant.slug,
-      restaurantName: restaurant.name,
+      shopId: shop.id,
+      shopSlug: shop.slug,
+      shopName: shop.name,
       name: product.name,
       price: product.price,
       image: firstImage,
@@ -80,7 +80,7 @@ function ArcadeCard({ product, restaurant, index, onConflict }: CardProps) {
   }
 
   return (
-    <Link href={`/shop/${restaurant.slug}/products/${product.id}`} className="group block" style={{ textDecoration: 'none' }}>
+    <Link href={`/shop/${shop.slug}/products/${product.id}`} className="group block" style={{ textDecoration: 'none' }}>
       <div style={{
         border: `1px solid ${NEON_PINK}55`,
         background: `linear-gradient(135deg, rgba(255,46,154,0.06) 0%, rgba(8,5,26,0.95) 100%)`,
@@ -192,11 +192,11 @@ function ArcadeCard({ product, restaurant, index, onConflict }: CardProps) {
 
 // ── Main component ────────────────────────────────────────────────────────
 interface Props {
-  restaurant: Restaurant & { description?: string | null }
+  shop: Shop & { description?: string | null }
   products: Product[]
 }
 
-export function ArcadeStorefront({ restaurant, products }: Props) {
+export function ArcadeStorefront({ shop, products }: Props) {
   const [activeCategory, setActiveCategory] = useState('ALL')
   const [cartOpen, setCartOpen] = useState(false)
   const [conflictItem, setConflictItem] = useState<Parameters<ReturnType<typeof useCart>['addItem']>[0] | null>(null)
@@ -251,10 +251,10 @@ export function ArcadeStorefront({ restaurant, products }: Props) {
           padding: '0 24px', height: '52px',
           display: 'flex', alignItems: 'center', justifyContent: 'space-between',
         }}>
-          <Link href={`/shop/${restaurant.slug}`}
+          <Link href={`/shop/${shop.slug}`}
             style={{ fontFamily: PIXEL, fontSize: '9px', color: TEXT, textDecoration: 'none',
               textShadow: neonText(NEON_PINK) }}>
-            {restaurant.name.toUpperCase()}
+            {shop.name.toUpperCase()}
           </Link>
           <div style={{ display: 'flex', alignItems: 'center', gap: '24px' }}>
             <a href="#shop" style={{ fontFamily: PIXEL, fontSize: '7px', color: `${TEXT}80`,
@@ -319,10 +319,10 @@ export function ArcadeStorefront({ restaurant, products }: Props) {
             </div>
 
             {/* Description */}
-            {restaurant.description && (
+            {shop.description && (
               <p style={{ fontSize: '13px', color: `${TEXT}70`, lineHeight: 1.8,
                 maxWidth: '480px', marginBottom: '36px', fontFamily: 'system-ui, sans-serif' }}>
-                {restaurant.description}
+                {shop.description}
               </p>
             )}
 
@@ -428,7 +428,7 @@ export function ArcadeStorefront({ restaurant, products }: Props) {
                 <ArcadeCard
                   key={product.id}
                   product={product}
-                  restaurant={restaurant}
+                  shop={shop}
                   index={i}
                   onConflict={setConflictItem}
                 />
@@ -447,7 +447,7 @@ export function ArcadeStorefront({ restaurant, products }: Props) {
             INSERT COIN TO CONTINUE
           </div>
           <div style={{ fontFamily: PIXEL, fontSize: '7px', color: `${TEXT}30` }}>
-            © {restaurant.name.toUpperCase()} · POWERED BY AFTER DESSERT
+            © {shop.name.toUpperCase()} · POWERED BY AFTER DESSERT
           </div>
         </footer>
       </div>

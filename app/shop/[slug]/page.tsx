@@ -5,7 +5,7 @@ import { ArcadeStorefront } from '@/components/storefront/ArcadeStorefront'
 import { LunchLadyStorefront } from '@/components/storefront/LunchLadyStorefront'
 import { The1982Storefront } from '@/components/storefront/The1982Storefront'
 import { IslandApparelStorefront } from '@/components/storefront/IslandApparelStorefront'
-import { Product, Restaurant } from '@/types'
+import { Product, Shop } from '@/types'
 import Image from 'next/image'
 
 export const dynamic = 'force-dynamic'
@@ -32,7 +32,7 @@ export default async function StorefrontPage({
     return <IslandApparelStorefront />
   }
 
-  const restaurant = await prisma.restaurant.findUnique({
+  const shop = await prisma.shop.findUnique({
     where: { slug },
     select: {
       id: true, name: true, slug: true, description: true,
@@ -44,20 +44,20 @@ export default async function StorefrontPage({
     },
   })
 
-  if (!restaurant) notFound()
+  if (!shop) notFound()
 
   // Arcade theme — custom layout for Quazar Arcade
   if (slug === 'quazar-arcade') {
     const rawProducts = await prisma.product.findMany({
-      where: { restaurantId: restaurant.id },
+      where: { shopId: shop.id },
       orderBy: { createdAt: 'asc' },
     })
     const products: Product[] = rawProducts.map((p) => ({ ...p, images: JSON.parse(p.images) }))
-    return <ArcadeStorefront restaurant={restaurant as Restaurant} products={products} />
+    return <ArcadeStorefront shop={shop as Shop} products={products} />
   }
 
   const rawProducts = await prisma.product.findMany({
-    where: { restaurantId: restaurant.id },
+    where: { shopId: shop.id },
     orderBy: { createdAt: 'asc' },
   })
   const products: Product[] = rawProducts.map((p) => ({
@@ -66,7 +66,7 @@ export default async function StorefrontPage({
   }))
 
   const categories = [...new Set(products.map((p) => p.category))]
-  const year = new Date(restaurant.createdAt).getFullYear()
+  const year = new Date(shop.createdAt).getFullYear()
 
   return (
     <div>
@@ -74,10 +74,10 @@ export default async function StorefrontPage({
       <section className="relative min-h-screen flex flex-col justify-end px-6 sm:px-14 pb-16 sm:pb-24 overflow-hidden"
         style={{ backgroundColor: 'var(--color-primary)' }}
       >
-        {restaurant.bannerImage && (
+        {shop.bannerImage && (
           <Image
-            src={restaurant.bannerImage}
-            alt={restaurant.name}
+            src={shop.bannerImage}
+            alt={shop.name}
             fill
             className="object-cover object-center"
             priority
@@ -90,27 +90,27 @@ export default async function StorefrontPage({
 
         {/* Content — bottom left, editorial */}
         <div className="relative z-10 max-w-4xl">
-          {restaurant.logo ? (
+          {shop.logo ? (
             <div className="mb-6">
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={restaurant.logo} alt={restaurant.name} style={{ maxHeight: '320px', width: 'auto' }} />
+              <img src={shop.logo} alt={shop.name} style={{ maxHeight: '320px', width: 'auto' }} />
             </div>
           ) : (
             <h1
               className="font-[family-name:var(--font-display)] font-light text-white leading-[0.9] tracking-[-0.02em] mb-6"
               style={{ fontSize: 'clamp(4.5rem, 9vw, 9rem)' }}
             >
-              {restaurant.heroHeadline || restaurant.name}
+              {shop.heroHeadline || shop.name}
             </h1>
           )}
-          {restaurant.tagline && (
+          {shop.tagline && (
             <p className="text-[10px] tracking-[0.35em] uppercase text-white/50 mb-3">
-              {restaurant.tagline}
+              {shop.tagline}
             </p>
           )}
-          {restaurant.description && (
+          {shop.description && (
             <p className="mt-2 text-sm text-white/60 leading-relaxed max-w-sm tracking-wide">
-              {restaurant.description}
+              {shop.description}
             </p>
           )}
         </div>
@@ -123,20 +123,20 @@ export default async function StorefrontPage({
       </section>
 
       {/* ── MANIFESTO ── dark strip with brand statement */}
-      {(restaurant.description || restaurant.about) && (
+      {(shop.description || shop.about) && (
         <section className="py-20 px-6 sm:px-14" style={{ backgroundColor: 'var(--color-primary)' }}>
           <div className="max-w-3xl mx-auto text-center">
-            {restaurant.description && (
+            {shop.description && (
               <p
                 className="font-[family-name:var(--font-display)] font-light italic leading-[1.2] tracking-wide"
                 style={{ fontSize: 'clamp(1.6rem, 3vw, 2.8rem)', color: 'var(--color-secondary)', opacity: 0.85 }}
               >
-                &ldquo;{restaurant.description}&rdquo;
+                &ldquo;{shop.description}&rdquo;
               </p>
             )}
-            {restaurant.about && (
+            {shop.about && (
               <p className="mt-8 text-sm leading-relaxed max-w-xl mx-auto" style={{ color: 'var(--color-secondary)', opacity: 0.55 }}>
-                {restaurant.about}
+                {shop.about}
               </p>
             )}
           </div>
@@ -166,7 +166,7 @@ export default async function StorefrontPage({
                   color: 'var(--color-primary)',
                 }}
               >
-                {restaurant.name} Merchandise
+                {shop.name} Merchandise
               </h2>
             </div>
 
@@ -189,16 +189,16 @@ export default async function StorefrontPage({
                     {products
                       .filter((p) => p.category === category)
                       .map((p) => (
-                        <ProductCard key={p.id} product={p} restaurant={restaurant as Restaurant} />
+                        <ProductCard key={p.id} product={p} shop={shop as Shop} />
                       ))}
                   </div>
                 </section>
 
                 {/* Editorial image break between first and second category */}
-                {idx === 0 && categories.length > 1 && restaurant.bannerImage && (
+                {idx === 0 && categories.length > 1 && shop.bannerImage && (
                   <div className="relative w-full h-64 sm:h-96 overflow-hidden mb-20">
                     <Image
-                      src={restaurant.bannerImage}
+                      src={shop.bannerImage}
                       alt=""
                       fill
                       className="object-cover object-center"
@@ -210,7 +210,7 @@ export default async function StorefrontPage({
                         className="font-[family-name:var(--font-display)] font-light italic text-white/80 tracking-wide text-center px-6"
                         style={{ fontSize: 'clamp(1.4rem, 2.5vw, 2rem)' }}
                       >
-                        {restaurant.name}
+                        {shop.name}
                       </p>
                     </div>
                   </div>
@@ -225,27 +225,27 @@ export default async function StorefrontPage({
       </div>
 
       {/* Storefront footer */}
-      {(restaurant.address || restaurant.instagram || restaurant.websiteUrl) && (
+      {(shop.address || shop.instagram || shop.websiteUrl) && (
         <footer className="py-12 px-6 sm:px-14" style={{ backgroundColor: 'var(--color-primary)' }}>
           <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
             <div className="text-center sm:text-left">
-              {restaurant.address && (
+              {shop.address && (
                 <p className="text-xs tracking-wide" style={{ color: 'var(--color-secondary)', opacity: 0.5 }}>
-                  {restaurant.address}
+                  {shop.address}
                 </p>
               )}
             </div>
             <div className="flex items-center gap-5">
-              {restaurant.instagram && (
-                <a href={restaurant.instagram} target="_blank" rel="noopener noreferrer"
+              {shop.instagram && (
+                <a href={shop.instagram} target="_blank" rel="noopener noreferrer"
                   className="text-[10px] tracking-[0.2em] uppercase hover:opacity-80 transition-opacity"
                   style={{ color: 'var(--color-secondary)', opacity: 0.6 }}
                 >
                   Instagram
                 </a>
               )}
-              {restaurant.websiteUrl && (
-                <a href={restaurant.websiteUrl} target="_blank" rel="noopener noreferrer"
+              {shop.websiteUrl && (
+                <a href={shop.websiteUrl} target="_blank" rel="noopener noreferrer"
                   className="text-[10px] tracking-[0.2em] uppercase hover:opacity-80 transition-opacity"
                   style={{ color: 'var(--color-secondary)', opacity: 0.6 }}
                 >

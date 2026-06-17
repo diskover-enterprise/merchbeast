@@ -2,16 +2,16 @@
 
 import Link from 'next/link'
 import { useState } from 'react'
-import { Product, Restaurant } from '@/types'
+import { Product, Shop } from '@/types'
 import { formatCurrency } from '@/lib/utils'
 import { useCart } from '@/hooks/useCart'
 
 interface Props {
   product: Product
-  restaurant: Restaurant
+  shop: Shop
 }
 
-export function ProductCard({ product, restaurant }: Props) {
+export function ProductCard({ product, shop }: Props) {
   const { addItem, replaceCartWith, cartRestaurantName } = useCart()
   const [showConflictDialog, setShowConflictDialog] = useState(false)
   const [pendingItem, setPendingItem] = useState<Parameters<typeof addItem>[0] | null>(null)
@@ -21,9 +21,9 @@ export function ProductCard({ product, restaurant }: Props) {
     e.preventDefault()
     const item = {
       productId: product.id,
-      restaurantId: restaurant.id,
-      restaurantSlug: restaurant.slug,
-      restaurantName: restaurant.name,
+      shopId: shop.id,
+      shopSlug: shop.slug,
+      shopName: shop.name,
       name: product.name,
       price: product.price,
       image: firstImage,
@@ -52,7 +52,7 @@ export function ProductCard({ product, restaurant }: Props) {
   return (
     <>
       <Link
-        href={`/shop/${restaurant.slug}/products/${product.id}`}
+        href={`/shop/${shop.slug}/products/${product.id}`}
         className="group block"
       >
         {/* Image */}
@@ -68,7 +68,7 @@ export function ProductCard({ product, restaurant }: Props) {
           ) : (
             <div
               className="w-full h-full"
-              style={{ backgroundColor: `${restaurant.primaryColor}12` }}
+              style={{ backgroundColor: `${shop.primaryColor}12` }}
             />
           )}
           {product.stock === 0 && (

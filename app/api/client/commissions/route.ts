@@ -8,13 +8,13 @@ export async function GET() {
 
   // Get all orders grouped by month
   const orders = await prisma.order.findMany({
-    where: { restaurantId: shopId },
+    where: { shopId },
     orderBy: { createdAt: 'asc' },
   })
 
   // Get existing commission payment records
   const payments = await prisma.commissionPayment.findMany({
-    where: { restaurantId: shopId },
+    where: { shopId },
     orderBy: { month: 'desc' },
   })
 

@@ -2,7 +2,7 @@ import { prisma } from '@/lib/prisma'
 
 // GET all commissions across all clients
 export async function GET() {
-  const shops = await prisma.restaurant.findMany({
+  const shops = await prisma.shop.findMany({
     include: {
       orders: true,
       commissions: { orderBy: { month: 'desc' } },
@@ -38,14 +38,15 @@ export async function GET() {
 
 // POST to mark a month as paid
 export async function POST(request: Request) {
-  const { restaurantId, month, note } = await request.json()
+  const { shopId: restaurantId, month, note } = await request.json()
+  // shopId already set
 
   const existing = await prisma.commissionPayment.findFirst({
-    where: { restaurantId, month },
+    where: { shopId, month },
   })
 
   // Get revenue for that month
-  const orders = await prisma.order.findMany({ where: { restaurantId } })
+  const orders = await prisma.order.findMany({ where: { shopId } })
   const revenue = orders
     .filter(o => o.createdAt.toISOString().slice(0, 7) === month)
     .reduce((sum, o) => sum + o.total, 0)
@@ -57,7 +58,7 @@ export async function POST(request: Request) {
     })
   } else {
     await prisma.commissionPayment.create({
-      data: { restaurantId, month, revenue, rate: 0.25, paidAt: new Date(), note: note || null },
+      data: { shopId, month, revenue, rate: 0.25, paidAt: new Date(), note: note || null },
     })
   }
 
@@ -66,7 +67,8 @@ export async function POST(request: Request) {
 
 // DELETE to unmark a payment
 export async function DELETE(request: Request) {
-  const { restaurantId, month } = await request.json()
-  await prisma.commissionPayment.deleteMany({ where: { restaurantId, month } })
+  const { shopId: restaurantId, month } = await request.json()
+  // shopId already set
+  await prisma.commissionPayment.deleteMany({ where: { shopId, month } })
   return Response.json({ ok: true })
 }

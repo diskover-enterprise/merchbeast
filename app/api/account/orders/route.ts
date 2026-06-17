@@ -10,7 +10,7 @@ export async function GET() {
   const orders = await prisma.order.findMany({
     where: { customerId: session.user.customerId },
     include: {
-      restaurant: { select: { name: true, slug: true, primaryColor: true, accentColor: true } },
+      shop: { select: { name: true, slug: true, primaryColor: true, accentColor: true } },
       items: {
         include: { product: { select: { name: true, images: true } } },
       },
@@ -22,6 +22,7 @@ export async function GET() {
   return Response.json(
     orders.map((o: any) => ({
       ...o,
+      restaurant: o.shop,
       items: o.items.map((i: any) => ({
         ...i,
         product: i.product ? { ...i.product, images: JSON.parse(i.product.images) } : null,

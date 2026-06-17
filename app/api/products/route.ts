@@ -3,11 +3,11 @@ import { getAuthSession } from '@/lib/auth'
 
 export async function GET() {
   const session = await getAuthSession()
-  if (!session?.user?.restaurantId)
+  if (!session?.user?.shopId)
     return Response.json({ error: 'Unauthorized' }, { status: 401 })
 
   const products = await prisma.product.findMany({
-    where: { restaurantId: session.user.restaurantId },
+    where: { shopId: session.user.shopId },
     orderBy: { createdAt: 'desc' },
   })
   return Response.json(products.map((p) => ({ ...p, images: JSON.parse(p.images) })))
@@ -15,13 +15,13 @@ export async function GET() {
 
 export async function POST(req: Request) {
   const session = await getAuthSession()
-  if (!session?.user?.restaurantId)
+  if (!session?.user?.shopId)
     return Response.json({ error: 'Unauthorized' }, { status: 401 })
 
   const body = await req.json()
   const product = await prisma.product.create({
     data: {
-      restaurantId: session.user.restaurantId,
+      shopId: session.user.shopId,
       name: body.name,
       description: body.description,
       price: Math.round(parseFloat(body.price) * 100),

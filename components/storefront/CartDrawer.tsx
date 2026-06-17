@@ -70,7 +70,7 @@ export function CartDrawer({ open, onClose }: Props) {
                   </div>
                   <div className="flex-1 min-w-0">
                     <p className="text-sm font-medium text-[#0A0A0A] truncate">{item.name}</p>
-                    <p className="text-[10px] tracking-wider uppercase text-[#6B6B6B] mt-0.5">{item.restaurantName}</p>
+                    <p className="text-[10px] tracking-wider uppercase text-[#6B6B6B] mt-0.5">{item.shopName}</p>
                     <p className="text-sm font-medium text-[#0A0A0A] mt-1">
                       {formatCurrency(item.price)}
                     </p>

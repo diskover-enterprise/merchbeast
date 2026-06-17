@@ -14,7 +14,7 @@ export async function GET(
   if (!await requireAdmin()) return Response.json({ error: 'Unauthorized' }, { status: 401 })
 
   const { id } = await params
-  const restaurant = await prisma.restaurant.findUnique({
+  const shop = await prisma.shop.findUnique({
     where: { id },
     select: {
       id: true, name: true, slug: true, ownerEmail: true,
@@ -24,8 +24,8 @@ export async function GET(
       instagram: true, websiteUrl: true, address: true,
     },
   })
-  if (!restaurant) return Response.json({ error: 'Not found' }, { status: 404 })
-  return Response.json(restaurant)
+  if (!shop) return Response.json({ error: 'Not found' }, { status: 404 })
+  return Response.json(shop)
 }
 
 export async function PUT(
@@ -37,7 +37,7 @@ export async function PUT(
   const { id } = await params
   const body = await req.json()
 
-  const updated = await prisma.restaurant.update({
+  const updated = await prisma.shop.update({
     where: { id },
     data: {
       name: body.name,

@@ -8,7 +8,7 @@ export async function POST(req: Request) {
     api_secret: process.env.CLOUDINARY_API_SECRET,
   })
   const session = await getAuthSession()
-  if (!session?.user?.restaurantId && session?.user?.role !== 'admin')
+  if (!session?.user?.shopId && session?.user?.role !== 'admin')
     return Response.json({ error: 'Unauthorized' }, { status: 401 })
 
   const formData = await req.formData()
@@ -19,8 +19,8 @@ export async function POST(req: Request) {
   const buffer = Buffer.from(bytes)
 
   const result = await new Promise<{ secure_url: string }>((resolve, reject) => {
-    const folder = session.user.restaurantId
-      ? `afterdessert/${session.user.restaurantId}`
+    const folder = session.user.shopId
+      ? `afterdessert/${session.user.shopId}`
       : 'afterdessert/admin'
 
     cloudinary.uploader

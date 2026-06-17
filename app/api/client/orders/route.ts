@@ -9,7 +9,7 @@ export async function GET() {
   const db = prisma
 
   const orders = await db.order.findMany({
-    where: { restaurantId: shopId },
+    where: { shopId },
     include: {
       customer: true,
       items: { include: { product: true } },

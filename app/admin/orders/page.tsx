@@ -27,7 +27,7 @@ interface RestaurantOption {
 export default function AdminOrdersPage() {
   const [orders, setOrders] = useState<AdminOrder[]>([])
   const [restaurants, setRestaurants] = useState<RestaurantOption[]>([])
-  const [selectedRestaurantId, setSelectedRestaurantId] = useState('')
+  const [selectedShopId, setSelectedRestaurantId] = useState('')
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
@@ -38,8 +38,8 @@ export default function AdminOrdersPage() {
 
   useEffect(() => {
     setLoading(true)
-    const url = selectedRestaurantId
-      ? `/api/admin/orders?restaurantId=${selectedRestaurantId}`
+    const url = selectedShopId
+      ? `/api/admin/orders?shopId=${selectedShopId}`
       : '/api/admin/orders'
     fetch(url)
       .then((r) => r.json())
@@ -48,7 +48,7 @@ export default function AdminOrdersPage() {
         setLoading(false)
       })
       .catch(() => setLoading(false))
-  }, [selectedRestaurantId])
+  }, [selectedShopId])
 
   return (
     <div className="p-8 max-w-6xl">
@@ -62,7 +62,7 @@ export default function AdminOrdersPage() {
             Filter by Restaurant
           </label>
           <select
-            value={selectedRestaurantId}
+            value={selectedShopId}
             onChange={(e) => setSelectedRestaurantId(e.target.value)}
             className="border border-gray-200 text-sm px-3 py-2 bg-white text-gray-700 focus:outline-none focus:border-gray-400"
           >

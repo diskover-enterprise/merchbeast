@@ -38,8 +38,8 @@ export function useCart() {
   const addItem = useCallback(
     (item: CartItem): 'added' | 'conflict' => {
       const current = readCart()
-      const currentRestaurantId = current.items[0]?.restaurantId
-      if (currentRestaurantId && currentRestaurantId !== item.restaurantId) {
+      const currentShopId = current.items[0]?.shopId
+      if (currentShopId && currentShopId !== item.shopId) {
         return 'conflict'
       }
       const existing = current.items.findIndex((i) => i.productId === item.productId)
@@ -54,7 +54,7 @@ export function useCart() {
     [saveCart]
   )
 
-  // Used after user confirms replacing cart from a different restaurant
+  // Used after user confirms replacing cart from a different shop
   const replaceCartWith = useCallback(
     (item: CartItem) => {
       saveCart({ items: [item] })
@@ -91,9 +91,9 @@ export function useCart() {
 
   const itemCount = cart.items.reduce((sum, i) => sum + i.quantity, 0)
   const total = cart.items.reduce((sum, i) => sum + i.price * i.quantity, 0)
-  const cartRestaurantId = cart.items[0]?.restaurantId ?? null
-  const cartRestaurantSlug = cart.items[0]?.restaurantSlug ?? null
-  const cartRestaurantName = cart.items[0]?.restaurantName ?? null
+  const cartShopId = cart.items[0]?.shopId ?? null
+  const cartShopSlug = cart.items[0]?.shopSlug ?? null
+  const cartShopName = cart.items[0]?.shopName ?? null
 
   return {
     cart,
@@ -105,8 +105,12 @@ export function useCart() {
     clearCart,
     itemCount,
     total,
-    cartRestaurantId,
-    cartRestaurantSlug,
-    cartRestaurantName,
+    cartShopId,
+    cartShopSlug,
+    cartShopName,
+    // Legacy aliases for gradual migration
+    cartRestaurantId: cartShopId,
+    cartRestaurantSlug: cartShopSlug,
+    cartRestaurantName: cartShopName,
   }
 }
