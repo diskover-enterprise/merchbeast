@@ -14,7 +14,7 @@ export function The1982Storefront() {
   const crewnecks = the1982Products.filter(p => p.category === 'Crewneck')
 
   return (
-    <div style={{ fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif", background: '#fff', color: '#111', minHeight: '100vh' }}>
+    <div style={{ fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif", background: '#fff', color: '#111', overflowX: 'hidden' }}>
 
       <style>{`
         /* NAV */
