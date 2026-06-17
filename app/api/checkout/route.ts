@@ -50,9 +50,12 @@ export async function POST(request: Request) {
     : (process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000')
 
   const host = new URL(baseUrl).hostname
+  const refererPath = request.headers.get('referer') || ''
   const shopSlug = host.startsWith('the1982.') ? 'the-1982'
     : host.startsWith('nomo-nomo.') ? 'nomo-nomo'
-    : host.startsWith('islandapparel.') ? 'island-apparel'
+    : refererPath.includes('/shop/boasty-collective') ? 'boasty-collective'
+    : refererPath.includes('/shop/nomo-nomo') ? 'nomo-nomo'
+    : refererPath.includes('/shop/the-1982') ? 'the-1982'
     : 'lunch-lady'
 
   // Pass shop slug + item details as metadata so success page can create the DB order
