@@ -8,7 +8,6 @@ import { useCart } from '@/app/cart-context'
 export function IslandApparelStorefront() {
   const { count } = useCart()
   const tees = islandProducts.filter(p => p.category === 'Tee')
-  const crewnecks = islandProducts.filter(p => p.category === 'Crewneck')
   const hats = islandProducts.filter(p => p.category === 'Hat')
 
   return (
@@ -108,17 +107,6 @@ export function IslandApparelStorefront() {
         </div>
         <div className="ia-grid">
           {tees.map(p => <ProductCard key={p.slug} product={p} />)}
-        </div>
-      </section>
-
-      {/* CREWNECKS */}
-      <section className="ia-section dark">
-        <div className="ia-section-head">
-          <h2 className="ia-section-title">Crewnecks</h2>
-          <span className="ia-section-count">{crewnecks.length} styles</span>
-        </div>
-        <div className="ia-grid">
-          {crewnecks.map(p => <ProductCard key={p.slug} product={p} dark />)}
         </div>
       </section>
 
