@@ -65,6 +65,7 @@ export default function OrdersPage() {
                     <th>Order ID</th>
                     <th>Customer</th>
                     <th>Items</th>
+                    <th>Ship To</th>
                     <th>Total</th>
                     <th>Status</th>
                     <th>Date</th>
@@ -83,6 +84,9 @@ export default function OrdersPage() {
                       </td>
                       <td>
                         {order.items?.map((i) => `${i.product?.name} ×${i.quantity}`).join(', ')}
+                      </td>
+                      <td style={{ fontSize: 12, color: (order as any).shippingAddress ? 'inherit' : 'var(--ink-mute)' }}>
+                        {(order as any).shippingAddress ?? '—'}
                       </td>
                       <td className="strong">{formatCurrency(order.total)}</td>
                       <td><StatusBadge status={order.status} /></td>

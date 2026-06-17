@@ -21,6 +21,9 @@ export async function GET() {
         total: session.amount_total || 0,
         status: 'paid',
         createdAt: new Date(session.created * 1000).toISOString(),
+        shippingAddress: session.shipping_details?.address
+          ? [session.shipping_details.address.line1, session.shipping_details.address.line2, session.shipping_details.address.city, session.shipping_details.address.state, session.shipping_details.address.postal_code, session.shipping_details.address.country].filter(Boolean).join(', ')
+          : null,
       }
     })
   )
