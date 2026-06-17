@@ -78,7 +78,10 @@ export function DashboardSidebar() {
       <div className="db-signout">
         <button
           className="db-signout-btn"
-          onClick={() => signOut({ callbackUrl: '/dashboard/login' })}
+          onClick={async () => {
+            await fetch('/api/dashboard/auth', { method: 'DELETE' })
+            window.location.href = '/dashboard'
+          }}
         >
           <LogOut />
           Sign Out
