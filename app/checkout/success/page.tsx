@@ -44,11 +44,19 @@ function SuccessContent() {
   const { clearCart } = useCart()
   const params = useSearchParams()
   const shop = params.get('shop') || 'lunch-lady'
+  const sessionId = params.get('session_id')
   const brand = BRANDS[shop] || BRANDS['lunch-lady']
 
   useEffect(() => {
     clearCart()
-  }, [clearCart])
+    if (sessionId) {
+      fetch('/api/orders/create-from-stripe', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ sessionId }),
+      }).catch(console.error)
+    }
+  }, [clearCart, sessionId])
 
   return (
     <div style={{ fontFamily: brand.font, background: brand.bg, color: brand.color, minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>

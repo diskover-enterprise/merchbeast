@@ -20,7 +20,7 @@ export async function GET() {
   return Response.json(orders.map(o => ({
     id: o.id,
     customer: { name: o.customer.name, email: o.customer.email },
-    items: o.items.map(i => ({ name: i.product.name, quantity: i.quantity, price: i.priceAtPurchase / 100 })),
+    items: o.items.map(i => ({ name: i.product?.name ?? i.productName ?? 'Item', quantity: i.quantity, price: i.priceAtPurchase / 100 })),
     total: o.total / 100,
     status: o.status,
     createdAt: o.createdAt,

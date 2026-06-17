@@ -25,22 +25,24 @@ export async function POST(request: Request) {
     return Response.json({ error: 'Cart is empty' }, { status: 400 })
   }
 
-  const lineItems = items.map((item) => {
+  const resolvedItems = items.map((item) => {
     const product = findProduct(item.slug)
     if (!product) throw new Error(`Product not found: ${item.slug}`)
     const unitAmount = Math.round(parseFloat(product.price.replace(/[^0-9.]/g, '')) * 100)
-    return {
-      price_data: {
-        currency: 'cad',
-        product_data: {
-          name: product.name,
-          images: product.images.slice(0, 1),
-        },
-        unit_amount: unitAmount,
-      },
-      quantity: item.quantity,
-    }
+    return { product, item, unitAmount }
   })
+
+  const lineItems = resolvedItems.map(({ product, item, unitAmount }) => ({
+    price_data: {
+      currency: 'cad',
+      product_data: {
+        name: product.name,
+        images: product.images.slice(0, 1),
+      },
+      unit_amount: unitAmount,
+    },
+    quantity: item.quantity,
+  }))
 
   const origin = request.headers.get('origin') || request.headers.get('referer') || ''
   const baseUrl = origin
@@ -48,16 +50,29 @@ export async function POST(request: Request) {
     : (process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000')
 
   const host = new URL(baseUrl).hostname
-  const shop = host.startsWith('the1982.') ? 'the-1982'
+  const shopSlug = host.startsWith('the1982.') ? 'the-1982'
     : host.startsWith('nomo-nomo.') ? 'nomo-nomo'
+    : host.startsWith('islandapparel.') ? 'island-apparel'
     : 'lunch-lady'
+
+  // Pass shop slug + item details as metadata so success page can create the DB order
+  const cartMeta = resolvedItems.map(({ product, item, unitAmount }) => ({
+    name: product.name,
+    slug: item.slug,
+    quantity: item.quantity,
+    price: unitAmount,
+  }))
 
   const session = await stripe.checkout.sessions.create({
     payment_method_types: ['card'],
     line_items: lineItems,
     mode: 'payment',
-    success_url: `${baseUrl}/checkout/success?session_id={CHECKOUT_SESSION_ID}&shop=${shop}`,
+    success_url: `${baseUrl}/checkout/success?session_id={CHECKOUT_SESSION_ID}&shop=${shopSlug}`,
     cancel_url: `${baseUrl}/cart`,
+    metadata: {
+      shopSlug,
+      cartItems: JSON.stringify(cartMeta),
+    },
   })
 
   return Response.json({ url: session.url })
