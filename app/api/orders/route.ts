@@ -18,7 +18,7 @@ export async function GET() {
           product: { name: item.description },
           quantity: item.quantity,
         })),
-        total: (session.amount_total || 0) / 100,
+        total: session.amount_total || 0,
         status: 'paid',
         createdAt: new Date(session.created * 1000).toISOString(),
       }
