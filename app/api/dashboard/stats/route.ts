@@ -13,7 +13,7 @@ export async function GET() {
 
   const totalOrders = allSessions.data.length
   const recentOrdersCount = recentSessions.data.length
-  const totalRevenue = recentSessions.data.reduce((sum, s) => sum + (s.amount_total || 0), 0) / 100
+  const totalRevenue = recentSessions.data.reduce((sum, s) => sum + (s.amount_total || 0), 0)
 
   // Daily revenue for last 7 days
   const dailyMap: Record<string, number> = {}
@@ -25,7 +25,7 @@ export async function GET() {
   for (const session of allSessions.data) {
     if (session.created >= sevenDaysAgo) {
       const key = new Date(session.created * 1000).toISOString().split('T')[0]
-      if (key in dailyMap) dailyMap[key] += (session.amount_total || 0) / 100
+      if (key in dailyMap) dailyMap[key] += (session.amount_total || 0)
     }
   }
   const dailyRevenue = Object.entries(dailyMap).map(([date, revenue]) => ({ date, revenue }))
