@@ -70,8 +70,21 @@ export async function POST(request: Request) {
     success_url: `${baseUrl}/checkout/success?session_id={CHECKOUT_SESSION_ID}&shop=${shopSlug}`,
     cancel_url: `${baseUrl}/cart`,
     shipping_address_collection: {
-      allowed_countries: ['US', 'CA', 'GB', 'AU'],
+      allowed_countries: ['US', 'CA'],
     },
+    shipping_options: [
+      {
+        shipping_rate_data: {
+          type: 'fixed_amount',
+          fixed_amount: { amount: 1000, currency: 'cad' },
+          display_name: 'Standard Shipping',
+          delivery_estimate: {
+            minimum: { unit: 'business_day', value: 5 },
+            maximum: { unit: 'business_day', value: 10 },
+          },
+        },
+      },
+    ],
     metadata: {
       shopSlug,
       cartItems: JSON.stringify(cartMeta),
