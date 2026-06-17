@@ -12,6 +12,7 @@ type Order = {
   total: number
   status: string
   createdAt: string
+  shippingAddress?: string
 }
 
 export default function ClientOrders() {
@@ -82,6 +83,7 @@ export default function ClientOrders() {
                     <th>Order</th>
                     <th>Customer</th>
                     <th>Items</th>
+                    <th>Ship To</th>
                     <th>Total</th>
                     <th>Status</th>
                     <th>Date</th>
@@ -96,6 +98,7 @@ export default function ClientOrders() {
                         <div style={{ fontSize: 11, color: 'var(--ink-mute)' }}>{o.customer.email}</div>
                       </td>
                       <td style={{ fontSize: 12 }}>{o.items.map(i => `${i.name} ×${i.quantity}`).join(', ')}</td>
+                      <td style={{ fontSize: 12, color: o.shippingAddress ? 'inherit' : 'var(--ink-mute)' }}>{o.shippingAddress ?? '—'}</td>
                       <td style={{ fontWeight: 600 }}>${o.total.toFixed(2)}</td>
                       <td><span className={`cl-badge ${o.status}`}>{o.status}</span></td>
                       <td style={{ color: 'var(--ink-mute)', fontSize: 12 }}>{new Date(o.createdAt).toLocaleDateString()}</td>

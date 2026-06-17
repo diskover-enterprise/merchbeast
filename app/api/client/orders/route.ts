@@ -24,5 +24,6 @@ export async function GET() {
     total: o.total / 100,
     status: o.status,
     createdAt: o.createdAt,
+    shippingAddress: o.shippingAddress,
   })))
 }
