@@ -41,7 +41,8 @@ export async function POST(req: Request) {
 
   const orders = []
   for (const [restaurantId, groupItems] of Object.entries(restaurantGroups)) {
-    const total = groupItems.reduce((sum, i) => sum + i.price * i.quantity, 0)
+    // Use Stripe's amount_total (in cents) as the authoritative total
+    const total = stripeSession.amount_total ?? groupItems.reduce((sum, i) => sum + i.price * i.quantity, 0)
     const order = await prisma.order.create({
       data: {
         customerId: customer.id,
