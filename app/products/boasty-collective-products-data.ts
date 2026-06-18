@@ -56,6 +56,28 @@ export const boastyProducts: BoastyProduct[] = [
     colors: ['Teal'],
     category: 'Tee',
   },
+  {
+    slug: 'boasty-hat-1',
+    name: 'Hat 1',
+    price: '$50.00 CAD',
+    description: 'Caribbean-inspired cap. One size fits all.',
+    path: '/shop/boasty-collective/products/boasty-hat-1',
+    images: ['https://images.unsplash.com/photo-1588850561407-ed78c282e89b?w=800&q=80'],
+    sizes: ['One Size'],
+    colors: ['White'],
+    category: 'Hat',
+  },
+  {
+    slug: 'boasty-hat-2',
+    name: 'Hat 2',
+    price: '$50.00 CAD',
+    description: 'Caribbean-inspired cap. One size fits all.',
+    path: '/shop/boasty-collective/products/boasty-hat-2',
+    images: ['https://images.unsplash.com/photo-1556306535-0f09a537f0a3?w=800&q=80'],
+    sizes: ['One Size'],
+    colors: ['Navy'],
+    category: 'Hat',
+  },
 ]
 
 export function getBoastyProduct(slug: string) {
