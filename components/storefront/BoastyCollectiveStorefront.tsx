@@ -8,7 +8,6 @@ import { useCart } from '@/app/cart-context'
 export function BoastyCollectiveStorefront() {
   const { count } = useCart()
   const tees = boastyProducts.filter(p => p.category === 'Tee')
-  const hats = boastyProducts.filter(p => p.category === 'Hat')
 
   return (
     <div style={{ fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif", background: '#f9f6f0', color: '#1a1a2e', overflowX: 'hidden' }}>
@@ -89,16 +88,6 @@ export function BoastyCollectiveStorefront() {
         </div>
         <div className="bc-grid">
           {tees.map(p => <ProductCard key={p.slug} product={p} />)}
-        </div>
-      </section>
-
-      <section className="bc-section">
-        <div className="bc-section-head">
-          <h2 className="bc-section-title">Hats</h2>
-          <span className="bc-section-count">{hats.length} styles</span>
-        </div>
-        <div className="bc-grid">
-          {hats.map(p => <ProductCard key={p.slug} product={p} />)}
         </div>
       </section>
 
