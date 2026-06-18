@@ -2,7 +2,7 @@ import Stripe from 'stripe'
 import { getProduct } from '@/app/products/products-data'
 import { the1982Products } from '@/app/products/the1982-products-data'
 import { nomoProducts } from '@/app/products/nomo-nomo-products-data'
-import { islandProducts } from '@/app/products/island-apparel-products-data'
+import { boastyProducts } from '@/app/products/boasty-collective-products-data'
 
 function findProduct(slug: string) {
   const main = getProduct(slug)
@@ -10,7 +10,7 @@ function findProduct(slug: string) {
   return (
     the1982Products.find(p => p.slug === slug) ||
     nomoProducts.find(p => p.slug === slug) ||
-    islandProducts.find(p => p.slug === slug) ||
+    boastyProducts.find(p => p.slug === slug) ||
     null
   )
 }
