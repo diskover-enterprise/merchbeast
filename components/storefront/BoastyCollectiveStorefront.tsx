@@ -23,7 +23,7 @@ export function BoastyCollectiveStorefront() {
         .bc-nav-cart:hover { border-color: #F4A261; color: #F4A261; }
 
         .bc-hero { padding-top: 64px; position: relative; background: #003A5C; min-height: 520px; display: flex; align-items: flex-end; overflow: hidden; }
-        .bc-hero-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0.45; }
+        .bc-hero-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center 20%; opacity: 0.55; }
         .bc-hero-content { position: relative; z-index: 2; padding: 60px 40px 64px; max-width: 700px; }
         .bc-hero-tag { font-size: 10px; letter-spacing: 0.4em; text-transform: uppercase; color: #F4A261; font-weight: 700; margin-bottom: 20px; }
         .bc-hero-title { font-family: 'Bebas Neue', sans-serif; font-size: clamp(60px, 10vw, 120px); color: #fff; line-height: 0.95; letter-spacing: 0.04em; text-transform: uppercase; margin-bottom: 20px; }
@@ -53,9 +53,9 @@ export function BoastyCollectiveStorefront() {
           .bc-nav { padding: 0 16px; height: 56px; }
           .bc-nav-brand { font-size: 20px; }
           .bc-nav-cart { font-size: 10px; padding: 8px 14px; letter-spacing: 0.15em; }
-          .bc-hero { min-height: 100svh; align-items: center; }
-          .bc-hero-img { object-position: center top; opacity: 0.5; }
-          .bc-hero-content { padding: 80px 20px 48px; text-align: center; max-width: 100%; }
+          .bc-hero { min-height: unset; flex-direction: column; align-items: stretch; }
+          .bc-hero-img { position: relative; inset: unset; width: 100%; height: auto; aspect-ratio: 16/9; object-fit: cover; object-position: center 20%; opacity: 1; }
+          .bc-hero-content { padding: 32px 20px 40px; text-align: center; max-width: 100%; background: #003A5C; }
           .bc-hero-tag { font-size: 9px; }
           .bc-hero-sub { font-size: 14px; margin: 0 auto; }
           .bc-section { padding: 48px 16px; }
