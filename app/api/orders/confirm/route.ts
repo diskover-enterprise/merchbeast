@@ -75,7 +75,7 @@ export async function POST(req: Request) {
         orderId: order.id,
       })
       resend.emails.send({
-        from: 'MerchMarket <orders@' + (process.env.RESEND_FROM_DOMAIN ?? 'resend.dev') + '>',
+        from: 'Merch Beast <orders@' + (process.env.RESEND_FROM_DOMAIN ?? 'resend.dev') + '>',
         to: email,
         subject,
         html,
@@ -96,7 +96,7 @@ export async function POST(req: Request) {
       orderId: order.id,
     })
     resend.emails.send({
-      from: 'MerchMarket <orders@' + (process.env.RESEND_FROM_DOMAIN ?? 'resend.dev') + '>',
+      from: 'Merch Beast <orders@' + (process.env.RESEND_FROM_DOMAIN ?? 'resend.dev') + '>',
       to: order.shop.ownerEmail,
       subject: ownerSubject,
       html: ownerHtml,
