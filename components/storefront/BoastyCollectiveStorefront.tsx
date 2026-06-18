@@ -11,11 +11,13 @@ export function BoastyCollectiveStorefront() {
   const hats = boastyProducts.filter(p => p.category === 'Hat')
 
   return (
-    <div style={{ fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif", background: '#f9f6f0', color: '#1a1a2e', overflowX: 'hidden' }}>
+    <div style={{ fontFamily: "'Montserrat', 'Helvetica Neue', Helvetica, Arial, sans-serif", background: '#f9f6f0', color: '#1a1a2e', overflowX: 'hidden' }}>
 
       <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@400;600;700;800&display=swap');
+
         .bc-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; height: 64px; background: rgba(0,58,92,0.97); backdrop-filter: blur(8px); display: flex; align-items: center; justify-content: space-between; padding: 0 40px; }
-        .bc-nav-brand { font-size: 15px; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; color: #fff; text-decoration: none; }
+        .bc-nav-brand { font-family: 'Bebas Neue', sans-serif; font-size: 22px; letter-spacing: 0.15em; text-transform: uppercase; color: #fff; text-decoration: none; }
         .bc-nav-brand span { color: #F4A261; }
         .bc-nav-cart { font-size: 11px; letter-spacing: 0.25em; text-transform: uppercase; color: #fff; text-decoration: none; padding: 9px 20px; border: 1px solid rgba(255,255,255,0.35); white-space: nowrap; transition: border-color 0.2s, color 0.2s; }
         .bc-nav-cart:hover { border-color: #F4A261; color: #F4A261; }
@@ -24,7 +26,7 @@ export function BoastyCollectiveStorefront() {
         .bc-hero-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0.45; }
         .bc-hero-content { position: relative; z-index: 2; padding: 60px 40px 64px; max-width: 700px; }
         .bc-hero-tag { font-size: 10px; letter-spacing: 0.4em; text-transform: uppercase; color: #F4A261; font-weight: 700; margin-bottom: 20px; }
-        .bc-hero-title { font-size: clamp(40px, 7vw, 80px); font-weight: 900; color: #fff; line-height: 1; letter-spacing: -0.02em; text-transform: uppercase; margin-bottom: 20px; }
+        .bc-hero-title { font-family: 'Bebas Neue', sans-serif; font-size: clamp(60px, 10vw, 120px); color: #fff; line-height: 0.95; letter-spacing: 0.04em; text-transform: uppercase; margin-bottom: 20px; }
         .bc-hero-title span { color: #F4A261; }
         .bc-hero-sub { font-size: 15px; color: rgba(255,255,255,0.65); line-height: 1.6; max-width: 420px; }
 
@@ -35,14 +37,14 @@ export function BoastyCollectiveStorefront() {
         .bc-section.dark { background: #003A5C; }
         .bc-section-head { display: flex; align-items: flex-end; justify-content: space-between; max-width: 1200px; margin: 0 auto 48px; padding-bottom: 20px; border-bottom: 2px solid rgba(0,58,92,0.12); }
         .bc-section.dark .bc-section-head { border-bottom-color: rgba(255,255,255,0.1); }
-        .bc-section-title { font-size: 26px; font-weight: 900; letter-spacing: 0.06em; text-transform: uppercase; color: #003A5C; }
+        .bc-section-title { font-family: 'Bebas Neue', sans-serif; font-size: 36px; letter-spacing: 0.1em; text-transform: uppercase; color: #003A5C; }
         .bc-section.dark .bc-section-title { color: #fff; }
         .bc-section-count { font-size: 11px; color: #F4A261; font-weight: 700; letter-spacing: 0.1em; }
 
         .bc-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 40px 20px; max-width: 1200px; margin: 0 auto; }
 
         .bc-footer { background: #001f33; padding: 48px 40px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; }
-        .bc-footer-brand { font-size: 14px; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; color: #fff; }
+        .bc-footer-brand { font-family: 'Bebas Neue', sans-serif; font-size: 20px; letter-spacing: 0.15em; text-transform: uppercase; color: #fff; }
         .bc-footer-brand span { color: #F4A261; }
         .bc-footer-copy { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(255,255,255,0.3); }
 
