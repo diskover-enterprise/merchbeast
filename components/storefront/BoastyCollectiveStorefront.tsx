@@ -115,9 +115,9 @@ function ProductCard({ product }: { product: BoastyProduct }) {
 
   return (
     <Link href={product.path} style={{ textDecoration: 'none', color: 'inherit', display: 'block' }} onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)}>
-      <div style={{ aspectRatio: '4/5', background: '#ede8df', overflow: 'hidden', marginBottom: 12, position: 'relative', borderRadius: 4 }}>
+      <div style={{ aspectRatio: '4/5', background: '#fff', overflow: 'hidden', marginBottom: 12, position: 'relative', borderRadius: 4 }}>
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={product.images[0]} alt={product.name} style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block', transition: 'transform 0.4s ease', transform: hovered ? 'scale(1.04)' : 'scale(1)' }} />
+        <img src={product.images[0]} alt={product.name} style={{ width: '100%', height: '100%', objectFit: 'contain', display: 'block', padding: '12px', transition: 'transform 0.4s ease', transform: hovered ? 'scale(1.04)' : 'scale(1)' }} />
         {product.tag && (
           <div style={{ position: 'absolute', top: 10, left: 10, fontSize: 9, letterSpacing: '0.2em', textTransform: 'uppercase', background: '#F4A261', color: '#fff', padding: '3px 8px', fontWeight: 700, borderRadius: 2 }}>{product.tag}</div>
         )}
