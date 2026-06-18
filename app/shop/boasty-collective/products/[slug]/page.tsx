@@ -65,7 +65,7 @@ export default function BoastyProductPage({ params }: { params: Promise<{ slug: 
       <nav className="bc-pnav">
         <Link href="/shop/boasty-collective" className="bc-pnav-back">← Shop</Link>
         <span className="bc-pnav-brand">Boasty<span> Collective</span></span>
-        <Link href="/cart" className="bc-pnav-cart">Cart{count > 0 ? ` (${count})` : ''}</Link>
+        <Link href="/shop/boasty-collective/cart" className="bc-pnav-cart">Cart{count > 0 ? ` (${count})` : ''}</Link>
       </nav>
 
       <div className="bc-pwrap">
@@ -111,7 +111,7 @@ export default function BoastyProductPage({ params }: { params: Promise<{ slug: 
               {added ? '✓ Added to Cart' : 'Add to Cart'}
             </button>
 
-            <Link href="/cart" style={{ display: 'block', width: '100%', padding: '16px 32px', fontSize: 11, letterSpacing: '0.3em', textTransform: 'uppercase', fontFamily: "'Helvetica Neue', sans-serif", fontWeight: 700, textAlign: 'center', border: '1px solid #d0c8bb', color: '#1a1a2e', textDecoration: 'none', boxSizing: 'border-box', transition: 'border-color 0.2s', borderRadius: 3 }}>
+            <Link href="/shop/boasty-collective/cart" style={{ display: 'block', width: '100%', padding: '16px 32px', fontSize: 11, letterSpacing: '0.3em', textTransform: 'uppercase', fontFamily: "'Helvetica Neue', sans-serif", fontWeight: 700, textAlign: 'center', border: '1px solid #d0c8bb', color: '#1a1a2e', textDecoration: 'none', boxSizing: 'border-box', transition: 'border-color 0.2s', borderRadius: 3 }}>
               View Cart{count > 0 ? ` (${count})` : ''}
             </Link>
 

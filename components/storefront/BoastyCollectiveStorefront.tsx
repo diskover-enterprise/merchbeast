@@ -72,7 +72,7 @@ export function BoastyCollectiveStorefront() {
 
       <nav className="bc-nav">
         <span className="bc-nav-brand">Boasty<span> Collective</span></span>
-        <Link href="/cart" className="bc-nav-cart">
+        <Link href="/shop/boasty-collective/cart" className="bc-nav-cart">
           Cart{count > 0 ? ` (${count})` : ''}
         </Link>
       </nav>
