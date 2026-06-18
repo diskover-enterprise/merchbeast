@@ -70,7 +70,7 @@ export function BoastyCollectiveStorefront() {
 
       <section className="bc-hero">
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src="https://images.unsplash.com/photo-1548574505-5e239809ee19?w=1600&q=80" alt="Caribbean" className="bc-hero-img" />
+        <img src="https://i.imgur.com/VmMIV8u.jpeg" alt="Boasty Collective" className="bc-hero-img" />
         <div className="bc-hero-content">
           <p className="bc-hero-tag">Boasty Collective</p>
           <h1 className="bc-hero-title">Born<br />from the<br /><span>Island.</span></h1>
