@@ -63,6 +63,7 @@ export default function OrdersPage() {
                 <thead>
                   <tr>
                     <th>Order ID</th>
+                    <th>Shop</th>
                     <th>Customer</th>
                     <th>Items</th>
                     <th>Ship To</th>
@@ -75,6 +76,7 @@ export default function OrdersPage() {
                   {orders.map((order) => (
                     <tr key={order.id}>
                       <td className="mono">{order.id.slice(0, 8)}…</td>
+                      <td style={{ fontSize: 12, textTransform: 'capitalize' }}>{(order as any).shopSlug?.replace(/-/g, ' ') || '—'}</td>
                       <td className="strong">
                         {order.customer?.name}
                         <br />
