@@ -161,7 +161,8 @@
       "Bash(node_modules/.bin/tsc --noEmit)",
       "Bash(curl -s -X POST http://localhost:3000/api/client/auth -H \"Content-Type: application/json\" -d '{\"email\":\"test\",\"password\":\"test\"}')",
       "Bash(GIT_ASKPASS=echo git push origin main)",
-      "Bash(git push origin main)"
+      "Bash(git push origin main)",
+      "Bash(mkdir -p /Users/mac/Downloads/restaurant-marketplace/app/api/dashboard/shops/\\\\[id\\\\] && cat /Users/mac/Downloads/restaurant-marketplace/app/api/dashboard/commissions/route.ts | head -10)"
     ]
   }
 }

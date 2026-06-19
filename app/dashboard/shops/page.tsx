@@ -268,7 +268,7 @@ function ShopEditor({ shop, onSaved }: { shop: Shop; onSaved: (updated: Shop) =>
   async function save() {
     setSaving(true)
     setMsg('')
-    const res = await fetch(`/api/admin/shops/${shop.id}`, {
+    const res = await fetch(`/api/dashboard/shops/${shop.id}`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(form),
@@ -452,7 +452,7 @@ export default function ShopsPage() {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    fetch('/api/admin/shops')
+    fetch('/api/dashboard/shops')
       .then(r => r.json())
       .then(data => { setShops(data); setLoading(false) })
       .catch(() => setLoading(false))
