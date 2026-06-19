@@ -30,9 +30,9 @@ export function BoastyCollectiveStorefront({ heroImage, logo, dbProducts }: { he
 
         .bc-hero { padding-top: 100px; position: relative; background: #003A5C; }
         .bc-hero-img { display: block; width: 100%; height: auto; opacity: 1; }
-        .bc-hero-content { position: absolute; bottom: 0; left: 0; right: 0; z-index: 2; padding: 40px; background: linear-gradient(to top, rgba(0,30,50,0.75) 0%, transparent 100%); }
+        .bc-hero-content { position: absolute; bottom: 40px; left: 40px; z-index: 2; background: none; padding: 0; }
         .bc-hero-content { position: relative; z-index: 2; padding: 60px 40px 64px; max-width: 700px; }
-        .bc-hero-tag { font-size: 11px; letter-spacing: 0.4em; text-transform: uppercase; color: #F4A261; font-weight: 800; margin-bottom: 20px; text-shadow: 0 1px 6px rgba(0,0,0,0.6); }
+        .bc-hero-tag { font-family: 'Bebas Neue', sans-serif; font-size: 32px; letter-spacing: 0.25em; text-transform: uppercase; color: #F4A261; font-weight: 400; margin-bottom: 12px; text-shadow: 0 2px 8px rgba(0,0,0,0.7); }
         .bc-hero-title { font-family: 'Bebas Neue', sans-serif; font-size: clamp(60px, 10vw, 120px); color: #fff; line-height: 0.95; letter-spacing: 0.04em; text-transform: uppercase; margin-bottom: 20px; }
         .bc-hero-title span { color: #F4A261; }
         .bc-hero-sub { font-size: 16px; color: #fff; font-weight: 700; line-height: 1.6; max-width: 420px; text-shadow: 0 1px 8px rgba(0,0,0,0.7); }
