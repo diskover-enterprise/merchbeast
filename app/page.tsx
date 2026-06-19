@@ -264,7 +264,7 @@ export default function Home() {
           <a href="mailto:team@merchbeast.shop">team@merchbeast.shop</a>
           <a href="#">Instagram</a>
           <a href="#">TikTok</a>
-          <a href="/admin/login">Admin</a>
+          <a href="/dashboard">Dashboard</a>
         </nav>
       </footer>
 
