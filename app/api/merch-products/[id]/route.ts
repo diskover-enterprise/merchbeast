@@ -13,11 +13,12 @@ function deserialize(p: any) {
   }
 }
 
-export async function PUT(request: Request, { params }: { params: { id: string } }) {
+export async function PUT(request: Request, { params }: { params: Promise<{ id: string }> }) {
   const db = getDB()
+  const { id } = await params
   const body = await request.json()
   const product = await db.merchProduct.update({
-    where: { id: params.id },
+    where: { id },
     data: {
       name: body.name,
       description: body.description || '',
@@ -32,8 +33,9 @@ export async function PUT(request: Request, { params }: { params: { id: string }
   return Response.json(deserialize(product))
 }
 
-export async function DELETE(_: Request, { params }: { params: { id: string } }) {
+export async function DELETE(_: Request, { params }: { params: Promise<{ id: string }> }) {
   const db = getDB()
-  await db.merchProduct.delete({ where: { id: params.id } })
+  const { id } = await params
+  await db.merchProduct.delete({ where: { id } })
   return Response.json({ ok: true })
 }
