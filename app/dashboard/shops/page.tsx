@@ -178,12 +178,12 @@ function ProductModal({ shopId, product, onClose, onSaved }: {
 
   return (
     <div className="db-modal-overlay">
-      <div className="db-modal" style={{ maxWidth: 560, display: 'flex', flexDirection: 'column', maxHeight: '90vh' }}>
+      <div className="db-modal" style={{ maxWidth: 500, display: 'flex', flexDirection: 'column', maxHeight: '80vh' }}>
         <div className="db-modal-head">
           <span className="db-modal-title">{product ? 'Edit Product' : 'Add Product'}</span>
           <button className="db-modal-close" onClick={onClose}><X size={13} /></button>
         </div>
-        <div className="db-modal-body" style={{ overflowY: 'auto', flex: 1 }}>
+        <div className="db-modal-body" style={{ overflowY: 'auto', flex: 1, padding: '16px 20px' }}>
           <div className="db-field-row">
             <div className="db-field">
               <label>Name *</label>
