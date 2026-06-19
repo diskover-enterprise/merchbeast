@@ -28,8 +28,9 @@ export function BoastyCollectiveStorefront({ heroImage, logo, dbProducts }: { he
         .bc-nav-cart { font-size: 11px; letter-spacing: 0.25em; text-transform: uppercase; color: #fff; text-decoration: none; padding: 9px 20px; border: 1px solid rgba(255,255,255,0.35); white-space: nowrap; transition: border-color 0.2s, color 0.2s; }
         .bc-nav-cart:hover { border-color: #F4A261; color: #F4A261; }
 
-        .bc-hero { padding-top: 100px; position: relative; background: #003A5C; min-height: 600px; display: flex; align-items: flex-end; overflow: hidden; }
-        .bc-hero-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center 30%; opacity: 1; transform: scale(0.85); transform-origin: center top; }
+        .bc-hero { padding-top: 100px; position: relative; background: #003A5C; }
+        .bc-hero-img { display: block; width: 100%; height: auto; opacity: 1; }
+        .bc-hero-content { position: absolute; bottom: 0; left: 0; right: 0; z-index: 2; padding: 40px; background: linear-gradient(to top, rgba(0,30,50,0.75) 0%, transparent 100%); }
         .bc-hero-content { position: relative; z-index: 2; padding: 60px 40px 64px; max-width: 700px; }
         .bc-hero-tag { font-size: 11px; letter-spacing: 0.4em; text-transform: uppercase; color: #F4A261; font-weight: 800; margin-bottom: 20px; text-shadow: 0 1px 6px rgba(0,0,0,0.6); }
         .bc-hero-title { font-family: 'Bebas Neue', sans-serif; font-size: clamp(60px, 10vw, 120px); color: #fff; line-height: 0.95; letter-spacing: 0.04em; text-transform: uppercase; margin-bottom: 20px; }
