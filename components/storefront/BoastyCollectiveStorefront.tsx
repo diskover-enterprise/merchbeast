@@ -5,7 +5,8 @@ import { useState } from 'react'
 import { boastyProducts, type BoastyProduct } from '@/app/products/boasty-collective-products-data'
 import { useCart } from '@/app/cart-context'
 
-export function BoastyCollectiveStorefront() {
+export function BoastyCollectiveStorefront({ heroImage }: { heroImage?: string | null }) {
+  const heroSrc = heroImage || 'https://i.imgur.com/VmMIV8u.jpeg'
   const { count } = useCart()
   const tees = boastyProducts.filter(p => p.category === 'Tee')
   const hats = boastyProducts.filter(p => p.category === 'Hat')
@@ -79,7 +80,7 @@ export function BoastyCollectiveStorefront() {
 
       <section className="bc-hero">
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src="https://i.imgur.com/VmMIV8u.jpeg" alt="Boasty Collective" className="bc-hero-img" />
+        <img src={heroSrc} alt="Boasty Collective" className="bc-hero-img" />
         <div className="bc-hero-content">
           <p className="bc-hero-tag">Boasty Collective</p>
           <h1 className="bc-hero-title">Born<br />from the<br /><span>Island.</span></h1>

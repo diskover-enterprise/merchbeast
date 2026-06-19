@@ -159,7 +159,9 @@
       "Bash(sed -i '' 's/selectedRestaurantId/selectedShopId/g' /Users/mac/Downloads/restaurant-marketplace/app/admin/orders/page.tsx)",
       "Bash(npx tsc *)",
       "Bash(node_modules/.bin/tsc --noEmit)",
-      "Bash(curl -s -X POST http://localhost:3000/api/client/auth -H \"Content-Type: application/json\" -d '{\"email\":\"test\",\"password\":\"test\"}')"
+      "Bash(curl -s -X POST http://localhost:3000/api/client/auth -H \"Content-Type: application/json\" -d '{\"email\":\"test\",\"password\":\"test\"}')",
+      "Bash(GIT_ASKPASS=echo git push origin main)",
+      "Bash(git -c credential.helper= push https://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@github.com/diskover-enterprise/merchbeast.git main)"
     ]
   }
 }
