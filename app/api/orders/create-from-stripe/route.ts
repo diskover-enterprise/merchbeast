@@ -1,5 +1,8 @@
 import Stripe from 'stripe'
 import { prisma } from '@/lib/prisma'
+import { resend } from '@/lib/resend'
+import { buildOrderConfirmationEmail } from '@/emails/orderConfirmation'
+import { buildNewOrderEmail } from '@/emails/newOrderNotification'
 
 export async function POST(req: Request) {
   const { sessionId } = await req.json()
@@ -58,6 +61,41 @@ export async function POST(req: Request) {
       },
     },
   })
+
+  const emailItems = cartItems.map(i => ({ name: i.name, quantity: i.quantity, priceAtPurchase: i.price }))
+
+  // Customer confirmation email
+  if (email && email !== 'unknown@unknown.com') {
+    const { subject, html } = buildOrderConfirmationEmail({
+      customerName: name,
+      restaurantName: shop.name,
+      items: emailItems,
+      total: session.amount_total ?? 0,
+      orderId: order.id,
+    })
+    resend.emails.send({
+      from: `Merch Beast <orders@${process.env.RESEND_FROM_DOMAIN ?? 'resend.dev'}>`,
+      to: email,
+      subject,
+      html,
+    }).catch(console.error)
+  }
+
+  // Shop owner notification email
+  const { subject: ownerSubject, html: ownerHtml } = buildNewOrderEmail({
+    restaurantName: shop.name,
+    customerName: name,
+    customerEmail: email,
+    items: emailItems,
+    total: session.amount_total ?? 0,
+    orderId: order.id,
+  })
+  resend.emails.send({
+    from: `Merch Beast <orders@${process.env.RESEND_FROM_DOMAIN ?? 'resend.dev'}>`,
+    to: shop.ownerEmail,
+    subject: ownerSubject,
+    html: ownerHtml,
+  }).catch(console.error)
 
   return Response.json({ ok: true, orderId: order.id })
 }

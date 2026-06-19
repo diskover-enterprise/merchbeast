@@ -72,7 +72,7 @@ export function buildOrderConfirmationEmail(data: OrderEmailData): { subject: st
 
         <!-- Footer -->
         <tr><td style="padding:24px 0 0;text-align:center;">
-          <p style="margin:0;font-size:13px;color:#9ca3af;">MerchMarket · Questions? Reply to this email.</p>
+          <p style="margin:0;font-size:13px;color:#9ca3af;">Merch Beast · Questions? Reply to this email.</p>
         </td></tr>
 
       </table>
