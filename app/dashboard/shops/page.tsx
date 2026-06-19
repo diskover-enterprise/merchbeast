@@ -202,23 +202,23 @@ function ProductModal({ shopId, product, onClose, onSaved }: {
             <label>Category / Tag</label>
             <input type="text" value={form.tag} onChange={e => setForm({ ...form, tag: e.target.value })} placeholder="Tee, Hat, Crewneck…" />
           </div>
-          <div className="db-field">
+          <div className="db-field" style={{ marginBottom: 12 }}>
             <label>Sizes</label>
-            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 4 }}>
               {SIZE_OPTIONS.map(s => (
                 <button key={s} type="button" onClick={() => setForm({ ...form, sizes: toggleChip(form.sizes, s) })}
-                  style={{ padding: '4px 12px', borderRadius: 6, fontSize: 12, cursor: 'pointer', background: form.sizes.includes(s) ? 'var(--neon)' : 'var(--bg-2)', color: form.sizes.includes(s) ? '#000' : 'var(--ink)', border: `1px solid ${form.sizes.includes(s) ? 'var(--neon)' : 'var(--line)'}`, fontWeight: form.sizes.includes(s) ? 700 : 400 }}>
+                  style={{ padding: '2px 8px', borderRadius: 4, fontSize: 11, cursor: 'pointer', background: form.sizes.includes(s) ? 'var(--neon)' : 'var(--bg-2)', color: form.sizes.includes(s) ? '#000' : 'var(--ink)', border: `1px solid ${form.sizes.includes(s) ? 'var(--neon)' : 'var(--line)'}`, fontWeight: form.sizes.includes(s) ? 700 : 400 }}>
                   {s}
                 </button>
               ))}
             </div>
           </div>
-          <div className="db-field">
+          <div className="db-field" style={{ marginBottom: 12 }}>
             <label>Colors</label>
-            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 4 }}>
               {COLOR_OPTIONS.map(c => (
                 <button key={c} type="button" onClick={() => setForm({ ...form, colors: toggleChip(form.colors, c) })}
-                  style={{ padding: '4px 12px', borderRadius: 6, fontSize: 12, cursor: 'pointer', background: form.colors.includes(c) ? 'var(--neon)' : 'var(--bg-2)', color: form.colors.includes(c) ? '#000' : 'var(--ink)', border: `1px solid ${form.colors.includes(c) ? 'var(--neon)' : 'var(--line)'}`, fontWeight: form.colors.includes(c) ? 700 : 400 }}>
+                  style={{ padding: '2px 8px', borderRadius: 4, fontSize: 11, cursor: 'pointer', background: form.colors.includes(c) ? 'var(--neon)' : 'var(--bg-2)', color: form.colors.includes(c) ? '#000' : 'var(--ink)', border: `1px solid ${form.colors.includes(c) ? 'var(--neon)' : 'var(--line)'}`, fontWeight: form.colors.includes(c) ? 700 : 400 }}>
                   {c}
                 </button>
               ))}
