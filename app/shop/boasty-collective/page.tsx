@@ -1,5 +1,6 @@
 import { prisma } from '@/lib/prisma'
 import { BoastyCollectiveStorefront } from '@/components/storefront/BoastyCollectiveStorefront'
+import { TrackView } from '@/components/storefront/TrackView'
 
 export const dynamic = 'force-dynamic'
 
@@ -18,5 +19,8 @@ export default async function BoastyCollectiveShopPage() {
     sizes: JSON.parse(p.sizes || '[]'),
     colors: JSON.parse(p.colors || '[]'),
   }))
-  return <BoastyCollectiveStorefront heroImage={shop?.bannerImage ?? null} logo={shop?.logo ?? null} dbProducts={dbProducts} />
+  return <>
+    {shop && <TrackView shopId={shop.id} />}
+    <BoastyCollectiveStorefront heroImage={shop?.bannerImage ?? null} logo={shop?.logo ?? null} dbProducts={dbProducts} />
+  </>
 }

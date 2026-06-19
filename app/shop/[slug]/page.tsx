@@ -5,6 +5,7 @@ import { ArcadeStorefront } from '@/components/storefront/ArcadeStorefront'
 import { LunchLadyStorefront } from '@/components/storefront/LunchLadyStorefront'
 import { The1982Storefront } from '@/components/storefront/The1982Storefront'
 import { BoastyCollectiveStorefront } from '@/components/storefront/BoastyCollectiveStorefront'
+import { TrackView } from '@/components/storefront/TrackView'
 import { Product, Shop } from '@/types'
 import Image from 'next/image'
 
@@ -22,7 +23,7 @@ export default async function StorefrontPage({
     const llShop = await prisma.shop.findUnique({ where: { slug: 'lunch-lady' }, select: { id: true } })
     const llRaw = llShop ? await prisma.merchProduct.findMany({ where: { shopId: llShop.id, active: true }, orderBy: { createdAt: 'asc' } }) : []
     const llProducts = llRaw.map(p => ({ ...p, images: JSON.parse(p.images || '[]'), sizes: JSON.parse(p.sizes || '[]'), colors: JSON.parse(p.colors || '[]') }))
-    return <LunchLadyStorefront dbProducts={llProducts} />
+    return <>{llShop && <TrackView shopId={llShop.id} />}<LunchLadyStorefront dbProducts={llProducts} /></>
   }
 
   // The 1982 — vintage sports apparel

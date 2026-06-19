@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, use } from 'react'
+import { useState, use, useEffect } from 'react'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import { nomoProducts, getNomoProduct } from '@/app/products/nomo-nomo-products-data'
@@ -10,6 +10,10 @@ export default function NomoProductPage({ params }: { params: Promise<{ slug: st
   const { slug } = use(params)
   const product = getNomoProduct(slug)
   if (!product) notFound()
+
+  useEffect(() => {
+    fetch('/api/track', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ shopSlug: 'nomo-nomo', productSlug: slug }) }).catch(() => {})
+  }, [slug])
 
   const { addToCart, count, setBrandColor, setShopPath } = useCart()
   const [activeImg, setActiveImg] = useState(0)

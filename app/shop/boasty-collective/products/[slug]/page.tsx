@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, use } from 'react'
+import { useState, use, useEffect } from 'react'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import { boastyProducts, getBoastyProduct } from '@/app/products/boasty-collective-products-data'
@@ -9,6 +9,14 @@ import { useCart } from '@/app/cart-context'
 export default function BoastyProductPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = use(params)
   const product = getBoastyProduct(slug)
+
+  useEffect(() => {
+    fetch('/api/track', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ shopSlug: 'boasty-collective', productSlug: slug }),
+    }).catch(() => {})
+  }, [slug])
   if (!product) notFound()
 
   const { addToCart, count, setBrandColor, setShopPath } = useCart()

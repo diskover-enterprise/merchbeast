@@ -238,9 +238,16 @@ function ProductModal({ shopId, product, onClose, onSaved }: {
   )
 }
 
+type Analytics = {
+  shopViews: { total: number; last30: number; last7: number }
+  productViews: { slug: string | null; count: number }[]
+  orders: { total: number; last30: number }
+  revenue: { total: number; last30: number }
+}
+
 function ShopEditor({ shop, onSaved }: { shop: Shop; onSaved: (updated: Shop) => void }) {
   const [open, setOpen] = useState(false)
-  const [activeTab, setActiveTab] = useState<'settings' | 'products'>('settings')
+  const [activeTab, setActiveTab] = useState<'settings' | 'products' | 'analytics'>('settings')
   const [form, setForm] = useState(shop)
   const [saving, setSaving] = useState(false)
   const [msg, setMsg] = useState('')
@@ -248,6 +255,8 @@ function ShopEditor({ shop, onSaved }: { shop: Shop; onSaved: (updated: Shop) =>
   const [productsLoaded, setProductsLoaded] = useState(false)
   const [showProductModal, setShowProductModal] = useState(false)
   const [editingProduct, setEditingProduct] = useState<MerchProduct | null>(null)
+  const [analytics, setAnalytics] = useState<Analytics | null>(null)
+  const [analyticsLoaded, setAnalyticsLoaded] = useState(false)
 
   async function loadProducts() {
     const res = await fetch(`/api/merch-products?shopId=${shop.id}`)
@@ -255,9 +264,16 @@ function ShopEditor({ shop, onSaved }: { shop: Shop; onSaved: (updated: Shop) =>
     setProductsLoaded(true)
   }
 
-  function openTab(tab: 'settings' | 'products') {
+  async function loadAnalytics() {
+    const res = await fetch(`/api/dashboard/analytics?shopId=${shop.id}`)
+    if (res.ok) setAnalytics(await res.json())
+    setAnalyticsLoaded(true)
+  }
+
+  function openTab(tab: 'settings' | 'products' | 'analytics') {
     setActiveTab(tab)
     if (tab === 'products' && !productsLoaded) loadProducts()
+    if (tab === 'analytics' && !analyticsLoaded) loadAnalytics()
   }
 
   function set(key: keyof Shop, val: string) {
@@ -310,7 +326,7 @@ function ShopEditor({ shop, onSaved }: { shop: Shop; onSaved: (updated: Shop) =>
         <div style={{ borderTop: '1px solid var(--line)' }}>
           {/* Tabs */}
           <div style={{ display: 'flex', borderBottom: '1px solid var(--line)' }}>
-            {(['settings', 'products'] as const).map(tab => (
+            {(['settings', 'products', 'analytics'] as const).map(tab => (
               <button key={tab} onClick={() => openTab(tab)} style={{ padding: '10px 20px', fontSize: 12, fontWeight: activeTab === tab ? 700 : 400, color: activeTab === tab ? 'var(--neon)' : 'var(--ink-mute)', background: 'none', border: 'none', borderBottom: activeTab === tab ? '2px solid var(--neon)' : '2px solid transparent', cursor: 'pointer', textTransform: 'capitalize', letterSpacing: '0.05em' }}>
                 {tab}
               </button>
@@ -429,6 +445,59 @@ function ShopEditor({ shop, onSaved }: { shop: Shop; onSaved: (updated: Shop) =>
                     </tbody>
                   </table>
                 </div>
+              )}
+            </div>
+          )}
+
+          {/* Analytics tab */}
+          {activeTab === 'analytics' && (
+            <div style={{ padding: '20px' }}>
+              {!analyticsLoaded ? (
+                <p style={{ fontSize: 12, color: 'var(--ink-mute)' }}>Loading analytics…</p>
+              ) : !analytics ? (
+                <p style={{ fontSize: 12, color: 'var(--ink-mute)' }}>Failed to load analytics.</p>
+              ) : (
+                <>
+                  {/* Stats grid */}
+                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 12, marginBottom: 24 }}>
+                    {[
+                      { label: 'Shop Visits (All)', value: analytics.shopViews.total },
+                      { label: 'Visits (30 days)', value: analytics.shopViews.last30 },
+                      { label: 'Visits (7 days)', value: analytics.shopViews.last7 },
+                      { label: 'Total Orders', value: analytics.orders.total },
+                      { label: 'Orders (30 days)', value: analytics.orders.last30 },
+                      { label: 'Total Revenue', value: `$${(analytics.revenue.total / 100).toFixed(2)}` },
+                      { label: 'Revenue (30 days)', value: `$${(analytics.revenue.last30 / 100).toFixed(2)}` },
+                    ].map(s => (
+                      <div key={s.label} style={{ background: 'var(--bg-2)', border: '1px solid var(--line)', padding: '14px 16px', borderRadius: 4 }}>
+                        <div style={{ fontSize: 10, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'var(--ink-mute)', marginBottom: 6 }}>{s.label}</div>
+                        <div style={{ fontSize: 22, fontWeight: 700, color: 'var(--neon)' }}>{s.value}</div>
+                      </div>
+                    ))}
+                  </div>
+
+                  {/* Product views */}
+                  {analytics.productViews.length > 0 && (
+                    <div>
+                      <p style={{ fontSize: 10, letterSpacing: '0.25em', textTransform: 'uppercase', color: 'var(--ink-mute)', marginBottom: 12 }}>Product Page Visits</p>
+                      <table className="db-table" style={{ fontSize: 12 }}>
+                        <thead><tr><th>Product</th><th style={{ textAlign: 'right' }}>Views</th></tr></thead>
+                        <tbody>
+                          {analytics.productViews.map(pv => (
+                            <tr key={pv.slug}>
+                              <td style={{ color: 'var(--ink)' }}>{pv.slug}</td>
+                              <td className="right" style={{ color: 'var(--neon)', fontWeight: 700 }}>{pv.count}</td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+                  )}
+
+                  {analytics.productViews.length === 0 && (
+                    <p style={{ fontSize: 12, color: 'var(--ink-mute)' }}>No product page visits recorded yet. Visits will appear here once customers browse products.</p>
+                  )}
+                </>
               )}
             </div>
           )}

@@ -1,5 +1,6 @@
 import { prisma } from '@/lib/prisma'
 import { The1982Storefront } from '@/components/storefront/The1982Storefront'
+import { TrackView } from '@/components/storefront/TrackView'
 
 export const dynamic = 'force-dynamic'
 
@@ -18,5 +19,8 @@ export default async function The1982ShopPage() {
     sizes: JSON.parse(p.sizes || '[]'),
     colors: JSON.parse(p.colors || '[]'),
   }))
-  return <The1982Storefront heroImage={shop?.bannerImage ?? null} dbProducts={dbProducts} />
+  return <>
+    {shop && <TrackView shopId={shop.id} />}
+    <The1982Storefront heroImage={shop?.bannerImage ?? null} dbProducts={dbProducts} />
+  </>
 }

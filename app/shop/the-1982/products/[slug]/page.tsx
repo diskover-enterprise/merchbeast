@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, use } from 'react'
+import { useState, use, useEffect } from 'react'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import { the1982Products, getThe1982Product } from '@/app/products/the1982-products-data'
@@ -12,6 +12,10 @@ export default function The1982ProductPage({ params }: { params: Promise<{ slug:
   const { slug } = use(params)
   const product = getThe1982Product(slug)
   if (!product) notFound()
+
+  useEffect(() => {
+    fetch('/api/track', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ shopSlug: 'the-1982', productSlug: slug }) }).catch(() => {})
+  }, [slug])
 
   const { addToCart, count, setBrandColor, setShopPath } = useCart()
   const [activeImg, setActiveImg] = useState(0)
