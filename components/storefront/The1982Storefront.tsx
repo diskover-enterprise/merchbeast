@@ -71,7 +71,7 @@ export function The1982Storefront({ heroImage, dbProducts }: { heroImage?: strin
 
       {/* NAV */}
       <nav className="n82-nav">
-        <Link href="/cart" className="n82-nav-cart">
+        <Link href="/shop/the-1982/cart" className="n82-nav-cart">
           Cart{count > 0 ? ` (${count})` : ''}
         </Link>
       </nav>
