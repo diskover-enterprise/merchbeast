@@ -22,7 +22,7 @@ export function BoastyCollectiveStorefront({ heroImage, logo, dbProducts }: { he
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@400;600;700;800&display=swap');
 
-        .bc-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; height: 72px; background: rgba(0,58,92,0.97); backdrop-filter: blur(8px); display: flex; align-items: center; justify-content: space-between; padding: 0 24px; }
+        .bc-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; height: 72px; background: #003A5C; display: flex; align-items: center; justify-content: space-between; padding: 0 24px; }
         .bc-nav-brand { font-family: 'Bebas Neue', sans-serif; font-size: 22px; letter-spacing: 0.15em; text-transform: uppercase; color: #fff; text-decoration: none; }
         .bc-nav-brand span { color: #F4A261; }
         .bc-nav-cart { font-size: 11px; letter-spacing: 0.25em; text-transform: uppercase; color: #fff; text-decoration: none; padding: 9px 20px; border: 1px solid rgba(255,255,255,0.35); white-space: nowrap; transition: border-color 0.2s, color 0.2s; }
