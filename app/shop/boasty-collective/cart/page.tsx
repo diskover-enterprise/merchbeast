@@ -104,7 +104,7 @@ export default function BoastyCartPage() {
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img src={product.images[0]} alt={product.name} className="bc-cart-item-img" />
                   <div>
-                    <Link href={product.path} className="bc-cart-item-name">{product.name}</Link>
+                    <Link href={`/shop/boasty-collective/products/${product.slug}`} className="bc-cart-item-name">{product.name}</Link>
                     {(size || color) && (
                       <p className="bc-cart-item-meta">{[size, color].filter(Boolean).join(' · ')}</p>
                     )}

@@ -152,7 +152,7 @@ function ProductCard({ product }: { product: Product }) {
             {product.name.replace('Lunch Lady — ', '')}
           </h3>
           {product.sizes && product.sizes.length > 0 && (
-            <p style={{ fontSize: 10, color: '#999', letterSpacing: '0.08em' }}>{product.sizes.join(' · ')}</p>
+            <p style={{ fontSize: 10, color: '#999', letterSpacing: '0.08em' }}>{product.sizes.filter(s => s !== '2XL').join(' · ')}</p>
           )}
         </div>
         <span style={{ fontSize: 13, color: '#C84020', fontWeight: 600, flexShrink: 0 }}>

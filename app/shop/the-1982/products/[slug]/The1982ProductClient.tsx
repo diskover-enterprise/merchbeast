@@ -94,7 +94,7 @@ export default function The1982ProductClient({ product, related }: { product: Pr
                   {sizeError ? 'Please select a size' : 'Size'}
                 </p>
                 <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
-                  {product.sizes.map(s => (
+                  {product.sizes.filter(s => s !== '2XL').map(s => (
                     <button key={s} onClick={() => setSelectedSize(s)} style={{ width: 52, height: 52, fontSize: 12, fontWeight: 700, fontFamily: "'Helvetica Neue', sans-serif", cursor: 'pointer', border: selectedSize === s ? '2px solid #B8860B' : '2px solid rgba(255,255,255,0.15)', background: selectedSize === s ? '#B8860B' : 'transparent', color: '#fff', letterSpacing: '0.05em', transition: 'all 0.15s' }}>
                       {s}
                     </button>

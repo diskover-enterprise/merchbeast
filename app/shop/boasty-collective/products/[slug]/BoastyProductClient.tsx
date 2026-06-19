@@ -95,7 +95,7 @@ export default function BoastyProductClient({ product, related }: { product: Pro
                   {sizeError ? 'Please select a size' : 'Size'}
                 </p>
                 <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
-                  {product.sizes.map(s => (
+                  {product.sizes.filter(s => s !== '2XL').map(s => (
                     <button key={s} onClick={() => setSelectedSize(s)} style={{ width: 52, height: 52, fontSize: 12, fontWeight: 700, fontFamily: "'Helvetica Neue', sans-serif", cursor: 'pointer', border: selectedSize === s ? '2px solid #003A5C' : '2px solid #d0c8bb', background: selectedSize === s ? '#003A5C' : 'transparent', color: selectedSize === s ? '#fff' : '#1a1a2e', letterSpacing: '0.05em', transition: 'all 0.15s', borderRadius: 3 }}>
                       {s}
                     </button>
