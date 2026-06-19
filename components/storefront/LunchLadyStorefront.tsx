@@ -72,7 +72,7 @@ export function LunchLadyStorefront({ dbProducts }: { dbProducts?: DBProduct[] }
         <span className="ll-nav-label">Merch Collection</span>
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src="/lunch-lady-logo.png" alt="Lunch Lady" className="ll-nav-logo" />
-        <Link href="/cart" className="ll-nav-cart">Cart</Link>
+        <Link href="/shop/lunch-lady/cart" className="ll-nav-cart">Cart</Link>
       </nav>
 
       {/* HERO */}

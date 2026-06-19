@@ -59,7 +59,7 @@ export default function LunchLadyProductClient({ product, related }: { product: 
       <nav className="ll-pnav">
         <Link href="/shop/lunch-lady" className="ll-pnav-back">← Shop</Link>
         <span className="ll-pnav-brand">Lunch Lady</span>
-        <Link href="/cart" className="ll-pnav-cart">Cart{count > 0 ? ` (${count})` : ''}</Link>
+        <Link href="/shop/lunch-lady/cart" className="ll-pnav-cart">Cart{count > 0 ? ` (${count})` : ''}</Link>
       </nav>
 
       <div className="ll-pwrap">
@@ -106,7 +106,7 @@ export default function LunchLadyProductClient({ product, related }: { product: 
               {added ? '✓ Added to Cart' : 'Add to Cart'}
             </button>
 
-            <Link href="/cart" style={{ display: 'block', width: '100%', padding: '16px 32px', fontSize: 11, letterSpacing: '0.3em', textTransform: 'uppercase', fontFamily: 'Georgia, serif', fontWeight: 400, textAlign: 'center', border: '1px solid #111', color: '#111', textDecoration: 'none', boxSizing: 'border-box', transition: 'border-color 0.2s' }}>
+            <Link href="/shop/lunch-lady/cart" style={{ display: 'block', width: '100%', padding: '16px 32px', fontSize: 11, letterSpacing: '0.3em', textTransform: 'uppercase', fontFamily: 'Georgia, serif', fontWeight: 400, textAlign: 'center', border: '1px solid #111', color: '#111', textDecoration: 'none', boxSizing: 'border-box', transition: 'border-color 0.2s' }}>
               View Cart{count > 0 ? ` (${count})` : ''}
             </Link>
 
