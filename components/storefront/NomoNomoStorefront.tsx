@@ -65,7 +65,7 @@ export function NomoNomoStorefront({ heroImage }: { heroImage?: string | null })
       <nav className="nn-nav">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src="/nomo-nomo-logo.png" alt="Nomo Nomo" className="nn-nav-logo" />
-        <Link href="/cart" className="nn-nav-cart">
+        <Link href="/shop/nomo-nomo/cart" className="nn-nav-cart">
           Cart{count > 0 ? ` (${count})` : ''}
         </Link>
       </nav>

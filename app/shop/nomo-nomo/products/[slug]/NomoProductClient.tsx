@@ -63,7 +63,7 @@ export default function NomoProductClient({ product, related }: { product: Produ
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src="/nomo-nomo-logo.png" alt="Nomo Nomo" className="nn-pnav-logo" />
         </Link>
-        <Link href="/cart" className="nn-pnav-cart">Cart{count > 0 ? ` (${count})` : ''}</Link>
+        <Link href="/shop/nomo-nomo/cart" className="nn-pnav-cart">Cart{count > 0 ? ` (${count})` : ''}</Link>
       </nav>
 
       <div className="nn-pwrap">
@@ -109,7 +109,7 @@ export default function NomoProductClient({ product, related }: { product: Produ
               {added ? '✓ Added to Cart' : 'Add to Cart'}
             </button>
 
-            <Link href="/cart" style={{ display: 'block', width: '100%', padding: '16px 32px', fontSize: 11, letterSpacing: '0.3em', textTransform: 'uppercase', fontFamily: "'Helvetica Neue', sans-serif", fontWeight: 700, textAlign: 'center', border: '1px solid rgba(255,255,255,0.2)', color: '#fff', textDecoration: 'none', boxSizing: 'border-box', transition: 'border-color 0.2s' }}>
+            <Link href="/shop/nomo-nomo/cart" style={{ display: 'block', width: '100%', padding: '16px 32px', fontSize: 11, letterSpacing: '0.3em', textTransform: 'uppercase', fontFamily: "'Helvetica Neue', sans-serif", fontWeight: 700, textAlign: 'center', border: '1px solid rgba(255,255,255,0.2)', color: '#fff', textDecoration: 'none', boxSizing: 'border-box', transition: 'border-color 0.2s' }}>
               View Cart{count > 0 ? ` (${count})` : ''}
             </Link>
 
