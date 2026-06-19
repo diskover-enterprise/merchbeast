@@ -33,7 +33,7 @@ type MerchProduct = {
   active: boolean
 }
 
-const SIZE_OPTIONS = ['XS', 'S', 'M', 'L', 'XL', 'XXL', 'One Size']
+const SIZE_OPTIONS = ['XS', 'S', 'M', 'L', 'XL', 'One Size']
 const COLOR_OPTIONS = ['Black', 'White', 'Grey', 'Navy', 'Red', 'Green', 'Blue', 'Brown', 'Lavender', 'Sand', 'Teal']
 
 const emptyProduct = {
