@@ -496,13 +496,11 @@
   width: 100%;
   max-width: 520px;
   max-height: 90vh;
-  overflow-y: auto;
   clip-path: polygon(0 0, calc(100% - 20px) 0, 100% 20px, 100% 100%, 20px 100%, 0 calc(100% - 20px));
   position: relative;
+  display: flex;
+  flex-direction: column;
 }
-
-.db-modal::-webkit-scrollbar { width: 3px; }
-.db-modal::-webkit-scrollbar-thumb { background: var(--line-2); }
 
 .db-modal-head {
   padding: 20px 26px;
@@ -510,6 +508,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  flex-shrink: 0;
 }
 
 .db-modal-title {
@@ -533,13 +532,22 @@
 .db-modal-close:hover { border-color: var(--neon); color: var(--neon); background: var(--neon-soft); }
 .db-modal-close svg { width: 13px; height: 13px; }
 
-.db-modal-body  { padding: 26px; }
+.db-modal-body {
+  padding: 26px;
+  overflow-y: auto;
+  flex: 1;
+}
+
+.db-modal-body::-webkit-scrollbar { width: 3px; }
+.db-modal-body::-webkit-scrollbar-thumb { background: var(--line-2); }
+
 .db-modal-foot  {
   padding: 18px 26px;
   border-top: 1px solid var(--line);
   display: flex;
   justify-content: flex-end;
   gap: 10px;
+  flex-shrink: 0;
 }
 
 /* ============================================================
