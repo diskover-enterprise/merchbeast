@@ -1,13 +1,6 @@
 import { prisma } from '@/lib/prisma'
-import { cookies } from 'next/headers'
-
-function isAuth() {
-  const store = cookies()
-  return store.get('mb-dashboard-auth')?.value === 'true'
-}
 
 export async function PUT(req: Request, { params }: { params: Promise<{ id: string }> }) {
-  if (!isAuth()) return Response.json({ error: 'Unauthorized' }, { status: 401 })
 
   const { id } = await params
   const body = await req.json()

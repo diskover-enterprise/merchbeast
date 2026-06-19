@@ -1,13 +1,6 @@
 import { prisma } from '@/lib/prisma'
-import { cookies } from 'next/headers'
-
-function isAuth() {
-  const store = cookies()
-  return store.get('mb-dashboard-auth')?.value === 'true'
-}
 
 export async function GET() {
-  if (!isAuth()) return Response.json({ error: 'Unauthorized' }, { status: 401 })
 
   const shops = await prisma.shop.findMany({
     orderBy: { createdAt: 'asc' },
