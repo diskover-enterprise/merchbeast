@@ -7,7 +7,8 @@ import { useCart } from '@/app/cart-context'
 
 const LOGO = '/1982-logo.png'
 
-export function The1982Storefront() {
+export function The1982Storefront({ heroImage }: { heroImage?: string | null }) {
+  const heroSrc = heroImage || '/1982-hero.jpg'
   const { count } = useCart()
   const tees = the1982Products.filter(p => p.category === 'Tee')
   const draftDay = the1982Products.filter(p => p.category === 'Draft Day')
@@ -73,7 +74,7 @@ export function The1982Storefront() {
       {/* HERO */}
       <section className="n82-hero">
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src="/1982-hero.jpg" alt="The 1982" className="n82-hero-img" />
+        <img src={heroSrc} alt="The 1982" className="n82-hero-img" />
         <div className="n82-hero-overlay" />
         <div style={{ position: 'absolute', bottom: 32, left: 40, zIndex: 2 }}>
           <span style={{ fontSize: 13, letterSpacing: '0.35em', textTransform: 'uppercase', fontWeight: 700, color: '#F5C518', fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif" }}>

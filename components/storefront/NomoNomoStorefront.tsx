@@ -5,7 +5,7 @@ import { useState } from 'react'
 import { nomoProducts, type NomoProduct } from '@/app/products/nomo-nomo-products-data'
 import { useCart } from '@/app/cart-context'
 
-export function NomoNomoStorefront() {
+export function NomoNomoStorefront({ heroImage }: { heroImage?: string | null }) {
   const { count } = useCart()
   const tees = nomoProducts.filter(p => p.category === 'Tee')
   const hats = nomoProducts.filter(p => p.category === 'Hat')
@@ -71,7 +71,7 @@ export function NomoNomoStorefront() {
       </nav>
 
       {/* HERO */}
-      <section className="nn-hero">
+      <section className="nn-hero" style={heroImage ? { backgroundImage: `url(${heroImage})`, backgroundSize: 'cover', backgroundPosition: 'center' } : {}}>
         <p className="nn-hero-tag">Vancouver, BC</p>
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src="/nomo-nomo-logo.png" alt="Nomo Nomo" className="nn-hero-logo" />
