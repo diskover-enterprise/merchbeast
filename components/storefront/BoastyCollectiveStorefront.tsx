@@ -77,7 +77,7 @@ export function BoastyCollectiveStorefront({ heroImage, logo, dbProducts }: { he
       `}</style>
 
       <nav className="bc-nav">
-        {logo ? <img src={logo} alt="Boasty Collective" style={{ height: 120, objectFit: 'contain', filter: 'brightness(0) invert(1)' }} /> : <span className="bc-nav-brand">Boasty<span> Collective</span></span>}
+        {logo ? <img src={logo} alt="Boasty Collective" style={{ height: 84, objectFit: 'contain', filter: 'brightness(0) invert(1)' }} /> : <span className="bc-nav-brand">Boasty<span> Collective</span></span>}
         <Link href="/shop/boasty-collective/cart" className="bc-nav-cart">
           Cart{count > 0 ? ` (${count})` : ''}
         </Link>
