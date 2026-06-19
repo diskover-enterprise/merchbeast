@@ -108,7 +108,7 @@ export default function CartPage() {
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img src={product.images[0]} alt={product.name} className="cart-item-img" />
                   <div>
-                    <Link href={product.path} className="cart-item-name">
+                    <Link href={`${shopPath}/products/${product.slug}`} className="cart-item-name">
                       {product.name.replace('Lunch Lady — ', '')}
                     </Link>
                     {(size || color) && (
