@@ -4,7 +4,17 @@ import { BoastyCollectiveStorefront } from '@/components/storefront/BoastyCollec
 export default async function BoastyCollectiveShopPage() {
   const shop = await prisma.shop.findUnique({
     where: { slug: 'boasty-collective' },
-    select: { bannerImage: true },
+    select: { id: true, bannerImage: true },
   })
-  return <BoastyCollectiveStorefront heroImage={shop?.bannerImage ?? null} />
+  const rawProducts = shop ? await prisma.merchProduct.findMany({
+    where: { shopId: shop.id, active: true },
+    orderBy: { createdAt: 'asc' },
+  }) : []
+  const dbProducts = rawProducts.map(p => ({
+    ...p,
+    images: JSON.parse(p.images || '[]'),
+    sizes: JSON.parse(p.sizes || '[]'),
+    colors: JSON.parse(p.colors || '[]'),
+  }))
+  return <BoastyCollectiveStorefront heroImage={shop?.bannerImage ?? null} dbProducts={dbProducts} />
 }

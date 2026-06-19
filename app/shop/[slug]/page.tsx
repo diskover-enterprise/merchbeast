@@ -19,17 +19,26 @@ export default async function StorefrontPage({
 
   // Lunch Lady — custom editorial storefront with real products
   if (slug === 'lunch-lady') {
-    return <LunchLadyStorefront />
+    const llShop = await prisma.shop.findUnique({ where: { slug: 'lunch-lady' }, select: { id: true } })
+    const llRaw = llShop ? await prisma.merchProduct.findMany({ where: { shopId: llShop.id, active: true }, orderBy: { createdAt: 'asc' } }) : []
+    const llProducts = llRaw.map(p => ({ ...p, images: JSON.parse(p.images || '[]'), sizes: JSON.parse(p.sizes || '[]'), colors: JSON.parse(p.colors || '[]') }))
+    return <LunchLadyStorefront dbProducts={llProducts} />
   }
 
   // The 1982 — vintage sports apparel
   if (slug === 'the-1982') {
-    return <The1982Storefront />
+    const s = await prisma.shop.findUnique({ where: { slug: 'the-1982' }, select: { id: true, bannerImage: true } })
+    const raw = s ? await prisma.merchProduct.findMany({ where: { shopId: s.id, active: true }, orderBy: { createdAt: 'asc' } }) : []
+    const prods = raw.map(p => ({ ...p, images: JSON.parse(p.images || '[]'), sizes: JSON.parse(p.sizes || '[]'), colors: JSON.parse(p.colors || '[]') }))
+    return <The1982Storefront heroImage={s?.bannerImage ?? null} dbProducts={prods} />
   }
 
   // Boasty Collective — Caribbean-inspired apparel
   if (slug === 'boasty-collective') {
-    return <BoastyCollectiveStorefront />
+    const s = await prisma.shop.findUnique({ where: { slug: 'boasty-collective' }, select: { id: true, bannerImage: true } })
+    const raw = s ? await prisma.merchProduct.findMany({ where: { shopId: s.id, active: true }, orderBy: { createdAt: 'asc' } }) : []
+    const prods = raw.map(p => ({ ...p, images: JSON.parse(p.images || '[]'), sizes: JSON.parse(p.sizes || '[]'), colors: JSON.parse(p.colors || '[]') }))
+    return <BoastyCollectiveStorefront heroImage={s?.bannerImage ?? null} dbProducts={prods} />
   }
 
   const shop = await prisma.shop.findUnique({

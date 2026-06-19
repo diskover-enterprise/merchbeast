@@ -5,11 +5,16 @@ import { useState } from 'react'
 import { boastyProducts, type BoastyProduct } from '@/app/products/boasty-collective-products-data'
 import { useCart } from '@/app/cart-context'
 
-export function BoastyCollectiveStorefront({ heroImage }: { heroImage?: string | null }) {
+type DBProduct = { slug: string; name: string; price: string; description: string; images: string[]; sizes: string[]; colors: string[]; tag: string | null; active: boolean }
+
+export function BoastyCollectiveStorefront({ heroImage, dbProducts }: { heroImage?: string | null; dbProducts?: DBProduct[] }) {
   const heroSrc = heroImage || 'https://i.imgur.com/VmMIV8u.jpeg'
   const { count } = useCart()
-  const tees = boastyProducts.filter(p => p.category === 'Tee')
-  const hats = boastyProducts.filter(p => p.category === 'Hat')
+  const source = dbProducts && dbProducts.length > 0
+    ? dbProducts.map(p => ({ ...p, category: p.tag || 'Tee', path: `/shop/boasty-collective/products/${p.slug}` }))
+    : boastyProducts
+  const tees = source.filter(p => p.category === 'Tee')
+  const hats = source.filter(p => p.category === 'Hat')
 
   return (
     <div style={{ fontFamily: "'Montserrat', 'Helvetica Neue', Helvetica, Arial, sans-serif", background: '#f9f6f0', color: '#1a1a2e', overflowX: 'hidden' }}>

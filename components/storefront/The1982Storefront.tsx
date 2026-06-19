@@ -5,14 +5,19 @@ import { useState } from 'react'
 import { the1982Products, type The1982Product } from '@/app/products/the1982-products-data'
 import { useCart } from '@/app/cart-context'
 
+type DBProduct = { slug: string; name: string; price: string; description: string; images: string[]; sizes: string[]; colors: string[]; tag: string | null; active: boolean }
+
 const LOGO = '/1982-logo.png'
 
-export function The1982Storefront({ heroImage }: { heroImage?: string | null }) {
+export function The1982Storefront({ heroImage, dbProducts }: { heroImage?: string | null; dbProducts?: DBProduct[] }) {
   const heroSrc = heroImage || '/1982-hero.jpg'
   const { count } = useCart()
-  const tees = the1982Products.filter(p => p.category === 'Tee')
-  const draftDay = the1982Products.filter(p => p.category === 'Draft Day')
-  const crewnecks = the1982Products.filter(p => p.category === 'Crewneck')
+  const source = dbProducts && dbProducts.length > 0
+    ? dbProducts.map(p => ({ ...p, category: p.tag || 'Tee', path: `/shop/the-1982/products/${p.slug}` }))
+    : the1982Products
+  const tees = source.filter(p => p.category === 'Tee')
+  const draftDay = source.filter(p => p.category === 'Draft Day')
+  const crewnecks = source.filter(p => p.category === 'Crewneck')
 
   return (
     <div style={{ fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif", background: '#fff', color: '#111', overflowX: 'hidden' }}>

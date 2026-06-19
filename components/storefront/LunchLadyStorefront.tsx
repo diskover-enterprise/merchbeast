@@ -2,9 +2,14 @@
 
 import Link from 'next/link'
 import { useState } from 'react'
-import { products, type Product } from '@/app/products/products-data'
+import { products as staticProducts, type Product } from '@/app/products/products-data'
 
-export function LunchLadyStorefront() {
+type DBProduct = { slug: string; name: string; price: string; description: string; images: string[]; sizes: string[]; colors: string[]; tag: string | null; active: boolean }
+
+export function LunchLadyStorefront({ dbProducts }: { dbProducts?: DBProduct[] }) {
+  const products = dbProducts && dbProducts.length > 0
+    ? dbProducts.map(p => ({ ...p, path: `/shop/lunch-lady/products/${p.slug}`, shopifyUrl: '', tag: p.tag || undefined }))
+    : staticProducts
   return (
     <div style={{ fontFamily: 'Georgia, serif', background: '#fff', color: '#111', minHeight: '100vh', border: '12px solid #D4911E', boxSizing: 'border-box' }}>
 
