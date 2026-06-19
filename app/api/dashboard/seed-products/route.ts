@@ -2,6 +2,7 @@ import { prisma } from '@/lib/prisma'
 import { boastyProducts } from '@/app/products/boasty-collective-products-data'
 import { the1982Products } from '@/app/products/the1982-products-data'
 import { nomoProducts } from '@/app/products/nomo-nomo-products-data'
+import { products as lunchLadyProducts } from '@/app/products/products-data'
 
 export async function POST() {
   const shops = await prisma.shop.findMany({ select: { id: true, slug: true } })
@@ -12,6 +13,7 @@ export async function POST() {
     ...boastyProducts.map(p => ({ ...p, shopSlug: 'boasty-collective' })),
     ...the1982Products.map(p => ({ ...p, shopSlug: 'the-1982' })),
     ...nomoProducts.map(p => ({ ...p, shopSlug: 'nomo-nomo' })),
+    ...lunchLadyProducts.map(p => ({ ...p, shopSlug: 'lunch-lady', category: p.tag })),
   ]
 
   let created = 0
