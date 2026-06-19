@@ -7,7 +7,7 @@ import { useCart } from '@/app/cart-context'
 
 type DBProduct = { slug: string; name: string; price: string; description: string; images: string[]; sizes: string[]; colors: string[]; tag: string | null; active: boolean }
 
-export function BoastyCollectiveStorefront({ heroImage, dbProducts }: { heroImage?: string | null; dbProducts?: DBProduct[] }) {
+export function BoastyCollectiveStorefront({ heroImage, logo, dbProducts }: { heroImage?: string | null; logo?: string | null; dbProducts?: DBProduct[] }) {
   const heroSrc = heroImage || 'https://i.imgur.com/VmMIV8u.jpeg'
   const { count } = useCart()
   const source = dbProducts && dbProducts.length > 0
@@ -77,7 +77,7 @@ export function BoastyCollectiveStorefront({ heroImage, dbProducts }: { heroImag
       `}</style>
 
       <nav className="bc-nav">
-        <span className="bc-nav-brand">Boasty<span> Collective</span></span>
+        {logo ? <img src={logo} alt="Boasty Collective" style={{ height: 40, objectFit: 'contain' }} /> : <span className="bc-nav-brand">Boasty<span> Collective</span></span>}
         <Link href="/shop/boasty-collective/cart" className="bc-nav-cart">
           Cart{count > 0 ? ` (${count})` : ''}
         </Link>
