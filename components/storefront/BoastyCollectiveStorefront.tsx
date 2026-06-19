@@ -31,10 +31,10 @@ export function BoastyCollectiveStorefront({ heroImage, logo, dbProducts }: { he
         .bc-hero { padding-top: 100px; position: relative; background: #003A5C; min-height: 600px; display: flex; align-items: flex-end; overflow: hidden; }
         .bc-hero-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; object-position: center top; opacity: 1; background: #003A5C; }
         .bc-hero-content { position: relative; z-index: 2; padding: 60px 40px 64px; max-width: 700px; }
-        .bc-hero-tag { font-size: 10px; letter-spacing: 0.4em; text-transform: uppercase; color: #F4A261; font-weight: 700; margin-bottom: 20px; }
+        .bc-hero-tag { font-size: 11px; letter-spacing: 0.4em; text-transform: uppercase; color: #F4A261; font-weight: 800; margin-bottom: 20px; text-shadow: 0 1px 6px rgba(0,0,0,0.6); }
         .bc-hero-title { font-family: 'Bebas Neue', sans-serif; font-size: clamp(60px, 10vw, 120px); color: #fff; line-height: 0.95; letter-spacing: 0.04em; text-transform: uppercase; margin-bottom: 20px; }
         .bc-hero-title span { color: #F4A261; }
-        .bc-hero-sub { font-size: 15px; color: rgba(255,255,255,0.65); line-height: 1.6; max-width: 420px; }
+        .bc-hero-sub { font-size: 16px; color: #fff; font-weight: 700; line-height: 1.6; max-width: 420px; text-shadow: 0 1px 8px rgba(0,0,0,0.7); }
 
         .bc-wave { background: #003A5C; line-height: 0; }
         .bc-wave svg { display: block; width: 100%; }
