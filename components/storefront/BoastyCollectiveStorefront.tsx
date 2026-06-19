@@ -22,14 +22,14 @@ export function BoastyCollectiveStorefront({ heroImage, logo, dbProducts }: { he
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@400;600;700;800&display=swap');
 
-        .bc-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; height: 64px; background: rgba(0,58,92,0.97); backdrop-filter: blur(8px); display: flex; align-items: center; justify-content: space-between; padding: 0 40px; }
+        .bc-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; height: 100px; background: rgba(0,58,92,0.97); backdrop-filter: blur(8px); display: flex; align-items: center; justify-content: space-between; padding: 0 40px; }
         .bc-nav-brand { font-family: 'Bebas Neue', sans-serif; font-size: 22px; letter-spacing: 0.15em; text-transform: uppercase; color: #fff; text-decoration: none; }
         .bc-nav-brand span { color: #F4A261; }
         .bc-nav-cart { font-size: 11px; letter-spacing: 0.25em; text-transform: uppercase; color: #fff; text-decoration: none; padding: 9px 20px; border: 1px solid rgba(255,255,255,0.35); white-space: nowrap; transition: border-color 0.2s, color 0.2s; }
         .bc-nav-cart:hover { border-color: #F4A261; color: #F4A261; }
 
-        .bc-hero { padding-top: 64px; position: relative; background: #003A5C; min-height: 520px; display: flex; align-items: flex-end; overflow: hidden; }
-        .bc-hero-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center 20%; opacity: 0.55; }
+        .bc-hero { padding-top: 100px; position: relative; background: #003A5C; min-height: 600px; display: flex; align-items: flex-end; overflow: hidden; }
+        .bc-hero-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; object-position: center top; opacity: 1; background: #003A5C; }
         .bc-hero-content { position: relative; z-index: 2; padding: 60px 40px 64px; max-width: 700px; }
         .bc-hero-tag { font-size: 10px; letter-spacing: 0.4em; text-transform: uppercase; color: #F4A261; font-weight: 700; margin-bottom: 20px; }
         .bc-hero-title { font-family: 'Bebas Neue', sans-serif; font-size: clamp(60px, 10vw, 120px); color: #fff; line-height: 0.95; letter-spacing: 0.04em; text-transform: uppercase; margin-bottom: 20px; }
