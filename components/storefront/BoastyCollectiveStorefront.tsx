@@ -88,7 +88,6 @@ export function BoastyCollectiveStorefront({ heroImage, logo, dbProducts }: { he
         <img src={heroSrc} alt="Boasty Collective" className="bc-hero-img" />
         <div className="bc-hero-content">
           <p className="bc-hero-tag">Boasty Collective</p>
-          <h1 className="bc-hero-title">Born<br />from the<br /><span>Island.</span></h1>
           <p className="bc-hero-sub">Apparel inspired by the Caribbean — the water, the sun, the culture. Wear it like you live there.</p>
         </div>
       </section>
