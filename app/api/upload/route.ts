@@ -1,4 +1,5 @@
 import { getAuthSession } from '@/lib/auth'
+import { cookies } from 'next/headers'
 import { v2 as cloudinary } from 'cloudinary'
 
 export async function POST(req: Request) {
@@ -7,9 +8,16 @@ export async function POST(req: Request) {
     api_key: process.env.CLOUDINARY_API_KEY,
     api_secret: process.env.CLOUDINARY_API_SECRET,
   })
-  const session = await getAuthSession()
-  if (!session?.user?.shopId && session?.user?.role !== 'admin')
-    return Response.json({ error: 'Unauthorized' }, { status: 401 })
+
+  // Allow dashboard cookie auth
+  const cookieStore = await cookies()
+  const dashboardAuth = cookieStore.get('mb-dashboard-auth')?.value === 'true'
+
+  if (!dashboardAuth) {
+    const session = await getAuthSession()
+    if (!session?.user?.shopId && session?.user?.role !== 'admin')
+      return Response.json({ error: 'Unauthorized' }, { status: 401 })
+  }
 
   const formData = await req.formData()
   const file = formData.get('file') as File | null
