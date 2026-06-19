@@ -14,9 +14,14 @@ function deserialize(p: any) {
   }
 }
 
-export async function GET() {
+export async function GET(request: Request) {
   const db = getDB()
-  const products = await db.merchProduct.findMany({ orderBy: { createdAt: 'asc' } })
+  const { searchParams } = new URL(request.url)
+  const shopId = searchParams.get('shopId')
+  const products = await db.merchProduct.findMany({
+    where: shopId ? { shopId } : {},
+    orderBy: { createdAt: 'asc' },
+  })
   return Response.json(products.map(deserialize))
 }
 
@@ -27,6 +32,7 @@ export async function POST(request: Request) {
   const product = await db.merchProduct.create({
     data: {
       slug,
+      shopId: body.shopId || null,
       name: body.name,
       description: body.description || '',
       price: body.price,

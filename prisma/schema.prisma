@@ -103,6 +103,7 @@ model CommissionPayment {
 model MerchProduct {
   id          String   @id @default(cuid())
   slug        String   @unique
+  shopId      String?
   name        String
   description String
   price       String

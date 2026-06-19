@@ -4,9 +4,12 @@ import { useEffect, useRef, useState } from 'react'
 import { ImageIcon, Plus, Pencil, Trash2, X, Check, Upload } from 'lucide-react'
 import { products as staticProducts } from '@/app/products/products-data'
 
+type Shop = { id: string; name: string; slug: string }
+
 type MerchProduct = {
   id: string
   slug: string
+  shopId: string | null
   name: string
   description: string
   price: string
@@ -18,6 +21,7 @@ type MerchProduct = {
 }
 
 const emptyForm = {
+  shopId: '',
   name: '',
   description: '',
   price: '',
@@ -120,6 +124,8 @@ function Toggle({ label, checked, onChange }: { label: string; checked: boolean;
 
 export default function ProductsPage() {
   const [products, setProducts] = useState<MerchProduct[]>([])
+  const [shops, setShops] = useState<Shop[]>([])
+  const [filterShopId, setFilterShopId] = useState<string>('')
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
   const [showForm, setShowForm] = useState(false)
@@ -128,9 +134,14 @@ export default function ProductsPage() {
   const [saving, setSaving] = useState(false)
   const [saveError, setSaveError] = useState('')
 
+  useEffect(() => {
+    fetch('/api/admin/shops').then(r => r.json()).then(setShops).catch(() => {})
+  }, [])
+
   async function load() {
     try {
-      const res = await fetch('/api/merch-products')
+      const url = filterShopId ? `/api/merch-products?shopId=${filterShopId}` : '/api/merch-products'
+      const res = await fetch(url)
       if (!res.ok) throw new Error(`${res.status}`)
       const data = await res.json()
       if (data.length === 0) {
@@ -169,7 +180,7 @@ export default function ProductsPage() {
     }
   }
 
-  useEffect(() => { load() }, [])
+  useEffect(() => { load() }, [filterShopId])
 
   function openAdd() {
     setEditing(null)
@@ -180,7 +191,7 @@ export default function ProductsPage() {
 
   function openEdit(p: MerchProduct) {
     setEditing(p)
-    setForm({ name: p.name, description: p.description, price: p.price, tag: p.tag || '', images: p.images, sizes: p.sizes, colors: p.colors, active: p.active })
+    setForm({ shopId: p.shopId || '', name: p.name, description: p.description, price: p.price, tag: p.tag || '', images: p.images, sizes: p.sizes, colors: p.colors, active: p.active })
     setSaveError('')
     setShowForm(true)
   }
@@ -242,7 +253,14 @@ export default function ProductsPage() {
         )}
 
         <div className="db-page-head">
-          <div />
+          <select
+            value={filterShopId}
+            onChange={e => setFilterShopId(e.target.value)}
+            style={{ background: 'var(--bg-2)', border: '1px solid var(--line)', borderRadius: 6, padding: '6px 12px', color: 'var(--ink)', fontSize: 12 }}
+          >
+            <option value="">All Shops</option>
+            {shops.map(s => <option key={s.id} value={s.id}>{s.name}</option>)}
+          </select>
           <button className="db-btn primary" onClick={openAdd}><Plus size={13} /> Add Product</button>
         </div>
 
@@ -256,8 +274,15 @@ export default function ProductsPage() {
               </div>
               <div className="db-modal-body">
                 <div className="db-field">
+                  <label>Shop *</label>
+                  <select value={form.shopId} onChange={e => setForm({ ...form, shopId: e.target.value })} style={{ width: '100%', background: 'var(--bg-2)', border: '1px solid var(--line)', borderRadius: 6, padding: '8px 10px', color: 'var(--ink)', fontSize: 13 }}>
+                    <option value="">Select a shop…</option>
+                    {shops.map(s => <option key={s.id} value={s.id}>{s.name}</option>)}
+                  </select>
+                </div>
+                <div className="db-field">
                   <label>Name *</label>
-                  <input type="text" value={form.name} onChange={e => setForm({ ...form, name: e.target.value })} placeholder="e.g. Lunch Lady — Scooter Tee" />
+                  <input type="text" value={form.name} onChange={e => setForm({ ...form, name: e.target.value })} placeholder="e.g. Boasty Tee — Lavender" />
                 </div>
                 <div className="db-field-row">
                   <div className="db-field">
