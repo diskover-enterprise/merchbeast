@@ -81,6 +81,22 @@ export async function POST(req: Request) {
     }).catch(console.error)
   }
 
+  // Team notification email
+  const { subject: teamSubject, html: teamHtml } = buildNewOrderEmail({
+    restaurantName: shop.name,
+    customerName: name,
+    customerEmail: email,
+    items: emailItems,
+    total: session.amount_total ?? 0,
+    orderId: order.id,
+  })
+  resend.emails.send({
+    from: `Merch Beast <orders@${process.env.RESEND_FROM_DOMAIN ?? 'resend.dev'}>`,
+    to: 'team@merchbeast.shop',
+    subject: teamSubject,
+    html: teamHtml,
+  }).catch(console.error)
+
   // Shop owner notification email
   const { subject: ownerSubject, html: ownerHtml } = buildNewOrderEmail({
     restaurantName: shop.name,
