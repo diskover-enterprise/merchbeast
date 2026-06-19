@@ -57,14 +57,11 @@ export function BoastyCollectiveStorefront({ heroImage, logo, dbProducts }: { he
 
         @media (max-width: 1024px) { .bc-grid { grid-template-columns: repeat(3, 1fr); } }
         @media (max-width: 768px) {
-          .bc-nav { padding: 0 16px; height: 56px; }
-          .bc-nav-brand { font-size: 20px; }
+          .bc-nav { padding: 0 16px; height: 72px; }
           .bc-nav-cart { font-size: 10px; padding: 8px 14px; letter-spacing: 0.15em; }
-          .bc-hero { min-height: unset; flex-direction: column; align-items: stretch; }
-          .bc-hero-img { position: relative; inset: unset; width: 100%; height: auto; aspect-ratio: 16/9; object-fit: cover; object-position: center 20%; opacity: 1; }
-          .bc-hero-content { padding: 32px 20px 40px; text-align: center; max-width: 100%; background: #003A5C; }
-          .bc-hero-tag { font-size: 9px; }
-          .bc-hero-sub { font-size: 14px; margin: 0 auto; }
+          .bc-hero-content { bottom: 20px; left: 16px; right: 16px; }
+          .bc-hero-tag { font-size: 22px; }
+          .bc-hero-sub { font-size: 13px; }
           .bc-section { padding: 48px 16px; }
           .bc-section-head { margin-bottom: 28px; }
           .bc-section-title { font-size: 30px; }
@@ -72,8 +69,10 @@ export function BoastyCollectiveStorefront({ heroImage, logo, dbProducts }: { he
           .bc-footer { padding: 28px 16px; flex-direction: column; align-items: flex-start; gap: 8px; }
         }
         @media (max-width: 480px) {
+          .bc-nav { height: 64px; }
           .bc-grid { grid-template-columns: repeat(2, 1fr); gap: 14px 8px; }
-          .bc-hero-title { letter-spacing: 0.02em; }
+          .bc-hero-tag { font-size: 18px; }
+          .bc-hero-sub { font-size: 12px; }
         }
       `}</style>
 
