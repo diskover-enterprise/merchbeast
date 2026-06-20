@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { the1982Products, type The1982Product } from '@/app/products/the1982-products-data'
 import { useCart } from '@/app/cart-context'
 
