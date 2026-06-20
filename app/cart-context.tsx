@@ -47,13 +47,11 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     } catch {}
   }, [shopPath])
 
-  // Restore shopPath and brandColor on mount
+  // Restore brandColor on mount (shopPath is always set by the page, never persisted)
   useEffect(() => {
     try {
       const savedColor = localStorage.getItem('mb-cart-brand-color')
       if (savedColor) setBrandColorState(savedColor)
-      const savedShop = localStorage.getItem('mb-cart-shop-path')
-      if (savedShop) setShopPathState(savedShop)
     } catch {}
   }, [])
 
@@ -71,7 +69,6 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
 
   const setShopPath = useCallback((path: string) => {
     setShopPathState(path)
-    try { localStorage.setItem('mb-cart-shop-path', path) } catch {}
   }, [])
 
   const addToCart = useCallback((product: Product, size?: string, color?: string) => {
