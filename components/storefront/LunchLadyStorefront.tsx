@@ -1,12 +1,15 @@
 'use client'
 
 import Link from 'next/link'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { products as staticProducts, type Product } from '@/app/products/products-data'
+import { useCart } from '@/app/cart-context'
 
 type DBProduct = { slug: string; name: string; price: string; description: string; images: string[]; sizes: string[]; colors: string[]; tag: string | null; active: boolean }
 
 export function LunchLadyStorefront({ dbProducts }: { dbProducts?: DBProduct[] }) {
+  const { setBrandColor, setShopPath } = useCart()
+  useEffect(() => { setBrandColor('#1C2E54'); setShopPath('/shop/lunch-lady') }, [setBrandColor, setShopPath])
   const products = dbProducts && dbProducts.length > 0
     ? dbProducts.map(p => ({ ...p, path: `/shop/lunch-lady/products/${p.slug}`, shopifyUrl: '', tag: p.tag || undefined }))
     : staticProducts

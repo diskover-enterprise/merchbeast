@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { boastyProducts, type BoastyProduct } from '@/app/products/boasty-collective-products-data'
 import { useCart } from '@/app/cart-context'
 
@@ -9,7 +9,8 @@ type DBProduct = { slug: string; name: string; price: string; description: strin
 
 export function BoastyCollectiveStorefront({ heroImage, logo, dbProducts }: { heroImage?: string | null; logo?: string | null; dbProducts?: DBProduct[] }) {
   const heroSrc = heroImage || 'https://i.imgur.com/VmMIV8u.jpeg'
-  const { count } = useCart()
+  const { count, setBrandColor, setShopPath } = useCart()
+  useEffect(() => { setBrandColor('#003A5C'); setShopPath('/shop/boasty-collective') }, [setBrandColor, setShopPath])
   const source = dbProducts && dbProducts.length > 0
     ? dbProducts.map(p => ({ ...p, category: p.tag || 'Tee', path: `/shop/boasty-collective/products/${p.slug}` }))
     : boastyProducts

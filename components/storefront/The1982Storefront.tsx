@@ -11,7 +11,8 @@ const LOGO = '/1982-logo.png'
 
 export function The1982Storefront({ heroImage, dbProducts }: { heroImage?: string | null; dbProducts?: DBProduct[] }) {
   const heroSrc = heroImage || '/1982-hero.jpg'
-  const { count } = useCart()
+  const { count, setBrandColor, setShopPath } = useCart()
+  useEffect(() => { setBrandColor('#B8860B'); setShopPath('/shop/the-1982') }, [setBrandColor, setShopPath])
   const source = dbProducts && dbProducts.length > 0
     ? dbProducts.map(p => ({ ...p, category: p.tag || 'Tee', path: `/shop/the-1982/products/${p.slug}` }))
     : the1982Products

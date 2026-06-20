@@ -6,7 +6,8 @@ import { nomoProducts, type NomoProduct } from '@/app/products/nomo-nomo-product
 import { useCart } from '@/app/cart-context'
 
 export function NomoNomoStorefront({ heroImage }: { heroImage?: string | null }) {
-  const { count } = useCart()
+  const { count, setBrandColor, setShopPath } = useCart()
+  useEffect(() => { setBrandColor('#C41E1E'); setShopPath('/shop/nomo-nomo') }, [setBrandColor, setShopPath])
   const tees = nomoProducts.filter(p => p.category === 'Tee')
   const hats = nomoProducts.filter(p => p.category === 'Hat')
 

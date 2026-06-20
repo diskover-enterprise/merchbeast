@@ -1,11 +1,12 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { useCart } from '@/app/cart-context'
 
 export default function The1982CartPage() {
-  const { items, removeFromCart, updateQuantity, total } = useCart()
+  const { items, removeFromCart, updateQuantity, total, setBrandColor, setShopPath } = useCart()
+  useEffect(() => { setBrandColor('#B8860B'); setShopPath('/shop/the-1982') }, [setBrandColor, setShopPath])
   const [checkoutError, setCheckoutError] = useState<string | null>(null)
   const [loading, setLoading] = useState(false)
 
