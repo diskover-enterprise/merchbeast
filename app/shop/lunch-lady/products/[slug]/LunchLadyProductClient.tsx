@@ -17,14 +17,17 @@ export default function LunchLadyProductClient({ product, related }: { product: 
   const [added, setAdded] = useState(false)
   const [sizeError, setSizeError] = useState(false)
 
+  useEffect(() => {
+    setBrandColor('#1C2E54')
+    setShopPath('/shop/lunch-lady')
+  }, [setBrandColor, setShopPath])
+
   function handleAddToCart() {
     if (product.sizes.length > 1 && !selectedSize) {
       setSizeError(true)
       setTimeout(() => setSizeError(false), 2000)
       return
     }
-    setBrandColor('#1C2E54')
-    setShopPath('/shop/lunch-lady')
     addToCart(product as any, selectedSize || product.sizes[0], selectedColor || product.colors[0])
     setAdded(true)
     setTimeout(() => setAdded(false), 2000)

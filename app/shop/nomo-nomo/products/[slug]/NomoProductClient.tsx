@@ -17,14 +17,17 @@ export default function NomoProductClient({ product, related }: { product: Produ
   const [added, setAdded] = useState(false)
   const [sizeError, setSizeError] = useState(false)
 
+  useEffect(() => {
+    setBrandColor('#C41E1E')
+    setShopPath('/shop/nomo-nomo')
+  }, [setBrandColor, setShopPath])
+
   function handleAddToCart() {
     if (product.sizes.length > 1 && !selectedSize) {
       setSizeError(true)
       setTimeout(() => setSizeError(false), 2000)
       return
     }
-    setBrandColor('#C41E1E')
-    setShopPath('/shop/nomo-nomo')
     addToCart(product as any, selectedSize || product.sizes[0], selectedColor || product.colors[0])
     setAdded(true)
     setTimeout(() => setAdded(false), 2000)

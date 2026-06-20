@@ -17,14 +17,17 @@ export default function BoastyProductClient({ product, related }: { product: Pro
   const [added, setAdded] = useState(false)
   const [sizeError, setSizeError] = useState(false)
 
+  useEffect(() => {
+    setBrandColor('#003A5C')
+    setShopPath('/shop/boasty-collective')
+  }, [setBrandColor, setShopPath])
+
   function handleAddToCart() {
     if (product.sizes.length > 1 && !selectedSize) {
       setSizeError(true)
       setTimeout(() => setSizeError(false), 2000)
       return
     }
-    setBrandColor('#003A5C')
-    setShopPath('/shop/boasty-collective')
     addToCart(product as any, selectedSize || product.sizes[0], selectedColor || product.colors[0])
     setAdded(true)
     setTimeout(() => setAdded(false), 2000)

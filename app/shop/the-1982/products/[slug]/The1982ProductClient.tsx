@@ -17,14 +17,17 @@ export default function The1982ProductClient({ product, related }: { product: Pr
   const [added, setAdded] = useState(false)
   const [sizeError, setSizeError] = useState(false)
 
+  useEffect(() => {
+    setBrandColor('#B8860B')
+    setShopPath('/shop/the-1982')
+  }, [setBrandColor, setShopPath])
+
   function handleAddToCart() {
     if (product.sizes.length > 1 && !selectedSize) {
       setSizeError(true)
       setTimeout(() => setSizeError(false), 2000)
       return
     }
-    setBrandColor('#B8860B')
-    setShopPath('/shop/the-1982')
     addToCart(product as any, selectedSize || product.sizes[0], selectedColor || product.colors[0])
     setAdded(true)
     setTimeout(() => setAdded(false), 2000)
