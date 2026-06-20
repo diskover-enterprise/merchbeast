@@ -2,7 +2,7 @@ import { prisma } from '@/lib/prisma'
 import { BoastyCollectiveStorefront } from '@/components/storefront/BoastyCollectiveStorefront'
 import { TrackView } from '@/components/storefront/TrackView'
 
-export const dynamic = 'force-dynamic'
+export const revalidate = 60
 
 export default async function BoastyCollectiveShopPage() {
   const shop = await prisma.shop.findUnique({

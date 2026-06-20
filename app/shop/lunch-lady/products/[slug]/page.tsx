@@ -3,7 +3,7 @@ import { notFound } from 'next/navigation'
 import { TrackView } from '@/components/storefront/TrackView'
 import LunchLadyProductClient from './LunchLadyProductClient'
 
-export const dynamic = 'force-dynamic'
+export const revalidate = 60
 
 export default async function LunchLadyProductPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params

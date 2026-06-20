@@ -3,7 +3,7 @@ import { notFound } from 'next/navigation'
 import { TrackView } from '@/components/storefront/TrackView'
 import The1982ProductClient from './The1982ProductClient'
 
-export const dynamic = 'force-dynamic'
+export const revalidate = 60
 
 export default async function The1982ProductPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params
