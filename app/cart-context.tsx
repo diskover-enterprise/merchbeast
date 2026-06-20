@@ -30,15 +30,26 @@ function itemKey(slug: string, size?: string, color?: string) {
   return `${slug}__${size || ''}__${color || ''}`
 }
 
+function cartStorageKey(shopPath: string) {
+  return `mb-cart-${shopPath.replace(/\//g, '-')}`
+}
+
 export function CartProvider({ children }: { children: React.ReactNode }) {
   const [items, setItems] = useState<CartItem[]>([])
   const [brandColor, setBrandColorState] = useState('#1C2E54')
   const [shopPath, setShopPathState] = useState('/shop/lunch-lady')
 
+  // Load items for the current shopPath whenever it changes
   useEffect(() => {
     try {
-      const saved = localStorage.getItem('mb-cart')
-      if (saved) setItems(JSON.parse(saved))
+      const saved = localStorage.getItem(cartStorageKey(shopPath))
+      setItems(saved ? JSON.parse(saved) : [])
+    } catch {}
+  }, [shopPath])
+
+  // Restore shopPath and brandColor on mount
+  useEffect(() => {
+    try {
       const savedColor = localStorage.getItem('mb-cart-brand-color')
       if (savedColor) setBrandColorState(savedColor)
       const savedShop = localStorage.getItem('mb-cart-shop-path')
@@ -46,11 +57,12 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     } catch {}
   }, [])
 
+  // Persist items under the shop-specific key
   useEffect(() => {
     try {
-      localStorage.setItem('mb-cart', JSON.stringify(items))
+      localStorage.setItem(cartStorageKey(shopPath), JSON.stringify(items))
     } catch {}
-  }, [items])
+  }, [items, shopPath])
 
   const setBrandColor = useCallback((color: string) => {
     setBrandColorState(color)
@@ -86,8 +98,8 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
 
   const clearCart = useCallback(() => {
     setItems([])
-    try { localStorage.removeItem('mb-cart') } catch {}
-  }, [])
+    try { localStorage.removeItem(cartStorageKey(shopPath)) } catch {}
+  }, [shopPath])
 
   const total = items.reduce((sum, i) => {
     const price = parseFloat(i.product.price.replace(/[^0-9.]/g, ''))
