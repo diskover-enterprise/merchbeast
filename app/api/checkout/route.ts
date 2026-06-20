@@ -1,10 +1,11 @@
 import Stripe from 'stripe'
+import { prisma } from '@/lib/prisma'
 import { getProduct } from '@/app/products/products-data'
 import { the1982Products } from '@/app/products/the1982-products-data'
 import { nomoProducts } from '@/app/products/nomo-nomo-products-data'
 import { boastyProducts } from '@/app/products/boasty-collective-products-data'
 
-function findProduct(slug: string) {
+function findStaticProduct(slug: string) {
   const main = getProduct(slug)
   if (main) return main
   return (
@@ -25,19 +26,30 @@ export async function POST(request: Request) {
     return Response.json({ error: 'Cart is empty' }, { status: 400 })
   }
 
-  const resolvedItems = items.map((item) => {
-    const product = findProduct(item.slug)
-    if (!product) throw new Error(`Product not found: ${item.slug}`)
-    const unitAmount = Math.round(parseFloat(product.price.replace(/[^0-9.]/g, '')) * 100)
-    return { product, item, unitAmount }
-  })
+  const resolvedItems = await Promise.all(items.map(async (item) => {
+    let name: string, price: string, images: string[]
+    const staticProduct = findStaticProduct(item.slug)
+    if (staticProduct) {
+      name = staticProduct.name
+      price = staticProduct.price
+      images = staticProduct.images
+    } else {
+      const dbProduct = await prisma.merchProduct.findUnique({ where: { slug: item.slug } })
+      if (!dbProduct) throw new Error(`Product not found: ${item.slug}`)
+      name = dbProduct.name
+      price = dbProduct.price
+      images = JSON.parse(dbProduct.images || '[]') as string[]
+    }
+    const unitAmount = Math.round(parseFloat(price.replace(/[^0-9.]/g, '')) * 100)
+    return { name, images, item, unitAmount }
+  }))
 
-  const lineItems = resolvedItems.map(({ product, item, unitAmount }) => ({
+  const lineItems = resolvedItems.map(({ name, images, item, unitAmount }) => ({
     price_data: {
       currency: 'cad',
       product_data: {
-        name: product.name,
-        images: product.images.slice(0, 1),
+        name,
+        images: images.slice(0, 1),
       },
       unit_amount: unitAmount,
     },
@@ -59,8 +71,8 @@ export async function POST(request: Request) {
     : 'lunch-lady'
 
   // Pass shop slug + item details as metadata so success page can create the DB order
-  const cartMeta = resolvedItems.map(({ product, item, unitAmount }) => ({
-    name: product.name,
+  const cartMeta = resolvedItems.map(({ name, item, unitAmount }) => ({
+    name,
     slug: item.slug,
     quantity: item.quantity,
     price: unitAmount,
