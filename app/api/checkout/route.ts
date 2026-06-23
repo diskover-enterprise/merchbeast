@@ -18,8 +18,10 @@ function findStaticProduct(slug: string) {
 
 export async function POST(request: Request) {
   const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!)
-  const { items } = await request.json() as {
+  const { items, discountCode, shopSlug: bodyShopSlug } = await request.json() as {
     items: { slug: string; quantity: number }[]
+    discountCode?: string
+    shopSlug?: string
   }
 
   if (!items?.length) {
@@ -63,12 +65,49 @@ export async function POST(request: Request) {
 
   const host = new URL(baseUrl).hostname
   const refererPath = request.headers.get('referer') || ''
-  const shopSlug = host.startsWith('the1982.') ? 'the-1982'
+  const shopSlug = bodyShopSlug || (
+    host.startsWith('the1982.') ? 'the-1982'
     : host.startsWith('nomo-nomo.') ? 'nomo-nomo'
     : refererPath.includes('/shop/boasty-collective') ? 'boasty-collective'
     : refererPath.includes('/shop/nomo-nomo') ? 'nomo-nomo'
     : refererPath.includes('/shop/the-1982') ? 'the-1982'
     : 'lunch-lady'
+  )
+
+  // Validate and apply discount code
+  let discountAmountCents = 0
+  let discountId: string | null = null
+  if (discountCode) {
+    const orderTotalCents = resolvedItems.reduce((sum, { item, unitAmount }) => sum + unitAmount * item.quantity, 0)
+    const shop = await prisma.shop.findUnique({ where: { slug: shopSlug } })
+    if (shop) {
+      const discount = await prisma.discountCode.findUnique({
+        where: { shopId_code: { shopId: shop.id, code: discountCode.toUpperCase() } },
+      })
+      if (discount && discount.active &&
+        (!discount.expiresAt || discount.expiresAt > new Date()) &&
+        (discount.maxUses === null || discount.usedCount < discount.maxUses) &&
+        orderTotalCents >= discount.minOrderAmount) {
+        discountId = discount.id
+        discountAmountCents = discount.type === 'percentage'
+          ? Math.round(orderTotalCents * discount.value / 100)
+          : Math.min(discount.value, orderTotalCents)
+      }
+    }
+  }
+
+  // If discount applies, add a negative line item
+  const finalLineItems = [...lineItems]
+  if (discountAmountCents > 0) {
+    finalLineItems.push({
+      price_data: {
+        currency: 'cad',
+        product_data: { name: `Discount (${discountCode!.toUpperCase()})`, images: [] },
+        unit_amount: -discountAmountCents,
+      },
+      quantity: 1,
+    })
+  }
 
   // Pass shop slug + item details as metadata so success page can create the DB order
   const cartMeta = resolvedItems.map(({ name, item, unitAmount }) => ({
@@ -80,7 +119,7 @@ export async function POST(request: Request) {
 
   const session = await stripe.checkout.sessions.create({
     payment_method_types: ['card'],
-    line_items: lineItems,
+    line_items: finalLineItems,
     mode: 'payment',
     success_url: `${baseUrl}/checkout/success?session_id={CHECKOUT_SESSION_ID}&shop=${shopSlug}`,
     cancel_url: `${baseUrl}/cart`,
@@ -103,8 +142,17 @@ export async function POST(request: Request) {
     metadata: {
       shopSlug,
       cartItems: JSON.stringify(cartMeta),
+      ...(discountId ? { discountId } : {}),
     },
   })
+
+  // Increment usage count
+  if (discountId) {
+    await prisma.discountCode.update({
+      where: { id: discountId },
+      data: { usedCount: { increment: 1 } },
+    })
+  }
 
   return Response.json({ url: session.url })
 }

@@ -3,11 +3,18 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { useCart } from '../cart-context'
+import { PromoCodeInput } from '@/components/PromoCodeInput'
 
 export default function CartPage() {
   const { items, removeFromCart, updateQuantity, total, brandColor, shopPath } = useCart()
   const [checkoutError, setCheckoutError] = useState<string | null>(null)
   const [loading, setLoading] = useState(false)
+  const [appliedCode, setAppliedCode] = useState<string | null>(null)
+  const [discountCents, setDiscountCents] = useState(0)
+
+  const shopSlug = shopPath?.replace('/shop/', '') || 'lunch-lady'
+  const totalCents = Math.round(total * 100)
+  const discountedTotal = Math.max(0, total - discountCents / 100)
 
   async function handleCheckout() {
     setCheckoutError(null)
@@ -18,6 +25,7 @@ export default function CartPage() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           items: items.map(i => ({ slug: i.product.slug, quantity: i.quantity })),
+          ...(appliedCode ? { discountCode: appliedCode, shopSlug } : {}),
         }),
       })
       const text = await res.text()
@@ -133,14 +141,28 @@ export default function CartPage() {
                 <span>Subtotal</span>
                 <span>${total.toFixed(2)} CAD</span>
               </div>
+              {discountCents > 0 && (
+                <div className="cart-summary-row" style={{ color: '#276749' }}>
+                  <span>Discount</span>
+                  <span>−${(discountCents / 100).toFixed(2)} CAD</span>
+                </div>
+              )}
               <div className="cart-summary-row">
                 <span>Shipping</span>
                 <span style={{ color: '#999' }}>Calculated at checkout</span>
               </div>
               <div className="cart-summary-row cart-summary-total">
                 <span>Total</span>
-                <span>${total.toFixed(2)} CAD</span>
+                <span>${discountedTotal.toFixed(2)} CAD</span>
               </div>
+              <PromoCodeInput
+                shopSlug={shopSlug}
+                orderTotalCents={totalCents}
+                appliedCode={appliedCode}
+                discountCents={discountCents}
+                onApply={(code, cents) => { setAppliedCode(code); setDiscountCents(cents) }}
+                onRemove={() => { setAppliedCode(null); setDiscountCents(0) }}
+              />
               <button className="cart-checkout-btn" style={{ background: brandColor }} onClick={handleCheckout} disabled={loading}>
                 {loading ? 'Redirecting...' : 'Proceed to Checkout'}
               </button>

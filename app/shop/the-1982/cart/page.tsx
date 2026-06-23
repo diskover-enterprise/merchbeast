@@ -3,12 +3,18 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { useCart } from '@/app/cart-context'
+import { PromoCodeInput } from '@/components/PromoCodeInput'
 
 export default function The1982CartPage() {
   const { items, removeFromCart, updateQuantity, total, setBrandColor, setShopPath } = useCart()
   useEffect(() => { setBrandColor('#B8860B'); setShopPath('/shop/the-1982') }, [setBrandColor, setShopPath])
   const [checkoutError, setCheckoutError] = useState<string | null>(null)
   const [loading, setLoading] = useState(false)
+  const [appliedCode, setAppliedCode] = useState<string | null>(null)
+  const [discountCents, setDiscountCents] = useState(0)
+
+  const totalCents = Math.round(total * 100)
+  const discountedTotal = Math.max(0, total - discountCents / 100)
 
   async function handleCheckout() {
     setCheckoutError(null)
@@ -19,6 +25,7 @@ export default function The1982CartPage() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           items: items.map(i => ({ slug: i.product.slug, quantity: i.quantity })),
+          ...(appliedCode ? { discountCode: appliedCode, shopSlug: 'the-1982' } : {}),
         }),
       })
       const data = await res.json()
@@ -126,14 +133,29 @@ export default function The1982CartPage() {
                 <span>Subtotal</span>
                 <span>${total.toFixed(2)} CAD</span>
               </div>
+              {discountCents > 0 && (
+                <div className="t82-cart-summary-row" style={{ color: '#86efac' }}>
+                  <span>Discount</span>
+                  <span>−${(discountCents / 100).toFixed(2)} CAD</span>
+                </div>
+              )}
               <div className="t82-cart-summary-row">
                 <span>Shipping</span>
                 <span>Calculated at checkout</span>
               </div>
               <div className="t82-cart-summary-row t82-cart-summary-total">
                 <span>Total</span>
-                <span>${total.toFixed(2)} CAD</span>
+                <span>${discountedTotal.toFixed(2)} CAD</span>
               </div>
+              <PromoCodeInput
+                shopSlug="the-1982"
+                orderTotalCents={totalCents}
+                appliedCode={appliedCode}
+                discountCents={discountCents}
+                onApply={(code, cents) => { setAppliedCode(code); setDiscountCents(cents) }}
+                onRemove={() => { setAppliedCode(null); setDiscountCents(0) }}
+                theme="dark"
+              />
               <button className="t82-cart-checkout-btn" onClick={handleCheckout} disabled={loading}>
                 {loading ? 'Redirecting...' : 'Proceed to Checkout'}
               </button>

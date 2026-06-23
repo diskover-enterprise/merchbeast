@@ -2,7 +2,7 @@ import { prisma } from '@/lib/prisma'
 import { NomoNomoStorefront } from '@/components/storefront/NomoNomoStorefront'
 import { TrackView } from '@/components/storefront/TrackView'
 
-export const revalidate = 60
+export const revalidate = 0
 
 export default async function NomoNomoShopPage() {
   const shop = await prisma.shop.findUnique({
