@@ -10,7 +10,7 @@ import { calcSalePrice } from '@/lib/sale'
 type DBProduct = { slug: string; name: string; price: string; description: string; images: string[]; sizes: string[]; colors: string[]; tag: string | null; active: boolean }
 
 export function BoastyCollectiveStorefront({ heroImage, logo, dbProducts, activeSale }: { heroImage?: string | null; logo?: string | null; dbProducts?: DBProduct[]; activeSale?: ActiveSale }) {
-  const heroSrc = heroImage || 'https://i.imgur.com/VmMIV8u.jpeg'
+  const heroSrc = heroImage || 'https://res.cloudinary.com/dwjvblzu9/image/upload/v1782248772/merchbeast/ccxxbxnbslckb2ipccm0.jpg'
   const { count, setBrandColor, setShopPath } = useCart()
   useEffect(() => { setBrandColor('#003A5C'); setShopPath('/shop/boasty-collective') }, [setBrandColor, setShopPath])
   const source = dbProducts && dbProducts.length > 0
