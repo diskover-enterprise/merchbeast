@@ -9,7 +9,7 @@ import { TrackView } from '@/components/storefront/TrackView'
 import { Product, Shop } from '@/types'
 import Image from 'next/image'
 
-export const revalidate = 60
+export const revalidate = 0
 
 export default async function StorefrontPage({
   params,
@@ -18,12 +18,19 @@ export default async function StorefrontPage({
 }) {
   const { slug } = await params
 
+  async function fetchSale(shopId: string) {
+    const s = await prisma.shopSale.findFirst({ where: { shopId, active: true }, orderBy: { createdAt: 'desc' } })
+    if (!s) return null
+    return { id: s.id, name: s.name, type: s.type as 'percentage'|'fixed', value: s.value, scope: s.scope as 'cart'|'products', productSlugs: JSON.parse(s.productSlugs||'[]') }
+  }
+
   // Lunch Lady — custom editorial storefront with real products
   if (slug === 'lunch-lady') {
     const llShop = await prisma.shop.findUnique({ where: { slug: 'lunch-lady' }, select: { id: true } })
     const llRaw = llShop ? await prisma.merchProduct.findMany({ where: { shopId: llShop.id, active: true }, orderBy: { createdAt: 'asc' } }) : []
     const llProducts = llRaw.map(p => ({ ...p, images: JSON.parse(p.images || '[]'), sizes: JSON.parse(p.sizes || '[]'), colors: JSON.parse(p.colors || '[]') }))
-    return <>{llShop && <TrackView shopId={llShop.id} />}<LunchLadyStorefront dbProducts={llProducts} /></>
+    const sale = llShop ? await fetchSale(llShop.id) : null
+    return <>{llShop && <TrackView shopId={llShop.id} />}<LunchLadyStorefront dbProducts={llProducts} activeSale={sale} /></>
   }
 
   // The 1982 — vintage sports apparel
@@ -31,7 +38,8 @@ export default async function StorefrontPage({
     const s = await prisma.shop.findUnique({ where: { slug: 'the-1982' }, select: { id: true, bannerImage: true } })
     const raw = s ? await prisma.merchProduct.findMany({ where: { shopId: s.id, active: true }, orderBy: { createdAt: 'asc' } }) : []
     const prods = raw.map(p => ({ ...p, images: JSON.parse(p.images || '[]'), sizes: JSON.parse(p.sizes || '[]'), colors: JSON.parse(p.colors || '[]') }))
-    return <The1982Storefront heroImage={s?.bannerImage ?? null} dbProducts={prods} />
+    const sale = s ? await fetchSale(s.id) : null
+    return <The1982Storefront heroImage={s?.bannerImage ?? null} dbProducts={prods} activeSale={sale} />
   }
 
   // Boasty Collective — Caribbean-inspired apparel
@@ -39,7 +47,8 @@ export default async function StorefrontPage({
     const s = await prisma.shop.findUnique({ where: { slug: 'boasty-collective' }, select: { id: true, bannerImage: true } })
     const raw = s ? await prisma.merchProduct.findMany({ where: { shopId: s.id, active: true }, orderBy: { createdAt: 'asc' } }) : []
     const prods = raw.map(p => ({ ...p, images: JSON.parse(p.images || '[]'), sizes: JSON.parse(p.sizes || '[]'), colors: JSON.parse(p.colors || '[]') }))
-    return <BoastyCollectiveStorefront heroImage={s?.bannerImage ?? null} dbProducts={prods} />
+    const sale = s ? await fetchSale(s.id) : null
+    return <BoastyCollectiveStorefront heroImage={s?.bannerImage ?? null} dbProducts={prods} activeSale={sale} />
   }
 
   const shop = await prisma.shop.findUnique({

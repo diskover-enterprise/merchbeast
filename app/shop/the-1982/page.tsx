@@ -19,8 +19,10 @@ export default async function The1982ShopPage() {
     sizes: JSON.parse(p.sizes || '[]'),
     colors: JSON.parse(p.colors || '[]'),
   }))
+  const rawSale = shop ? await prisma.shopSale.findFirst({ where: { shopId: shop.id, active: true }, orderBy: { createdAt: 'desc' } }) : null
+  const activeSale = rawSale ? { id: rawSale.id, name: rawSale.name, type: rawSale.type as 'percentage'|'fixed', value: rawSale.value, scope: rawSale.scope as 'cart'|'products', productSlugs: JSON.parse(rawSale.productSlugs||'[]') } : null
   return <>
     {shop && <TrackView shopId={shop.id} />}
-    <The1982Storefront heroImage={shop?.bannerImage ?? null} dbProducts={dbProducts} />
+    <The1982Storefront heroImage={shop?.bannerImage ?? null} dbProducts={dbProducts} activeSale={activeSale} />
   </>
 }

@@ -4,8 +4,10 @@ import Link from 'next/link'
 import { useState, useEffect } from 'react'
 import { nomoProducts, type NomoProduct } from '@/app/products/nomo-nomo-products-data'
 import { useCart } from '@/app/cart-context'
+import type { ActiveSale } from '@/lib/sale'
+import { calcSalePrice } from '@/lib/sale'
 
-export function NomoNomoStorefront({ heroImage }: { heroImage?: string | null }) {
+export function NomoNomoStorefront({ heroImage, activeSale }: { heroImage?: string | null; activeSale?: ActiveSale }) {
   const { count, setBrandColor, setShopPath } = useCart()
   useEffect(() => { setBrandColor('#C41E1E'); setShopPath('/shop/nomo-nomo') }, [setBrandColor, setShopPath])
   const tees = nomoProducts.filter(p => p.category === 'Tee')
@@ -63,6 +65,11 @@ export function NomoNomoStorefront({ heroImage }: { heroImage?: string | null })
       `}</style>
 
       {/* NAV */}
+      {activeSale && (
+        <div style={{ background: '#C41E1E', color: '#fff', textAlign: 'center', padding: '10px 20px', fontSize: 12, fontWeight: 700, letterSpacing: '0.25em', textTransform: 'uppercase', position: 'sticky', top: 0, zIndex: 200 }}>
+          {activeSale.name} — {activeSale.type === 'percentage' ? `${activeSale.value}% OFF` : `$${(activeSale.value/100).toFixed(0)} OFF`}{activeSale.scope === 'cart' ? ' EVERYTHING' : ' SELECT STYLES'}
+        </div>
+      )}
       <nav className="nn-nav">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src="/nomo-nomo-logo.png" alt="Nomo Nomo" className="nn-nav-logo" />
@@ -86,7 +93,7 @@ export function NomoNomoStorefront({ heroImage }: { heroImage?: string | null })
           <span className="nn-section-count">{tees.length} styles</span>
         </div>
         <div className="nn-grid">
-          {tees.map(p => <ProductCard key={p.slug} product={p} />)}
+          {tees.map(p => <ProductCard key={p.slug} product={p} activeSale={activeSale} />)}
         </div>
       </section>
 
@@ -105,7 +112,7 @@ export function NomoNomoStorefront({ heroImage }: { heroImage?: string | null })
           <span className="nn-section-count">{hats.length} styles</span>
         </div>
         <div className="nn-grid">
-          {hats.map(p => <ProductCard key={p.slug} product={p} />)}
+          {hats.map(p => <ProductCard key={p.slug} product={p} activeSale={activeSale} />)}
         </div>
       </section>
 
@@ -118,8 +125,9 @@ export function NomoNomoStorefront({ heroImage }: { heroImage?: string | null })
   )
 }
 
-function ProductCard({ product }: { product: NomoProduct }) {
+function ProductCard({ product, activeSale }: { product: NomoProduct; activeSale?: ActiveSale }) {
   const [hovered, setHovered] = useState(false)
+  const salePrice = calcSalePrice(product.price, activeSale ?? null, product.slug)
 
   return (
     <Link
@@ -143,9 +151,10 @@ function ProductCard({ product }: { product: NomoProduct }) {
         <h3 style={{ fontSize: 13, fontWeight: 500, lineHeight: 1.4, color: '#fff', flex: 1, marginRight: 8 }}>
           {product.name}
         </h3>
-        <span style={{ fontSize: 13, color: '#C41E1E', fontWeight: 700, flexShrink: 0 }}>
-          {product.price}
-        </span>
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', flexShrink: 0 }}>
+          {salePrice && <span style={{ fontSize: 13, color: '#ff6b6b', fontWeight: 700 }}>{salePrice}</span>}
+          <span style={{ fontSize: 13, color: salePrice ? 'rgba(255,255,255,0.3)' : '#C41E1E', fontWeight: 700, textDecoration: salePrice ? 'line-through' : 'none' }}>{product.price}</span>
+        </div>
       </div>
       {product.colors && (
         <p style={{ fontSize: 10, color: 'rgba(255,255,255,0.3)', letterSpacing: '0.05em', marginTop: 3 }}>

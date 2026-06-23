@@ -162,7 +162,23 @@
       "Bash(curl -s -X POST http://localhost:3000/api/client/auth -H \"Content-Type: application/json\" -d '{\"email\":\"test\",\"password\":\"test\"}')",
       "Bash(GIT_ASKPASS=echo git push origin main)",
       "Bash(git push origin main)",
-      "Bash(mkdir -p /Users/mac/Downloads/restaurant-marketplace/app/api/dashboard/shops/\\\\[id\\\\] && cat /Users/mac/Downloads/restaurant-marketplace/app/api/dashboard/commissions/route.ts | head -10)"
+      "Bash(mkdir -p /Users/mac/Downloads/restaurant-marketplace/app/api/dashboard/shops/\\\\[id\\\\] && cat /Users/mac/Downloads/restaurant-marketplace/app/api/dashboard/commissions/route.ts | head -10)",
+      "Bash(sed -i '' 's|href=\"/cart\" className=\"ll-nav-cart\"|href=\"/shop/lunch-lady/cart\" className=\"ll-nav-cart\"|' /Users/mac/Downloads/restaurant-marketplace/components/storefront/LunchLadyStorefront.tsx)",
+      "Bash(sed -i '' 's|href=\"/cart\" className=\"ll-pnav-cart\"|href=\"/shop/lunch-lady/cart\" className=\"ll-pnav-cart\"|' /Users/mac/Downloads/restaurant-marketplace/app/shop/lunch-lady/products/\\\\[slug\\\\]/LunchLadyProductClient.tsx)",
+      "Bash(sed -i '' 's|href=\"/cart\" style|href=\"/shop/lunch-lady/cart\" style|g' /Users/mac/Downloads/restaurant-marketplace/app/shop/lunch-lady/products/\\\\[slug\\\\]/LunchLadyProductClient.tsx)",
+      "Bash(sed -i '' 's|href=\"/cart\" className=\"nn-nav-cart\"|href=\"/shop/nomo-nomo/cart\" className=\"nn-nav-cart\"|' /Users/mac/Downloads/restaurant-marketplace/components/storefront/NomoNomoStorefront.tsx)",
+      "Bash(sed -i '' 's|href=\"/cart\" className=\"nn-pnav-cart\"|href=\"/shop/nomo-nomo/cart\" className=\"nn-pnav-cart\"|' \"/Users/mac/Downloads/restaurant-marketplace/app/shop/nomo-nomo/products/[slug]/NomoProductClient.tsx\")",
+      "Bash(sed -i '' 's|href=\"/cart\" style|href=\"/shop/nomo-nomo/cart\" style|g' \"/Users/mac/Downloads/restaurant-marketplace/app/shop/nomo-nomo/products/[slug]/NomoProductClient.tsx\")",
+      "Bash(PATH=/tmp/nodebin/bin:__TRACKED_VAR__ /tmp/nodebin/bin/node /tmp/nodebin/bin/npm install --prefix /Users/mac/Downloads/restaurant-marketplace @vercel/analytics)",
+      "Bash(npm run *)",
+      "Bash(npx next *)",
+      "Bash(npx prisma *)",
+      "Bash(which node *)",
+      "Read(//Users/mac/**)",
+      "Read(//usr/local/**)",
+      "Bash(find /opt /usr/local /Users/mac -name \"node\" -type f 2>/dev/null | grep -v node_modules | head -10)",
+      "Bash(ls /Applications/ | grep -i node; ls ~/Applications/ 2>/dev/null | grep -i node)",
+      "Bash(mkdir -p /Users/mac/Downloads/restaurant-marketplace/app/api/dashboard/discounts/\\\\[id\\\\])"
     ]
   }
 }

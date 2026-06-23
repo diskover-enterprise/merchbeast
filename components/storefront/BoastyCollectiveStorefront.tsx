@@ -4,10 +4,12 @@ import Link from 'next/link'
 import { useState, useEffect } from 'react'
 import { boastyProducts, type BoastyProduct } from '@/app/products/boasty-collective-products-data'
 import { useCart } from '@/app/cart-context'
+import type { ActiveSale } from '@/lib/sale'
+import { calcSalePrice } from '@/lib/sale'
 
 type DBProduct = { slug: string; name: string; price: string; description: string; images: string[]; sizes: string[]; colors: string[]; tag: string | null; active: boolean }
 
-export function BoastyCollectiveStorefront({ heroImage, logo, dbProducts }: { heroImage?: string | null; logo?: string | null; dbProducts?: DBProduct[] }) {
+export function BoastyCollectiveStorefront({ heroImage, logo, dbProducts, activeSale }: { heroImage?: string | null; logo?: string | null; dbProducts?: DBProduct[]; activeSale?: ActiveSale }) {
   const heroSrc = heroImage || 'https://i.imgur.com/VmMIV8u.jpeg'
   const { count, setBrandColor, setShopPath } = useCart()
   useEffect(() => { setBrandColor('#003A5C'); setShopPath('/shop/boasty-collective') }, [setBrandColor, setShopPath])
@@ -77,6 +79,11 @@ export function BoastyCollectiveStorefront({ heroImage, logo, dbProducts }: { he
         }
       `}</style>
 
+      {activeSale && (
+        <div style={{ background: '#F4A261', color: '#003A5C', textAlign: 'center', padding: '10px 20px', fontSize: 12, fontWeight: 700, letterSpacing: '0.25em', textTransform: 'uppercase', position: 'sticky', top: 0, zIndex: 200 }}>
+          {activeSale.name} — {activeSale.type === 'percentage' ? `${activeSale.value}% OFF` : `$${(activeSale.value/100).toFixed(0)} OFF`}{activeSale.scope === 'cart' ? ' EVERYTHING' : ' SELECT STYLES'}
+        </div>
+      )}
       <nav className="bc-nav">
         {logo ? <img src={logo} alt="Boasty Collective" style={{ height: 84, objectFit: 'contain', filter: 'brightness(0) invert(1)' }} /> : <span className="bc-nav-brand">Boasty<span> Collective</span></span>}
         <Link href="/shop/boasty-collective/cart" className="bc-nav-cart">
@@ -105,7 +112,7 @@ export function BoastyCollectiveStorefront({ heroImage, logo, dbProducts }: { he
           <span className="bc-section-count">{tees.length} styles</span>
         </div>
         <div className="bc-grid">
-          {tees.map(p => <ProductCard key={p.slug} product={p} />)}
+          {tees.map(p => <ProductCard key={p.slug} product={p} activeSale={activeSale} />)}
         </div>
       </section>
 
@@ -115,7 +122,7 @@ export function BoastyCollectiveStorefront({ heroImage, logo, dbProducts }: { he
           <span className="bc-section-count">{hats.length} styles</span>
         </div>
         <div className="bc-grid">
-          {hats.map(p => <ProductCard key={p.slug} product={p} />)}
+          {hats.map(p => <ProductCard key={p.slug} product={p} activeSale={activeSale} />)}
         </div>
       </section>
 
@@ -127,8 +134,9 @@ export function BoastyCollectiveStorefront({ heroImage, logo, dbProducts }: { he
   )
 }
 
-function ProductCard({ product }: { product: BoastyProduct }) {
+function ProductCard({ product, activeSale }: { product: BoastyProduct; activeSale?: ActiveSale }) {
   const [hovered, setHovered] = useState(false)
+  const salePrice = calcSalePrice(product.price, activeSale ?? null, product.slug)
 
   return (
     <Link href={product.path} style={{ textDecoration: 'none', color: 'inherit', display: 'block' }} onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)}>
@@ -138,13 +146,19 @@ function ProductCard({ product }: { product: BoastyProduct }) {
         {product.tag && (
           <div style={{ position: 'absolute', top: 10, left: 10, fontSize: 9, letterSpacing: '0.2em', textTransform: 'uppercase', background: '#F4A261', color: '#fff', padding: '3px 8px', fontWeight: 700, borderRadius: 2 }}>{product.tag}</div>
         )}
+        {salePrice && (
+          <div style={{ position: 'absolute', top: 10, right: 10, fontSize: 9, letterSpacing: '0.15em', textTransform: 'uppercase', background: '#e53e3e', color: '#fff', padding: '3px 8px', fontWeight: 700, borderRadius: 2 }}>SALE</div>
+        )}
         <div style={{ position: 'absolute', inset: 0, background: 'rgba(0,58,92,0.6)', display: 'flex', alignItems: 'center', justifyContent: 'center', opacity: hovered ? 1 : 0, transition: 'opacity 0.3s ease', borderRadius: 4 }}>
           <span style={{ fontSize: 10, letterSpacing: '0.3em', textTransform: 'uppercase', color: '#fff', border: '1px solid rgba(255,255,255,0.7)', padding: '10px 18px', fontWeight: 600 }}>View Product</span>
         </div>
       </div>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
         <h3 style={{ fontSize: 13, fontWeight: 600, lineHeight: 1.4, color: '#1a1a2e', flex: 1, marginRight: 8 }}>{product.name}</h3>
-        <span style={{ fontSize: 13, color: '#F4A261', fontWeight: 700, flexShrink: 0 }}>{product.price}</span>
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', flexShrink: 0 }}>
+          {salePrice && <span style={{ fontSize: 13, color: '#e53e3e', fontWeight: 700 }}>{salePrice}</span>}
+          <span style={{ fontSize: 13, color: salePrice ? '#aaa' : '#F4A261', fontWeight: 700, textDecoration: salePrice ? 'line-through' : 'none' }}>{product.price}</span>
+        </div>
       </div>
       {product.colors && (
         <p style={{ fontSize: 10, color: '#aaa', letterSpacing: '0.05em', marginTop: 3 }}>{product.colors.join(' · ')}</p>

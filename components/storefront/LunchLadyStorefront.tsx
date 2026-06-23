@@ -4,10 +4,12 @@ import Link from 'next/link'
 import { useState, useEffect } from 'react'
 import { products as staticProducts, type Product } from '@/app/products/products-data'
 import { useCart } from '@/app/cart-context'
+import type { ActiveSale } from '@/lib/sale'
+import { calcSalePrice } from '@/lib/sale'
 
 type DBProduct = { slug: string; name: string; price: string; description: string; images: string[]; sizes: string[]; colors: string[]; tag: string | null; active: boolean }
 
-export function LunchLadyStorefront({ dbProducts }: { dbProducts?: DBProduct[] }) {
+export function LunchLadyStorefront({ dbProducts, activeSale }: { dbProducts?: DBProduct[]; activeSale?: ActiveSale }) {
   const { setBrandColor, setShopPath } = useCart()
   useEffect(() => { setBrandColor('#1C2E54'); setShopPath('/shop/lunch-lady') }, [setBrandColor, setShopPath])
   const products = dbProducts && dbProducts.length > 0
@@ -70,6 +72,11 @@ export function LunchLadyStorefront({ dbProducts }: { dbProducts?: DBProduct[] }
         }
       `}</style>
 
+      {activeSale && (
+        <div style={{ background: '#C84020', color: '#fff', textAlign: 'center', padding: '10px 20px', fontSize: 12, fontWeight: 700, letterSpacing: '0.25em', textTransform: 'uppercase', position: 'sticky', top: 0, zIndex: 200 }}>
+          {activeSale.name} — {activeSale.type === 'percentage' ? `${activeSale.value}% OFF` : `$${(activeSale.value/100).toFixed(0)} OFF`}{activeSale.scope === 'cart' ? ' EVERYTHING' : ' SELECT STYLES'}
+        </div>
+      )}
       {/* NAV */}
       <nav className="ll-nav">
         <span className="ll-nav-label">Merch Collection</span>
@@ -102,7 +109,7 @@ export function LunchLadyStorefront({ dbProducts }: { dbProducts?: DBProduct[] }
       <section className="ll-grid-wrap">
         <div className="ll-product-grid">
           {products.map((product) => (
-            <ProductCard key={product.slug} product={product} />
+            <ProductCard key={product.slug} product={product} activeSale={activeSale} />
           ))}
         </div>
       </section>
@@ -123,8 +130,9 @@ export function LunchLadyStorefront({ dbProducts }: { dbProducts?: DBProduct[] }
   )
 }
 
-function ProductCard({ product }: { product: Product }) {
+function ProductCard({ product, activeSale }: { product: Product; activeSale?: ActiveSale }) {
   const [hovered, setHovered] = useState(false)
+  const salePrice = calcSalePrice(product.price, activeSale ?? null, product.slug)
 
   return (
     <Link
@@ -158,9 +166,10 @@ function ProductCard({ product }: { product: Product }) {
             <p style={{ fontSize: 10, color: '#999', letterSpacing: '0.08em' }}>{product.sizes.filter(s => s !== '2XL').join(' · ')}</p>
           )}
         </div>
-        <span style={{ fontSize: 13, color: '#C84020', fontWeight: 600, flexShrink: 0 }}>
-          {product.price}
-        </span>
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', flexShrink: 0 }}>
+          {salePrice && <span style={{ fontSize: 13, color: '#e53e3e', fontWeight: 700 }}>{salePrice}</span>}
+          <span style={{ fontSize: 13, color: salePrice ? '#aaa' : '#C84020', fontWeight: 600, textDecoration: salePrice ? 'line-through' : 'none' }}>{product.price}</span>
+        </div>
       </div>
     </Link>
   )

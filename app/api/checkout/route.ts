@@ -74,6 +74,37 @@ export async function POST(request: Request) {
     : 'lunch-lady'
   )
 
+  // Auto-apply active shop sale
+  let saleDiscountCents = 0
+  const saleShop = await prisma.shop.findUnique({ where: { slug: shopSlug } })
+  if (saleShop) {
+    const activeSale = await prisma.shopSale.findFirst({ where: { shopId: saleShop.id, active: true } })
+    if (activeSale) {
+      const orderTotalCents = resolvedItems.reduce((sum, { item, unitAmount }) => sum + unitAmount * item.quantity, 0)
+      const slugsInCart = resolvedItems.map(({ item }) => item.slug)
+      const saleSlugs: string[] = JSON.parse(activeSale.productSlugs || '[]')
+      const appliesToCart = activeSale.scope === 'cart' || saleSlugs.length === 0
+      const appliesToSomething = appliesToCart || slugsInCart.some(s => saleSlugs.includes(s))
+      if (appliesToSomething) {
+        if (activeSale.scope === 'cart' || saleSlugs.length === 0) {
+          saleDiscountCents = activeSale.type === 'percentage'
+            ? Math.round(orderTotalCents * activeSale.value / 100)
+            : Math.min(activeSale.value, orderTotalCents)
+        } else {
+          // Per-product: sum discount only on matching items
+          for (const { item, unitAmount } of resolvedItems) {
+            if (saleSlugs.includes(item.slug)) {
+              const itemTotal = unitAmount * item.quantity
+              saleDiscountCents += activeSale.type === 'percentage'
+                ? Math.round(itemTotal * activeSale.value / 100)
+                : Math.min(activeSale.value, itemTotal)
+            }
+          }
+        }
+      }
+    }
+  }
+
   // Validate and apply discount code
   let discountAmountCents = 0
   let discountId: string | null = null
@@ -96,13 +127,23 @@ export async function POST(request: Request) {
     }
   }
 
-  // If discount applies, add a negative line item
+  // Build final line items with any discounts as negative items
   const finalLineItems = [...lineItems]
+  if (saleDiscountCents > 0) {
+    finalLineItems.push({
+      price_data: {
+        currency: 'cad',
+        product_data: { name: `Sale Discount`, images: [] },
+        unit_amount: -saleDiscountCents,
+      },
+      quantity: 1,
+    })
+  }
   if (discountAmountCents > 0) {
     finalLineItems.push({
       price_data: {
         currency: 'cad',
-        product_data: { name: `Discount (${discountCode!.toUpperCase()})`, images: [] },
+        product_data: { name: `Promo (${discountCode!.toUpperCase()})`, images: [] },
         unit_amount: -discountAmountCents,
       },
       quantity: 1,

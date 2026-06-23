@@ -30,6 +30,7 @@ model Shop {
   orders            Order[]
   commissions       CommissionPayment[]
   discountCodes     DiscountCode[]
+  shopSales         ShopSale[]
 
   @@map("Restaurant")
 }
@@ -80,6 +81,21 @@ model OrderItem {
   priceAtPurchase Int
   order           Order    @relation(fields: [orderId], references: [id])
   product         Product? @relation(fields: [productId], references: [id])
+}
+
+model ShopSale {
+  id           String   @id @default(cuid())
+  shopId       String   @map("restaurantId")
+  name         String
+  type         String   // "percentage" | "fixed"
+  value        Int      // percentage 0-100, or fixed amount in cents
+  scope        String   // "cart" | "products"
+  productSlugs String   @default("[]") // JSON array of slugs, empty = all
+  active       Boolean  @default(false)
+  createdAt    DateTime @default(now())
+  shop         Shop     @relation(fields: [shopId], references: [id])
+
+  @@map("ShopSale")
 }
 
 model DiscountCode {

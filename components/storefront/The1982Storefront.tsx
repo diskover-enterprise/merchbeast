@@ -4,12 +4,14 @@ import Link from 'next/link'
 import { useState, useEffect } from 'react'
 import { the1982Products, type The1982Product } from '@/app/products/the1982-products-data'
 import { useCart } from '@/app/cart-context'
+import type { ActiveSale } from '@/lib/sale'
+import { calcSalePrice } from '@/lib/sale'
 
 type DBProduct = { slug: string; name: string; price: string; description: string; images: string[]; sizes: string[]; colors: string[]; tag: string | null; active: boolean }
 
 const LOGO = '/1982-logo.png'
 
-export function The1982Storefront({ heroImage, dbProducts }: { heroImage?: string | null; dbProducts?: DBProduct[] }) {
+export function The1982Storefront({ heroImage, dbProducts, activeSale }: { heroImage?: string | null; dbProducts?: DBProduct[]; activeSale?: ActiveSale }) {
   const heroSrc = heroImage || '/1982-hero.jpg'
   const { count, setBrandColor, setShopPath } = useCart()
   useEffect(() => { setBrandColor('#B8860B'); setShopPath('/shop/the-1982') }, [setBrandColor, setShopPath])
@@ -71,6 +73,11 @@ export function The1982Storefront({ heroImage, dbProducts }: { heroImage?: strin
       `}</style>
 
       {/* NAV */}
+      {activeSale && (
+        <div style={{ background: '#B8860B', color: '#0a0a0a', textAlign: 'center', padding: '10px 20px', fontSize: 12, fontWeight: 800, letterSpacing: '0.25em', textTransform: 'uppercase', position: 'sticky', top: 0, zIndex: 200 }}>
+          {activeSale.name} — {activeSale.type === 'percentage' ? `${activeSale.value}% OFF` : `$${(activeSale.value/100).toFixed(0)} OFF`}{activeSale.scope === 'cart' ? ' EVERYTHING' : ' SELECT STYLES'}
+        </div>
+      )}
       <nav className="n82-nav">
         <Link href="/shop/the-1982/cart" className="n82-nav-cart">
           Cart{count > 0 ? ` (${count})` : ''}
@@ -96,7 +103,7 @@ export function The1982Storefront({ heroImage, dbProducts }: { heroImage?: strin
           <span className="n82-section-count">{tees.length} styles</span>
         </div>
         <div className="n82-grid">
-          {tees.map(p => <ProductCard key={p.slug} product={p} />)}
+          {tees.map(p => <ProductCard key={p.slug} product={p} activeSale={activeSale} />)}
         </div>
       </section>
 
@@ -107,7 +114,7 @@ export function The1982Storefront({ heroImage, dbProducts }: { heroImage?: strin
           <span className="n82-section-count">{draftDay.length} styles</span>
         </div>
         <div className="n82-grid">
-          {draftDay.map(p => <ProductCard key={p.slug} product={p} />)}
+          {draftDay.map(p => <ProductCard key={p.slug} product={p} activeSale={activeSale} />)}
         </div>
       </section>
 
@@ -118,7 +125,7 @@ export function The1982Storefront({ heroImage, dbProducts }: { heroImage?: strin
           <span className="n82-section-count">{crewnecks.length} styles</span>
         </div>
         <div className="n82-grid">
-          {crewnecks.map(p => <ProductCard key={p.slug} product={p} />)}
+          {crewnecks.map(p => <ProductCard key={p.slug} product={p} activeSale={activeSale} />)}
         </div>
       </section>
 
@@ -131,8 +138,9 @@ export function The1982Storefront({ heroImage, dbProducts }: { heroImage?: strin
   )
 }
 
-function ProductCard({ product, dark }: { product: The1982Product; dark?: boolean }) {
+function ProductCard({ product, dark, activeSale }: { product: The1982Product; dark?: boolean; activeSale?: ActiveSale }) {
   const [hovered, setHovered] = useState(false)
+  const salePrice = calcSalePrice(product.price, activeSale ?? null, product.slug)
 
   return (
     <Link
@@ -161,9 +169,10 @@ function ProductCard({ product, dark }: { product: The1982Product; dark?: boolea
         <h3 style={{ fontSize: 13, fontWeight: 500, lineHeight: 1.4, color: dark ? '#fff' : '#111', flex: 1, marginRight: 8 }}>
           {product.name}
         </h3>
-        <span style={{ fontSize: 13, color: dark ? 'rgba(255,255,255,0.6)' : '#555', fontWeight: 600, flexShrink: 0 }}>
-          {product.price}
-        </span>
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', flexShrink: 0 }}>
+          {salePrice && <span style={{ fontSize: 13, color: '#B8860B', fontWeight: 700 }}>{salePrice}</span>}
+          <span style={{ fontSize: 13, color: salePrice ? (dark ? 'rgba(255,255,255,0.2)' : '#bbb') : (dark ? 'rgba(255,255,255,0.6)' : '#555'), fontWeight: 600, textDecoration: salePrice ? 'line-through' : 'none' }}>{product.price}</span>
+        </div>
       </div>
       {product.colors && (
         <p style={{ fontSize: 10, color: dark ? 'rgba(255,255,255,0.3)' : '#999', letterSpacing: '0.05em', marginTop: 3 }}>
