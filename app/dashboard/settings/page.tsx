@@ -50,7 +50,7 @@ export default function SettingsPage() {
   async function handleHeroSave() {
     if (!selectedShopId) return
     setHeroMsg('')
-    const res = await fetch(`/api/admin/shops/${selectedShopId}`, {
+    const res = await fetch(`/api/dashboard/shops/${selectedShopId}`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ bannerImage: heroImage }),
