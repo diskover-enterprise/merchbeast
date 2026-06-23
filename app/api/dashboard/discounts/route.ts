@@ -1,15 +1,12 @@
-import { getAuthSession } from '@/lib/auth'
 import { prisma } from '@/lib/prisma'
 
-export async function GET() {
-  const session = await getAuthSession()
-  if (!session) return Response.json({ error: 'Unauthorized' }, { status: 401 })
-
-  const shop = await prisma.shop.findUnique({ where: { ownerEmail: session.user.email! } })
-  if (!shop) return Response.json({ error: 'Shop not found' }, { status: 404 })
+export async function GET(request: Request) {
+  const { searchParams } = new URL(request.url)
+  const shopId = searchParams.get('shopId')
+  if (!shopId) return Response.json({ error: 'shopId required' }, { status: 400 })
 
   const codes = await prisma.discountCode.findMany({
-    where: { shopId: shop.id },
+    where: { shopId },
     orderBy: { createdAt: 'desc' },
   })
 
@@ -17,16 +14,10 @@ export async function GET() {
 }
 
 export async function POST(request: Request) {
-  const session = await getAuthSession()
-  if (!session) return Response.json({ error: 'Unauthorized' }, { status: 401 })
-
-  const shop = await prisma.shop.findUnique({ where: { ownerEmail: session.user.email! } })
-  if (!shop) return Response.json({ error: 'Shop not found' }, { status: 404 })
-
   const body = await request.json()
-  const { code, type, value, minOrderAmount, maxUses, expiresAt } = body
+  const { shopId, code, type, value, minOrderAmount, maxUses, expiresAt } = body
 
-  if (!code || !type || value == null) {
+  if (!shopId || !code || !type || value == null) {
     return Response.json({ error: 'Missing required fields' }, { status: 400 })
   }
   if (!['percentage', 'fixed'].includes(type)) {
@@ -39,7 +30,7 @@ export async function POST(request: Request) {
   try {
     const discount = await prisma.discountCode.create({
       data: {
-        shopId: shop.id,
+        shopId,
         code: code.toUpperCase().trim(),
         type,
         value: Math.round(type === 'fixed' ? value * 100 : value),

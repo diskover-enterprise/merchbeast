@@ -3,6 +3,8 @@
 import { useEffect, useState } from 'react'
 import { Plus, Trash2, ToggleLeft, ToggleRight, Tag } from 'lucide-react'
 
+type Shop = { id: string; name: string; slug: string }
+
 type DiscountCode = {
   id: string
   code: string
@@ -26,21 +28,31 @@ const emptyForm = {
 }
 
 export default function DiscountsPage() {
+  const [shops, setShops] = useState<Shop[]>([])
+  const [selectedShopId, setSelectedShopId] = useState('')
   const [codes, setCodes] = useState<DiscountCode[]>([])
-  const [loading, setLoading] = useState(true)
+  const [loading, setLoading] = useState(false)
   const [showForm, setShowForm] = useState(false)
   const [form, setForm] = useState(emptyForm)
   const [saving, setSaving] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
-  async function load() {
+  useEffect(() => {
+    fetch('/api/dashboard/shops').then(r => r.json()).then((data: Shop[]) => {
+      setShops(data)
+      if (data.length > 0) setSelectedShopId(data[0].id)
+    }).catch(() => {})
+  }, [])
+
+  async function load(shopId: string) {
+    if (!shopId) return
     setLoading(true)
-    const res = await fetch('/api/dashboard/discounts')
+    const res = await fetch(`/api/dashboard/discounts?shopId=${shopId}`)
     if (res.ok) setCodes(await res.json())
     setLoading(false)
   }
 
-  useEffect(() => { load() }, [])
+  useEffect(() => { if (selectedShopId) load(selectedShopId) }, [selectedShopId])
 
   async function handleCreate(e: React.FormEvent) {
     e.preventDefault()
@@ -50,6 +62,7 @@ export default function DiscountsPage() {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
+        shopId: selectedShopId,
         code: form.code,
         type: form.type,
         value: parseFloat(form.value),
@@ -62,7 +75,7 @@ export default function DiscountsPage() {
     if (res.ok) {
       setForm(emptyForm)
       setShowForm(false)
-      load()
+      load(selectedShopId)
     } else {
       setError(data.error || 'Failed to create code')
     }
@@ -75,13 +88,13 @@ export default function DiscountsPage() {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ active: !code.active }),
     })
-    load()
+    load(selectedShopId)
   }
 
   async function handleDelete(id: string) {
     if (!confirm('Delete this discount code?')) return
     await fetch(`/api/dashboard/discounts/${id}`, { method: 'DELETE' })
-    load()
+    load(selectedShopId)
   }
 
   function formatValue(code: DiscountCode) {
@@ -97,11 +110,20 @@ export default function DiscountsPage() {
       <div className="db-page-head">
         <div>
           <h1 style={{ fontSize: 20, fontWeight: 700, color: 'var(--ink)', margin: 0 }}>Discount Codes</h1>
-          <p style={{ fontSize: 12, color: 'var(--ink-mute)', marginTop: 4 }}>Create promo codes for your shop</p>
+          <p style={{ fontSize: 12, color: 'var(--ink-mute)', marginTop: 4 }}>Create promo codes per shop</p>
         </div>
-        <button className="db-btn primary" onClick={() => { setShowForm(true); setError(null) }}>
-          <Plus size={13} /> New Code
-        </button>
+        <div style={{ display: 'flex', gap: 12, alignItems: 'center' }}>
+          <select
+            value={selectedShopId}
+            onChange={e => setSelectedShopId(e.target.value)}
+            style={{ background: 'var(--bg-2)', border: '1px solid var(--line)', borderRadius: 6, padding: '6px 12px', color: 'var(--ink)', fontSize: 12 }}
+          >
+            {shops.map(s => <option key={s.id} value={s.id}>{s.name}</option>)}
+          </select>
+          <button className="db-btn primary" onClick={() => { setShowForm(true); setError(null) }} disabled={!selectedShopId}>
+            <Plus size={13} /> New Code
+          </button>
+        </div>
       </div>
 
       {showForm && (

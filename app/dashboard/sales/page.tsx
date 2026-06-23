@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react'
 import { Plus, Trash2, ToggleLeft, ToggleRight, Percent } from 'lucide-react'
 
+type Shop = { id: string; name: string; slug: string }
 type DBProduct = { id: string; slug: string; name: string }
 
 type ShopSale = {
@@ -25,32 +26,36 @@ const emptyForm = {
 }
 
 export default function SalesPage() {
+  const [shops, setShops] = useState<Shop[]>([])
+  const [selectedShopId, setSelectedShopId] = useState('')
   const [sales, setSales] = useState<ShopSale[]>([])
   const [products, setProducts] = useState<DBProduct[]>([])
-  const [loading, setLoading] = useState(true)
+  const [loading, setLoading] = useState(false)
   const [showForm, setShowForm] = useState(false)
   const [form, setForm] = useState(emptyForm)
   const [saving, setSaving] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
-  async function load() {
+  useEffect(() => {
+    fetch('/api/dashboard/shops').then(r => r.json()).then((data: Shop[]) => {
+      setShops(data)
+      if (data.length > 0) setSelectedShopId(data[0].id)
+    }).catch(() => {})
+  }, [])
+
+  async function load(shopId: string) {
+    if (!shopId) return
     setLoading(true)
-    const [salesRes, shopRes] = await Promise.all([
-      fetch('/api/dashboard/sales'),
-      fetch('/api/dashboard/settings'),
+    const [salesRes, prodsRes] = await Promise.all([
+      fetch(`/api/dashboard/sales?shopId=${shopId}`),
+      fetch(`/api/merch-products?shopId=${shopId}`),
     ])
     if (salesRes.ok) setSales(await salesRes.json())
-    if (shopRes.ok) {
-      const shop = await shopRes.json()
-      if (shop?.id) {
-        const prodsRes = await fetch(`/api/merch-products?shopId=${shop.id}`)
-        if (prodsRes.ok) setProducts(await prodsRes.json())
-      }
-    }
+    if (prodsRes.ok) setProducts(await prodsRes.json())
     setLoading(false)
   }
 
-  useEffect(() => { load() }, [])
+  useEffect(() => { if (selectedShopId) load(selectedShopId) }, [selectedShopId])
 
   async function handleCreate(e: React.FormEvent) {
     e.preventDefault()
@@ -60,6 +65,7 @@ export default function SalesPage() {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
+        shopId: selectedShopId,
         name: form.name,
         type: form.type,
         value: parseFloat(form.value),
@@ -71,7 +77,7 @@ export default function SalesPage() {
     if (res.ok) {
       setForm(emptyForm)
       setShowForm(false)
-      load()
+      load(selectedShopId)
     } else {
       setError(data.error || 'Failed to create sale')
     }
@@ -84,13 +90,13 @@ export default function SalesPage() {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ active: !sale.active }),
     })
-    load()
+    load(selectedShopId)
   }
 
   async function handleDelete(id: string) {
     if (!confirm('Delete this sale?')) return
     await fetch(`/api/dashboard/sales/${id}`, { method: 'DELETE' })
-    load()
+    load(selectedShopId)
   }
 
   function toggleProduct(slug: string) {
@@ -117,9 +123,18 @@ export default function SalesPage() {
           <h1 style={{ fontSize: 20, fontWeight: 700, color: 'var(--ink)', margin: 0 }}>Automated Sales</h1>
           <p style={{ fontSize: 12, color: 'var(--ink-mute)', marginTop: 4 }}>Apply discounts automatically — no code needed</p>
         </div>
-        <button className="db-btn primary" onClick={() => { setShowForm(true); setError(null) }}>
-          <Plus size={13} /> New Sale
-        </button>
+        <div style={{ display: 'flex', gap: 12, alignItems: 'center' }}>
+          <select
+            value={selectedShopId}
+            onChange={e => setSelectedShopId(e.target.value)}
+            style={{ background: 'var(--bg-2)', border: '1px solid var(--line)', borderRadius: 6, padding: '6px 12px', color: 'var(--ink)', fontSize: 12 }}
+          >
+            {shops.map(s => <option key={s.id} value={s.id}>{s.name}</option>)}
+          </select>
+          <button className="db-btn primary" onClick={() => { setShowForm(true); setError(null) }} disabled={!selectedShopId}>
+            <Plus size={13} /> New Sale
+          </button>
+        </div>
       </div>
 
       {showForm && (
