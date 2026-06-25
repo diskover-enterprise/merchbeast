@@ -37,7 +37,7 @@ function cartStorageKey(shopPath: string) {
 export function CartProvider({ children }: { children: React.ReactNode }) {
   const [items, setItems] = useState<CartItem[]>([])
   const [brandColor, setBrandColorState] = useState('#1C2E54')
-  const [shopPath, setShopPathState] = useState('/shop/lunch-lady')
+  const [shopPath, setShopPathState] = useState('')
 
   // Load items for the current shopPath whenever it changes
   useEffect(() => {
