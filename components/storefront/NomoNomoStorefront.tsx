@@ -49,7 +49,7 @@ export function NomoNomoStorefront({ heroImage, activeSale, dbProducts }: { hero
         /* DIVIDER */
         .nn-divider { max-width: 1200px; margin: 0 auto; padding: 40px 0; display: flex; align-items: center; gap: 20px; }
         .nn-divider-line { flex: 1; height: 1px; background: rgba(255,255,255,0.06); }
-        .nn-divider-text { font-size: 10px; letter-spacing: 0.4em; text-transform: uppercase; color: #C41E1E; }
+        .nn-divider-text { font-size: 40px; letter-spacing: 0.4em; text-transform: uppercase; color: #C41E1E; }
 
         /* FOOTER */
         .nn-footer { background: #000; border-top: 1px solid rgba(255,255,255,0.06); padding: 48px 40px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; }
