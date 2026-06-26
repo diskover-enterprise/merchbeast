@@ -1,10 +1,10 @@
 import { NextResponse } from 'next/server'
-import { getAuthSession } from '@/lib/auth'
+import { cookies } from 'next/headers'
 import { prisma } from '@/lib/prisma'
 
 export async function GET() {
-  const session = await getAuthSession()
-  if (!session || session.user.role !== 'admin') {
+  const cookieStore = await cookies()
+  if (cookieStore.get('mb-dashboard-auth')?.value !== 'true') {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
   }
 
