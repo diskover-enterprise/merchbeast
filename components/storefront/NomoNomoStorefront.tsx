@@ -80,10 +80,6 @@ export function NomoNomoStorefront({ heroImage, activeSale }: { heroImage?: stri
 
       {/* HERO */}
       <section className="nn-hero" style={heroImage ? { backgroundImage: `url(${heroImage})`, backgroundSize: 'cover', backgroundPosition: 'center' } : {}}>
-        <p className="nn-hero-tag">Vancouver, BC</p>
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src="/nomo-nomo-logo.png" alt="Nomo Nomo" className="nn-hero-logo" />
-        <p className="nn-hero-sub">1268 Commercial Dr &nbsp;·&nbsp; The Merch</p>
       </section>
 
       {/* TEES */}
