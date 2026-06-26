@@ -86,7 +86,7 @@ export function NomoNomoStorefront({ heroImage, activeSale, dbProducts }: { hero
       </nav>
 
       {/* HERO */}
-      <section className="nn-hero" style={heroImage ? { backgroundImage: `url(${heroImage})`, backgroundSize: 'cover', backgroundPosition: 'center' } : {}}>
+      <section className="nn-hero" style={heroImage ? { backgroundImage: `url(${heroImage})`, backgroundSize: 'cover', backgroundPosition: 'top center' } : {}}>
       </section>
 
       {/* TEES */}
