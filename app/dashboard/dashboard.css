@@ -486,8 +486,9 @@
   position: fixed; inset: 0;
   background: rgba(0,0,0,.72);
   z-index: 50;
-  display: flex; align-items: center; justify-content: center;
+  display: flex; align-items: flex-start; justify-content: center;
   padding: 24px;
+  overflow-y: auto;
 }
 
 .db-modal {
@@ -495,11 +496,11 @@
   border: 1px solid var(--line-2);
   width: 100%;
   max-width: 520px;
-  max-height: 85vh;
   clip-path: polygon(0 0, calc(100% - 20px) 0, 100% 20px, 100% 100%, 20px 100%, 0 calc(100% - 20px));
   position: relative;
   display: flex;
   flex-direction: column;
+  margin: auto;
 }
 
 .db-modal-head {
