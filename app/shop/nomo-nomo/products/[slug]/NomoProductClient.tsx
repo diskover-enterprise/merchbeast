@@ -74,7 +74,7 @@ export default function NomoProductClient({ product, related }: { product: Produ
           <div>
             <div style={{ aspectRatio: '4/5', background: '#1a1a1a', overflow: 'hidden', marginBottom: 12 }}>
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={product.images[activeImg]} alt={product.name} style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
+              <img src={product.images[activeImg]} alt={product.name} style={{ width: '100%', height: '100%', objectFit: 'contain', display: 'block' }} />
             </div>
             {product.images.length > 1 && (
               <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
@@ -89,8 +89,8 @@ export default function NomoProductClient({ product, related }: { product: Produ
           </div>
 
           <div style={{ paddingTop: 16 }}>
-            <h1 style={{ fontSize: 28, fontWeight: 800, lineHeight: 1.2, marginBottom: 16, letterSpacing: '-0.01em', textTransform: 'uppercase' }}>{product.name}</h1>
-            <p style={{ fontSize: 24, color: '#C41E1E', fontWeight: 700, marginBottom: 24 }}>{product.price}</p>
+            <h1 style={{ fontSize: 36, fontWeight: 800, lineHeight: 1.2, marginBottom: 16, letterSpacing: '-0.01em', textTransform: 'uppercase' }}>{product.name}</h1>
+            <p style={{ fontSize: 24, color: '#C41E1E', fontWeight: 700, marginBottom: 24 }}>${product.price}</p>
             <p style={{ fontSize: 14, lineHeight: 1.7, color: 'rgba(255,255,255,0.55)', marginBottom: 32 }}>{product.description}</p>
 
             {product.sizes.length > 0 && (
