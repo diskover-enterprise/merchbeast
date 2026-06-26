@@ -26,7 +26,7 @@ export function NomoNomoStorefront({ heroImage, activeSale, dbProducts }: { hero
       <style>{`
         /* NAV */
         .nn-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; height: 64px; background: rgba(13,13,13,0.95); backdrop-filter: blur(8px); border-bottom: 1px solid rgba(255,255,255,0.06); display: flex; align-items: center; justify-content: space-between; padding: 0 40px; }
-        .nn-nav-logo { height: 160px; object-fit: contain; }
+        .nn-nav-logo { height: 40px; object-fit: contain; }
         .nn-nav-cart { font-size: 11px; letter-spacing: 0.25em; text-transform: uppercase; color: #fff; text-decoration: none; padding: 9px 20px; border: 1px solid rgba(255,255,255,0.25); white-space: nowrap; transition: border-color 0.2s, color 0.2s; }
         .nn-nav-cart:hover { border-color: #C41E1E; color: #C41E1E; }
 
