@@ -495,7 +495,7 @@
   border: 1px solid var(--line-2);
   width: 100%;
   max-width: 520px;
-  max-height: 90vh;
+  max-height: 85vh;
   clip-path: polygon(0 0, calc(100% - 20px) 0, 100% 20px, 100% 100%, 20px 100%, 0 calc(100% - 20px));
   position: relative;
   display: flex;
@@ -533,7 +533,7 @@
 .db-modal-close svg { width: 13px; height: 13px; }
 
 .db-modal-body {
-  padding: 26px;
+  padding: 16px 26px;
   overflow-y: auto;
   flex: 1;
 }
@@ -553,7 +553,7 @@
 /* ============================================================
    FORM FIELDS
    ============================================================ */
-.db-field { margin-bottom: 20px; }
+.db-field { margin-bottom: 12px; }
 
 .db-field label {
   display: block;
