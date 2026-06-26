@@ -31,8 +31,8 @@ export function NomoNomoStorefront({ heroImage, activeSale, dbProducts }: { hero
         .nn-nav-cart:hover { border-color: #C41E1E; color: #C41E1E; }
 
         /* HERO */
-        .nn-hero { padding-top: 64px; min-height: 560px; background: #0d0d0d; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding-left: 24px; padding-right: 24px; position: relative; overflow: hidden; }
-        .nn-hero::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at center, rgba(196,30,30,0.12) 0%, transparent 70%); pointer-events: none; }
+        .nn-hero { padding-top: 64px; background: #0d0d0d; position: relative; }
+        .nn-hero img { width: 100%; height: auto; display: block; }
         .nn-hero-logo { height: 220px; object-fit: contain; margin-bottom: 32px; filter: drop-shadow(0 0 40px rgba(196,30,30,0.4)); }
         .nn-hero-tag { font-size: 10px; letter-spacing: 0.5em; text-transform: uppercase; color: rgba(255,255,255,0.35); margin-bottom: 16px; }
         .nn-hero-sub { font-size: 13px; letter-spacing: 0.25em; text-transform: uppercase; color: rgba(255,255,255,0.4); }
@@ -86,7 +86,11 @@ export function NomoNomoStorefront({ heroImage, activeSale, dbProducts }: { hero
       </nav>
 
       {/* HERO */}
-      <section className="nn-hero" style={heroImage ? { backgroundImage: `url(${heroImage})`, backgroundSize: 'cover', backgroundPosition: 'top center' } : {}}>
+      <section className="nn-hero">
+        {heroImage && (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img src={heroImage} alt="Nomo Nomo" />
+        )}
       </section>
 
       {/* TEES */}
