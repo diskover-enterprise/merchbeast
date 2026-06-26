@@ -13,7 +13,7 @@ export function NomoNomoStorefront({ heroImage, activeSale, dbProducts }: { hero
   const { count, setBrandColor, setShopPath } = useCart()
   useEffect(() => { setBrandColor('#C41E1E'); setShopPath('/shop/nomo-nomo') }, [setBrandColor, setShopPath])
 
-  const products: NomoProduct[] = dbProducts && dbProducts.length > 0
+  const products: NomoProduct[] = dbProducts !== undefined
     ? dbProducts.map(p => ({ ...p, path: `/shop/nomo-nomo/products/${p.slug}`, shopifyUrl: '', category: p.tag || 'Tee', tag: p.tag || undefined }))
     : nomoProducts
 
