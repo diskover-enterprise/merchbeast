@@ -141,7 +141,7 @@ export default function ProductsPage() {
   async function load() {
     try {
       const url = filterShopId ? `/api/merch-products?shopId=${filterShopId}` : '/api/merch-products'
-      const res = await fetch(url)
+      const res = await fetch(url, { cache: 'no-store' })
       if (!res.ok) throw new Error(`${res.status}`)
       const data = await res.json()
       if (data.length === 0) {
