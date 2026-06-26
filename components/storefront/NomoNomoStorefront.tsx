@@ -7,11 +7,18 @@ import { useCart } from '@/app/cart-context'
 import type { ActiveSale } from '@/lib/sale'
 import { calcSalePrice } from '@/lib/sale'
 
-export function NomoNomoStorefront({ heroImage, activeSale }: { heroImage?: string | null; activeSale?: ActiveSale }) {
+type DBProduct = { slug: string; name: string; price: string; description: string; images: string[]; sizes: string[]; colors: string[]; tag: string | null }
+
+export function NomoNomoStorefront({ heroImage, activeSale, dbProducts }: { heroImage?: string | null; activeSale?: ActiveSale; dbProducts?: DBProduct[] }) {
   const { count, setBrandColor, setShopPath } = useCart()
   useEffect(() => { setBrandColor('#C41E1E'); setShopPath('/shop/nomo-nomo') }, [setBrandColor, setShopPath])
-  const tees = nomoProducts.filter(p => p.category === 'Tee')
-  const hats = nomoProducts.filter(p => p.category === 'Hat')
+
+  const products: NomoProduct[] = dbProducts && dbProducts.length > 0
+    ? dbProducts.map(p => ({ ...p, path: `/shop/nomo-nomo/products/${p.slug}`, shopifyUrl: '', category: p.tag || 'Tee', tag: p.tag || undefined }))
+    : nomoProducts
+
+  const tees = products.filter(p => p.category === 'Tee')
+  const hats = products.filter(p => p.category === 'Hat')
 
   return (
     <div style={{ fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif", background: '#0d0d0d', color: '#fff', minHeight: '100vh' }}>
