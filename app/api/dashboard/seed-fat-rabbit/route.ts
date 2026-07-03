@@ -11,9 +11,11 @@ export async function GET() {
     data: {
       name: 'Fat Rabbit',
       slug: 'fat-rabbit',
+      description: 'Fat Rabbit merch shop',
       ownerEmail: 'hello@fat-rabbit.ca',
-      brandColor: '#C5442A',
-      active: true,
+      ownerPasswordHash: '',
+      primaryColor: '#C5442A',
+      accentColor: '#C5442A',
     },
   })
 
