@@ -178,7 +178,10 @@
       "Read(//usr/local/**)",
       "Bash(find /opt /usr/local /Users/mac -name \"node\" -type f 2>/dev/null | grep -v node_modules | head -10)",
       "Bash(ls /Applications/ | grep -i node; ls ~/Applications/ 2>/dev/null | grep -i node)",
-      "Bash(mkdir -p /Users/mac/Downloads/restaurant-marketplace/app/api/dashboard/discounts/\\\\[id\\\\])"
+      "Bash(mkdir -p /Users/mac/Downloads/restaurant-marketplace/app/api/dashboard/discounts/\\\\[id\\\\])",
+      "mcp__claude-in-chrome__navigate",
+      "mcp__claude-in-chrome__computer",
+      "Bash(mkdir -p /Users/mac/Downloads/restaurant-marketplace/app/shop/fat-rabbit/products/\\\\[slug\\\\])"
     ]
   }
 }
