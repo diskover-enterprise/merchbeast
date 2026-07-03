@@ -64,7 +64,7 @@ export default function FatRabbitProductClient({ product, related }: { product: 
         <Link href="/shop/fat-rabbit" className="fr-pnav-back">← Shop</Link>
         <Link href="/shop/fat-rabbit">
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/fat-rabbit-logo.png" alt="Fat Rabbit" className="fr-pnav-logo" />
+          <img src="https://res.cloudinary.com/dwjvblzu9/image/upload/v1783059789/scrol-to-top_uitiui.png" alt="Fat Rabbit" className="fr-pnav-logo" />
         </Link>
         <Link href="/shop/fat-rabbit/cart" className="fr-pnav-cart">Cart{count > 0 ? ` (${count})` : ''}</Link>
       </nav>
@@ -156,7 +156,7 @@ export default function FatRabbitProductClient({ product, related }: { product: 
 
       <footer className="fr-footer">
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src="/fat-rabbit-logo.png" alt="Fat Rabbit" className="fr-footer-logo" />
+        <img src="https://res.cloudinary.com/dwjvblzu9/image/upload/v1783059789/scrol-to-top_uitiui.png" alt="Fat Rabbit" className="fr-footer-logo" />
         <p className="fr-footer-copy">Powered by Merch Beast</p>
       </footer>
     </div>

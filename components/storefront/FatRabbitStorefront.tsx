@@ -61,7 +61,7 @@ export function FatRabbitStorefront({ heroImage, dbProducts }: { heroImage?: str
       <nav className="fr-nav">
         <span className="fr-nav-brand">The Merch</span>
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src="/fat-rabbit-logo.png" alt="Fat Rabbit" className="fr-nav-logo" />
+        <img src="https://res.cloudinary.com/dwjvblzu9/image/upload/v1783059789/scrol-to-top_uitiui.png" alt="Fat Rabbit" className="fr-nav-logo" />
         <Link href="/shop/fat-rabbit/cart" className="fr-nav-cart">Cart</Link>
       </nav>
 
@@ -74,7 +74,7 @@ export function FatRabbitStorefront({ heroImage, dbProducts }: { heroImage?: str
       ) : (
         <section className="fr-hero-placeholder">
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/fat-rabbit-logo.png" alt="Fat Rabbit" />
+          <img src="https://res.cloudinary.com/dwjvblzu9/image/upload/v1783059789/scrol-to-top_uitiui.png" alt="Fat Rabbit" />
         </section>
       )}
 
@@ -97,14 +97,14 @@ export function FatRabbitStorefront({ heroImage, dbProducts }: { heroImage?: str
       {/* BAND */}
       <section className="fr-band">
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src="/fat-rabbit-logo.png" alt="Fat Rabbit" className="fr-band-logo" />
+        <img src="https://res.cloudinary.com/dwjvblzu9/image/upload/v1783059789/scrol-to-top_uitiui.png" alt="Fat Rabbit" className="fr-band-logo" />
         <p>Fat Rabbit · Vancouver, BC</p>
       </section>
 
       {/* FOOTER */}
       <footer className="fr-footer">
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src="/fat-rabbit-logo.png" alt="Fat Rabbit" className="fr-footer-logo" />
+        <img src="https://res.cloudinary.com/dwjvblzu9/image/upload/v1783059789/scrol-to-top_uitiui.png" alt="Fat Rabbit" className="fr-footer-logo" />
         <p className="fr-footer-copy">Powered by Merch Beast</p>
       </footer>
     </div>

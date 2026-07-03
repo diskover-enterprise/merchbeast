@@ -181,7 +181,8 @@
       "Bash(mkdir -p /Users/mac/Downloads/restaurant-marketplace/app/api/dashboard/discounts/\\\\[id\\\\])",
       "mcp__claude-in-chrome__navigate",
       "mcp__claude-in-chrome__computer",
-      "Bash(mkdir -p /Users/mac/Downloads/restaurant-marketplace/app/shop/fat-rabbit/products/\\\\[slug\\\\])"
+      "Bash(mkdir -p /Users/mac/Downloads/restaurant-marketplace/app/shop/fat-rabbit/products/\\\\[slug\\\\])",
+      "Bash(sed -i '' 's|/fat-rabbit-logo.png|https://res.cloudinary.com/dwjvblzu9/image/upload/v1783059789/scrol-to-top_uitiui.png|g' /Users/mac/Downloads/restaurant-marketplace/components/storefront/FatRabbitStorefront.tsx /Users/mac/Downloads/restaurant-marketplace/app/shop/fat-rabbit/products/[slug]/FatRabbitProductClient.tsx /Users/mac/Downloads/restaurant-marketplace/app/shop/fat-rabbit/cart/page.tsx)"
     ]
   }
 }

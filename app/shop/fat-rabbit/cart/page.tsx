@@ -53,7 +53,7 @@ export default function FatRabbitCartPage() {
       <nav className="frc-nav">
         <Link href="/shop/fat-rabbit" className="frc-nav-back">← Shop</Link>
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src="/fat-rabbit-logo.png" alt="Fat Rabbit" className="frc-nav-logo" />
+        <img src="https://res.cloudinary.com/dwjvblzu9/image/upload/v1783059789/scrol-to-top_uitiui.png" alt="Fat Rabbit" className="frc-nav-logo" />
         <span style={{ width: 80 }} />
       </nav>
 
