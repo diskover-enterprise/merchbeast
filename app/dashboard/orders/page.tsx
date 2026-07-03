@@ -85,7 +85,10 @@ export default function OrdersPage() {
                         </span>
                       </td>
                       <td>
-                        {order.items?.map((i) => `${i.product?.name} ×${i.quantity}`).join(', ')}
+                        {order.items?.map((i) => {
+                          const meta = [(i as any).size, (i as any).color].filter(Boolean).join(' / ')
+                          return `${i.product?.name}${meta ? ` (${meta})` : ''} ×${i.quantity}`
+                        }).join(', ')}
                       </td>
                       <td style={{ fontSize: 12, color: (order as any).shippingAddress ? 'inherit' : 'var(--ink-mute)' }}>
                         {(order as any).shippingAddress ?? '—'}
