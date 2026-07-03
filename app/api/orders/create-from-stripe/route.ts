@@ -27,7 +27,7 @@ export async function POST(req: Request) {
   const shop = await prisma.shop.findUnique({ where: { slug: shopSlug } })
   if (!shop) return Response.json({ error: `Shop not found: ${shopSlug}` }, { status: 404 })
 
-  const cartItems: { name: string; slug: string; quantity: number; price: number }[] =
+  const cartItems: { name: string; slug: string; quantity: number; price: number; size?: string | null; color?: string | null }[] =
     JSON.parse(session.metadata?.cartItems ?? '[]')
 
   const email = session.customer_details?.email ?? 'unknown@unknown.com'
@@ -57,6 +57,8 @@ export async function POST(req: Request) {
           productName: i.name,
           quantity: i.quantity,
           priceAtPurchase: i.price,
+          size: i.size ?? null,
+          color: i.color ?? null,
         })),
       },
     },

@@ -19,7 +19,7 @@ function findStaticProduct(slug: string) {
 export async function POST(request: Request) {
   const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!)
   const { items, discountCode, shopSlug: bodyShopSlug } = await request.json() as {
-    items: { slug: string; quantity: number }[]
+    items: { slug: string; quantity: number; size?: string; color?: string }[]
     discountCode?: string
     shopSlug?: string
   }
@@ -156,6 +156,8 @@ export async function POST(request: Request) {
     slug: item.slug,
     quantity: item.quantity,
     price: unitAmount,
+    size: item.size ?? null,
+    color: item.color ?? null,
   }))
 
   const session = await stripe.checkout.sessions.create({
