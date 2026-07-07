@@ -143,12 +143,12 @@ function ProductCard({ product, activeSale }: { product: NomoProduct; activeSale
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
-      <div style={{ marginBottom: 12 }}>
+      <div style={{ marginBottom: 12, background: '#0d0d0d' }}>
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src={product.images[0]}
           alt={product.name}
-          style={{ width: '100%', height: 'auto', display: 'block', transition: 'opacity 0.6s ease', opacity: hovered ? 0.5 : 1 }}
+          style={{ width: '100%', height: 'auto', display: 'block', transition: 'opacity 0.35s ease', opacity: hovered ? 0.5 : 1 }}
         />
       </div>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>

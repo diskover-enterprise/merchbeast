@@ -154,7 +154,7 @@ function ProductCard({ product, dark, activeSale }: { product: The1982Product; d
         <img
           src={product.images[0]}
           alt={product.name}
-          style={{ width: '100%', height: 'auto', display: 'block', transition: 'opacity 0.6s ease', opacity: hovered ? 0.5 : 1 }}
+          style={{ width: '100%', height: 'auto', display: 'block', transition: 'opacity 0.35s ease', opacity: hovered ? 0.5 : 1 }}
         />
         {product.tag && (
           <div style={{ position: 'absolute', top: 10, left: 10, fontSize: 9, letterSpacing: '0.2em', textTransform: 'uppercase', background: '#fff', color: '#000', padding: '3px 8px', fontWeight: 700 }}>

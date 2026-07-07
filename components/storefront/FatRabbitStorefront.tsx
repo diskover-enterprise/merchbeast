@@ -118,7 +118,7 @@ function ProductCard({ product }: { product: Product }) {
       onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)}>
       <div style={{ marginBottom: 14, position: 'relative' }}>
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={product.images[0]} alt={product.name} style={{ width: '100%', height: 'auto', display: 'block', transition: 'opacity 0.6s ease', opacity: hovered ? 0.5 : 1 }} />
+        <img src={product.images[0]} alt={product.name} style={{ width: '100%', height: 'auto', display: 'block', transition: 'opacity 0.35s ease', opacity: hovered ? 0.5 : 1 }} />
         {product.tag && (
           <div style={{ position: 'absolute', top: 10, left: 10, fontSize: 9, letterSpacing: '0.2em', textTransform: 'uppercase', background: '#C5442A', color: '#fff', padding: '3px 8px' }}>{product.tag}</div>
         )}
