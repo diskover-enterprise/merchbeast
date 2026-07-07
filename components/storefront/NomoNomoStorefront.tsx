@@ -148,7 +148,7 @@ function ProductCard({ product, activeSale }: { product: NomoProduct; activeSale
         <img
           src={product.images[0]}
           alt={product.name}
-          style={{ width: '100%', height: 'auto', display: 'block', transition: 'filter 0.3s ease', filter: hovered ? 'grayscale(100%)' : 'none' }}
+          style={{ width: '100%', height: 'auto', display: 'block', transition: 'opacity 0.6s ease', opacity: hovered ? 0.5 : 1 }}
         />
       </div>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>

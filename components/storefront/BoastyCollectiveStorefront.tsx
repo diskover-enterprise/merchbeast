@@ -142,7 +142,7 @@ function ProductCard({ product, activeSale }: { product: BoastyProduct; activeSa
     <Link href={product.path} style={{ textDecoration: 'none', color: 'inherit', display: 'block' }} onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)}>
       <div style={{ marginBottom: 12, position: 'relative' }}>
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={product.images[0]} alt={product.name} style={{ width: '100%', height: 'auto', display: 'block', transition: 'filter 0.3s ease', filter: hovered ? 'grayscale(100%)' : 'none' }} />
+        <img src={product.images[0]} alt={product.name} style={{ width: '100%', height: 'auto', display: 'block', transition: 'opacity 0.6s ease', opacity: hovered ? 0.5 : 1 }} />
         {product.tag && (
           <div style={{ position: 'absolute', top: 10, left: 10, fontSize: 9, letterSpacing: '0.2em', textTransform: 'uppercase', background: '#F4A261', color: '#fff', padding: '3px 8px', fontWeight: 700, borderRadius: 2 }}>{product.tag}</div>
         )}
