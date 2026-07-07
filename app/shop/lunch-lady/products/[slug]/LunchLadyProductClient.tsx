@@ -68,16 +68,16 @@ export default function LunchLadyProductClient({ product, related }: { product: 
       <div className="ll-pwrap">
         <div className="ll-playout">
           <div>
-            <div style={{ aspectRatio: '4/5', background: '#f5f2ee', overflow: 'hidden', marginBottom: 12 }}>
+            <div style={{ marginBottom: 12 }}>
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={product.images[activeImg]} alt={product.name} style={{ width: '100%', height: '100%', objectFit: 'contain', display: 'block', padding: 16 }} />
+              <img src={product.images[activeImg]} alt={product.name} style={{ width: '100%', height: 'auto', display: 'block' }} />
             </div>
             {product.images.length > 1 && (
               <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
                 {product.images.map((img, i) => (
                   <button key={i} onClick={() => setActiveImg(i)} style={{ width: 72, height: 72, padding: 0, border: i === activeImg ? '2px solid #1C2E54' : '2px solid transparent', background: '#f5f2ee', cursor: 'pointer', overflow: 'hidden', flexShrink: 0 }}>
                     {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src={img} alt="" style={{ width: '100%', height: '100%', objectFit: 'contain', display: 'block', padding: 4 }} />
+                    <img src={img} alt="" style={{ width: '100%', height: 'auto', display: 'block' }} />
                   </button>
                 ))}
               </div>
@@ -125,7 +125,7 @@ export default function LunchLadyProductClient({ product, related }: { product: 
                 <Link key={p.slug} href={`/shop/lunch-lady/products/${p.slug}`} style={{ textDecoration: 'none', color: 'inherit' }}>
                   <div style={{ aspectRatio: '4/5', background: '#f5f2ee', overflow: 'hidden', marginBottom: 12 }}>
                     {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src={p.images[0]} alt={p.name} style={{ width: '100%', height: '100%', objectFit: 'contain', display: 'block', padding: 8 }} />
+                    <img src={p.images[0]} alt={p.name} style={{ width: '100%', height: 'auto', display: 'block' }} />
                   </div>
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
                     <h3 style={{ fontSize: 13, fontWeight: 400, lineHeight: 1.4, color: '#111', flex: 1, marginRight: 8 }}>{p.name}</h3>
