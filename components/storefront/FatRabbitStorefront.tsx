@@ -98,7 +98,7 @@ export function FatRabbitStorefront({ heroImage, dbProducts }: { heroImage?: str
       <section className="fr-band">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src="https://res.cloudinary.com/dwjvblzu9/image/upload/v1783059789/scrol-to-top_uitiui.png" alt="Fat Rabbit" className="fr-band-logo" />
-        <p>Fat Rabbit · Vancouver, BC</p>
+        <p>Fat Rabbit · St. Catharines, ON</p>
       </section>
 
       {/* FOOTER */}
