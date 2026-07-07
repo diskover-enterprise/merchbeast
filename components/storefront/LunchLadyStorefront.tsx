@@ -141,21 +141,18 @@ function ProductCard({ product, activeSale }: { product: Product; activeSale?: A
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
-      <div style={{ aspectRatio: '4/5', background: '#f5f2ee', overflow: 'hidden', marginBottom: 12, position: 'relative' }}>
+      <div style={{ marginBottom: 12, position: 'relative' }}>
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src={product.images[0]}
           alt={product.name}
-          style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block', transform: hovered ? 'scale(1.04)' : 'scale(1)', transition: 'transform 0.5s ease' }}
+          style={{ width: '100%', height: 'auto', display: 'block', transition: 'filter 0.3s ease', filter: hovered ? 'grayscale(100%)' : 'none' }}
         />
         {product.tag && (
           <div style={{ position: 'absolute', top: 10, left: 10, fontSize: 9, letterSpacing: '0.2em', textTransform: 'uppercase', background: '#fff', color: '#111', padding: '3px 8px' }}>
             {product.tag}
           </div>
         )}
-        <div style={{ position: 'absolute', inset: 0, background: 'rgba(28,46,84,0.5)', display: 'flex', alignItems: 'center', justifyContent: 'center', opacity: hovered ? 1 : 0, transition: 'opacity 0.3s ease' }}>
-          <span style={{ fontSize: 10, letterSpacing: '0.3em', textTransform: 'uppercase', color: '#fff', border: '1px solid rgba(255,255,255,0.8)', padding: '10px 18px' }}>View Product</span>
-        </div>
       </div>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
         <div style={{ flex: 1, marginRight: 8 }}>

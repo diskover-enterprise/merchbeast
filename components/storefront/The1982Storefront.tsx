@@ -149,21 +149,18 @@ function ProductCard({ product, dark, activeSale }: { product: The1982Product; d
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
-      <div style={{ aspectRatio: '4/5', background: dark ? '#1a1a1a' : '#f5f5f5', overflow: 'hidden', marginBottom: 12, position: 'relative' }}>
+      <div style={{ marginBottom: 12, position: 'relative' }}>
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src={product.images[0]}
           alt={product.name}
-          style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+          style={{ width: '100%', height: 'auto', display: 'block', transition: 'filter 0.3s ease', filter: hovered ? 'grayscale(100%)' : 'none' }}
         />
         {product.tag && (
           <div style={{ position: 'absolute', top: 10, left: 10, fontSize: 9, letterSpacing: '0.2em', textTransform: 'uppercase', background: '#fff', color: '#000', padding: '3px 8px', fontWeight: 700 }}>
             {product.tag}
           </div>
         )}
-        <div style={{ position: 'absolute', inset: 0, background: 'rgba(0,0,0,0.5)', display: 'flex', alignItems: 'center', justifyContent: 'center', opacity: hovered ? 1 : 0, transition: 'opacity 0.3s ease' }}>
-          <span style={{ fontSize: 10, letterSpacing: '0.3em', textTransform: 'uppercase', color: '#fff', border: '1px solid rgba(255,255,255,0.8)', padding: '10px 18px', fontWeight: 600 }}>View Product</span>
-        </div>
       </div>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
         <h3 style={{ fontSize: 13, fontWeight: 500, lineHeight: 1.4, color: dark ? '#fff' : '#111', flex: 1, marginRight: 8 }}>

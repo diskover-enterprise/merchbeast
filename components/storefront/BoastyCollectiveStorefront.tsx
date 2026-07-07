@@ -140,18 +140,15 @@ function ProductCard({ product, activeSale }: { product: BoastyProduct; activeSa
 
   return (
     <Link href={product.path} style={{ textDecoration: 'none', color: 'inherit', display: 'block' }} onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)}>
-      <div style={{ aspectRatio: '4/5', background: '#fff', overflow: 'hidden', marginBottom: 12, position: 'relative', borderRadius: 4 }}>
+      <div style={{ marginBottom: 12, position: 'relative' }}>
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={product.images[0]} alt={product.name} style={{ width: '100%', height: '100%', objectFit: 'contain', display: 'block', padding: '12px', transition: 'transform 0.4s ease', transform: hovered ? 'scale(1.04)' : 'scale(1)' }} />
+        <img src={product.images[0]} alt={product.name} style={{ width: '100%', height: 'auto', display: 'block', transition: 'filter 0.3s ease', filter: hovered ? 'grayscale(100%)' : 'none' }} />
         {product.tag && (
           <div style={{ position: 'absolute', top: 10, left: 10, fontSize: 9, letterSpacing: '0.2em', textTransform: 'uppercase', background: '#F4A261', color: '#fff', padding: '3px 8px', fontWeight: 700, borderRadius: 2 }}>{product.tag}</div>
         )}
         {salePrice && (
           <div style={{ position: 'absolute', top: 10, right: 10, fontSize: 9, letterSpacing: '0.15em', textTransform: 'uppercase', background: '#e53e3e', color: '#fff', padding: '3px 8px', fontWeight: 700, borderRadius: 2 }}>SALE</div>
         )}
-        <div style={{ position: 'absolute', inset: 0, background: 'rgba(0,58,92,0.6)', display: 'flex', alignItems: 'center', justifyContent: 'center', opacity: hovered ? 1 : 0, transition: 'opacity 0.3s ease', borderRadius: 4 }}>
-          <span style={{ fontSize: 10, letterSpacing: '0.3em', textTransform: 'uppercase', color: '#fff', border: '1px solid rgba(255,255,255,0.7)', padding: '10px 18px', fontWeight: 600 }}>View Product</span>
-        </div>
       </div>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
         <h3 style={{ fontSize: 13, fontWeight: 600, lineHeight: 1.4, color: '#1a1a2e', flex: 1, marginRight: 8 }}>{product.name}</h3>

@@ -116,15 +116,12 @@ function ProductCard({ product }: { product: Product }) {
   return (
     <Link href={`/shop/fat-rabbit/products/${product.slug}`} style={{ textDecoration: 'none', color: 'inherit', display: 'block' }}
       onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)}>
-      <div style={{ aspectRatio: '4/5', background: '#D9D4CA', overflow: 'hidden', marginBottom: 14, position: 'relative' }}>
+      <div style={{ marginBottom: 14, position: 'relative' }}>
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={product.images[0]} alt={product.name} style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block', transform: hovered ? 'scale(1.04)' : 'scale(1)', transition: 'transform 0.5s ease' }} />
+        <img src={product.images[0]} alt={product.name} style={{ width: '100%', height: 'auto', display: 'block', transition: 'filter 0.3s ease', filter: hovered ? 'grayscale(100%)' : 'none' }} />
         {product.tag && (
           <div style={{ position: 'absolute', top: 10, left: 10, fontSize: 9, letterSpacing: '0.2em', textTransform: 'uppercase', background: '#C5442A', color: '#fff', padding: '3px 8px' }}>{product.tag}</div>
         )}
-        <div style={{ position: 'absolute', inset: 0, background: 'rgba(197,68,42,0.45)', display: 'flex', alignItems: 'center', justifyContent: 'center', opacity: hovered ? 1 : 0, transition: 'opacity 0.3s ease' }}>
-          <span style={{ fontSize: 10, letterSpacing: '0.3em', textTransform: 'uppercase', color: '#fff', border: '1px solid rgba(255,255,255,0.8)', padding: '10px 18px', fontFamily: 'Georgia, serif' }}>View Product</span>
-        </div>
       </div>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
         <h3 style={{ fontSize: 15, fontWeight: 400, fontStyle: 'italic', lineHeight: 1.4, marginBottom: 3, flex: 1, marginRight: 8, color: '#1a1a1a' }}>{product.name}</h3>

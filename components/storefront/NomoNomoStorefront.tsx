@@ -143,16 +143,13 @@ function ProductCard({ product, activeSale }: { product: NomoProduct; activeSale
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
-      <div style={{ aspectRatio: '4/5', background: '#1a1a1a', overflow: 'hidden', marginBottom: 12, position: 'relative' }}>
+      <div style={{ marginBottom: 12 }}>
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src={product.images[0]}
           alt={product.name}
-          style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+          style={{ width: '100%', height: 'auto', display: 'block', transition: 'filter 0.3s ease', filter: hovered ? 'grayscale(100%)' : 'none' }}
         />
-        <div style={{ position: 'absolute', inset: 0, background: 'rgba(0,0,0,0.55)', display: 'flex', alignItems: 'center', justifyContent: 'center', opacity: hovered ? 1 : 0, transition: 'opacity 0.3s ease' }}>
-          <span style={{ fontSize: 10, letterSpacing: '0.3em', textTransform: 'uppercase', color: '#fff', border: '1px solid rgba(255,255,255,0.7)', padding: '10px 18px', fontWeight: 600 }}>View Product</span>
-        </div>
       </div>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
         <h3 style={{ fontSize: 16, fontWeight: 600, lineHeight: 1.4, color: '#fff', flex: 1, marginRight: 8 }}>
