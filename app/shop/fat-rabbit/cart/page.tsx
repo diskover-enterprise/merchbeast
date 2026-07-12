@@ -94,7 +94,7 @@ export default function FatRabbitCartPage() {
               </div>
               <a href="/api/checkout" className="frc-checkout" onClick={async (e) => {
                 e.preventDefault()
-                const res = await fetch('/api/checkout', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ items, shopPath: '/shop/fat-rabbit' }) })
+                const res = await fetch('/api/checkout', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ items: items.map((item: any) => ({ slug: item.slug, quantity: item.quantity, size: item.size, color: item.color })), shopSlug: 'fat-rabbit' }) })
                 const data = await res.json()
                 if (data.url) window.location.href = data.url
               }}>

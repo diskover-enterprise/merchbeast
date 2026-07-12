@@ -46,17 +46,20 @@ export async function POST(request: Request) {
     return { name, images, item, unitAmount }
   }))
 
-  const lineItems = resolvedItems.map(({ name, images, item, unitAmount }) => ({
-    price_data: {
-      currency: 'cad',
-      product_data: {
-        name,
-        images: images.slice(0, 1),
+  const lineItems = resolvedItems.map(({ name, images, item, unitAmount }) => {
+    const meta = [item.size, item.color].filter(Boolean).join(' / ')
+    return {
+      price_data: {
+        currency: 'cad',
+        product_data: {
+          name: meta ? `${name} — ${meta}` : name,
+          images: images.slice(0, 1),
+        },
+        unit_amount: unitAmount,
       },
-      unit_amount: unitAmount,
-    },
-    quantity: item.quantity,
-  }))
+      quantity: item.quantity,
+    }
+  })
 
   const origin = request.headers.get('origin') || request.headers.get('referer') || ''
   const baseUrl = origin
@@ -165,7 +168,7 @@ export async function POST(request: Request) {
     line_items: finalLineItems,
     mode: 'payment',
     success_url: `${baseUrl}/checkout/success?session_id={CHECKOUT_SESSION_ID}&shop=${shopSlug}`,
-    cancel_url: `${baseUrl}/cart`,
+    cancel_url: `${baseUrl}/shop/${shopSlug}/cart`,
     shipping_address_collection: {
       allowed_countries: ['US', 'CA'],
     },

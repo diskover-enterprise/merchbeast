@@ -33,7 +33,7 @@ export default function CartPage() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          items: items.map(i => ({ slug: i.product.slug, quantity: i.quantity })),
+          items: items.map(i => ({ slug: i.product.slug, quantity: i.quantity, size: i.size, color: i.color })),
           shopSlug,
           ...(appliedCode ? { discountCode: appliedCode } : {}),
         }),

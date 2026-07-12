@@ -141,12 +141,12 @@ function ProductCard({ product, activeSale }: { product: Product; activeSale?: A
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
-      <div style={{ marginBottom: 12, position: 'relative', aspectRatio: '4/5', overflow: 'hidden', background: '#f5f2ee' }}>
+      <div style={{ marginBottom: 12, position: 'relative', aspectRatio: '4/5', background: '#f5f2ee' }}>
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src={product.images[0]}
           alt={product.name}
-          style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block', transition: 'opacity 0.35s ease', opacity: hovered ? 0.5 : 1 }}
+          style={{ width: '100%', height: '100%', objectFit: 'contain', display: 'block', transition: 'opacity 0.35s ease', opacity: hovered ? 0.5 : 1 }}
         />
         {product.tag && (
           <div style={{ position: 'absolute', top: 10, left: 10, fontSize: 9, letterSpacing: '0.2em', textTransform: 'uppercase', background: '#fff', color: '#111', padding: '3px 8px' }}>

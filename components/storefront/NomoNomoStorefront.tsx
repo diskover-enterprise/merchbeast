@@ -143,7 +143,7 @@ function ProductCard({ product, activeSale }: { product: NomoProduct; activeSale
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
-      <div style={{ marginBottom: 12, background: '#0d0d0d' }}>
+      <div style={{ marginBottom: 12 }}>
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src={product.images[0]}
