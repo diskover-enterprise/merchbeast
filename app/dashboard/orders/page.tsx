@@ -21,6 +21,21 @@ export default function OrdersPage() {
     })
   }, [])
 
+  async function fetchAddress(orderId: string) {
+    setOrders(prev => prev.map(o => o.id === orderId ? { ...o, _fetchingAddress: true, _error: null } : o))
+    try {
+      const res = await fetch(`/api/orders/${orderId}/fetch-address`, { method: 'POST' })
+      const data = await res.json()
+      if (res.ok) {
+        setOrders(prev => prev.map(o => o.id === orderId ? { ...o, shippingAddress: data.shippingAddress, _fetchingAddress: false } : o))
+      } else {
+        setOrders(prev => prev.map(o => o.id === orderId ? { ...o, _fetchingAddress: false, _error: data.error } : o))
+      }
+    } catch {
+      setOrders(prev => prev.map(o => o.id === orderId ? { ...o, _fetchingAddress: false } : o))
+    }
+  }
+
   async function toggleFulfilled(orderId: string, currentStatus: string) {
     if (currentStatus === 'fulfilled') {
       // Revert to paid/unfulfilled
@@ -130,8 +145,18 @@ export default function OrdersPage() {
                       <td style={{ fontSize: 12 }}>
                         {order.items?.map((i: any) => i.color).filter(Boolean).join(', ') || <span style={{ color: 'var(--ink-mute)' }}>—</span>}
                       </td>
-                      <td style={{ fontSize: 12, color: order.shippingAddress ? 'inherit' : 'var(--ink-mute)' }}>
-                        {order.shippingAddress ?? '—'}
+                      <td style={{ fontSize: 12 }}>
+                        {order.shippingAddress
+                          ? <span style={{ color: 'inherit' }}>{order.shippingAddress}</span>
+                          : <button
+                              className="db-fulfill-btn mark"
+                              style={{ fontSize: 9 }}
+                              onClick={() => fetchAddress(order.id)}
+                              disabled={order._fetchingAddress}
+                            >
+                              {order._fetchingAddress ? '…' : 'Fetch from Stripe'}
+                            </button>
+                        }
                       </td>
                       <td className="strong">{formatCurrency(order.total)}</td>
                       <td><StatusBadge status={order.status} /></td>
