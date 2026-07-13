@@ -406,7 +406,20 @@
 .db-badge-paid      { background: rgba(57,255,20,.18); color: var(--neon); }
 .db-badge-shipped   { background: rgba(0,200,130,.14);  color: #00c882; }
 .db-badge-delivered { background: rgba(0,200,130,.10);  color: #00c882; }
-.db-badge-cancelled { background: rgba(255,80,80,.12);  color: #ff5050; }
+.db-badge-cancelled   { background: rgba(255,80,80,.12);  color: #ff5050; }
+.db-badge-fulfilled   { background: rgba(0,200,130,.18);  color: #00c882; }
+.db-badge-unfulfilled { background: rgba(255,170,0,.14);  color: #ffaa00; }
+
+.db-fulfill-btn {
+  font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
+  padding: 4px 10px; border: 1px solid; cursor: pointer; background: transparent;
+  transition: background 0.15s, color 0.15s; white-space: nowrap;
+  font-family: inherit;
+}
+.db-fulfill-btn.mark    { border-color: #00c882; color: #00c882; }
+.db-fulfill-btn.mark:hover { background: #00c882; color: #000; }
+.db-fulfill-btn.unmark  { border-color: #ffaa00; color: #ffaa00; }
+.db-fulfill-btn.unmark:hover { background: #ffaa00; color: #000; }
 
 /* ============================================================
    EMPTY STATE

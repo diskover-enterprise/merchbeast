@@ -5,12 +5,13 @@ import { Order } from '@/types'
 import { formatCurrency } from '@/lib/utils'
 
 function StatusBadge({ status }: { status: string }) {
-  const cls = `db-badge db-badge-${status.toLowerCase()}`
-  return <span className={cls}>{status}</span>
+  const display = status === 'paid' ? 'unfulfilled' : status
+  const cls = `db-badge db-badge-${status === 'paid' ? 'unfulfilled' : status.toLowerCase()}`
+  return <span className={cls}>{display}</span>
 }
 
 export default function OrdersPage() {
-  const [orders, setOrders] = useState<Order[]>([])
+  const [orders, setOrders] = useState<any[]>([])
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
@@ -19,6 +20,22 @@ export default function OrdersPage() {
       setLoading(false)
     })
   }, [])
+
+  async function toggleFulfilled(orderId: string, currentStatus: string) {
+    const newStatus = currentStatus === 'fulfilled' ? 'paid' : 'fulfilled'
+    // Optimistic update
+    setOrders(prev => prev.map(o => o.id === orderId ? { ...o, status: newStatus } : o))
+    try {
+      await fetch(`/api/orders/${orderId}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ status: newStatus }),
+      })
+    } catch {
+      // Revert on failure
+      setOrders(prev => prev.map(o => o.id === orderId ? { ...o, status: currentStatus } : o))
+    }
+  }
 
   if (loading) {
     return (
@@ -71,6 +88,7 @@ export default function OrdersPage() {
                     <th>Ship To</th>
                     <th>Total</th>
                     <th>Status</th>
+                    <th>Fulfillment</th>
                     <th>Date</th>
                   </tr>
                 </thead>
@@ -78,7 +96,7 @@ export default function OrdersPage() {
                   {orders.map((order) => (
                     <tr key={order.id}>
                       <td className="mono">{order.id.slice(0, 8)}…</td>
-                      <td style={{ fontSize: 12, textTransform: 'capitalize' }}>{(order as any).shopSlug?.replace(/-/g, ' ') || '—'}</td>
+                      <td style={{ fontSize: 12, textTransform: 'capitalize' }}>{order.shopSlug?.replace(/-/g, ' ') || '—'}</td>
                       <td className="strong">
                         {order.customer?.name}
                         <br />
@@ -87,19 +105,27 @@ export default function OrdersPage() {
                         </span>
                       </td>
                       <td>
-                        {order.items?.map((i) => `${i.product?.name} ×${i.quantity}`).join(', ')}
+                        {order.items?.map((i: any) => `${i.product?.name} ×${i.quantity}`).join(', ')}
                       </td>
                       <td style={{ fontSize: 12 }}>
-                        {order.items?.map((i) => (i as any).size).filter(Boolean).join(', ') || <span style={{ color: 'var(--ink-mute)' }}>—</span>}
+                        {order.items?.map((i: any) => i.size).filter(Boolean).join(', ') || <span style={{ color: 'var(--ink-mute)' }}>—</span>}
                       </td>
                       <td style={{ fontSize: 12 }}>
-                        {order.items?.map((i) => (i as any).color).filter(Boolean).join(', ') || <span style={{ color: 'var(--ink-mute)' }}>—</span>}
+                        {order.items?.map((i: any) => i.color).filter(Boolean).join(', ') || <span style={{ color: 'var(--ink-mute)' }}>—</span>}
                       </td>
-                      <td style={{ fontSize: 12, color: (order as any).shippingAddress ? 'inherit' : 'var(--ink-mute)' }}>
-                        {(order as any).shippingAddress ?? '—'}
+                      <td style={{ fontSize: 12, color: order.shippingAddress ? 'inherit' : 'var(--ink-mute)' }}>
+                        {order.shippingAddress ?? '—'}
                       </td>
                       <td className="strong">{formatCurrency(order.total)}</td>
                       <td><StatusBadge status={order.status} /></td>
+                      <td>
+                        <button
+                          className={`db-fulfill-btn ${order.status === 'fulfilled' ? 'unmark' : 'mark'}`}
+                          onClick={() => toggleFulfilled(order.id, order.status)}
+                        >
+                          {order.status === 'fulfilled' ? 'Unfulfill' : 'Fulfil'}
+                        </button>
+                      </td>
                       <td>{new Date(order.createdAt).toLocaleDateString()}</td>
                     </tr>
                   ))}
