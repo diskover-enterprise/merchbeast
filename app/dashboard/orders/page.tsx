@@ -22,18 +22,34 @@ export default function OrdersPage() {
   }, [])
 
   async function toggleFulfilled(orderId: string, currentStatus: string) {
-    const newStatus = currentStatus === 'fulfilled' ? 'paid' : 'fulfilled'
-    // Optimistic update
-    setOrders(prev => prev.map(o => o.id === orderId ? { ...o, status: newStatus } : o))
-    try {
+    if (currentStatus === 'fulfilled') {
+      // Revert to paid/unfulfilled
+      setOrders(prev => prev.map(o => o.id === orderId ? { ...o, status: 'paid' } : o))
       await fetch(`/api/orders/${orderId}`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ status: newStatus }),
+        body: JSON.stringify({ status: 'paid' }),
+      }).catch(() => {
+        setOrders(prev => prev.map(o => o.id === orderId ? { ...o, status: 'fulfilled' } : o))
       })
+      return
+    }
+
+    // Mark fulfilled — create Chit Chats shipment
+    setOrders(prev => prev.map(o => o.id === orderId ? { ...o, _fulfilling: true } : o))
+    try {
+      const res = await fetch(`/api/orders/${orderId}/fulfill`, { method: 'POST' })
+      const data = await res.json()
+      if (res.ok) {
+        setOrders(prev => prev.map(o => o.id === orderId
+          ? { ...o, status: 'fulfilled', chitchatsId: data.chitchatsId, trackingUrl: data.trackingUrl, _fulfilling: false }
+          : o
+        ))
+      } else {
+        setOrders(prev => prev.map(o => o.id === orderId ? { ...o, _fulfilling: false, _error: data.error } : o))
+      }
     } catch {
-      // Revert on failure
-      setOrders(prev => prev.map(o => o.id === orderId ? { ...o, status: currentStatus } : o))
+      setOrders(prev => prev.map(o => o.id === orderId ? { ...o, _fulfilling: false } : o))
     }
   }
 
@@ -88,6 +104,7 @@ export default function OrdersPage() {
                     <th>Ship To</th>
                     <th>Total</th>
                     <th>Status</th>
+                    <th>Tracking</th>
                     <th>Fulfillment</th>
                     <th>Date</th>
                   </tr>
@@ -118,12 +135,19 @@ export default function OrdersPage() {
                       </td>
                       <td className="strong">{formatCurrency(order.total)}</td>
                       <td><StatusBadge status={order.status} /></td>
+                      <td style={{ fontSize: 12 }}>
+                        {order.trackingUrl
+                          ? <a href={order.trackingUrl} target="_blank" rel="noopener noreferrer" style={{ color: 'var(--neon)', textDecoration: 'none', fontFamily: 'monospace', fontSize: 11 }}>{order.chitchatsId}</a>
+                          : <span style={{ color: 'var(--ink-mute)' }}>—</span>}
+                      </td>
                       <td>
+                        {order._error && <p style={{ color: '#ff5050', fontSize: 10, marginBottom: 4 }}>{order._error}</p>}
                         <button
                           className={`db-fulfill-btn ${order.status === 'fulfilled' ? 'unmark' : 'mark'}`}
                           onClick={() => toggleFulfilled(order.id, order.status)}
+                          disabled={order._fulfilling}
                         >
-                          {order.status === 'fulfilled' ? 'Unfulfill' : 'Fulfil'}
+                          {order._fulfilling ? '…' : order.status === 'fulfilled' ? 'Unfulfill' : 'Fulfil'}
                         </button>
                       </td>
                       <td>{new Date(order.createdAt).toLocaleDateString()}</td>
