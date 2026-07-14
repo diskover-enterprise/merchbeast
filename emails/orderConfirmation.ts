@@ -65,14 +65,18 @@ export function buildOrderConfirmationEmail(data: OrderEmailData): { subject: st
             </tr>
           </table>
 
-          <p style="margin:24px 0 0;font-size:13px;color:#9ca3af;text-align:center;">
+          <p style="margin:24px 0 16px;font-size:13px;color:#9ca3af;text-align:center;">
             Order ID: ${orderId}
+          </p>
+          <p style="margin:0;font-size:14px;color:#6b7280;text-align:center;line-height:1.6;">
+            If you have any questions, please email us at<br>
+            <a href="mailto:team@merchbeast.shop" style="color:#f97316;text-decoration:none;font-weight:600;">team@merchbeast.shop</a>
           </p>
         </td></tr>
 
         <!-- Footer -->
         <tr><td style="padding:24px 0 0;text-align:center;">
-          <p style="margin:0;font-size:13px;color:#9ca3af;">Merch Beast · Questions? Reply to this email.</p>
+          <p style="margin:0;font-size:13px;color:#9ca3af;">Merch Beast</p>
         </td></tr>
 
       </table>
