@@ -106,25 +106,29 @@ export function BoastyCollectiveStorefront({ heroImage, logo, dbProducts, active
         </svg>
       </div>
 
-      <section className="bc-section">
-        <div className="bc-section-head">
-          <h2 className="bc-section-title">Tees</h2>
-          <span className="bc-section-count">{tees.length} styles</span>
-        </div>
-        <div className="bc-grid">
-          {tees.map(p => <ProductCard key={p.slug} product={p} activeSale={activeSale} />)}
-        </div>
-      </section>
+      {tees.length > 0 && (
+        <section className="bc-section">
+          <div className="bc-section-head">
+            <h2 className="bc-section-title">Tees</h2>
+            <span className="bc-section-count">{tees.length} styles</span>
+          </div>
+          <div className="bc-grid">
+            {tees.map(p => <ProductCard key={p.slug} product={p} activeSale={activeSale} />)}
+          </div>
+        </section>
+      )}
 
-      <section className="bc-section">
-        <div className="bc-section-head">
-          <h2 className="bc-section-title">Hats</h2>
-          <span className="bc-section-count">{hats.length} styles</span>
-        </div>
-        <div className="bc-grid">
-          {hats.map(p => <ProductCard key={p.slug} product={p} activeSale={activeSale} />)}
-        </div>
-      </section>
+      {hats.length > 0 && (
+        <section className="bc-section">
+          <div className="bc-section-head">
+            <h2 className="bc-section-title">Hats</h2>
+            <span className="bc-section-count">{hats.length} styles</span>
+          </div>
+          <div className="bc-grid">
+            {hats.map(p => <ProductCard key={p.slug} product={p} activeSale={activeSale} />)}
+          </div>
+        </section>
+      )}
 
       <footer className="bc-footer">
         <span className="bc-footer-brand">Boasty<span> Collective</span></span>

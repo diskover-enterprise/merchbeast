@@ -94,34 +94,40 @@ export function NomoNomoStorefront({ heroImage, activeSale, dbProducts }: { hero
       </section>
 
       {/* TEES */}
-      <section className="nn-section">
-        <div className="nn-section-head">
-          <h2 className="nn-section-title">Tees</h2>
-          <span className="nn-section-count">{tees.length} styles</span>
-        </div>
-        <div className="nn-grid">
-          {tees.map(p => <ProductCard key={p.slug} product={p} activeSale={activeSale} />)}
-        </div>
-      </section>
+      {tees.length > 0 && (
+        <section className="nn-section">
+          <div className="nn-section-head">
+            <h2 className="nn-section-title">Tees</h2>
+            <span className="nn-section-count">{tees.length} styles</span>
+          </div>
+          <div className="nn-grid">
+            {tees.map(p => <ProductCard key={p.slug} product={p} activeSale={activeSale} />)}
+          </div>
+        </section>
+      )}
 
-      <div style={{ padding: '0 40px' }}>
-        <div className="nn-divider">
-          <div className="nn-divider-line" />
-          <span className="nn-divider-text">のものも</span>
-          <div className="nn-divider-line" />
+      {tees.length > 0 && hats.length > 0 && (
+        <div style={{ padding: '0 40px' }}>
+          <div className="nn-divider">
+            <div className="nn-divider-line" />
+            <span className="nn-divider-text">のものも</span>
+            <div className="nn-divider-line" />
+          </div>
         </div>
-      </div>
+      )}
 
       {/* HATS */}
-      <section className="nn-section">
-        <div className="nn-section-head">
-          <h2 className="nn-section-title">Hats</h2>
-          <span className="nn-section-count">{hats.length} styles</span>
-        </div>
-        <div className="nn-grid">
-          {hats.map(p => <ProductCard key={p.slug} product={p} activeSale={activeSale} />)}
-        </div>
-      </section>
+      {hats.length > 0 && (
+        <section className="nn-section">
+          <div className="nn-section-head">
+            <h2 className="nn-section-title">Hats</h2>
+            <span className="nn-section-count">{hats.length} styles</span>
+          </div>
+          <div className="nn-grid">
+            {hats.map(p => <ProductCard key={p.slug} product={p} activeSale={activeSale} />)}
+          </div>
+        </section>
+      )}
 
       {/* FOOTER */}
       <footer className="nn-footer">
