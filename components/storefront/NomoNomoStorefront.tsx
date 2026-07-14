@@ -157,13 +157,13 @@ function ProductCard({ product, activeSale }: { product: NomoProduct; activeSale
           style={{ width: '100%', height: 'auto', display: 'block', transition: 'opacity 0.35s ease', opacity: hovered ? 0.5 : 1 }}
         />
       </div>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
-        <h3 style={{ fontSize: 16, fontWeight: 600, lineHeight: 1.4, color: '#fff', flex: 1, marginRight: 8 }}>
+      <div style={{ display: 'flex', alignItems: 'baseline', gap: 8, flexWrap: 'wrap' }}>
+        <h3 style={{ fontSize: 16, fontWeight: 600, lineHeight: 1.4, color: '#fff', margin: 0 }}>
           {product.name}
         </h3>
-        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', flexShrink: 0 }}>
+        <div style={{ display: 'flex', gap: 6, flexShrink: 0 }}>
           {salePrice && <span style={{ fontSize: 16, color: '#ff6b6b', fontWeight: 700 }}>${salePrice}</span>}
-          <span style={{ fontSize: 16, color: salePrice ? 'rgba(255,255,255,0.3)' : '#C41E1E', fontWeight: 700, textDecoration: salePrice ? 'line-through' : 'none' }}>${product.price}</span>
+          <span style={{ fontSize: 16, color: salePrice ? 'rgba(255,255,255,0.3)' : '#fff', fontWeight: 700, textDecoration: salePrice ? 'line-through' : 'none' }}>${product.price}</span>
         </div>
       </div>
       {product.colors && (
