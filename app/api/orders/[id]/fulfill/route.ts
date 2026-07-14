@@ -15,17 +15,18 @@ function parseAddress(address: string) {
   return { line1, city, province, postal, country }
 }
 
-export async function POST(_req: Request, { params }: { params: { id: string } }) {
+export async function POST(_req: Request, { params }: { params: Promise<{ id: string }> }) {
   const cookieStore = await cookies()
   if (cookieStore.get('mb-dashboard-auth')?.value !== 'true') {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
   }
 
+  const { id } = await params
   const apiKey = process.env.CHITCHATS_API_KEY
   if (!apiKey) return NextResponse.json({ error: 'CHITCHATS_API_KEY not configured' }, { status: 500 })
 
   const order = await prisma.order.findUnique({
-    where: { id: params.id },
+    where: { id },
     include: { customer: true, items: true },
   })
 
@@ -76,7 +77,7 @@ export async function POST(_req: Request, { params }: { params: { id: string } }
   const shipment = await res.json()
 
   await prisma.order.update({
-    where: { id: params.id },
+    where: { id },
     data: {
       status: 'fulfilled',
       chitchatsId: shipment.id,
