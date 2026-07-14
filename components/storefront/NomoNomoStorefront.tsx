@@ -62,7 +62,7 @@ export function NomoNomoStorefront({ heroImage, activeSale, dbProducts }: { hero
         }
         @media (max-width: 640px) {
           .nn-nav { padding: 0 20px; height: 56px; }
-          .nn-hero { min-height: 420px; }
+          .nn-hero { min-height: 0; }
           .nn-hero-logo { height: 160px; }
           .nn-section { padding: 24px 20px 48px; }
           .nn-grid { grid-template-columns: repeat(2, 1fr); gap: 20px 12px; }
