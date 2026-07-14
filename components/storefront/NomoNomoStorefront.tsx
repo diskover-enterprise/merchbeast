@@ -21,9 +21,11 @@ export function NomoNomoStorefront({ heroImage, activeSale, dbProducts }: { hero
   const hats = products.filter(p => p.category === 'Hat')
 
   return (
-    <div style={{ fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif", background: '#2e2e2e', color: '#fff', minHeight: '100vh' }}>
+    <div style={{ fontFamily: "'Kaisei Opti', serif", background: '#2e2e2e', color: '#fff', minHeight: '100vh' }}>
 
       <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=Kaisei+Opti:wght@400;700&display=swap');
+
         /* NAV */
         .nn-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; height: 64px; background: rgba(13,13,13,0.95); backdrop-filter: blur(8px); border-bottom: 1px solid rgba(255,255,255,0.06); display: flex; align-items: center; justify-content: space-between; padding: 0 40px; }
         .nn-nav-logo { height: 40px; object-fit: contain; }
