@@ -21,7 +21,7 @@ export function NomoNomoStorefront({ heroImage, activeSale, dbProducts }: { hero
   const hats = products.filter(p => p.category === 'Hat')
 
   return (
-    <div style={{ fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif", background: '#0d0d0d', color: '#fff', minHeight: '100vh' }}>
+    <div style={{ fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif", background: '#1c1c1c', color: '#fff', minHeight: '100vh' }}>
 
       <style>{`
         /* NAV */
@@ -31,7 +31,7 @@ export function NomoNomoStorefront({ heroImage, activeSale, dbProducts }: { hero
         .nn-nav-cart:hover { border-color: #C41E1E; color: #C41E1E; }
 
         /* HERO */
-        .nn-hero { padding-top: 64px; background: #0d0d0d; position: relative; }
+        .nn-hero { padding-top: 64px; background: #1c1c1c; position: relative; }
         .nn-hero img { width: 100%; height: auto; display: block; }
         .nn-hero-logo { height: 220px; object-fit: contain; margin-bottom: 32px; filter: drop-shadow(0 0 40px rgba(196,30,30,0.4)); }
         .nn-hero-tag { font-size: 10px; letter-spacing: 0.5em; text-transform: uppercase; color: rgba(255,255,255,0.35); margin-bottom: 16px; }
