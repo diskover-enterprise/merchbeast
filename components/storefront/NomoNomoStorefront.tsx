@@ -64,7 +64,7 @@ export function NomoNomoStorefront({ heroImage, activeSale, dbProducts }: { hero
           .nn-nav { padding: 0 20px; height: 56px; }
           .nn-hero { min-height: 420px; }
           .nn-hero-logo { height: 160px; }
-          .nn-section { padding: 48px 20px; }
+          .nn-section { padding: 24px 20px 48px; }
           .nn-grid { grid-template-columns: repeat(2, 1fr); gap: 20px 12px; }
           .nn-footer { padding: 32px 20px; }
           .nn-section-title { font-size: 20px; }
