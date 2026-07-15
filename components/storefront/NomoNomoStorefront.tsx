@@ -152,23 +152,23 @@ function ProductCard({ product, activeSale, stock }: { product: NomoProduct; act
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
-      <div style={{ position: 'relative', marginBottom: 4 }}>
+      {isLimited && (
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 3, marginBottom: 6 }}>
+          <span style={{ background: '#C41E1E', color: '#fff', fontSize: 9, fontWeight: 800, letterSpacing: '0.15em', textTransform: 'uppercase', padding: '4px 8px', alignSelf: 'flex-start' }}>
+            Limited Edition
+          </span>
+          <span style={{ background: 'rgba(255,255,255,0.08)', color: 'rgba(255,255,255,0.7)', fontSize: 9, fontWeight: 700, letterSpacing: '0.1em', padding: '3px 8px', alignSelf: 'flex-start' }}>
+            {stock} / 100 remaining
+          </span>
+        </div>
+      )}
+      <div style={{ marginBottom: 4 }}>
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src={product.images[0]}
           alt={product.name}
           style={{ width: '100%', height: 'auto', display: 'block', transition: 'opacity 0.35s ease', opacity: hovered ? 0.5 : 1 }}
         />
-        {isLimited && (
-          <div style={{ position: 'absolute', top: 10, left: 10, display: 'flex', flexDirection: 'column', gap: 4 }}>
-            <span style={{ background: '#C41E1E', color: '#fff', fontSize: 9, fontWeight: 800, letterSpacing: '0.15em', textTransform: 'uppercase', padding: '4px 8px' }}>
-              Limited Edition
-            </span>
-            <span style={{ background: 'rgba(0,0,0,0.75)', color: '#fff', fontSize: 9, fontWeight: 700, letterSpacing: '0.1em', padding: '3px 8px' }}>
-              {stock} / 100 remaining
-            </span>
-          </div>
-        )}
       </div>
       <div style={{ display: 'flex', alignItems: 'baseline', gap: 8, flexWrap: 'wrap' }}>
         <h3 style={{ fontSize: 16, fontWeight: 600, lineHeight: 1.4, color: '#fff', margin: 0 }}>
