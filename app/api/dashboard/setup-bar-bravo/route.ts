@@ -9,8 +9,9 @@ export async function POST() {
       data: {
         name: 'Bar Bravo',
         slug: 'bar-bravo',
+        description: 'Seafood-forward neighbourhood restaurant. Vancouver, BC.',
         ownerEmail: 'hello@barbravo.com',
-        commissionRate: 25,
+        ownerPasswordHash: '',
         bannerImage: '/bar-bravo-hero.jpg',
       },
     })
