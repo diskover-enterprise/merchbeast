@@ -36,9 +36,33 @@ export function BarBravoStorefront({ heroImage, activeSale, dbProducts }: {
         .bb-nav-logo { height: 44px; object-fit: contain; }
         .bb-nav-cart { font-size: 11px; letter-spacing: 0.25em; text-transform: uppercase; color: #0d1117; text-decoration: none; padding: 10px 22px; border: 1.5px solid #2d6b65; color: #2d6b65; font-family: 'Georgia', serif; font-weight: 700; transition: background 0.2s, color 0.2s; }
         .bb-nav-cart:hover { background: #2d6b65; color: #f0ead6; }
-        .bb-hero { width: 100%; background: #162030; }
+        .bb-hero { width: 100%; background: #162030; position: relative; }
         .bb-hero-img { width: 100%; height: auto; display: block; }
         .bb-hero-placeholder { width: 100%; height: 320px; background: #162030; display: block; }
+        .bb-hero-glow { position: absolute; inset: 0; pointer-events: none; mix-blend-mode: screen; }
+        .bb-hero-glow::before {
+          content: '';
+          position: absolute;
+          top: 2%; left: 3%;
+          width: 38%; height: 55%;
+          background: radial-gradient(ellipse at 40% 45%, rgba(255,185,30,0.45) 0%, rgba(255,140,0,0.18) 45%, transparent 72%);
+          animation: neonPulse 2.8s ease-in-out infinite;
+        }
+        .bb-hero-glow::after {
+          content: '';
+          position: absolute;
+          top: 2%; left: 3%;
+          width: 38%; height: 55%;
+          background: radial-gradient(ellipse at 40% 45%, rgba(255,220,80,0.3) 0%, transparent 55%);
+          animation: neonPulse 2.8s ease-in-out infinite 0.4s;
+        }
+        @keyframes neonPulse {
+          0%, 100% { opacity: 1; }
+          30% { opacity: 0.6; }
+          35% { opacity: 1; }
+          60% { opacity: 0.75; }
+          65% { opacity: 1; }
+        }
         .bb-section { padding: 72px 48px 56px; max-width: 1280px; margin: 0 auto; }
         .bb-section-head { display: flex; align-items: baseline; gap: 16px; margin-bottom: 40px; padding-bottom: 16px; border-bottom: 1px solid rgba(240,234,214,0.12); }
         .bb-section-title { font-size: 28px; font-weight: 700; color: #f0ead6; font-family: 'Playfair Display', Georgia, serif; letter-spacing: -0.01em; }
@@ -80,6 +104,7 @@ export function BarBravoStorefront({ heroImage, activeSale, dbProducts }: {
           ) : (
             <div className="bb-hero-placeholder" />
           )}
+          {heroImage && <div className="bb-hero-glow" />}
         </div>
 
         {/* HATS */}
