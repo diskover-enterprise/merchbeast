@@ -5,7 +5,7 @@ import Link from 'next/link'
 import { useCart } from '@/app/cart-context'
 
 export default function FatRabbitCartPage() {
-  const { items, removeFromCart, updateQuantity, subtotal, setBrandColor, setShopPath } = useCart()
+  const { items, removeFromCart, updateQuantity, total: subtotal, setBrandColor, setShopPath } = useCart()
 
   useEffect(() => {
     setBrandColor('#C5442A')
