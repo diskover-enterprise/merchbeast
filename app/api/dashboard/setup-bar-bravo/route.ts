@@ -11,7 +11,13 @@ export async function POST() {
         slug: 'bar-bravo',
         ownerEmail: 'hello@barbravo.com',
         commissionRate: 25,
+        bannerImage: '/bar-bravo-hero.jpg',
       },
+    })
+  } else {
+    shop = await prisma.shop.update({
+      where: { slug: 'bar-bravo' },
+      data: { bannerImage: '/bar-bravo-hero.jpg' },
     })
   }
 
