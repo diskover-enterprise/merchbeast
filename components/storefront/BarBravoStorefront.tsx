@@ -83,6 +83,7 @@ export function BarBravoStorefront({ heroImage, activeSale, dbProducts }: {
           .bb-section { padding: 40px 20px 32px; }
           .bb-section-head { margin-bottom: 24px; }
           .bb-section-title { font-size: 21px; }
+          .bb-hero-tagline p { font-size: 9px; }
           .bb-grid { grid-template-columns: repeat(2, 1fr); gap: 24px 12px; }
           .bb-divider { padding: 0 20px; }
           .bb-footer { padding: 32px 20px; }
