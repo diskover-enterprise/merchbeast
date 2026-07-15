@@ -33,7 +33,7 @@ const emptyForm = {
 }
 
 const SIZE_OPTIONS = ['XS', 'S', 'M', 'L', 'XL', 'XXL', 'One Size']
-const COLOR_OPTIONS = ['Black', 'White', 'Grey', 'Navy', 'Red', 'Green', 'Blue', 'Brown']
+const COLOR_OPTIONS = ['Black', 'White', 'Ivory', 'Grey', 'Navy', 'Red', 'Green', 'Blue', 'Brown']
 
 function ImageUploader({ images, onChange }: { images: string[]; onChange: (imgs: string[]) => void }) {
   const inputRef = useRef<HTMLInputElement>(null)
