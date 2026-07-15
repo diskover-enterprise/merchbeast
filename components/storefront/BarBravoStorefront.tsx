@@ -36,13 +36,9 @@ export function BarBravoStorefront({ heroImage, activeSale, dbProducts }: {
         .bb-nav-logo { height: 44px; object-fit: contain; }
         .bb-nav-cart { font-size: 11px; letter-spacing: 0.25em; text-transform: uppercase; color: #0d1117; text-decoration: none; padding: 10px 22px; border: 1.5px solid #2d6b65; color: #2d6b65; font-family: 'Georgia', serif; font-weight: 700; transition: background 0.2s, color 0.2s; }
         .bb-nav-cart:hover { background: #2d6b65; color: #f0ead6; }
-        .bb-hero { position: relative; width: 100%; height: 520px; overflow: hidden; background: #162030; display: flex; align-items: center; justify-content: center; }
-        .bb-hero-img { width: 100%; height: 100%; object-fit: cover; opacity: 0.5; }
-        .bb-hero-overlay { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 0 24px; }
-        .bb-hero-tag { font-size: 10px; letter-spacing: 0.4em; text-transform: uppercase; color: #2d6b65; margin-bottom: 16px; font-family: Georgia, serif; }
-        .bb-hero-title { font-size: clamp(48px, 7vw, 88px); font-weight: 900; line-height: 1; color: #f0ead6; margin-bottom: 16px; font-family: 'Playfair Display', Georgia, serif; }
-        .bb-hero-sub { font-size: 15px; color: rgba(240,234,214,0.6); letter-spacing: 0.08em; font-style: italic; }
-        .bb-hero-placeholder { display: flex; flex-direction: column; align-items: center; justify-content: center; width: 100%; height: 100%; }
+        .bb-hero { width: 100%; background: #162030; }
+        .bb-hero-img { width: 100%; height: auto; display: block; }
+        .bb-hero-placeholder { width: 100%; height: 320px; background: #162030; display: block; }
         .bb-section { padding: 72px 48px 56px; max-width: 1280px; margin: 0 auto; }
         .bb-section-head { display: flex; align-items: baseline; gap: 16px; margin-bottom: 40px; padding-bottom: 16px; border-bottom: 1px solid rgba(240,234,214,0.12); }
         .bb-section-title { font-size: 28px; font-weight: 700; color: #f0ead6; font-family: 'Playfair Display', Georgia, serif; letter-spacing: -0.01em; }
@@ -58,8 +54,6 @@ export function BarBravoStorefront({ heroImage, activeSale, dbProducts }: {
         @media (max-width: 768px) {
           .bb-nav { padding: 0 20px; height: 58px; }
           .bb-nav-logo { height: 36px; }
-          .bb-hero { height: 360px; }
-          .bb-hero-title { font-size: 42px; }
           .bb-section { padding: 40px 20px 32px; }
           .bb-section-head { margin-bottom: 24px; }
           .bb-grid { grid-template-columns: repeat(2, 1fr); gap: 24px 12px; }
@@ -86,11 +80,6 @@ export function BarBravoStorefront({ heroImage, activeSale, dbProducts }: {
           ) : (
             <div className="bb-hero-placeholder" />
           )}
-          <div className="bb-hero-overlay">
-            <p className="bb-hero-tag">Vancouver · Seafood · Raw Bar</p>
-            <h1 className="bb-hero-title">The Merch</h1>
-            <p className="bb-hero-sub">"Bravo to you, me and the bounty from the sea!"</p>
-          </div>
         </div>
 
         {/* HATS */}
