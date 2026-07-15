@@ -170,7 +170,7 @@ function ProductCard({ product, activeSale }: { product: BarBravoProduct; active
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
-      <div style={{ marginBottom: 10, overflow: 'hidden', background: '#162030' }}>
+      <div style={{ marginBottom: 10, overflow: 'hidden', background: 'transparent' }}>
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src={product.images[0]}
