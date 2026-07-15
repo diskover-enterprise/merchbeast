@@ -51,9 +51,9 @@ export default function BarBravoCartPage() {
   }
 
   return (
-    <div style={{ fontFamily: "'Playfair Display', Georgia, serif", background: '#0d1117', color: '#f0ead6', minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
+    <div style={{ fontFamily: "'Cinzel', 'Trajan Pro', serif", background: '#0d1117', color: '#f0ead6', minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&display=swap');
         .bb-cart-nav { position: sticky; top: 0; z-index: 100; height: 68px; background: #f0ead6; display: flex; align-items: center; justify-content: space-between; padding: 0 48px; border-bottom: 1px solid rgba(0,0,0,0.1); }
         .bb-cart-back { font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: #2d6b65; text-decoration: none; font-family: Georgia, serif; font-weight: 700; transition: opacity 0.2s; }
         .bb-cart-back:hover { opacity: 0.7; }
@@ -63,7 +63,7 @@ export default function BarBravoCartPage() {
         .bb-cart-layout { display: grid; grid-template-columns: 1fr 320px; gap: 48px; align-items: start; }
         .bb-cart-item { display: grid; grid-template-columns: 88px 1fr auto auto; gap: 20px; align-items: center; padding: 24px 0; border-bottom: 1px solid rgba(240,234,214,0.08); }
         .bb-cart-item-img { width: 88px; height: 110px; object-fit: cover; background: #162030; display: block; }
-        .bb-cart-item-name { font-size: 14px; font-weight: 700; color: #f0ead6; line-height: 1.4; margin-bottom: 4px; display: block; text-decoration: none; transition: color 0.2s; font-family: 'Playfair Display', Georgia, serif; }
+        .bb-cart-item-name { font-size: 14px; font-weight: 700; color: #f0ead6; line-height: 1.4; margin-bottom: 4px; display: block; text-decoration: none; transition: color 0.2s; font-family: 'Cinzel', 'Trajan Pro', serif; }
         .bb-cart-item-name:hover { color: #2d6b65; }
         .bb-cart-item-meta { font-size: 12px; color: rgba(240,234,214,0.4); margin-bottom: 6px; font-family: Georgia, serif; }
         .bb-cart-item-price { font-size: 14px; color: #2d6b65; font-weight: 700; }
@@ -85,7 +85,7 @@ export default function BarBravoCartPage() {
         .bb-cart-empty p { font-size: 16px; color: rgba(240,234,214,0.4); margin-bottom: 32px; font-family: Georgia, serif; }
         .bb-cart-browse { display: inline-block; padding: 16px 40px; background: #2d6b65; color: #f0ead6; text-decoration: none; font-size: 11px; font-weight: 700; letter-spacing: 0.3em; text-transform: uppercase; font-family: Georgia, serif; }
         .bb-cart-footer { background: #060a0f; border-top: 1px solid rgba(240,234,214,0.06); padding: 32px 48px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; margin-top: auto; }
-        .bb-cart-footer-brand { font-size: 20px; font-weight: 900; color: #2d6b65; font-family: 'Playfair Display', Georgia, serif; }
+        .bb-cart-footer-brand { font-size: 20px; font-weight: 900; color: #2d6b65; font-family: 'Cinzel', 'Trajan Pro', serif; }
         .bb-cart-footer-copy { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(240,234,214,0.2); font-family: Georgia, serif; }
         @media (max-width: 768px) {
           .bb-cart-nav { padding: 0 20px; height: 58px; }

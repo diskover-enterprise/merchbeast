@@ -30,8 +30,8 @@ export function BarBravoStorefront({ heroImage, activeSale, dbProducts }: {
   return (
     <div style={{ fontFamily: "'Georgia', 'Times New Roman', serif", background: '#0d1117', color: '#f0ead6', minHeight: '100vh' }}>
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&display=swap');
-        .bb-wrap { font-family: 'Playfair Display', Georgia, serif; }
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&display=swap');
+        .bb-wrap { font-family: 'Cinzel', 'Trajan Pro', serif; }
         .bb-nav { position: sticky; top: 0; z-index: 100; height: 68px; background: #f0ead6; display: flex; align-items: center; justify-content: space-between; padding: 0 48px; border-bottom: 1px solid rgba(0,0,0,0.1); }
         .bb-nav-logo { height: 44px; object-fit: contain; }
         .bb-nav-cart { font-size: 11px; letter-spacing: 0.25em; text-transform: uppercase; color: #0d1117; text-decoration: none; padding: 10px 22px; border: 1.5px solid #2d6b65; color: #2d6b65; font-family: 'Georgia', serif; font-weight: 700; transition: background 0.2s, color 0.2s; }
@@ -65,7 +65,7 @@ export function BarBravoStorefront({ heroImage, activeSale, dbProducts }: {
         }
         .bb-section { padding: 72px 48px 56px; max-width: 1280px; margin: 0 auto; }
         .bb-section-head { display: flex; align-items: baseline; gap: 16px; margin-bottom: 40px; padding-bottom: 16px; border-bottom: 1px solid rgba(240,234,214,0.12); }
-        .bb-section-title { font-size: 28px; font-weight: 700; color: #f0ead6; font-family: 'Playfair Display', Georgia, serif; letter-spacing: -0.01em; }
+        .bb-section-title { font-size: 28px; font-weight: 700; color: #f0ead6; font-family: 'Cinzel', 'Trajan Pro', serif; letter-spacing: -0.01em; }
         .bb-section-count { font-size: 11px; color: rgba(240,234,214,0.35); letter-spacing: 0.2em; text-transform: uppercase; font-family: Georgia, serif; }
         .bb-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 36px 24px; }
         .bb-divider { padding: 0; max-width: 100%; margin: 0 0 16px; }
@@ -73,7 +73,7 @@ export function BarBravoStorefront({ heroImage, activeSale, dbProducts }: {
         .bb-divider-line { flex: 1; height: 1px; background: rgba(240,234,214,0.25); }
         .bb-divider-anchor { font-size: 18px; color: #f0ead6; }
         .bb-footer { background: #060a0f; border-top: 1px solid rgba(240,234,214,0.06); padding: 48px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
-        .bb-footer-brand { font-size: 40px; font-weight: 900; color: #2d6b65; font-family: 'Playfair Display', Georgia, serif; }
+        .bb-footer-brand { font-size: 40px; font-weight: 900; color: #2d6b65; font-family: 'Cinzel', 'Trajan Pro', serif; }
         .bb-footer-copy { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(240,234,214,0.2); font-family: Georgia, serif; }
         @media (max-width: 768px) {
           .bb-nav { padding: 0 20px; height: 58px; }
@@ -172,7 +172,7 @@ function ProductCard({ product, activeSale }: { product: BarBravoProduct; active
         />
       </div>
       <div style={{ display: 'flex', alignItems: 'baseline', gap: 8, flexWrap: 'wrap' }}>
-        <h3 style={{ fontSize: 15, fontWeight: 700, lineHeight: 1.4, color: '#f0ead6', margin: 0, fontFamily: "'Playfair Display', Georgia, serif" }}>
+        <h3 style={{ fontSize: 15, fontWeight: 700, lineHeight: 1.4, color: '#f0ead6', margin: 0, fontFamily: "'Cinzel', 'Trajan Pro', serif" }}>
           {product.name}
         </h3>
         <div style={{ display: 'flex', gap: 6, flexShrink: 0 }}>

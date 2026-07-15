@@ -34,9 +34,9 @@ export default function BarBravoProductClient({ product, related }: { product: P
   }
 
   return (
-    <div style={{ fontFamily: "'Playfair Display', Georgia, serif", background: '#0d1117', color: '#f0ead6', minHeight: '100vh' }}>
+    <div style={{ fontFamily: "'Cinzel', 'Trajan Pro', serif", background: '#0d1117', color: '#f0ead6', minHeight: '100vh' }}>
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&display=swap');
         .bb-pnav { position: sticky; top: 0; z-index: 100; height: 68px; background: #f0ead6; display: flex; align-items: center; justify-content: space-between; padding: 0 48px; border-bottom: 1px solid rgba(0,0,0,0.1); }
         .bb-pnav-back { font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: #2d6b65; text-decoration: none; font-family: Georgia, serif; font-weight: 700; transition: opacity 0.2s; }
         .bb-pnav-back:hover { opacity: 0.7; }
@@ -49,7 +49,7 @@ export default function BarBravoProductClient({ product, related }: { product: P
         .bb-related-title { font-size: 11px; font-weight: 700; letter-spacing: 0.4em; text-transform: uppercase; color: rgba(240,234,214,0.35); margin-bottom: 40px; font-family: Georgia, serif; }
         .bb-related-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px 20px; }
         .bb-footer { background: #060a0f; border-top: 1px solid rgba(240,234,214,0.06); padding: 48px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; margin-top: 80px; }
-        .bb-footer-brand { font-size: 20px; font-weight: 900; color: #2d6b65; font-family: 'Playfair Display', Georgia, serif; }
+        .bb-footer-brand { font-size: 20px; font-weight: 900; color: #2d6b65; font-family: 'Cinzel', 'Trajan Pro', serif; }
         .bb-footer-copy { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(240,234,214,0.2); font-family: Georgia, serif; }
         @media (max-width: 768px) {
           .bb-pnav { padding: 0 20px; height: 58px; }
@@ -147,7 +147,7 @@ export default function BarBravoProductClient({ product, related }: { product: P
                     <img src={p.images[0]} alt={p.name} style={{ width: '100%', height: 'auto', display: 'block' }} />
                   </div>
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
-                    <h3 style={{ fontSize: 13, fontWeight: 700, lineHeight: 1.4, color: '#f0ead6', flex: 1, marginRight: 8, fontFamily: "'Playfair Display', Georgia, serif" }}>{p.name}</h3>
+                    <h3 style={{ fontSize: 13, fontWeight: 700, lineHeight: 1.4, color: '#f0ead6', flex: 1, marginRight: 8, fontFamily: "'Cinzel', 'Trajan Pro', serif" }}>{p.name}</h3>
                     <span style={{ fontSize: 13, color: '#2d6b65', fontWeight: 700, flexShrink: 0 }}>${p.price}</span>
                   </div>
                 </Link>
