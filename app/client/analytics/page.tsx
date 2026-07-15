@@ -10,7 +10,8 @@ type Analytics = {
   last30: number
   last7: number
   today: number
-  topProducts: { slug: string; views: number }[]
+  topViewed: { slug: string; views: number }[]
+  topPurchased: { name: string; unitsSold: number; orders: number }[]
   daily: { day: string; count: number }[]
 }
 
@@ -117,10 +118,35 @@ export default function ClientAnalytics() {
                 </div>
               )}
 
-              {/* Top products */}
-              {data.topProducts.length > 0 && (
+              {/* Top purchased */}
+              {data.topPurchased.length > 0 && (
+                <div className="cl-card" style={{ marginBottom: 24 }}>
+                  <div style={{ padding: '16px 20px 8px', fontSize: 11, letterSpacing: '0.15em', textTransform: 'uppercase', color: 'var(--ink-mute)' }}>Top Products Purchased — All Time</div>
+                  <table className="cl-table">
+                    <thead>
+                      <tr>
+                        <th>Product</th>
+                        <th>Units Sold</th>
+                        <th>Orders</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {data.topPurchased.map(p => (
+                        <tr key={p.name}>
+                          <td style={{ fontWeight: 600 }}>{p.name}</td>
+                          <td style={{ fontWeight: 700, color: 'var(--neon)' }}>{p.unitsSold}</td>
+                          <td style={{ color: 'var(--ink-mute)' }}>{p.orders}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              )}
+
+              {/* Top viewed */}
+              {data.topViewed.length > 0 && (
                 <div className="cl-card">
-                  <div style={{ padding: '16px 20px 8px', fontSize: 11, letterSpacing: '0.15em', textTransform: 'uppercase', color: 'var(--ink-mute)' }}>Top Products — Last 30 Days</div>
+                  <div style={{ padding: '16px 20px 8px', fontSize: 11, letterSpacing: '0.15em', textTransform: 'uppercase', color: 'var(--ink-mute)' }}>Top Products Viewed — Last 30 Days</div>
                   <table className="cl-table">
                     <thead>
                       <tr>
@@ -129,7 +155,7 @@ export default function ClientAnalytics() {
                       </tr>
                     </thead>
                     <tbody>
-                      {data.topProducts.map(p => (
+                      {data.topViewed.map(p => (
                         <tr key={p.slug}>
                           <td style={{ fontFamily: 'monospace', fontSize: 12 }}>{p.slug}</td>
                           <td style={{ fontWeight: 600, color: 'var(--neon)' }}>{p.views}</td>

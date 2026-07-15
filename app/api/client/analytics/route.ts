@@ -15,7 +15,7 @@ export async function GET() {
   const d7 = new Date(now); d7.setDate(d7.getDate() - 7)
   const today = new Date(now); today.setHours(0, 0, 0, 0)
 
-  const [total, last30, last7, todayCount, topProducts, daily] = await Promise.all([
+  const [total, last30, last7, todayCount, topViewed, daily, topPurchased] = await Promise.all([
     prisma.pageView.count({ where: { shopId } }),
     prisma.pageView.count({ where: { shopId, createdAt: { gte: d30 } } }),
     prisma.pageView.count({ where: { shopId, createdAt: { gte: d7 } } }),
@@ -35,6 +35,17 @@ export async function GET() {
       GROUP BY DATE("createdAt")
       ORDER BY day ASC
     `,
+    prisma.orderItem.groupBy({
+      by: ['productName'],
+      where: {
+        order: { shopId },
+        productName: { not: null },
+      },
+      _sum: { quantity: true },
+      _count: { id: true },
+      orderBy: { _sum: { quantity: 'desc' } },
+      take: 5,
+    }),
   ])
 
   return NextResponse.json({
@@ -42,7 +53,8 @@ export async function GET() {
     last30,
     last7,
     today: todayCount,
-    topProducts: topProducts.map(p => ({ slug: p.productSlug, views: p._count.productSlug })),
+    topViewed: topViewed.map(p => ({ slug: p.productSlug, views: p._count.productSlug })),
+    topPurchased: topPurchased.map(p => ({ name: p.productName, unitsSold: p._sum.quantity ?? 0, orders: p._count.id })),
     daily: daily.map(d => ({ day: d.day, count: Number(d.count) })),
   })
 }
