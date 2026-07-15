@@ -40,8 +40,8 @@ export function BarBravoStorefront({ heroImage, activeSale, dbProducts }: {
         .bb-hero-img { width: 100%; height: auto; display: block; }
         .bb-hero-placeholder { width: 100%; height: 320px; background: #162030; display: block; }
         .bb-hero-glow { position: absolute; inset: 0; pointer-events: none; mix-blend-mode: screen; }
-        .bb-hero-tagline { position: absolute; top: 37%; left: 3.5%; pointer-events: none; }
-        .bb-hero-tagline p { font-family: 'Cinzel', 'Trajan Pro', serif; font-size: clamp(7px, 1.1vw, 14px); font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; color: rgba(240,220,160,0.82); line-height: 1.7; text-shadow: 0 1px 6px rgba(0,0,0,0.7); }
+        .bb-hero-tagline { position: absolute; top: 50%; left: 3.5%; pointer-events: none; }
+        .bb-hero-tagline p { font-family: 'Cinzel', 'Trajan Pro', serif; font-size: clamp(14px, 2.2vw, 28px); font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; color: rgba(240,220,160,0.82); line-height: 1.7; text-shadow: 0 1px 6px rgba(0,0,0,0.7); }
         .bb-hero-glow::before {
           content: '';
           position: absolute;
