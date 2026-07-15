@@ -95,15 +95,15 @@ export function NomoNomoStorefront({ heroImage, activeSale, dbProducts }: { hero
         )}
       </section>
 
-      {/* TEES */}
-      {tees.length > 0 && (
+      {/* HATS */}
+      {hats.length > 0 && (
         <section className="nn-section">
           <div className="nn-section-head">
-            <h2 className="nn-section-title">Tees</h2>
-            <span className="nn-section-count">{tees.length} styles</span>
+            <h2 className="nn-section-title">Hats</h2>
+            <span className="nn-section-count">{hats.length} styles</span>
           </div>
           <div className="nn-grid">
-            {tees.map(p => <ProductCard key={p.slug} product={p} activeSale={activeSale} />)}
+            {hats.map(p => <ProductCard key={p.slug} product={p} activeSale={activeSale} />)}
           </div>
         </section>
       )}
@@ -118,15 +118,15 @@ export function NomoNomoStorefront({ heroImage, activeSale, dbProducts }: { hero
         </div>
       )}
 
-      {/* HATS */}
-      {hats.length > 0 && (
+      {/* TEES */}
+      {tees.length > 0 && (
         <section className="nn-section">
           <div className="nn-section-head">
-            <h2 className="nn-section-title">Hats</h2>
-            <span className="nn-section-count">{hats.length} styles</span>
+            <h2 className="nn-section-title">Tees</h2>
+            <span className="nn-section-count">{tees.length} styles</span>
           </div>
           <div className="nn-grid">
-            {hats.map(p => <ProductCard key={p.slug} product={p} activeSale={activeSale} />)}
+            {tees.map(p => <ProductCard key={p.slug} product={p} activeSale={activeSale} />)}
           </div>
         </section>
       )}
