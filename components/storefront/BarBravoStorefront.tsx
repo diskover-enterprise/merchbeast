@@ -73,7 +73,7 @@ export function BarBravoStorefront({ heroImage, activeSale, dbProducts }: {
         .bb-divider-line { flex: 1; height: 1px; background: rgba(240,234,214,0.25); }
         .bb-divider-anchor { font-size: 18px; color: #f0ead6; }
         .bb-footer { background: #060a0f; border-top: 1px solid rgba(240,234,214,0.06); padding: 48px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
-        .bb-footer-brand { font-size: 20px; font-weight: 900; color: #2d6b65; font-family: 'Playfair Display', Georgia, serif; }
+        .bb-footer-brand { font-size: 40px; font-weight: 900; color: #2d6b65; font-family: 'Playfair Display', Georgia, serif; }
         .bb-footer-copy { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(240,234,214,0.2); font-family: Georgia, serif; }
         @media (max-width: 768px) {
           .bb-nav { padding: 0 20px; height: 58px; }
