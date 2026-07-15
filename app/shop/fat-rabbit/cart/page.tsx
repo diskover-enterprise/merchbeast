@@ -70,20 +70,20 @@ export default function FatRabbitCartPage() {
         ) : (
           <>
             {items.map(item => (
-              <div key={`${item.slug}-${item.size}-${item.color}`} className="frc-item">
+              <div key={`${item.product.slug}-${item.size}-${item.color}`} className="frc-item">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={item.image} alt={item.name} className="frc-item-img" />
+                <img src={item.product.images?.[0]} alt={item.product.name} className="frc-item-img" />
                 <div>
-                  <p className="frc-item-name">{item.name}</p>
+                  <p className="frc-item-name">{item.product.name}</p>
                   <p className="frc-item-meta">{[item.size, item.color].filter(Boolean).join(' · ')}</p>
                   <div className="frc-qty">
-                    <button className="frc-qty-btn" onClick={() => updateQuantity(item.slug, item.size, item.color, item.quantity - 1)}>−</button>
+                    <button className="frc-qty-btn" onClick={() => updateQuantity(item.product.slug, item.quantity - 1, item.size, item.color)}>−</button>
                     <span style={{ fontSize: 14, minWidth: 20, textAlign: 'center' }}>{item.quantity}</span>
-                    <button className="frc-qty-btn" onClick={() => updateQuantity(item.slug, item.size, item.color, item.quantity + 1)}>+</button>
-                    <button className="frc-remove" onClick={() => removeFromCart(item.slug, item.size, item.color)}>Remove</button>
+                    <button className="frc-qty-btn" onClick={() => updateQuantity(item.product.slug, item.quantity + 1, item.size, item.color)}>+</button>
+                    <button className="frc-remove" onClick={() => removeFromCart(item.product.slug, item.size, item.color)}>Remove</button>
                   </div>
                 </div>
-                <div className="frc-item-price">${(parseFloat(item.price) * item.quantity).toFixed(2)}</div>
+                <div className="frc-item-price">${(parseFloat(item.product.price) * item.quantity).toFixed(2)}</div>
               </div>
             ))}
 
@@ -94,7 +94,7 @@ export default function FatRabbitCartPage() {
               </div>
               <a href="/api/checkout" className="frc-checkout" onClick={async (e) => {
                 e.preventDefault()
-                const res = await fetch('/api/checkout', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ items: items.map((item: any) => ({ slug: item.slug, quantity: item.quantity, size: item.size, color: item.color })), shopSlug: 'fat-rabbit' }) })
+                const res = await fetch('/api/checkout', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ items: items.map((item: any) => ({ slug: item.product.slug, quantity: item.quantity, size: item.size, color: item.color })), shopSlug: 'fat-rabbit' }) })
                 const data = await res.json()
                 if (data.url) window.location.href = data.url
               }}>
