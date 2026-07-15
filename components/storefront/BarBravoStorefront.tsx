@@ -1,0 +1,176 @@
+'use client'
+
+import Link from 'next/link'
+import { useState, useEffect } from 'react'
+import { barBravoProducts, type BarBravoProduct } from '@/app/products/bar-bravo-products-data'
+import { useCart } from '@/app/cart-context'
+import type { ActiveSale } from '@/lib/sale'
+import { calcSalePrice } from '@/lib/sale'
+
+type DBProduct = {
+  slug: string; name: string; price: string; description: string
+  images: string[]; sizes: string[]; colors: string[]; tag: string | null
+}
+
+export function BarBravoStorefront({ heroImage, activeSale, dbProducts }: {
+  heroImage?: string | null
+  activeSale?: ActiveSale
+  dbProducts?: DBProduct[]
+}) {
+  const { count, setBrandColor, setShopPath } = useCart()
+  useEffect(() => { setBrandColor('#2d6b65'); setShopPath('/shop/bar-bravo') }, [setBrandColor, setShopPath])
+
+  const products: BarBravoProduct[] = dbProducts !== undefined
+    ? dbProducts.map(p => ({ ...p, path: `/shop/bar-bravo/products/${p.slug}`, shopifyUrl: '', category: (p.tag || 'Tee') as 'Tee' | 'Hat', tag: (p.tag || 'Tee') as 'Tee' | 'Hat' }))
+    : barBravoProducts
+
+  const tees = products.filter(p => p.category === 'Tee')
+  const hats = products.filter(p => p.category === 'Hat')
+
+  return (
+    <div style={{ fontFamily: "'Georgia', 'Times New Roman', serif", background: '#0d1117', color: '#f0ead6', minHeight: '100vh' }}>
+      <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&display=swap');
+        .bb-wrap { font-family: 'Playfair Display', Georgia, serif; }
+        .bb-nav { position: sticky; top: 0; z-index: 100; height: 68px; background: #f0ead6; display: flex; align-items: center; justify-content: space-between; padding: 0 48px; border-bottom: 1px solid rgba(0,0,0,0.1); }
+        .bb-nav-logo { height: 44px; object-fit: contain; }
+        .bb-nav-cart { font-size: 11px; letter-spacing: 0.25em; text-transform: uppercase; color: #0d1117; text-decoration: none; padding: 10px 22px; border: 1.5px solid #2d6b65; color: #2d6b65; font-family: 'Georgia', serif; font-weight: 700; transition: background 0.2s, color 0.2s; }
+        .bb-nav-cart:hover { background: #2d6b65; color: #f0ead6; }
+        .bb-hero { position: relative; width: 100%; height: 520px; overflow: hidden; background: #162030; display: flex; align-items: center; justify-content: center; }
+        .bb-hero-img { width: 100%; height: 100%; object-fit: cover; opacity: 0.5; }
+        .bb-hero-overlay { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 0 24px; }
+        .bb-hero-tag { font-size: 10px; letter-spacing: 0.4em; text-transform: uppercase; color: #2d6b65; margin-bottom: 16px; font-family: Georgia, serif; }
+        .bb-hero-title { font-size: clamp(48px, 7vw, 88px); font-weight: 900; line-height: 1; color: #f0ead6; margin-bottom: 16px; font-family: 'Playfair Display', Georgia, serif; }
+        .bb-hero-sub { font-size: 15px; color: rgba(240,234,214,0.6); letter-spacing: 0.08em; font-style: italic; }
+        .bb-hero-placeholder { display: flex; flex-direction: column; align-items: center; justify-content: center; width: 100%; height: 100%; }
+        .bb-section { padding: 72px 48px 56px; max-width: 1280px; margin: 0 auto; }
+        .bb-section-head { display: flex; align-items: baseline; gap: 16px; margin-bottom: 40px; padding-bottom: 16px; border-bottom: 1px solid rgba(240,234,214,0.12); }
+        .bb-section-title { font-size: 28px; font-weight: 700; color: #f0ead6; font-family: 'Playfair Display', Georgia, serif; letter-spacing: -0.01em; }
+        .bb-section-count { font-size: 11px; color: rgba(240,234,214,0.35); letter-spacing: 0.2em; text-transform: uppercase; font-family: Georgia, serif; }
+        .bb-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 36px 24px; }
+        .bb-divider { padding: 0 48px; max-width: 1280px; margin: 0 auto 16px; }
+        .bb-divider-inner { display: flex; align-items: center; gap: 20px; }
+        .bb-divider-line { flex: 1; height: 1px; background: rgba(240,234,214,0.1); }
+        .bb-divider-anchor { font-size: 18px; color: rgba(45,107,101,0.6); }
+        .bb-footer { background: #060a0f; border-top: 1px solid rgba(240,234,214,0.06); padding: 48px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+        .bb-footer-brand { font-size: 20px; font-weight: 900; color: #2d6b65; font-family: 'Playfair Display', Georgia, serif; }
+        .bb-footer-copy { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(240,234,214,0.2); font-family: Georgia, serif; }
+        @media (max-width: 768px) {
+          .bb-nav { padding: 0 20px; height: 58px; }
+          .bb-nav-logo { height: 36px; }
+          .bb-hero { height: 360px; }
+          .bb-hero-title { font-size: 42px; }
+          .bb-section { padding: 40px 20px 32px; }
+          .bb-section-head { margin-bottom: 24px; }
+          .bb-grid { grid-template-columns: repeat(2, 1fr); gap: 24px 12px; }
+          .bb-divider { padding: 0 20px; }
+          .bb-footer { padding: 32px 20px; }
+        }
+      `}</style>
+
+      <div className="bb-wrap">
+        {/* NAV */}
+        <nav className="bb-nav">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/bar-bravo-logo.png" alt="Bar Bravo" className="bb-nav-logo" />
+          <Link href="/shop/bar-bravo/cart" className="bb-nav-cart">
+            Cart{count > 0 ? ` (${count})` : ''}
+          </Link>
+        </nav>
+
+        {/* HERO */}
+        <div className="bb-hero">
+          {heroImage ? (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img src={heroImage} alt="Bar Bravo" className="bb-hero-img" />
+          ) : (
+            <div className="bb-hero-placeholder" />
+          )}
+          <div className="bb-hero-overlay">
+            <p className="bb-hero-tag">Vancouver · Seafood · Raw Bar</p>
+            <h1 className="bb-hero-title">The Merch</h1>
+            <p className="bb-hero-sub">"Bravo to you, me and the bounty from the sea!"</p>
+          </div>
+        </div>
+
+        {/* HATS */}
+        {hats.length > 0 && (
+          <section className="bb-section">
+            <div className="bb-section-head">
+              <h2 className="bb-section-title">Hats</h2>
+              <span className="bb-section-count">{hats.length} styles</span>
+            </div>
+            <div className="bb-grid">
+              {hats.map(p => <ProductCard key={p.slug} product={p} activeSale={activeSale} />)}
+            </div>
+          </section>
+        )}
+
+        {hats.length > 0 && tees.length > 0 && (
+          <div className="bb-divider">
+            <div className="bb-divider-inner">
+              <div className="bb-divider-line" />
+              <span className="bb-divider-anchor">⚓</span>
+              <div className="bb-divider-line" />
+            </div>
+          </div>
+        )}
+
+        {/* TEES */}
+        {tees.length > 0 && (
+          <section className="bb-section">
+            <div className="bb-section-head">
+              <h2 className="bb-section-title">Tees</h2>
+              <span className="bb-section-count">{tees.length} styles</span>
+            </div>
+            <div className="bb-grid">
+              {tees.map(p => <ProductCard key={p.slug} product={p} activeSale={activeSale} />)}
+            </div>
+          </section>
+        )}
+
+        <footer className="bb-footer">
+          <span className="bb-footer-brand">Bar Bravo</span>
+          <p className="bb-footer-copy">Powered by Merch Beast</p>
+        </footer>
+      </div>
+    </div>
+  )
+}
+
+function ProductCard({ product, activeSale }: { product: BarBravoProduct; activeSale?: ActiveSale }) {
+  const [hovered, setHovered] = useState(false)
+  const salePrice = calcSalePrice(product.price, activeSale ?? null, product.slug)
+
+  return (
+    <Link
+      href={product.path}
+      style={{ textDecoration: 'none', color: 'inherit', display: 'block' }}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+    >
+      <div style={{ marginBottom: 10, overflow: 'hidden', background: '#162030' }}>
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src={product.images[0]}
+          alt={product.name}
+          style={{ width: '100%', height: 'auto', display: 'block', transition: 'transform 0.4s ease, opacity 0.3s ease', opacity: hovered ? 0.75 : 1, transform: hovered ? 'scale(1.03)' : 'scale(1)' }}
+        />
+      </div>
+      <div style={{ display: 'flex', alignItems: 'baseline', gap: 8, flexWrap: 'wrap' }}>
+        <h3 style={{ fontSize: 15, fontWeight: 700, lineHeight: 1.4, color: '#f0ead6', margin: 0, fontFamily: "'Playfair Display', Georgia, serif" }}>
+          {product.name}
+        </h3>
+        <div style={{ display: 'flex', gap: 6, flexShrink: 0 }}>
+          {salePrice && <span style={{ fontSize: 14, color: '#2d6b65', fontWeight: 700 }}>${salePrice}</span>}
+          <span style={{ fontSize: 14, color: salePrice ? 'rgba(240,234,214,0.3)' : '#f0ead6', fontWeight: 600, textDecoration: salePrice ? 'line-through' : 'none' }}>${product.price}</span>
+        </div>
+      </div>
+      {product.colors && (
+        <p style={{ fontSize: 10, color: 'rgba(240,234,214,0.3)', letterSpacing: '0.05em', marginTop: 3, fontFamily: 'Georgia, serif' }}>
+          {product.colors.join(' · ')}
+        </p>
+      )}
+    </Link>
+  )
+}
