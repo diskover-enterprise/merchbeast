@@ -59,9 +59,8 @@ export function FatRabbitStorefront({ heroImage, dbProducts }: { heroImage?: str
 
       {/* NAV */}
       <nav className="fr-nav">
-        <span className="fr-nav-brand">The Merch</span>
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src="https://res.cloudinary.com/dwjvblzu9/image/upload/v1783059789/scrol-to-top_uitiui.png" alt="Fat Rabbit" className="fr-nav-logo" />
+        <img src="/fat-rabbit-logo.svg" alt="Fat Rabbit" className="fr-nav-logo" />
         <Link href="/shop/fat-rabbit/cart" className="fr-nav-cart">Cart</Link>
       </nav>
 
