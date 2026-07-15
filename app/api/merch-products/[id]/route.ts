@@ -28,6 +28,7 @@ export async function PUT(request: Request, { params }: { params: Promise<{ id: 
       colors: JSON.stringify(body.colors || []),
       tag: body.tag || null,
       active: body.active ?? true,
+      stock: body.stock != null && body.stock !== '' ? Number(body.stock) : null,
     },
   })
   return Response.json(deserialize(product))

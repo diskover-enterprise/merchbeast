@@ -30,6 +30,7 @@ const emptyForm = {
   sizes: [] as string[],
   colors: [] as string[],
   active: true,
+  stock: '',
 }
 
 const SIZE_OPTIONS = ['XS', 'S', 'M', 'L', 'XL', 'XXL', 'One Size']
@@ -191,7 +192,7 @@ export default function ProductsPage() {
 
   function openEdit(p: MerchProduct) {
     setEditing(p)
-    setForm({ shopId: p.shopId || '', name: p.name, description: p.description, price: p.price, tag: p.tag || '', images: p.images, sizes: p.sizes, colors: p.colors, active: p.active })
+    setForm({ shopId: p.shopId || '', name: p.name, description: p.description, price: p.price, tag: p.tag || '', images: p.images, sizes: p.sizes, colors: p.colors, active: p.active, stock: p.stock != null ? String(p.stock) : '' })
     setSaveError('')
     setShowForm(true)
   }
@@ -337,6 +338,10 @@ export default function ProductsPage() {
                 <div className="db-field">
                   <label>Images</label>
                   <ImageUploader images={form.images} onChange={imgs => setForm({ ...form, images: imgs })} />
+                </div>
+                <div className="db-field">
+                  <label>Limited Edition Stock <span style={{ color: 'var(--ink-mute)', fontWeight: 400 }}>(leave blank for unlimited)</span></label>
+                  <input type="number" min="0" value={form.stock} onChange={e => setForm({ ...form, stock: e.target.value })} placeholder="e.g. 100" />
                 </div>
                 <div className="db-field">
                   <Toggle label="Active (visible in store)" checked={form.active} onChange={v => setForm({ ...form, active: v })} />

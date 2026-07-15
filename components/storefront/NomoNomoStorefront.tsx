@@ -7,14 +7,14 @@ import { useCart } from '@/app/cart-context'
 import type { ActiveSale } from '@/lib/sale'
 import { calcSalePrice } from '@/lib/sale'
 
-type DBProduct = { slug: string; name: string; price: string; description: string; images: string[]; sizes: string[]; colors: string[]; tag: string | null }
+type DBProduct = { slug: string; name: string; price: string; description: string; images: string[]; sizes: string[]; colors: string[]; tag: string | null; stock?: number | null }
 
 export function NomoNomoStorefront({ heroImage, activeSale, dbProducts }: { heroImage?: string | null; activeSale?: ActiveSale; dbProducts?: DBProduct[] }) {
   const { count, setBrandColor, setShopPath } = useCart()
   useEffect(() => { setBrandColor('#C41E1E'); setShopPath('/shop/nomo-nomo') }, [setBrandColor, setShopPath])
 
-  const products: NomoProduct[] = dbProducts !== undefined
-    ? dbProducts.map(p => ({ ...p, path: `/shop/nomo-nomo/products/${p.slug}`, shopifyUrl: '', category: p.tag || 'Tee', tag: p.tag || undefined }))
+  const products: (NomoProduct & { stock?: number | null })[] = dbProducts !== undefined
+    ? dbProducts.map(p => ({ ...p, path: `/shop/nomo-nomo/products/${p.slug}`, shopifyUrl: '', category: p.tag || 'Tee', tag: p.tag || undefined, stock: p.stock ?? null }))
     : nomoProducts
 
   const tees = products.filter(p => p.category === 'Tee')
@@ -103,7 +103,7 @@ export function NomoNomoStorefront({ heroImage, activeSale, dbProducts }: { hero
             <span className="nn-section-count">{hats.length} styles</span>
           </div>
           <div className="nn-grid">
-            {hats.map(p => <ProductCard key={p.slug} product={p} activeSale={activeSale} />)}
+            {hats.map(p => <ProductCard key={p.slug} product={p} activeSale={activeSale} stock={(p as any).stock ?? null} />)}
           </div>
         </section>
       )}
@@ -126,7 +126,7 @@ export function NomoNomoStorefront({ heroImage, activeSale, dbProducts }: { hero
             <span className="nn-section-count">{tees.length} styles</span>
           </div>
           <div className="nn-grid">
-            {tees.map(p => <ProductCard key={p.slug} product={p} activeSale={activeSale} />)}
+            {tees.map(p => <ProductCard key={p.slug} product={p} activeSale={activeSale} stock={(p as any).stock ?? null} />)}
           </div>
         </section>
       )}
@@ -140,9 +140,10 @@ export function NomoNomoStorefront({ heroImage, activeSale, dbProducts }: { hero
   )
 }
 
-function ProductCard({ product, activeSale }: { product: NomoProduct; activeSale?: ActiveSale }) {
+function ProductCard({ product, activeSale, stock }: { product: NomoProduct; activeSale?: ActiveSale; stock?: number | null }) {
   const [hovered, setHovered] = useState(false)
   const salePrice = calcSalePrice(product.price, activeSale ?? null, product.slug)
+  const isLimited = stock != null
 
   return (
     <Link
@@ -151,13 +152,23 @@ function ProductCard({ product, activeSale }: { product: NomoProduct; activeSale
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
-      <div style={{ marginBottom: 4 }}>
+      <div style={{ position: 'relative', marginBottom: 4 }}>
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src={product.images[0]}
           alt={product.name}
           style={{ width: '100%', height: 'auto', display: 'block', transition: 'opacity 0.35s ease', opacity: hovered ? 0.5 : 1 }}
         />
+        {isLimited && (
+          <div style={{ position: 'absolute', top: 10, left: 10, display: 'flex', flexDirection: 'column', gap: 4 }}>
+            <span style={{ background: '#C41E1E', color: '#fff', fontSize: 9, fontWeight: 800, letterSpacing: '0.15em', textTransform: 'uppercase', padding: '4px 8px' }}>
+              Limited Edition
+            </span>
+            <span style={{ background: 'rgba(0,0,0,0.75)', color: '#fff', fontSize: 9, fontWeight: 700, letterSpacing: '0.1em', padding: '3px 8px' }}>
+              {stock} / 100 remaining
+            </span>
+          </div>
+        )}
       </div>
       <div style={{ display: 'flex', alignItems: 'baseline', gap: 8, flexWrap: 'wrap' }}>
         <h3 style={{ fontSize: 16, fontWeight: 600, lineHeight: 1.4, color: '#fff', margin: 0 }}>

@@ -1,0 +1,1 @@
+ALTER TABLE "MerchProduct" ADD COLUMN "stock" INTEGER;

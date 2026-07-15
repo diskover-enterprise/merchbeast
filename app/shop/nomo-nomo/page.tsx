@@ -22,6 +22,7 @@ export default async function NomoNomoShopPage() {
     sizes: JSON.parse(p.sizes || '[]') as string[],
     colors: JSON.parse(p.colors || '[]') as string[],
     tag: p.tag,
+    stock: p.stock ?? null,
   }))
 
   return <>

@@ -162,6 +162,7 @@ model MerchProduct {
   colors      String   @default("[]")
   tag         String?
   active      Boolean  @default(true)
+  stock       Int?
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 }

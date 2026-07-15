@@ -19,7 +19,7 @@ export async function POST(req: Request) {
   })
   if (existing) return Response.json({ alreadyCreated: true, orderId: existing.id })
 
-  const cartItems: { productId: string; shopId: string; quantity: number; price: number }[] =
+  const cartItems: { productId?: string; slug?: string; shopId: string; quantity: number; price: number; name?: string }[] =
     JSON.parse(stripeSession.metadata?.cartItems ?? '[]')
 
   if (!cartItems.length) return Response.json({ error: 'No items in session' }, { status: 400 })
@@ -101,6 +101,18 @@ export async function POST(req: Request) {
       subject: ownerSubject,
       html: ownerHtml,
     }).catch(console.error)
+  }
+
+  // Decrement stock for limited edition products
+  for (const item of cartItems) {
+    if (!item.slug) continue
+    const prod = await prisma.merchProduct.findUnique({ where: { slug: item.slug }, select: { stock: true } })
+    if (prod?.stock != null) {
+      await prisma.merchProduct.update({
+        where: { slug: item.slug },
+        data: { stock: { decrement: item.quantity } },
+      })
+    }
   }
 
   return Response.json({ orders, customerId: customer.id })
