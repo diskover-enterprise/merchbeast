@@ -48,10 +48,10 @@ export function BarBravoStorefront({ heroImage, activeSale, dbProducts }: {
         .bb-section-title { font-size: 28px; font-weight: 700; color: #f0ead6; font-family: 'Playfair Display', Georgia, serif; letter-spacing: -0.01em; }
         .bb-section-count { font-size: 11px; color: rgba(240,234,214,0.35); letter-spacing: 0.2em; text-transform: uppercase; font-family: Georgia, serif; }
         .bb-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 36px 24px; }
-        .bb-divider { padding: 0 48px; max-width: 1280px; margin: 0 auto 16px; }
-        .bb-divider-inner { display: flex; align-items: center; gap: 20px; }
-        .bb-divider-line { flex: 1; height: 1px; background: rgba(240,234,214,0.1); }
-        .bb-divider-anchor { font-size: 18px; color: rgba(45,107,101,0.6); }
+        .bb-divider { padding: 0; max-width: 100%; margin: 0 0 16px; }
+        .bb-divider-inner { display: flex; align-items: center; gap: 20px; background: #2d6b65; padding: 14px 48px; }
+        .bb-divider-line { flex: 1; height: 1px; background: rgba(240,234,214,0.25); }
+        .bb-divider-anchor { font-size: 18px; color: #f0ead6; }
         .bb-footer { background: #060a0f; border-top: 1px solid rgba(240,234,214,0.06); padding: 48px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
         .bb-footer-brand { font-size: 20px; font-weight: 900; color: #2d6b65; font-family: 'Playfair Display', Georgia, serif; }
         .bb-footer-copy { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(240,234,214,0.2); font-family: Georgia, serif; }
