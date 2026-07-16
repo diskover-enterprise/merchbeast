@@ -66,7 +66,7 @@ export function SappertonStorefront({ heroImage, activeSale, dbProducts }: {
         .ss-hero-placeholder-text { font-family: 'Barlow Condensed', sans-serif; font-size: 72px; font-weight: 900; font-style: italic; color: rgba(200,160,39,0.2); letter-spacing: -0.02em; text-transform: uppercase; }
         .ss-divider { width: 100%; padding: 0; }
         .ss-divider-inner { display: flex; align-items: center; gap: 20px; background: #b8860b; padding: 12px 48px; border-top: 2px solid #b8860b; border-bottom: 2px solid #b8860b; }
-        .ss-divider-line { flex: 1; height: 1px; background: rgba(154,148,136,0.4); }
+        .ss-divider-line { flex: 1; height: 1px; background: #5a5850; }
         .ss-divider-icon { font-size: 22px; filter: sepia(1) saturate(3) brightness(1.1) hue-rotate(5deg); }
         .ss-section { padding: 64px 48px 48px; max-width: 1280px; margin: 0 auto; }
         .ss-section-head { display: flex; align-items: baseline; gap: 16px; margin-bottom: 40px; padding-bottom: 16px; border-bottom: 1px solid rgba(184,134,11,0.15); }
@@ -75,7 +75,7 @@ export function SappertonStorefront({ heroImage, activeSale, dbProducts }: {
         .ss-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 36px 24px; }
         .ss-footer { background: #b8860b; border-top: 4px solid #b8860b; padding: 40px 48px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
         .ss-footer-brand { font-family: 'Barlow Condensed', sans-serif; font-size: 20px; font-weight: 900; font-style: italic; color: #5a5850; text-transform: uppercase; letter-spacing: 0.05em; }
-        .ss-footer-copy { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(154,148,136,0.4); font-family: 'Barlow', sans-serif; }
+        .ss-footer-copy { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: #5a5850; font-family: 'Barlow', sans-serif; }
         @media (max-width: 768px) {
           .ss-nav { padding: 0 20px; height: 88px; }
           .ss-nav-logo { height: 72px; }

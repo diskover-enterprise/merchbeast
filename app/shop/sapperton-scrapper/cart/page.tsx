@@ -86,7 +86,7 @@ export default function SappertonCartPage() {
         .ss-cart-browse { display: inline-block; padding: 16px 40px; background: #b8860b; color: #5a5850; text-decoration: none; font-size: 13px; font-weight: 900; font-style: italic; letter-spacing: 0.2em; text-transform: uppercase; font-family: 'Barlow Condensed', sans-serif; }
         .ss-cart-footer { background: #b8860b; border-top: 4px solid #b8860b; padding: 32px 48px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; margin-top: auto; }
         .ss-cart-footer-brand { font-size: 20px; font-weight: 900; font-style: italic; color: #5a5850; text-transform: uppercase; }
-        .ss-cart-footer-copy { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(154,148,136,0.4); font-family: 'Barlow', sans-serif; }
+        .ss-cart-footer-copy { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: #5a5850; font-family: 'Barlow', sans-serif; }
         @media (max-width: 768px) {
           .ss-cart-nav { padding: 0 20px; height: 72px; }
           .ss-cart-logo { height: 36px; }

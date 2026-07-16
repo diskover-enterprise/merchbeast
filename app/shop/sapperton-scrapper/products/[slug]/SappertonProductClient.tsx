@@ -50,7 +50,7 @@ export default function SappertonProductClient({ product, related }: { product: 
         .ss-related-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px 20px; }
         .ss-footer { background: #050505; border-top: 4px solid #b8860b; padding: 40px 48px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; margin-top: 80px; }
         .ss-footer-brand { font-size: 20px; font-weight: 900; font-style: italic; color: #5a5850; text-transform: uppercase; }
-        .ss-footer-copy { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(154,148,136,0.4); font-family: 'Barlow', sans-serif; }
+        .ss-footer-copy { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: #5a5850; font-family: 'Barlow', sans-serif; }
         @media (max-width: 768px) {
           .ss-pnav { padding: 0 20px; height: 72px; }
           .ss-pnav-logo { height: 36px; }
