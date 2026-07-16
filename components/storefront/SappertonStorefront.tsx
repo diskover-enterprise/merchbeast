@@ -28,14 +28,14 @@ export function SappertonStorefront({ heroImage, activeSale, dbProducts }: {
   const hats = products.filter(p => p.category === 'Hat')
 
   return (
-    <div style={{ fontFamily: "'Arial Black', 'Impact', sans-serif", background: '#5a5850', color: '#b8860b', minHeight: '100vh' }}>
+    <div style={{ fontFamily: "'Arial Black', 'Impact', sans-serif", background: '#f5f2ee', color: '#b8860b', minHeight: '100vh' }}>
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,700;0,900;1,700;1,900&family=Barlow:wght@400;600&display=swap');
         .ss-wrap { font-family: 'Barlow Condensed', 'Arial Narrow', sans-serif; }
-        .ss-nav { position: sticky; top: 0; z-index: 100; height: 148px; background: #5a5850; display: flex; align-items: center; justify-content: space-between; padding: 0 48px; border-bottom: 2px solid #b8860b; }
+        .ss-nav { position: sticky; top: 0; z-index: 100; height: 148px; background: #f5f2ee; display: flex; align-items: center; justify-content: space-between; padding: 0 48px; border-bottom: 2px solid #b8860b; }
         .ss-nav-logo { height: 128px; object-fit: contain; }
         .ss-nav-cart { font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: #b8860b; text-decoration: none; padding: 10px 22px; border: 2px solid #b8860b; font-family: 'Barlow Condensed', sans-serif; font-weight: 700; transition: background 0.15s, color 0.15s; }
-        .ss-nav-cart:hover { background: #b8860b; color: #5a5850; }
+        .ss-nav-cart:hover { background: #b8860b; color: #f5f2ee; }
         .ss-hero { width: 100%; background: #111; position: relative; overflow: hidden; }
         .ss-hero-img { width: 100%; aspect-ratio: 16/9; object-fit: cover; display: block; }
         .ss-hero-glow { position: absolute; inset: 0; pointer-events: none; mix-blend-mode: screen; }
@@ -66,7 +66,7 @@ export function SappertonStorefront({ heroImage, activeSale, dbProducts }: {
         .ss-hero-placeholder-text { font-family: 'Barlow Condensed', sans-serif; font-size: 72px; font-weight: 900; font-style: italic; color: rgba(200,160,39,0.2); letter-spacing: -0.02em; text-transform: uppercase; }
         .ss-divider { width: 100%; padding: 0; }
         .ss-divider-inner { display: flex; align-items: center; gap: 20px; background: #b8860b; padding: 12px 48px; border-top: 2px solid #b8860b; border-bottom: 2px solid #b8860b; }
-        .ss-divider-line { flex: 1; height: 1px; background: #5a5850; }
+        .ss-divider-line { flex: 1; height: 1px; background: #f5f2ee; }
         .ss-divider-icon { font-size: 22px; filter: sepia(1) saturate(3) brightness(1.1) hue-rotate(5deg); }
         .ss-section { padding: 64px 48px 48px; max-width: 1280px; margin: 0 auto; }
         .ss-section-head { display: flex; align-items: baseline; gap: 16px; margin-bottom: 40px; padding-bottom: 16px; border-bottom: 1px solid rgba(184,134,11,0.15); }
@@ -74,8 +74,8 @@ export function SappertonStorefront({ heroImage, activeSale, dbProducts }: {
         .ss-section-count { font-size: 11px; color: rgba(184,134,11,0.4); letter-spacing: 0.2em; text-transform: uppercase; font-family: 'Barlow', sans-serif; }
         .ss-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 36px 24px; }
         .ss-footer { background: #b8860b; border-top: 4px solid #b8860b; padding: 40px 48px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
-        .ss-footer-brand { font-family: 'Barlow Condensed', sans-serif; font-size: 20px; font-weight: 900; font-style: italic; color: #5a5850; text-transform: uppercase; letter-spacing: 0.05em; }
-        .ss-footer-copy { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: #5a5850; font-family: 'Barlow', sans-serif; }
+        .ss-footer-brand { font-family: 'Barlow Condensed', sans-serif; font-size: 20px; font-weight: 900; font-style: italic; color: #f5f2ee; text-transform: uppercase; letter-spacing: 0.05em; }
+        .ss-footer-copy { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: #f5f2ee; font-family: 'Barlow', sans-serif; }
         @media (max-width: 768px) {
           .ss-nav { padding: 0 20px; height: 88px; }
           .ss-nav-logo { height: 72px; }

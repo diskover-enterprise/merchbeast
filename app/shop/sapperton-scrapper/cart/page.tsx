@@ -51,10 +51,10 @@ export default function SappertonCartPage() {
   }
 
   return (
-    <div style={{ fontFamily: "'Barlow Condensed', 'Arial Narrow', sans-serif", background: '#5a5850', color: '#b8860b', minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
+    <div style={{ fontFamily: "'Barlow Condensed', 'Arial Narrow', sans-serif", background: '#f5f2ee', color: '#b8860b', minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,700;0,900;1,700;1,900&family=Barlow:wght@400;600&display=swap');
-        .ss-cart-nav { position: sticky; top: 0; z-index: 100; height: 88px; background: #5a5850; display: flex; align-items: center; justify-content: space-between; padding: 0 48px; border-bottom: 2px solid #b8860b; }
+        .ss-cart-nav { position: sticky; top: 0; z-index: 100; height: 88px; background: #f5f2ee; display: flex; align-items: center; justify-content: space-between; padding: 0 48px; border-bottom: 2px solid #b8860b; }
         .ss-cart-back { font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: #b8860b; text-decoration: none; font-family: 'Barlow Condensed', sans-serif; font-weight: 700; transition: opacity 0.2s; }
         .ss-cart-back:hover { opacity: 0.7; }
         .ss-cart-logo { height: 60px; object-fit: contain; filter: none; }
@@ -83,10 +83,10 @@ export default function SappertonCartPage() {
         .ss-cart-secure { font-size: 10px; color: rgba(184,134,11,0.35); text-align: center; margin-top: 14px; letter-spacing: 0.1em; font-family: 'Barlow', sans-serif; }
         .ss-cart-empty { text-align: center; padding: 80px 20px; }
         .ss-cart-empty p { font-size: 16px; color: rgba(184,134,11,0.5); margin-bottom: 32px; font-family: 'Barlow', sans-serif; }
-        .ss-cart-browse { display: inline-block; padding: 16px 40px; background: #b8860b; color: #5a5850; text-decoration: none; font-size: 13px; font-weight: 900; font-style: italic; letter-spacing: 0.2em; text-transform: uppercase; font-family: 'Barlow Condensed', sans-serif; }
+        .ss-cart-browse { display: inline-block; padding: 16px 40px; background: #b8860b; color: #f5f2ee; text-decoration: none; font-size: 13px; font-weight: 900; font-style: italic; letter-spacing: 0.2em; text-transform: uppercase; font-family: 'Barlow Condensed', sans-serif; }
         .ss-cart-footer { background: #b8860b; border-top: 4px solid #b8860b; padding: 32px 48px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; margin-top: auto; }
-        .ss-cart-footer-brand { font-size: 20px; font-weight: 900; font-style: italic; color: #5a5850; text-transform: uppercase; }
-        .ss-cart-footer-copy { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: #5a5850; font-family: 'Barlow', sans-serif; }
+        .ss-cart-footer-brand { font-size: 20px; font-weight: 900; font-style: italic; color: #f5f2ee; text-transform: uppercase; }
+        .ss-cart-footer-copy { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: #f5f2ee; font-family: 'Barlow', sans-serif; }
         @media (max-width: 768px) {
           .ss-cart-nav { padding: 0 20px; height: 72px; }
           .ss-cart-logo { height: 36px; }
