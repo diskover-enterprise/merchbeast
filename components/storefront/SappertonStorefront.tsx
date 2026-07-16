@@ -40,7 +40,10 @@ export function SappertonStorefront({ heroImage, activeSale, dbProducts }: {
         .ss-hero-img { width: 100%; height: 420px; object-fit: cover; display: block; }
         .ss-hero-placeholder { width: 100%; height: 280px; background: linear-gradient(135deg, #1a0000 0%, #0a0a0a 50%, #1a0a00 100%); display: flex; align-items: center; justify-content: center; }
         .ss-hero-placeholder-text { font-family: 'Barlow Condensed', sans-serif; font-size: 72px; font-weight: 900; font-style: italic; color: rgba(200,16,46,0.2); letter-spacing: -0.02em; text-transform: uppercase; }
-        .ss-divider { width: 100%; height: 6px; background: #c8102e; }
+        .ss-divider { width: 100%; padding: 0; }
+        .ss-divider-inner { display: flex; align-items: center; gap: 20px; background: #0a0a0a; padding: 12px 48px; border-top: 2px solid #b8952a; border-bottom: 2px solid #b8952a; }
+        .ss-divider-line { flex: 1; height: 1px; background: rgba(184,149,42,0.4); }
+        .ss-divider-icon { font-size: 20px; letter-spacing: 12px; }
         .ss-section { padding: 64px 48px 48px; max-width: 1280px; margin: 0 auto; }
         .ss-section-head { display: flex; align-items: baseline; gap: 16px; margin-bottom: 40px; padding-bottom: 16px; border-bottom: 1px solid rgba(245,245,245,0.1); }
         .ss-section-title { font-family: 'Barlow Condensed', 'Arial Narrow', sans-serif; font-size: 48px; font-weight: 900; font-style: italic; color: #f5f5f5; text-transform: uppercase; letter-spacing: -0.01em; line-height: 1; }
@@ -81,7 +84,7 @@ export function SappertonStorefront({ heroImage, activeSale, dbProducts }: {
           )}
         </div>
 
-        <div className="ss-divider" />
+        <div className="ss-divider"><div className="ss-divider-inner"><div className="ss-divider-line" /><span className="ss-divider-icon">🥊🥊</span><div className="ss-divider-line" /></div></div>
 
         {tees.length > 0 && (
           <section className="ss-section">
@@ -97,7 +100,7 @@ export function SappertonStorefront({ heroImage, activeSale, dbProducts }: {
 
         {hats.length > 0 && (
           <>
-            <div className="ss-divider" />
+            <div className="ss-divider"><div className="ss-divider-inner"><div className="ss-divider-line" /><span className="ss-divider-icon">🥊🥊</span><div className="ss-divider-line" /></div></div>
             <section className="ss-section">
               <div className="ss-section-head">
                 <h2 className="ss-section-title">Hats</h2>
