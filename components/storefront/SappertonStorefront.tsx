@@ -67,7 +67,7 @@ export function SappertonStorefront({ heroImage, activeSale, dbProducts }: {
         .ss-divider { width: 100%; padding: 0; }
         .ss-divider-inner { display: flex; align-items: center; gap: 20px; background: #0a0a0a; padding: 12px 48px; border-top: 2px solid #0a0a0a; border-bottom: 2px solid #0a0a0a; }
         .ss-divider-line { flex: 1; height: 1px; background: rgba(200,162,39,0.4); }
-        .ss-divider-icon { font-size: 20px; letter-spacing: 12px; }
+        .ss-divider-icon { font-size: 22px; filter: sepia(1) saturate(3) brightness(1.1) hue-rotate(5deg); }
         .ss-section { padding: 64px 48px 48px; max-width: 1280px; margin: 0 auto; }
         .ss-section-head { display: flex; align-items: baseline; gap: 16px; margin-bottom: 40px; padding-bottom: 16px; border-bottom: 1px solid rgba(0,0,0,0.15); }
         .ss-section-title { font-family: 'Barlow Condensed', 'Arial Narrow', sans-serif; font-size: 48px; font-weight: 900; font-style: italic; color: #0a0a0a; text-transform: uppercase; letter-spacing: -0.01em; line-height: 1; }
@@ -77,8 +77,8 @@ export function SappertonStorefront({ heroImage, activeSale, dbProducts }: {
         .ss-footer-brand { font-family: 'Barlow Condensed', sans-serif; font-size: 20px; font-weight: 900; font-style: italic; color: #b8860b; text-transform: uppercase; letter-spacing: 0.05em; }
         .ss-footer-copy { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(200,162,39,0.4); font-family: 'Barlow', sans-serif; }
         @media (max-width: 768px) {
-          .ss-nav { padding: 0 20px; height: 56px; }
-          .ss-nav-logo { height: 38px; }
+          .ss-nav { padding: 0 20px; height: 88px; }
+          .ss-nav-logo { height: 72px; }
           .ss-section { padding: 36px 20px 28px; }
           .ss-section-head { margin-bottom: 20px; }
           .ss-section-title { font-size: 36px; }
@@ -108,7 +108,7 @@ export function SappertonStorefront({ heroImage, activeSale, dbProducts }: {
           {heroImage && <div className="ss-hero-glow" />}
         </div>
 
-        <div className="ss-divider"><div className="ss-divider-inner"><div className="ss-divider-line" /><span className="ss-divider-icon">🥊🥊</span><div className="ss-divider-line" /></div></div>
+        <div className="ss-divider"><div className="ss-divider-inner"><div className="ss-divider-line" /><span className="ss-divider-icon">🥊</span><div className="ss-divider-line" /></div></div>
 
         {tees.length > 0 && (
           <section className="ss-section">
@@ -124,7 +124,7 @@ export function SappertonStorefront({ heroImage, activeSale, dbProducts }: {
 
         {hats.length > 0 && (
           <>
-            <div className="ss-divider"><div className="ss-divider-inner"><div className="ss-divider-line" /><span className="ss-divider-icon">🥊🥊</span><div className="ss-divider-line" /></div></div>
+            <div className="ss-divider"><div className="ss-divider-inner"><div className="ss-divider-line" /><span className="ss-divider-icon">🥊</span><div className="ss-divider-line" /></div></div>
             <section className="ss-section">
               <div className="ss-section-head">
                 <h2 className="ss-section-title">Hats</h2>
