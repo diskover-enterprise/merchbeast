@@ -34,22 +34,22 @@ export default function SappertonProductClient({ product, related }: { product: 
   }
 
   return (
-    <div style={{ fontFamily: "'Barlow Condensed', 'Arial Narrow', sans-serif", background: '#c8a227', color: '#0a0a0a', minHeight: '100vh' }}>
+    <div style={{ fontFamily: "'Barlow Condensed', 'Arial Narrow', sans-serif", background: '#b8860b', color: '#0a0a0a', minHeight: '100vh' }}>
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,700;0,900;1,700;1,900&family=Barlow:wght@400;600&display=swap');
-        .ss-pnav { position: sticky; top: 0; z-index: 100; height: 88px; background: #c8a227; display: flex; align-items: center; justify-content: space-between; padding: 0 48px; border-bottom: 2px solid #0a0a0a; }
+        .ss-pnav { position: sticky; top: 0; z-index: 100; height: 88px; background: #b8860b; display: flex; align-items: center; justify-content: space-between; padding: 0 48px; border-bottom: 2px solid #0a0a0a; }
         .ss-pnav-back { font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: #0a0a0a; text-decoration: none; font-family: 'Barlow Condensed', sans-serif; font-weight: 700; transition: opacity 0.2s; }
         .ss-pnav-back:hover { opacity: 0.7; }
         .ss-pnav-logo { height: 60px; object-fit: contain; filter: none; }
         .ss-pnav-cart { font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; text-decoration: none; padding: 9px 20px; border: 2px solid #0a0a0a; color: #0a0a0a; font-family: 'Barlow Condensed', sans-serif; font-weight: 700; transition: background 0.15s, color 0.15s; }
-        .ss-pnav-cart:hover { background: #0a0a0a; color: #c8a227; }
+        .ss-pnav-cart:hover { background: #0a0a0a; color: #b8860b; }
         .ss-pwrap { max-width: 1200px; margin: 0 auto; padding: 60px 48px; }
         .ss-playout { display: grid; grid-template-columns: 1fr 1fr; gap: 72px; align-items: start; }
         .ss-related { margin-top: 80px; padding-top: 40px; border-top: 2px solid #0a0a0a; }
         .ss-related-title { font-size: 32px; font-weight: 900; font-style: italic; text-transform: uppercase; color: #0a0a0a; margin-bottom: 32px; letter-spacing: -0.01em; }
         .ss-related-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px 20px; }
         .ss-footer { background: #050505; border-top: 4px solid #0a0a0a; padding: 40px 48px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; margin-top: 80px; }
-        .ss-footer-brand { font-size: 20px; font-weight: 900; font-style: italic; color: #c8a227; text-transform: uppercase; }
+        .ss-footer-brand { font-size: 20px; font-weight: 900; font-style: italic; color: #b8860b; text-transform: uppercase; }
         .ss-footer-copy { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(200,162,39,0.4); font-family: 'Barlow', sans-serif; }
         @media (max-width: 768px) {
           .ss-pnav { padding: 0 20px; height: 72px; }
@@ -124,7 +124,7 @@ export default function SappertonProductClient({ product, related }: { product: 
               </div>
             )}
 
-            <button onClick={handleAddToCart} style={{ width: '100%', padding: '18px 32px', fontSize: 14, letterSpacing: '0.25em', textTransform: 'uppercase', fontFamily: "'Barlow Condensed', sans-serif", fontWeight: 900, background: added ? '#333' : '#0a0a0a', color: '#c8a227', border: 'none', cursor: 'pointer', marginBottom: 12, transition: 'background 0.2s' }}>
+            <button onClick={handleAddToCart} style={{ width: '100%', padding: '18px 32px', fontSize: 14, letterSpacing: '0.25em', textTransform: 'uppercase', fontFamily: "'Barlow Condensed', sans-serif", fontWeight: 900, background: added ? '#333' : '#0a0a0a', color: '#b8860b', border: 'none', cursor: 'pointer', marginBottom: 12, transition: 'background 0.2s' }}>
               {added ? '✓ Added to Cart' : 'Add to Cart'}
             </button>
 
