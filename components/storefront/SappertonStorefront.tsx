@@ -28,14 +28,14 @@ export function SappertonStorefront({ heroImage, activeSale, dbProducts }: {
   const hats = products.filter(p => p.category === 'Hat')
 
   return (
-    <div style={{ fontFamily: "'Arial Black', 'Impact', sans-serif", background: '#0a0a0a', color: '#f5f5f5', minHeight: '100vh' }}>
+    <div style={{ fontFamily: "'Arial Black', 'Impact', sans-serif", background: '#c8a227', color: '#0a0a0a', minHeight: '100vh' }}>
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,700;0,900;1,700;1,900&family=Barlow:wght@400;600&display=swap');
         .ss-wrap { font-family: 'Barlow Condensed', 'Arial Narrow', sans-serif; }
-        .ss-nav { position: sticky; top: 0; z-index: 100; height: 148px; background: #0a0a0a; display: flex; align-items: center; justify-content: space-between; padding: 0 48px; border-bottom: 2px solid #b8952a; }
-        .ss-nav-logo { height: 128px; object-fit: contain; filter: invert(1); }
-        .ss-nav-cart { font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: #f5f5f5; text-decoration: none; padding: 10px 22px; border: 2px solid #b8952a; font-family: 'Barlow Condensed', sans-serif; font-weight: 700; transition: background 0.15s, color 0.15s; }
-        .ss-nav-cart:hover { background: #c8102e; color: #fff; }
+        .ss-nav { position: sticky; top: 0; z-index: 100; height: 148px; background: #c8a227; display: flex; align-items: center; justify-content: space-between; padding: 0 48px; border-bottom: 2px solid #0a0a0a; }
+        .ss-nav-logo { height: 128px; object-fit: contain; }
+        .ss-nav-cart { font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: #0a0a0a; text-decoration: none; padding: 10px 22px; border: 2px solid #0a0a0a; font-family: 'Barlow Condensed', sans-serif; font-weight: 700; transition: background 0.15s, color 0.15s; }
+        .ss-nav-cart:hover { background: #0a0a0a; color: #c8a227; }
         .ss-hero { width: 100%; background: #111; position: relative; overflow: hidden; }
         .ss-hero-img { width: 100%; aspect-ratio: 16/9; object-fit: cover; display: block; }
         .ss-hero-glow { position: absolute; inset: 0; pointer-events: none; mix-blend-mode: screen; }
@@ -62,21 +62,20 @@ export function SappertonStorefront({ heroImage, activeSale, dbProducts }: {
           65% { opacity: 0.7; }
           70% { opacity: 1; }
         }
-        .ss-hero-placeholder { width: 100%; height: 280px; background: linear-gradient(135deg, #1a0000 0%, #0a0a0a 50%, #1a0a00 100%); display: flex; align-items: center; justify-content: center; }
-        .ss-hero-placeholder-text { font-family: 'Barlow Condensed', sans-serif; font-size: 72px; font-weight: 900; font-style: italic; color: rgba(200,16,46,0.2); letter-spacing: -0.02em; text-transform: uppercase; }
+        .ss-hero-placeholder { width: 100%; height: 280px; background: #0a0a0a; display: flex; align-items: center; justify-content: center; }
+        .ss-hero-placeholder-text { font-family: 'Barlow Condensed', sans-serif; font-size: 72px; font-weight: 900; font-style: italic; color: rgba(200,160,39,0.2); letter-spacing: -0.02em; text-transform: uppercase; }
         .ss-divider { width: 100%; padding: 0; }
-        .ss-divider-inner { display: flex; align-items: center; gap: 20px; background: #0a0a0a; padding: 12px 48px; border-top: 2px solid #b8952a; border-bottom: 2px solid #b8952a; }
-        .ss-divider-line { flex: 1; height: 1px; background: rgba(184,149,42,0.4); }
+        .ss-divider-inner { display: flex; align-items: center; gap: 20px; background: #0a0a0a; padding: 12px 48px; border-top: 2px solid #0a0a0a; border-bottom: 2px solid #0a0a0a; }
+        .ss-divider-line { flex: 1; height: 1px; background: rgba(200,162,39,0.4); }
         .ss-divider-icon { font-size: 20px; letter-spacing: 12px; }
         .ss-section { padding: 64px 48px 48px; max-width: 1280px; margin: 0 auto; }
-        .ss-section-head { display: flex; align-items: baseline; gap: 16px; margin-bottom: 40px; padding-bottom: 16px; border-bottom: 1px solid rgba(245,245,245,0.1); }
-        .ss-section-title { font-family: 'Barlow Condensed', 'Arial Narrow', sans-serif; font-size: 48px; font-weight: 900; font-style: italic; color: #f5f5f5; text-transform: uppercase; letter-spacing: -0.01em; line-height: 1; }
-        .ss-section-title span { color: #c8102e; }
-        .ss-section-count { font-size: 11px; color: rgba(245,245,245,0.3); letter-spacing: 0.2em; text-transform: uppercase; font-family: 'Barlow', sans-serif; }
+        .ss-section-head { display: flex; align-items: baseline; gap: 16px; margin-bottom: 40px; padding-bottom: 16px; border-bottom: 1px solid rgba(0,0,0,0.15); }
+        .ss-section-title { font-family: 'Barlow Condensed', 'Arial Narrow', sans-serif; font-size: 48px; font-weight: 900; font-style: italic; color: #0a0a0a; text-transform: uppercase; letter-spacing: -0.01em; line-height: 1; }
+        .ss-section-count { font-size: 11px; color: rgba(0,0,0,0.4); letter-spacing: 0.2em; text-transform: uppercase; font-family: 'Barlow', sans-serif; }
         .ss-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 36px 24px; }
-        .ss-footer { background: #050505; border-top: 4px solid #b8952a; padding: 40px 48px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
-        .ss-footer-brand { font-family: 'Barlow Condensed', sans-serif; font-size: 20px; font-weight: 900; font-style: italic; color: #c8102e; text-transform: uppercase; letter-spacing: 0.05em; }
-        .ss-footer-copy { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(245,245,245,0.2); font-family: 'Barlow', sans-serif; }
+        .ss-footer { background: #0a0a0a; border-top: 4px solid #0a0a0a; padding: 40px 48px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+        .ss-footer-brand { font-family: 'Barlow Condensed', sans-serif; font-size: 20px; font-weight: 900; font-style: italic; color: #c8a227; text-transform: uppercase; letter-spacing: 0.05em; }
+        .ss-footer-copy { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(200,162,39,0.4); font-family: 'Barlow', sans-serif; }
         @media (max-width: 768px) {
           .ss-nav { padding: 0 20px; height: 56px; }
           .ss-nav-logo { height: 38px; }
@@ -167,16 +166,16 @@ function ProductCard({ product, activeSale }: { product: SappertonProduct; activ
         />
       </div>
       <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', gap: 8 }}>
-        <h3 style={{ fontFamily: "'Barlow Condensed', 'Arial Narrow', sans-serif", fontSize: 18, fontWeight: 700, fontStyle: 'italic', textTransform: 'uppercase', lineHeight: 1.2, color: '#f5f5f5', margin: 0, letterSpacing: '0.02em' }}>
+        <h3 style={{ fontFamily: "'Barlow Condensed', 'Arial Narrow', sans-serif", fontSize: 18, fontWeight: 700, fontStyle: 'italic', textTransform: 'uppercase', lineHeight: 1.2, color: '#0a0a0a', margin: 0, letterSpacing: '0.02em' }}>
           {product.name}
         </h3>
         <div style={{ display: 'flex', gap: 6, flexShrink: 0, alignItems: 'baseline' }}>
-          {salePrice && <span style={{ fontSize: 15, color: '#c8102e', fontWeight: 700 }}>${salePrice}</span>}
-          <span style={{ fontSize: 15, color: salePrice ? 'rgba(245,245,245,0.3)' : '#f5f5f5', fontWeight: 600, textDecoration: salePrice ? 'line-through' : 'none' }}>${product.price}</span>
+          {salePrice && <span style={{ fontSize: 15, color: '#0a0a0a', fontWeight: 700 }}>${salePrice}</span>}
+          <span style={{ fontSize: 15, color: salePrice ? 'rgba(0,0,0,0.3)' : '#0a0a0a', fontWeight: 600, textDecoration: salePrice ? 'line-through' : 'none' }}>${product.price}</span>
         </div>
       </div>
       {product.colors && (
-        <p style={{ fontFamily: "'Barlow', sans-serif", fontSize: 11, color: 'rgba(245,245,245,0.3)', letterSpacing: '0.05em', marginTop: 4 }}>
+        <p style={{ fontFamily: "'Barlow', sans-serif", fontSize: 11, color: 'rgba(0,0,0,0.4)', letterSpacing: '0.05em', marginTop: 4 }}>
           {product.colors.join(' · ')}
         </p>
       )}
