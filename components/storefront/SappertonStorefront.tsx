@@ -32,9 +32,9 @@ export function SappertonStorefront({ heroImage, activeSale, dbProducts }: {
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,700;0,900;1,700;1,900&family=Barlow:wght@400;600&display=swap');
         .ss-wrap { font-family: 'Barlow Condensed', 'Arial Narrow', sans-serif; }
-        .ss-nav { position: sticky; top: 0; z-index: 100; height: 148px; background: #0a0a0a; display: flex; align-items: center; justify-content: space-between; padding: 0 48px; border-bottom: 2px solid #c8102e; }
+        .ss-nav { position: sticky; top: 0; z-index: 100; height: 148px; background: #0a0a0a; display: flex; align-items: center; justify-content: space-between; padding: 0 48px; border-bottom: 2px solid #b8952a; }
         .ss-nav-logo { height: 128px; object-fit: contain; filter: invert(1); }
-        .ss-nav-cart { font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: #f5f5f5; text-decoration: none; padding: 10px 22px; border: 2px solid #c8102e; font-family: 'Barlow Condensed', sans-serif; font-weight: 700; transition: background 0.15s, color 0.15s; }
+        .ss-nav-cart { font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: #f5f5f5; text-decoration: none; padding: 10px 22px; border: 2px solid #b8952a; font-family: 'Barlow Condensed', sans-serif; font-weight: 700; transition: background 0.15s, color 0.15s; }
         .ss-nav-cart:hover { background: #c8102e; color: #fff; }
         .ss-hero { width: 100%; background: #111; position: relative; overflow: hidden; }
         .ss-hero-img { width: 100%; aspect-ratio: 16/9; object-fit: cover; display: block; }
@@ -50,7 +50,7 @@ export function SappertonStorefront({ heroImage, activeSale, dbProducts }: {
         .ss-section-title span { color: #c8102e; }
         .ss-section-count { font-size: 11px; color: rgba(245,245,245,0.3); letter-spacing: 0.2em; text-transform: uppercase; font-family: 'Barlow', sans-serif; }
         .ss-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 36px 24px; }
-        .ss-footer { background: #050505; border-top: 4px solid #c8102e; padding: 40px 48px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+        .ss-footer { background: #050505; border-top: 4px solid #b8952a; padding: 40px 48px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
         .ss-footer-brand { font-family: 'Barlow Condensed', sans-serif; font-size: 20px; font-weight: 900; font-style: italic; color: #c8102e; text-transform: uppercase; letter-spacing: 0.05em; }
         .ss-footer-copy { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(245,245,245,0.2); font-family: 'Barlow', sans-serif; }
         @media (max-width: 768px) {

@@ -54,7 +54,7 @@ export default function SappertonCartPage() {
     <div style={{ fontFamily: "'Barlow Condensed', 'Arial Narrow', sans-serif", background: '#0a0a0a', color: '#f5f5f5', minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,700;0,900;1,700;1,900&family=Barlow:wght@400;600&display=swap');
-        .ss-cart-nav { position: sticky; top: 0; z-index: 100; height: 88px; background: #0a0a0a; display: flex; align-items: center; justify-content: space-between; padding: 0 48px; border-bottom: 2px solid #c8102e; }
+        .ss-cart-nav { position: sticky; top: 0; z-index: 100; height: 88px; background: #0a0a0a; display: flex; align-items: center; justify-content: space-between; padding: 0 48px; border-bottom: 2px solid #b8952a; }
         .ss-cart-back { font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: #c8102e; text-decoration: none; font-family: 'Barlow Condensed', sans-serif; font-weight: 700; transition: opacity 0.2s; }
         .ss-cart-back:hover { opacity: 0.7; }
         .ss-cart-logo { height: 60px; object-fit: contain; filter: invert(1); }
@@ -84,7 +84,7 @@ export default function SappertonCartPage() {
         .ss-cart-empty { text-align: center; padding: 80px 20px; }
         .ss-cart-empty p { font-size: 16px; color: rgba(245,245,245,0.4); margin-bottom: 32px; font-family: 'Barlow', sans-serif; }
         .ss-cart-browse { display: inline-block; padding: 16px 40px; background: #c8102e; color: #fff; text-decoration: none; font-size: 13px; font-weight: 900; font-style: italic; letter-spacing: 0.2em; text-transform: uppercase; font-family: 'Barlow Condensed', sans-serif; }
-        .ss-cart-footer { background: #050505; border-top: 4px solid #c8102e; padding: 32px 48px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; margin-top: auto; }
+        .ss-cart-footer { background: #050505; border-top: 4px solid #b8952a; padding: 32px 48px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; margin-top: auto; }
         .ss-cart-footer-brand { font-size: 20px; font-weight: 900; font-style: italic; color: #c8102e; text-transform: uppercase; }
         .ss-cart-footer-copy { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(245,245,245,0.2); font-family: 'Barlow', sans-serif; }
         @media (max-width: 768px) {
