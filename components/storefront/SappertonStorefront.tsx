@@ -38,6 +38,30 @@ export function SappertonStorefront({ heroImage, activeSale, dbProducts }: {
         .ss-nav-cart:hover { background: #c8102e; color: #fff; }
         .ss-hero { width: 100%; background: #111; position: relative; overflow: hidden; }
         .ss-hero-img { width: 100%; aspect-ratio: 16/9; object-fit: cover; display: block; }
+        .ss-hero-glow { position: absolute; inset: 0; pointer-events: none; mix-blend-mode: screen; }
+        .ss-hero-glow::before {
+          content: '';
+          position: absolute;
+          top: 5%; left: 15%;
+          width: 70%; height: 80%;
+          background: radial-gradient(ellipse at 50% 45%, rgba(255,185,30,0.5) 0%, rgba(255,130,0,0.22) 40%, transparent 70%);
+          animation: neonPulse 3s ease-in-out infinite;
+        }
+        .ss-hero-glow::after {
+          content: '';
+          position: absolute;
+          top: 5%; left: 15%;
+          width: 70%; height: 80%;
+          background: radial-gradient(ellipse at 50% 45%, rgba(255,220,80,0.35) 0%, transparent 55%);
+          animation: neonPulse 3s ease-in-out infinite 0.5s;
+        }
+        @keyframes neonPulse {
+          0%, 100% { opacity: 1; }
+          30% { opacity: 0.55; }
+          35% { opacity: 1; }
+          65% { opacity: 0.7; }
+          70% { opacity: 1; }
+        }
         .ss-hero-placeholder { width: 100%; height: 280px; background: linear-gradient(135deg, #1a0000 0%, #0a0a0a 50%, #1a0a00 100%); display: flex; align-items: center; justify-content: center; }
         .ss-hero-placeholder-text { font-family: 'Barlow Condensed', sans-serif; font-size: 72px; font-weight: 900; font-style: italic; color: rgba(200,16,46,0.2); letter-spacing: -0.02em; text-transform: uppercase; }
         .ss-divider { width: 100%; padding: 0; }
@@ -82,6 +106,7 @@ export function SappertonStorefront({ heroImage, activeSale, dbProducts }: {
               <span className="ss-hero-placeholder-text">Fight Night</span>
             </div>
           )}
+          {heroImage && <div className="ss-hero-glow" />}
         </div>
 
         <div className="ss-divider"><div className="ss-divider-inner"><div className="ss-divider-line" /><span className="ss-divider-icon">🥊🥊</span><div className="ss-divider-line" /></div></div>
