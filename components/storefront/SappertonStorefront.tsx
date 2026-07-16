@@ -42,17 +42,17 @@ export function SappertonStorefront({ heroImage, activeSale, dbProducts }: {
         .ss-hero-glow::before {
           content: '';
           position: absolute;
-          top: 5%; left: 15%;
-          width: 70%; height: 80%;
-          background: radial-gradient(ellipse at 50% 45%, rgba(255,185,30,0.5) 0%, rgba(255,130,0,0.22) 40%, transparent 70%);
+          top: 1%; left: 54%;
+          width: 33%; height: 33%;
+          background: radial-gradient(ellipse at 50% 40%, rgba(255,185,30,0.6) 0%, rgba(255,130,0,0.25) 45%, transparent 72%);
           animation: neonPulse 3s ease-in-out infinite;
         }
         .ss-hero-glow::after {
           content: '';
           position: absolute;
-          top: 5%; left: 15%;
-          width: 70%; height: 80%;
-          background: radial-gradient(ellipse at 50% 45%, rgba(255,220,80,0.35) 0%, transparent 55%);
+          top: 1%; left: 54%;
+          width: 33%; height: 33%;
+          background: radial-gradient(ellipse at 50% 40%, rgba(255,220,80,0.4) 0%, transparent 58%);
           animation: neonPulse 3s ease-in-out infinite 0.5s;
         }
         @keyframes neonPulse {
