@@ -37,7 +37,7 @@ export function SappertonStorefront({ heroImage, activeSale, dbProducts }: {
         .ss-nav-cart { font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: #f5f5f5; text-decoration: none; padding: 10px 22px; border: 2px solid #c8102e; font-family: 'Barlow Condensed', sans-serif; font-weight: 700; transition: background 0.15s, color 0.15s; }
         .ss-nav-cart:hover { background: #c8102e; color: #fff; }
         .ss-hero { width: 100%; background: #111; position: relative; overflow: hidden; }
-        .ss-hero-img { width: 100%; height: 420px; object-fit: cover; display: block; }
+        .ss-hero-img { width: 100%; aspect-ratio: 16/9; object-fit: cover; display: block; }
         .ss-hero-placeholder { width: 100%; height: 280px; background: linear-gradient(135deg, #1a0000 0%, #0a0a0a 50%, #1a0a00 100%); display: flex; align-items: center; justify-content: center; }
         .ss-hero-placeholder-text { font-family: 'Barlow Condensed', sans-serif; font-size: 72px; font-weight: 900; font-style: italic; color: rgba(200,16,46,0.2); letter-spacing: -0.02em; text-transform: uppercase; }
         .ss-divider { width: 100%; padding: 0; }
