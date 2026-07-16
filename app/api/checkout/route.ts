@@ -75,6 +75,7 @@ export async function POST(request: Request) {
     : refererPath.includes('/shop/nomo-nomo') ? 'nomo-nomo'
     : refererPath.includes('/shop/the-1982') ? 'the-1982'
     : refererPath.includes('/shop/bar-bravo') ? 'bar-bravo'
+    : refererPath.includes('/shop/sapperton-scrapper') ? 'sapperton-scrapper'
     : 'lunch-lady'
   )
 
