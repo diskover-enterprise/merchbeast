@@ -32,8 +32,8 @@ export function SappertonStorefront({ heroImage, activeSale, dbProducts }: {
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,700;0,900;1,700;1,900&family=Barlow:wght@400;600&display=swap');
         .ss-wrap { font-family: 'Barlow Condensed', 'Arial Narrow', sans-serif; }
-        .ss-nav { position: sticky; top: 0; z-index: 100; height: 64px; background: #0a0a0a; display: flex; align-items: center; justify-content: space-between; padding: 0 48px; border-bottom: 2px solid #c8102e; }
-        .ss-nav-logo { height: 48px; object-fit: contain; filter: brightness(0) invert(1); }
+        .ss-nav { position: sticky; top: 0; z-index: 100; height: 88px; background: #0a0a0a; display: flex; align-items: center; justify-content: space-between; padding: 0 48px; border-bottom: 2px solid #c8102e; }
+        .ss-nav-logo { height: 64px; object-fit: contain; filter: invert(1); }
         .ss-nav-cart { font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: #f5f5f5; text-decoration: none; padding: 10px 22px; border: 2px solid #c8102e; font-family: 'Barlow Condensed', sans-serif; font-weight: 700; transition: background 0.15s, color 0.15s; }
         .ss-nav-cart:hover { background: #c8102e; color: #fff; }
         .ss-hero { width: 100%; background: #111; position: relative; overflow: hidden; }

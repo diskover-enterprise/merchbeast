@@ -37,10 +37,10 @@ export default function SappertonProductClient({ product, related }: { product: 
     <div style={{ fontFamily: "'Barlow Condensed', 'Arial Narrow', sans-serif", background: '#0a0a0a', color: '#f5f5f5', minHeight: '100vh' }}>
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,700;0,900;1,700;1,900&family=Barlow:wght@400;600&display=swap');
-        .ss-pnav { position: sticky; top: 0; z-index: 100; height: 64px; background: #0a0a0a; display: flex; align-items: center; justify-content: space-between; padding: 0 48px; border-bottom: 2px solid #c8102e; }
+        .ss-pnav { position: sticky; top: 0; z-index: 100; height: 88px; background: #0a0a0a; display: flex; align-items: center; justify-content: space-between; padding: 0 48px; border-bottom: 2px solid #c8102e; }
         .ss-pnav-back { font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: #c8102e; text-decoration: none; font-family: 'Barlow Condensed', sans-serif; font-weight: 700; transition: opacity 0.2s; }
         .ss-pnav-back:hover { opacity: 0.7; }
-        .ss-pnav-logo { height: 44px; object-fit: contain; filter: brightness(0) invert(1); }
+        .ss-pnav-logo { height: 60px; object-fit: contain; filter: invert(1); }
         .ss-pnav-cart { font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; text-decoration: none; padding: 9px 20px; border: 2px solid #c8102e; color: #f5f5f5; font-family: 'Barlow Condensed', sans-serif; font-weight: 700; transition: background 0.15s, color 0.15s; }
         .ss-pnav-cart:hover { background: #c8102e; color: #fff; }
         .ss-pwrap { max-width: 1200px; margin: 0 auto; padding: 60px 48px; }

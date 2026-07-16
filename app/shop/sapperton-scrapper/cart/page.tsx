@@ -54,10 +54,10 @@ export default function SappertonCartPage() {
     <div style={{ fontFamily: "'Barlow Condensed', 'Arial Narrow', sans-serif", background: '#0a0a0a', color: '#f5f5f5', minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,700;0,900;1,700;1,900&family=Barlow:wght@400;600&display=swap');
-        .ss-cart-nav { position: sticky; top: 0; z-index: 100; height: 64px; background: #0a0a0a; display: flex; align-items: center; justify-content: space-between; padding: 0 48px; border-bottom: 2px solid #c8102e; }
+        .ss-cart-nav { position: sticky; top: 0; z-index: 100; height: 88px; background: #0a0a0a; display: flex; align-items: center; justify-content: space-between; padding: 0 48px; border-bottom: 2px solid #c8102e; }
         .ss-cart-back { font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: #c8102e; text-decoration: none; font-family: 'Barlow Condensed', sans-serif; font-weight: 700; transition: opacity 0.2s; }
         .ss-cart-back:hover { opacity: 0.7; }
-        .ss-cart-logo { height: 44px; object-fit: contain; filter: brightness(0) invert(1); }
+        .ss-cart-logo { height: 60px; object-fit: contain; filter: invert(1); }
         .ss-cart-body { flex: 1; max-width: 960px; margin: 0 auto; padding: 60px 48px; width: 100%; box-sizing: border-box; }
         .ss-cart-heading { font-size: 56px; font-weight: 900; font-style: italic; text-transform: uppercase; letter-spacing: -0.02em; color: #f5f5f5; margin-bottom: 40px; }
         .ss-cart-layout { display: grid; grid-template-columns: 1fr 320px; gap: 48px; align-items: start; }
