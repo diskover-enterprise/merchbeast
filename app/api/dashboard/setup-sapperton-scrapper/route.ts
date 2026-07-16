@@ -9,15 +9,15 @@ export async function POST() {
         name: 'Sapperton Scrapper',
         slug: 'sapperton-scrapper',
         description: 'Boxing gym merch. Built for fighters, worn by everyone.',
-        ownerEmail: 'hello@sappertonscrapper.com',
+        ownerEmail: 'sapperton@gmail.com',
         ownerPasswordHash: '',
-        bannerImage: '/sapperton-hero.jpg',
+        bannerImage: '/sapperton-hero-placeholder.jpg',
       },
     })
   } else {
     shop = await prisma.shop.update({
       where: { slug: 'sapperton-scrapper' },
-      data: { bannerImage: '/sapperton-hero.jpg' },
+      data: { bannerImage: '/sapperton-hero-placeholder.jpg' },
     })
   }
 
