@@ -46,7 +46,7 @@ export default function ClientOrders() {
     } catch {
       setOrders(prev => prev.map(o => o.id === orderId ? { ...o, _fetchingAddress: false } : o))
     }
-  }, [])
+  }
 
   async function signOut() {
     await fetch('/api/client/auth', { method: 'DELETE' })
