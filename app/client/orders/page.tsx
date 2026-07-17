@@ -13,6 +13,8 @@ type Order = {
   status: string
   createdAt: string
   shippingAddress?: string
+  _fetchingAddress?: boolean
+  _addressError?: string
 }
 
 export default function ClientOrders() {
@@ -29,6 +31,21 @@ export default function ClientOrders() {
       .then(r => { if (!r.ok) { window.location.href = '/client/login'; return null } return r.json() })
       .then(d => d && setOrders(d))
       .finally(() => setLoading(false))
+  }, [])
+
+  async function fetchAddress(orderId: string) {
+    setOrders(prev => prev.map(o => o.id === orderId ? { ...o, _fetchingAddress: true, _addressError: undefined } : o))
+    try {
+      const res = await fetch(`/api/client/orders/${orderId}/fetch-address`, { method: 'POST' })
+      const data = await res.json()
+      if (res.ok) {
+        setOrders(prev => prev.map(o => o.id === orderId ? { ...o, shippingAddress: data.shippingAddress, _fetchingAddress: false } : o))
+      } else {
+        setOrders(prev => prev.map(o => o.id === orderId ? { ...o, _fetchingAddress: false, _addressError: data.error } : o))
+      }
+    } catch {
+      setOrders(prev => prev.map(o => o.id === orderId ? { ...o, _fetchingAddress: false } : o))
+    }
   }, [])
 
   async function signOut() {
@@ -101,7 +118,20 @@ export default function ClientOrders() {
                         <div style={{ fontSize: 11, color: 'var(--ink-mute)' }}>{o.customer.email}</div>
                       </td>
                       <td style={{ fontSize: 12 }}>{o.items.map(i => `${i.name} ×${i.quantity}`).join(', ')}</td>
-                      <td style={{ fontSize: 12, color: o.shippingAddress ? 'inherit' : 'var(--ink-mute)' }}>{o.shippingAddress ?? '—'}</td>
+                      <td style={{ fontSize: 12 }}>
+                        {o.shippingAddress
+                          ? o.shippingAddress
+                          : o._addressError
+                            ? <span style={{ color: '#ff5050', fontSize: 11 }}>{o._addressError}</span>
+                            : <button
+                                onClick={() => fetchAddress(o.id)}
+                                disabled={o._fetchingAddress}
+                                style={{ fontSize: 10, padding: '3px 8px', border: '1px solid var(--ink-mute)', background: 'transparent', color: 'var(--ink-mute)', cursor: 'pointer', borderRadius: 2 }}
+                              >
+                                {o._fetchingAddress ? '…' : 'Fetch address'}
+                              </button>
+                        }
+                      </td>
                       <td style={{ fontWeight: 600 }}>${o.total.toFixed(2)}</td>
                       <td><span className={`cl-badge ${o.status}`}>{o.status}</span></td>
                       <td style={{ color: 'var(--ink-mute)', fontSize: 12 }}>{new Date(o.createdAt).toLocaleDateString()}</td>
