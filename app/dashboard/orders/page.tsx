@@ -36,6 +36,20 @@ export default function OrdersPage() {
     }
   }
 
+  async function resendNotification(orderId: string) {
+    setOrders(prev => prev.map(o => o.id === orderId ? { ...o, _resending: true, _resendResult: null } : o))
+    try {
+      const res = await fetch(`/api/orders/${orderId}/resend-notification`, { method: 'POST' })
+      const data = await res.json()
+      setOrders(prev => prev.map(o => o.id === orderId
+        ? { ...o, _resending: false, _resendResult: res.ok ? 'sent' : (data.errors?.[0] ?? 'error') }
+        : o
+      ))
+    } catch {
+      setOrders(prev => prev.map(o => o.id === orderId ? { ...o, _resending: false, _resendResult: 'error' } : o))
+    }
+  }
+
   async function toggleFulfilled(orderId: string, currentStatus: string) {
     if (currentStatus === 'fulfilled') {
       // Revert to paid/unfulfilled
@@ -121,6 +135,7 @@ export default function OrdersPage() {
                     <th>Status</th>
                     <th>Tracking</th>
                     <th>Fulfillment</th>
+                    <th>Notify</th>
                     <th>Date</th>
                   </tr>
                 </thead>
@@ -174,6 +189,21 @@ export default function OrdersPage() {
                         >
                           {order._fulfilling ? '…' : order.status === 'fulfilled' ? 'Unfulfill' : 'Fulfil'}
                         </button>
+                      </td>
+                      <td>
+                        <button
+                          className="db-fulfill-btn mark"
+                          style={{ fontSize: 9 }}
+                          onClick={() => resendNotification(order.id)}
+                          disabled={order._resending}
+                        >
+                          {order._resending ? '…' : '✉ Resend'}
+                        </button>
+                        {order._resendResult && (
+                          <p style={{ fontSize: 9, marginTop: 3, color: order._resendResult === 'sent' ? '#4ade80' : '#ff5050' }}>
+                            {order._resendResult === 'sent' ? 'Sent ✓' : order._resendResult}
+                          </p>
+                        )}
                       </td>
                       <td>{new Date(order.createdAt).toLocaleDateString()}</td>
                     </tr>
