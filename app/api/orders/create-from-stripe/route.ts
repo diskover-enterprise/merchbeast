@@ -65,55 +65,32 @@ export async function POST(req: Request) {
   })
 
   const emailItems = cartItems.map(i => ({ name: i.name, quantity: i.quantity, priceAtPurchase: i.price }))
+  const from = `Merch Beast <orders@${process.env.RESEND_FROM_DOMAIN ?? 'resend.dev'}>`
 
-  // Customer confirmation email
-  if (email && email !== 'unknown@unknown.com') {
-    const { subject, html } = buildOrderConfirmationEmail({
-      customerName: name,
-      restaurantName: shop.name,
-      items: emailItems,
-      total: session.amount_total ?? 0,
-      orderId: order.id,
-    })
-    resend.emails.send({
-      from: `Merch Beast <orders@${process.env.RESEND_FROM_DOMAIN ?? 'resend.dev'}>`,
-      to: email,
-      subject,
-      html,
-    }).catch(console.error)
+  const notifPayload = {
+    restaurantName: shop.name,
+    customerName: name,
+    customerEmail: email,
+    items: emailItems,
+    total: session.amount_total ?? 0,
+    orderId: order.id,
   }
+  const { subject: notifSubject, html: notifHtml } = buildNewOrderEmail(notifPayload)
 
-  // Team notification email
-  const { subject: teamSubject, html: teamHtml } = buildNewOrderEmail({
-    restaurantName: shop.name,
-    customerName: name,
-    customerEmail: email,
-    items: emailItems,
-    total: session.amount_total ?? 0,
-    orderId: order.id,
-  })
-  resend.emails.send({
-    from: `Merch Beast <orders@${process.env.RESEND_FROM_DOMAIN ?? 'resend.dev'}>`,
-    to: 'team@merchbeast.shop',
-    subject: teamSubject,
-    html: teamHtml,
-  }).catch(console.error)
-
-  // Shop owner notification email
-  const { subject: ownerSubject, html: ownerHtml } = buildNewOrderEmail({
-    restaurantName: shop.name,
-    customerName: name,
-    customerEmail: email,
-    items: emailItems,
-    total: session.amount_total ?? 0,
-    orderId: order.id,
-  })
-  resend.emails.send({
-    from: `Merch Beast <orders@${process.env.RESEND_FROM_DOMAIN ?? 'resend.dev'}>`,
-    to: shop.ownerEmail,
-    subject: ownerSubject,
-    html: ownerHtml,
-  }).catch(console.error)
+  await Promise.allSettled([
+    // Customer confirmation
+    email && email !== 'unknown@unknown.com'
+      ? resend.emails.send({
+          from,
+          to: email,
+          ...buildOrderConfirmationEmail({ customerName: name, restaurantName: shop.name, items: emailItems, total: session.amount_total ?? 0, orderId: order.id }),
+        })
+      : Promise.resolve(),
+    // Team notification
+    resend.emails.send({ from, to: 'team@merchbeast.shop', subject: notifSubject, html: notifHtml }),
+    // Shop owner notification
+    resend.emails.send({ from, to: shop.ownerEmail, subject: notifSubject, html: notifHtml }),
+  ])
 
   return Response.json({ ok: true, orderId: order.id })
 }
