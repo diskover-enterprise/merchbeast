@@ -87,8 +87,14 @@ export function LunchLadyStorefront({ dbProducts, activeSale }: { dbProducts?: D
 
       {/* HERO */}
       <section className="ll-hero-pad">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src="/lunch-lady-hero.jpg" alt="Lunch Lady Collection" style={{ width: '100%', height: 'auto', display: 'block' }} />
+        <video
+          src="/lunch-lady-hero.mp4"
+          autoPlay
+          muted
+          loop
+          playsInline
+          style={{ width: '100%', height: 'auto', display: 'block' }}
+        />
         <div className="ll-hero-text">
           <p className="ll-hero-tagline">Born in Saigon. Worn Everywhere.</p>
           <p className="ll-hero-est">Est. 1995 •</p>
