@@ -88,6 +88,7 @@ export function LunchLadyStorefront({ dbProducts, activeSale }: { dbProducts?: D
       {/* HERO */}
       <section className="ll-hero-pad">
         <video
+          ref={(el) => { if (el) { el.muted = true; el.play().catch(() => {}) } }}
           autoPlay
           muted
           loop
