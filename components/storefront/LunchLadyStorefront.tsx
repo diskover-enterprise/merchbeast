@@ -88,13 +88,16 @@ export function LunchLadyStorefront({ dbProducts, activeSale }: { dbProducts?: D
       {/* HERO */}
       <section className="ll-hero-pad">
         <video
-          src="/lunch-lady-hero.mp4"
           autoPlay
           muted
           loop
           playsInline
+          preload="auto"
+          poster="/lunch-lady-hero.jpg"
           style={{ width: '100%', height: 'auto', display: 'block' }}
-        />
+        >
+          <source src="/lunch-lady-hero.mp4" type="video/mp4" />
+        </video>
         <div className="ll-hero-text">
           <p className="ll-hero-tagline">Born in Saigon. Worn Everywhere.</p>
           <p className="ll-hero-est">Est. 1995 •</p>
