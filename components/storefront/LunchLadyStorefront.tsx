@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { products as staticProducts, type Product } from '@/app/products/products-data'
 import { useCart } from '@/app/cart-context'
 import type { ActiveSale } from '@/lib/sale'
@@ -11,7 +11,23 @@ type DBProduct = { slug: string; name: string; price: string; description: strin
 
 export function LunchLadyStorefront({ dbProducts, activeSale }: { dbProducts?: DBProduct[]; activeSale?: ActiveSale }) {
   const { setBrandColor, setShopPath } = useCart()
+  const videoRef = useRef<HTMLVideoElement>(null)
+
   useEffect(() => { setBrandColor('#1C2E54'); setShopPath('/shop/lunch-lady') }, [setBrandColor, setShopPath])
+
+  useEffect(() => {
+    const video = videoRef.current
+    if (!video) return
+    video.muted = true
+    const tryPlay = () => video.play().catch(() => {})
+    tryPlay()
+    document.addEventListener('touchstart', tryPlay, { once: true })
+    document.addEventListener('click', tryPlay, { once: true })
+    return () => {
+      document.removeEventListener('touchstart', tryPlay)
+      document.removeEventListener('click', tryPlay)
+    }
+  }, [])
   const products = dbProducts && dbProducts.length > 0
     ? dbProducts.map(p => ({ ...p, path: `/shop/lunch-lady/products/${p.slug}`, shopifyUrl: '', tag: p.tag || undefined }))
     : staticProducts
@@ -88,7 +104,7 @@ export function LunchLadyStorefront({ dbProducts, activeSale }: { dbProducts?: D
       {/* HERO */}
       <section className="ll-hero-pad">
         <video
-          ref={(el) => { if (el) { el.muted = true; el.play().catch(() => {}) } }}
+          ref={videoRef}
           autoPlay
           muted
           loop
