@@ -84,7 +84,7 @@ export const products: Product[] = [
   },
   {
     slug: 'lunch-lady-new-era-trucker-cap-white-navy',
-    name: 'Lunch Lady — New Era Trucker Cap White/Navy',
+    name: 'Lunch Lady — New Era Trucker Cap White/Royal Blue',
     price: '$55.00 CAD',
     description: 'New Era quality with expertly embroidered Lunch Lady branding. Adjustable back strap for a perfect fit.',
     shopifyUrl: 'https://merchbeast.shop/collections/lunch-lady/products/lunch-lady-new-era-trucker-cap-white-navy',
