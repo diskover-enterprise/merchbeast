@@ -105,6 +105,19 @@ export default function LunchLadyProductClient({ product, related }: { product: 
               </div>
             )}
 
+            {product.colors.length > 1 && (
+              <div style={{ marginBottom: 28 }}>
+                <p style={{ fontSize: 11, letterSpacing: '0.25em', textTransform: 'uppercase', fontWeight: 400, color: '#888', marginBottom: 12, fontFamily: 'Georgia, serif' }}>Colour</p>
+                <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
+                  {product.colors.map(c => (
+                    <button key={c} onClick={() => setSelectedColor(c)} style={{ padding: '12px 16px', fontSize: 12, fontWeight: 400, fontFamily: 'Georgia, serif', cursor: 'pointer', border: selectedColor === c ? '2px solid #1C2E54' : '1px solid #ddd', background: selectedColor === c ? '#1C2E54' : 'transparent', color: selectedColor === c ? '#fff' : '#111', letterSpacing: '0.05em', transition: 'all 0.15s' }}>
+                      {c}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
+
             <button onClick={handleAddToCart} style={{ width: '100%', padding: '18px 32px', fontSize: 11, letterSpacing: '0.3em', textTransform: 'uppercase', fontFamily: 'Georgia, serif', fontWeight: 400, background: added ? '#2d7a3a' : '#1C2E54', color: '#fff', border: 'none', cursor: 'pointer', marginBottom: 12, transition: 'background 0.2s' }}>
               {added ? '✓ Added to Cart' : 'Add to Cart'}
             </button>
