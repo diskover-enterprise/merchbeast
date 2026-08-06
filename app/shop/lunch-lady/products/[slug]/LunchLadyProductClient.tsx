@@ -16,6 +16,7 @@ export default function LunchLadyProductClient({ product, related }: { product: 
   const [selectedColor, setSelectedColor] = useState<string | undefined>()
   const [added, setAdded] = useState(false)
   const [sizeError, setSizeError] = useState(false)
+  const [colorError, setColorError] = useState(false)
 
   useEffect(() => {
     setBrandColor('#1C2E54')
@@ -26,6 +27,11 @@ export default function LunchLadyProductClient({ product, related }: { product: 
     if (product.sizes.length > 1 && !selectedSize) {
       setSizeError(true)
       setTimeout(() => setSizeError(false), 2000)
+      return
+    }
+    if (product.colors.length > 1 && !selectedColor) {
+      setColorError(true)
+      setTimeout(() => setColorError(false), 2000)
       return
     }
     addToCart(product as any, selectedSize || product.sizes[0], selectedColor || product.colors[0])
@@ -107,7 +113,7 @@ export default function LunchLadyProductClient({ product, related }: { product: 
 
             {product.colors.length > 1 && (
               <div style={{ marginBottom: 28 }}>
-                <p style={{ fontSize: 11, letterSpacing: '0.25em', textTransform: 'uppercase', fontWeight: 400, color: '#888', marginBottom: 12, fontFamily: 'Georgia, serif' }}>Colour</p>
+                <p style={{ fontSize: 11, letterSpacing: '0.25em', textTransform: 'uppercase', fontWeight: 400, color: colorError ? '#C84020' : '#888', marginBottom: 12, fontFamily: 'Georgia, serif' }}>{colorError ? 'Please select a colour' : 'Colour'}</p>
                 <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
                   {product.colors.map(c => (
                     <button key={c} onClick={() => setSelectedColor(c)} style={{ padding: '12px 16px', fontSize: 12, fontWeight: 400, fontFamily: 'Georgia, serif', cursor: 'pointer', border: selectedColor === c ? '2px solid #1C2E54' : '1px solid #ddd', background: selectedColor === c ? '#1C2E54' : 'transparent', color: selectedColor === c ? '#fff' : '#111', letterSpacing: '0.05em', transition: 'all 0.15s' }}>
