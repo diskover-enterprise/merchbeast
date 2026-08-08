@@ -17,10 +17,10 @@ export async function POST(_req: Request, { params }: { params: Promise<{ id: st
   const session = sessions.data[0]
   if (!session) return Response.json({ error: 'Stripe session not found' }, { status: 404 })
 
-  const shipping = session.shipping_details?.address ?? session.customer_details?.address
+  const shipping = session.shipping_details?.address
   if (!shipping) return Response.json({ error: 'No shipping address in Stripe session' }, { status: 404 })
 
-  const shippingAddress = [shipping.line1, (shipping as any).line2, shipping.city, shipping.state, shipping.postal_code, shipping.country]
+  const shippingAddress = [shipping.line1, shipping.line2, shipping.city, shipping.state, shipping.postal_code, shipping.country]
     .filter(Boolean).join(', ')
 
   await prisma.order.update({ where: { id }, data: { shippingAddress } })

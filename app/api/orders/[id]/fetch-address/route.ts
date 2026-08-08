@@ -21,12 +21,12 @@ export async function POST(_req: Request, { params }: { params: Promise<{ id: st
   const session = sessions.data[0]
   if (!session) return NextResponse.json({ error: 'Stripe session not found' }, { status: 404 })
 
-  const shipping = session.shipping_details?.address ?? session.customer_details?.address
+  const shipping = session.shipping_details?.address
   if (!shipping) return NextResponse.json({ error: 'No shipping address in Stripe session' }, { status: 404 })
 
   const shippingAddress = [
     shipping.line1,
-    (shipping as any).line2,
+    shipping.line2,
     shipping.city,
     shipping.state,
     shipping.postal_code,

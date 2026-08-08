@@ -39,9 +39,9 @@ export async function POST(req: Request) {
     create: { email, name },
   })
 
-  const shipping = session.shipping_details?.address ?? session.customer_details?.address
+  const shipping = session.shipping_details?.address
   const shippingAddress = shipping
-    ? [shipping.line1, (shipping as any).line2, shipping.city, shipping.state, shipping.postal_code, shipping.country].filter(Boolean).join(', ')
+    ? [shipping.line1, shipping.line2, shipping.city, shipping.state, shipping.postal_code, shipping.country].filter(Boolean).join(', ')
     : null
 
   const order = await prisma.order.create({
