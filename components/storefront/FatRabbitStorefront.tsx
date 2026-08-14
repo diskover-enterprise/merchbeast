@@ -122,7 +122,7 @@ function ProductCard({ product }: { product: Product }) {
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
-      <div style={{ position: 'relative', marginBottom: 14, background: '#dedad1', overflow: 'hidden' }}>
+      <div style={{ position: 'relative', marginBottom: 14, background: 'transparent' }}>
         {/* Tag badge */}
         {product.tag && (
           <div style={{ position: 'absolute', top: 10, left: 10, zIndex: 2, fontSize: 9, letterSpacing: '0.2em', textTransform: 'uppercase', background: '#C5442A', color: '#fff', padding: '4px 9px', fontFamily: 'Georgia, serif' }}>
