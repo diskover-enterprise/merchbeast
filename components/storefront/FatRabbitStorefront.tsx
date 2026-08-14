@@ -113,6 +113,8 @@ export function FatRabbitStorefront({ dbProducts }: { heroImage?: string | null;
 
 function ProductCard({ product }: { product: Product }) {
   const [hovered, setHovered] = useState(false)
+  const { items } = useCart()
+  const inCart = items.some(i => i.product.slug === product.slug)
   const displaySize = product.sizes.length === 1 ? product.sizes[0] : product.sizes.length > 1 ? product.sizes.join(' / ') : null
 
   return (
@@ -129,17 +131,15 @@ function ProductCard({ product }: { product: Product }) {
             {product.tag}
           </div>
         )}
-        {/* Cart icon */}
-        <div style={{ position: 'absolute', top: 8, right: 10, zIndex: 2 }}>
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#C5442A" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-            <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
-            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
-          </svg>
-          <svg width="10" height="10" viewBox="0 0 10 10" style={{ position: 'absolute', top: -3, right: -3 }}>
-            <circle cx="5" cy="5" r="5" fill="#C5442A"/>
-            <text x="5" y="8" textAnchor="middle" fontSize="7" fill="#fff" fontFamily="Georgia">+</text>
-          </svg>
-        </div>
+        {/* Cart icon — only when item is in cart */}
+        {inCart && (
+          <div style={{ position: 'absolute', top: 8, right: 10, zIndex: 2 }}>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#C5442A" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+              <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
+              <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+            </svg>
+          </div>
+        )}
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src={product.images[0]}
