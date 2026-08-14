@@ -5,7 +5,7 @@ import Link from 'next/link'
 import { useCart } from '@/app/cart-context'
 
 export default function FatRabbitCartPage() {
-  const { items, removeFromCart, updateQuantity, total: subtotal, setBrandColor, setShopPath } = useCart()
+  const { items, removeFromCart, updateQuantity, clearCart, total: subtotal, setBrandColor, setShopPath } = useCart()
 
   useEffect(() => {
     setBrandColor('#C5442A')
@@ -77,7 +77,7 @@ export default function FatRabbitCartPage() {
                   <p className="frc-item-name">{item.product.name}</p>
                   <p className="frc-item-meta">{[item.size, item.color].filter(Boolean).join(' · ')}</p>
                   <div className="frc-qty">
-                    <button className="frc-qty-btn" onClick={() => updateQuantity(item.product.slug, item.quantity - 1, item.size, item.color)}>−</button>
+                    <button className="frc-qty-btn" onClick={() => item.quantity === 1 ? removeFromCart(item.product.slug, item.size, item.color) : updateQuantity(item.product.slug, item.quantity - 1, item.size, item.color)}>−</button>
                     <span style={{ fontSize: 14, minWidth: 20, textAlign: 'center' }}>{item.quantity}</span>
                     <button className="frc-qty-btn" onClick={() => updateQuantity(item.product.slug, item.quantity + 1, item.size, item.color)}>+</button>
                     <button className="frc-remove" onClick={() => removeFromCart(item.product.slug, item.size, item.color)}>Remove</button>
@@ -101,6 +101,10 @@ export default function FatRabbitCartPage() {
                 Proceed to Checkout
               </a>
               <Link href="/shop/fat-rabbit" className="frc-continue">Continue Shopping</Link>
+              <button onClick={clearCart} style={{ display: 'block', width: '100%', marginTop: 16, background: 'none', border: 'none', cursor: 'pointer', fontSize: 10, letterSpacing: '0.2em', textTransform: 'uppercase', color: '#bbb', fontFamily: 'Georgia, serif', transition: 'color 0.2s' }}
+                onMouseOver={e => (e.currentTarget.style.color = '#C5442A')} onMouseOut={e => (e.currentTarget.style.color = '#bbb')}>
+                Clear Cart
+              </button>
             </div>
           </>
         )}
