@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { nomoProducts, type NomoProduct } from '@/app/products/nomo-nomo-products-data'
 import { useCart } from '@/app/cart-context'
 import type { ActiveSale } from '@/lib/sale'
@@ -11,7 +11,21 @@ type DBProduct = { slug: string; name: string; price: string; description: strin
 
 export function NomoNomoStorefront({ heroImage, activeSale, dbProducts }: { heroImage?: string | null; activeSale?: ActiveSale; dbProducts?: DBProduct[] }) {
   const { count, setBrandColor, setShopPath } = useCart()
+  const videoRef = useRef<HTMLVideoElement>(null)
   useEffect(() => { setBrandColor('#C41E1E'); setShopPath('/shop/nomo-nomo') }, [setBrandColor, setShopPath])
+  useEffect(() => {
+    const video = videoRef.current
+    if (!video) return
+    video.muted = true
+    const tryPlay = () => video.play().catch(() => {})
+    tryPlay()
+    document.addEventListener('touchstart', tryPlay, { once: true })
+    document.addEventListener('click', tryPlay, { once: true })
+    return () => {
+      document.removeEventListener('touchstart', tryPlay)
+      document.removeEventListener('click', tryPlay)
+    }
+  }, [])
 
   const products: (NomoProduct & { stock?: number | null })[] = dbProducts !== undefined
     ? dbProducts.map(p => ({ ...p, path: `/shop/nomo-nomo/products/${p.slug}`, shopifyUrl: '', category: p.tag || 'Tee', tag: p.tag || undefined, stock: p.stock ?? null }))
@@ -89,10 +103,17 @@ export function NomoNomoStorefront({ heroImage, activeSale, dbProducts }: { hero
 
       {/* HERO */}
       <section className="nn-hero">
-        {heroImage && (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img src={heroImage} alt="Nomo Nomo" />
-        )}
+        <video
+          ref={videoRef}
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="auto"
+          style={{ width: '100%', height: 'auto', display: 'block' }}
+        >
+          <source src="/nomo-nomo-hero.mp4" type="video/mp4" />
+        </video>
       </section>
 
       {/* HATS */}
