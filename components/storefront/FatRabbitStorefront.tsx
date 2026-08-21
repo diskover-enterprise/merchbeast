@@ -115,7 +115,7 @@ export function FatRabbitStorefront({ dbProducts }: { heroImage?: string | null;
         {/* HEADER */}
         <header className="fr-header">
           <p className="fr-header-eyebrow">St. Catharines · 34 Geneva Street</p>
-          <h1 className="fr-header-title">The Shop</h1>
+          <h1 className="fr-header-title">Merch</h1>
           <div className="fr-header-rule" />
         </header>
 
