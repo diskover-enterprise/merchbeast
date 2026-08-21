@@ -186,13 +186,13 @@ function ProductCard({ product }: { product: Product }) {
           <div style={{ position: 'absolute', top: 12, right: 12, zIndex: 2, background: '#db4021', borderRadius: '50%', width: 8, height: 8 }} />
         )}
         {/* Product image */}
-        <div style={{ background: '#f5f4f0', padding: '32px 24px 24px', display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: 260 }}>
+        <div style={{ background: '#f5f4f0', height: 300, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '24px', overflow: 'hidden' }}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src={product.images[0]}
             alt={product.name}
             style={{
-              width: '100%', maxHeight: 240, objectFit: 'contain', display: 'block',
+              width: '100%', height: '100%', objectFit: 'contain', display: 'block',
               transition: 'transform 0.4s ease',
               transform: hovered ? 'scale(1.05)' : 'scale(1)',
             }}
