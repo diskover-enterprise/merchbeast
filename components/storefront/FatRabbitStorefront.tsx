@@ -131,14 +131,6 @@ export function FatRabbitStorefront({ dbProducts }: { heroImage?: string | null;
         </div>
       </div>
 
-      {/* NEWSLETTER STRIP */}
-      <div className="fr-newsletter">
-        <form className="fr-newsletter-form" onSubmit={e => e.preventDefault()}>
-          <input className="fr-newsletter-input" type="email" placeholder="Your Email" />
-          <button className="fr-newsletter-btn" type="submit">Subscribe</button>
-        </form>
-      </div>
-
       {/* WORDMARK */}
       <div className="fr-wordmark">
         <span className="fr-wordmark-text">FAT RABBIT</span>
