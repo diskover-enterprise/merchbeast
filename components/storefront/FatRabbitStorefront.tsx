@@ -93,6 +93,7 @@ export function FatRabbitStorefront({ dbProducts }: { heroImage?: string | null;
         }
         @media (max-width: 480px) {
           .fr-product-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+          .fr-card-img { height: 180px !important; padding: 10px !important; }
         }
       `}</style>
 
@@ -186,7 +187,7 @@ function ProductCard({ product }: { product: Product }) {
           <div style={{ position: 'absolute', top: 12, right: 12, zIndex: 2, background: '#db4021', borderRadius: '50%', width: 8, height: 8 }} />
         )}
         {/* Product image */}
-        <div style={{ background: '#f5f4f0', height: 300, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '24px', overflow: 'hidden' }}>
+        <div className="fr-card-img" style={{ background: '#f5f4f0', height: 300, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '16px', overflow: 'hidden' }}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src={product.images[0]}
