@@ -94,7 +94,7 @@ export function FatRabbitStorefront({ dbProducts }: { heroImage?: string | null;
       <div className="fr-body">
         {/* HEADER */}
         <header className="fr-header">
-          <p className="fr-header-eyebrow">Niagara-on-the-Lake · 26 Queen Street</p>
+          <p className="fr-header-eyebrow">St. Catharines · 26 Queen Street</p>
           <h1 className="fr-header-title">The Shop</h1>
           <div className="fr-header-rule" />
         </header>
@@ -115,7 +115,7 @@ export function FatRabbitStorefront({ dbProducts }: { heroImage?: string | null;
       <footer className="fr-footer">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src="/fat-rabbit-logo.svg" alt="Fat Rabbit" className="fr-footer-logo" />
-        <span className="fr-footer-address">26 Queen Street · Niagara-on-the-Lake, ONT.</span>
+        <span className="fr-footer-address">26 Queen Street · St. Catharines, ONT.</span>
         <span className="fr-footer-copy">Powered by Merch Beast</span>
       </footer>
     </div>
