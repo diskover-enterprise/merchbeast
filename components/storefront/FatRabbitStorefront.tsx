@@ -131,6 +131,9 @@ export function FatRabbitStorefront({ dbProducts }: { heroImage?: string | null;
         </div>
       </div>
 
+      {/* STRIP */}
+      <div style={{ background: '#db4021', height: 48 }} />
+
       {/* WORDMARK */}
       <div className="fr-wordmark">
         <span className="fr-wordmark-text">FAT RABBIT</span>
