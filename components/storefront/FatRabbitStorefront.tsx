@@ -24,10 +24,10 @@ export function FatRabbitStorefront({ dbProducts }: { heroImage?: string | null;
           display: grid; grid-template-columns: 1fr auto 1fr;
           align-items: center; padding: 0 32px;
         }
-        .fr-nav-left { display: flex; align-items: center; gap: 28px; }
+        .fr-nav-left { display: flex; align-items: center; gap: 28px; width: 120px; }
         .fr-nav-center { display: flex; align-items: center; justify-content: center; }
         .fr-nav-right { display: flex; align-items: center; justify-content: flex-end; gap: 20px; }
-        .fr-nav-logo { height: 52px; object-fit: contain; }
+        .fr-nav-logo { height: 72px; object-fit: contain; }
         .fr-nav-link { font-size: 11px; font-weight: 600; letter-spacing: 0.22em; text-transform: uppercase; color: #db4021; text-decoration: none; transition: opacity 0.2s; }
         .fr-nav-link:hover { opacity: 0.6; }
         .fr-nav-cart { font-size: 11px; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; color: #fff; background: #db4021; padding: 9px 20px; text-decoration: none; transition: opacity 0.2s; white-space: nowrap; }
@@ -75,10 +75,7 @@ export function FatRabbitStorefront({ dbProducts }: { heroImage?: string | null;
 
       {/* NAV */}
       <nav className="fr-nav">
-        <div className="fr-nav-left">
-          <a href="https://fat-rabbit.ca" className="fr-nav-link">Restaurant</a>
-          <a href="https://fat-rabbit.ca/menu" className="fr-nav-link">Menu</a>
-        </div>
+        <div className="fr-nav-left" />
         <div className="fr-nav-center">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src="/fat-rabbit-logo.svg" alt="Fat Rabbit" className="fr-nav-logo" />
