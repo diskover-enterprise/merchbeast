@@ -20,7 +20,7 @@ export function FatRabbitStorefront({ dbProducts }: { heroImage?: string | null;
         .fr-nav {
           position: fixed; top: 0; left: 0; right: 0; z-index: 100;
           height: 80px; background: rgba(0,0,0,0.96); backdrop-filter: blur(10px);
-          border-bottom: 1px solid rgba(255,255,255,0.08);
+          border-bottom: 1px solid rgba(191,213,202,0.2);
           display: grid; grid-template-columns: 1fr auto 1fr;
           align-items: center; padding: 0 32px;
         }
@@ -34,9 +34,9 @@ export function FatRabbitStorefront({ dbProducts }: { heroImage?: string | null;
 
         .fr-body { padding-top: 80px; }
 
-        .fr-header { text-align: center; padding: 72px 32px 56px; border-bottom: 1px solid rgba(255,255,255,0.08); }
-        .fr-header-eyebrow { font-size: 11px; letter-spacing: 0.4em; text-transform: uppercase; color: rgba(255,255,255,0.35); margin-bottom: 16px; font-weight: 400; }
-        .fr-header-title { font-size: clamp(52px, 8vw, 96px); font-weight: 800; letter-spacing: 0.04em; text-transform: uppercase; color: #fff; line-height: 0.95; margin: 0; }
+        .fr-header { text-align: center; padding: 72px 32px 56px; border-bottom: 1px solid rgba(191,213,202,0.15); }
+        .fr-header-eyebrow { font-size: 11px; letter-spacing: 0.4em; text-transform: uppercase; color: #b6b3d8; margin-bottom: 16px; font-weight: 500; }
+        .fr-header-title { font-size: clamp(52px, 8vw, 96px); font-weight: 800; letter-spacing: 0.04em; text-transform: uppercase; color: #bfd5ca; line-height: 0.95; margin: 0; }
 
         .fr-grid-wrap { padding: 64px 32px 96px; max-width: 1200px; margin: 0 auto; }
         .fr-product-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; }
@@ -45,14 +45,15 @@ export function FatRabbitStorefront({ dbProducts }: { heroImage?: string | null;
         .fr-empty p { font-size: 18px; color: rgba(255,255,255,0.3); font-weight: 300; letter-spacing: 0.1em; }
 
         .fr-footer {
-          border-top: 1px solid rgba(255,255,255,0.08);
+          border-top: 3px solid #bfd5ca;
+          background: #0a0a0a;
           padding: 48px 40px;
           display: flex; align-items: center; justify-content: space-between;
           gap: 20px;
         }
         .fr-footer-logo { height: 40px; object-fit: contain; filter: brightness(0) invert(1); }
-        .fr-footer-address { font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(255,255,255,0.3); font-weight: 400; text-align: center; }
-        .fr-footer-copy { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(255,255,255,0.15); text-align: right; }
+        .fr-footer-address { font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase; color: #b6b3d8; font-weight: 500; text-align: center; }
+        .fr-footer-copy { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(255,255,255,0.2); text-align: right; }
 
         @media (max-width: 900px) {
           .fr-product-grid { grid-template-columns: repeat(2, 1fr); }
@@ -140,8 +141,8 @@ function ProductCard({ product }: { product: Product }) {
       onMouseLeave={() => setHovered(false)}
     >
       <div style={{
-        border: '1px solid rgba(255,255,255,0.12)',
-        background: hovered ? 'rgba(255,255,255,0.04)' : 'transparent',
+        border: hovered ? '1px solid rgba(191,213,202,0.5)' : '1px solid rgba(191,213,202,0.15)',
+        background: hovered ? 'rgba(191,213,202,0.04)' : 'transparent',
         transition: 'background 0.25s',
         position: 'relative',
         aspectRatio: '3/4',
@@ -184,7 +185,7 @@ function ProductCard({ product }: { product: Product }) {
           />
         </div>
         {/* Card footer */}
-        <div style={{ padding: '16px 20px 20px', borderTop: '1px solid rgba(255,255,255,0.08)' }}>
+        <div style={{ padding: '16px 20px 20px', borderTop: '1px solid rgba(191,213,202,0.12)' }}>
           <h3 style={{
             fontFamily: "'Barlow Condensed', sans-serif",
             fontSize: 15, fontWeight: 600, letterSpacing: '0.06em', textTransform: 'uppercase',
