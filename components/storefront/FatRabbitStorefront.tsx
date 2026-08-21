@@ -19,7 +19,7 @@ export function FatRabbitStorefront({ dbProducts }: { heroImage?: string | null;
 
         .fr-nav {
           position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-          height: 72px; background: rgba(232,232,226,0.97); backdrop-filter: blur(10px);
+          height: 90px; background: rgba(232,232,226,0.97); backdrop-filter: blur(10px);
           border-bottom: 1px solid rgba(219,64,33,0.12);
           display: grid; grid-template-columns: 1fr auto 1fr;
           align-items: center; padding: 0 32px;
@@ -33,7 +33,7 @@ export function FatRabbitStorefront({ dbProducts }: { heroImage?: string | null;
         .fr-nav-cart { font-size: 11px; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; color: #fff; background: #db4021; padding: 9px 20px; text-decoration: none; transition: opacity 0.2s; white-space: nowrap; }
         .fr-nav-cart:hover { opacity: 0.85; }
 
-        .fr-body { padding-top: 72px; }
+        .fr-body { padding-top: 90px; }
 
         .fr-header { text-align: center; padding: 80px 32px 64px; }
         .fr-header-eyebrow { font-size: 10px; letter-spacing: 0.45em; text-transform: uppercase; color: rgba(219,64,33,0.4); margin-bottom: 20px; font-weight: 600; }
@@ -48,7 +48,7 @@ export function FatRabbitStorefront({ dbProducts }: { heroImage?: string | null;
 
         .fr-newsletter {
           background: #db4021; padding: 14px 32px;
-          display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap;
+          display: flex; align-items: center; justify-content: center; gap: 24px; flex-wrap: wrap;
         }
         .fr-newsletter-label { font-size: 13px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #fff; white-space: nowrap; }
         .fr-newsletter-form { display: flex; align-items: center; gap: 0; flex-shrink: 0; }
@@ -133,7 +133,6 @@ export function FatRabbitStorefront({ dbProducts }: { heroImage?: string | null;
 
       {/* NEWSLETTER STRIP */}
       <div className="fr-newsletter">
-        <span className="fr-newsletter-label">Get the latest news on Fat Rabbit Restaurant and Butcher!</span>
         <form className="fr-newsletter-form" onSubmit={e => e.preventDefault()}>
           <input className="fr-newsletter-input" type="email" placeholder="Your Email" />
           <button className="fr-newsletter-btn" type="submit">Subscribe</button>
