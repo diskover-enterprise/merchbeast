@@ -46,10 +46,33 @@ export function FatRabbitStorefront({ dbProducts }: { heroImage?: string | null;
         .fr-empty { text-align: center; padding: 120px 40px; }
         .fr-empty p { font-size: 16px; color: rgba(219,64,33,0.4); font-weight: 400; letter-spacing: 0.1em; text-transform: uppercase; }
 
+        .fr-newsletter {
+          background: #db4021; padding: 14px 32px;
+          display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap;
+        }
+        .fr-newsletter-label { font-size: 13px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #fff; white-space: nowrap; }
+        .fr-newsletter-form { display: flex; align-items: center; gap: 0; flex-shrink: 0; }
+        .fr-newsletter-input { background: transparent; border: none; border-bottom: 1px solid rgba(255,255,255,0.5); padding: 6px 12px; font-size: 12px; letter-spacing: 0.1em; color: #fff; font-family: 'Barlow Condensed', sans-serif; outline: none; width: 220px; }
+        .fr-newsletter-input::placeholder { color: rgba(255,255,255,0.55); }
+        .fr-newsletter-btn { background: transparent; border: none; font-size: 12px; font-weight: 800; letter-spacing: 0.25em; text-transform: uppercase; color: #fff; cursor: pointer; padding: 6px 0 6px 20px; font-family: 'Barlow Condensed', sans-serif; white-space: nowrap; transition: opacity 0.2s; }
+        .fr-newsletter-btn:hover { opacity: 0.7; }
+
+        .fr-wordmark {
+          background: #e8e8e2; overflow: hidden; line-height: 0.82;
+          padding: 24px 0 0;
+        }
+        .fr-wordmark-text {
+          font-family: 'Barlow Condensed', 'Arial Narrow', Arial, sans-serif;
+          font-size: 22vw; font-weight: 800; letter-spacing: -0.01em; text-transform: uppercase;
+          color: transparent; -webkit-text-stroke: 2px #db4021;
+          display: block; text-align: center; white-space: nowrap;
+          line-height: 0.88; padding-bottom: 8px;
+        }
+
         .fr-footer {
           border-top: 1px solid rgba(219,64,33,0.15);
           background: #e8e8e2;
-          padding: 48px 40px;
+          padding: 28px 40px;
           display: flex; align-items: center; justify-content: space-between;
           gap: 20px;
         }
@@ -106,6 +129,20 @@ export function FatRabbitStorefront({ dbProducts }: { heroImage?: string | null;
             </div>
           )}
         </div>
+      </div>
+
+      {/* NEWSLETTER STRIP */}
+      <div className="fr-newsletter">
+        <span className="fr-newsletter-label">Get the latest news on Fat Rabbit Restaurant and Butcher!</span>
+        <form className="fr-newsletter-form" onSubmit={e => e.preventDefault()}>
+          <input className="fr-newsletter-input" type="email" placeholder="Your Email" />
+          <button className="fr-newsletter-btn" type="submit">Subscribe</button>
+        </form>
+      </div>
+
+      {/* WORDMARK */}
+      <div className="fr-wordmark">
+        <span className="fr-wordmark-text">FAT RABBIT</span>
       </div>
 
       {/* FOOTER */}
