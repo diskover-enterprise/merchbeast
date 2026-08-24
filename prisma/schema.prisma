@@ -19,6 +19,7 @@ model Shop {
   fontFamily        String    @default("Inter")
   ownerEmail        String    @unique
   ownerPasswordHash String
+  clientEmails      String    @default("[]")
   tagline           String?
   about             String?
   heroHeadline      String?

@@ -5,7 +5,16 @@ export async function POST(request: Request) {
   const { email, password } = await request.json()
   const db = prisma
 
-  const shop = await db.shop.findUnique({ where: { ownerEmail: email.trim().toLowerCase() } })
+  const normalizedEmail = email.trim().toLowerCase()
+
+  // Check ownerEmail first, then fall back to clientEmails JSON array
+  let shop = await db.shop.findUnique({ where: { ownerEmail: normalizedEmail } })
+  if (!shop) {
+    const allShops = await db.shop.findMany({ select: { id: true, name: true, ownerEmail: true, ownerPasswordHash: true, clientEmails: true } })
+    shop = allShops.find(s => {
+      try { return (JSON.parse(s.clientEmails) as string[]).includes(normalizedEmail) } catch { return false }
+    }) ?? null
+  }
   if (!shop) {
     return Response.json({ error: 'Invalid email or password' }, { status: 401 })
   }
