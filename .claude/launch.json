@@ -3,7 +3,7 @@
   "configurations": [
     {
       "name": "dev",
-      "runtimeExecutable": "/tmp/nodebin/bin/node",
+      "runtimeExecutable": "/Users/mac/.local/bin/node",
       "runtimeArgs": ["/Users/mac/Downloads/restaurant-marketplace/node_modules/next/dist/bin/next", "dev", "--webpack"],
       "port": 3000
     }
