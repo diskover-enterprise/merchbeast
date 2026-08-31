@@ -22,6 +22,7 @@ export async function POST(_req: Request, { params }: { params: Promise<{ id: st
   if (!session) return NextResponse.json({ error: 'Stripe session not found' }, { status: 404 })
 
   const shipping = session.shipping_details?.address
+    ?? (session as any).collected_information?.shipping_details?.address
   if (!shipping) return NextResponse.json({ error: 'No shipping address in Stripe session' }, { status: 404 })
 
   const shippingAddress = [

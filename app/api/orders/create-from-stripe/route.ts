@@ -39,7 +39,9 @@ export async function POST(req: Request) {
     create: { email, name },
   })
 
+  // shipping_details is the standard field; collected_information.shipping_details is the newer Stripe field
   const shipping = session.shipping_details?.address
+    ?? (session as any).collected_information?.shipping_details?.address
   const shippingAddress = shipping
     ? [shipping.line1, shipping.line2, shipping.city, shipping.state, shipping.postal_code, shipping.country].filter(Boolean).join(', ')
     : null
