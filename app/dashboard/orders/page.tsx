@@ -64,22 +64,15 @@ export default function OrdersPage() {
       return
     }
 
-    // Mark fulfilled — create Chit Chats shipment
-    setOrders(prev => prev.map(o => o.id === orderId ? { ...o, _fulfilling: true } : o))
-    try {
-      const res = await fetch(`/api/orders/${orderId}/fulfill`, { method: 'POST' })
-      const data = await res.json()
-      if (res.ok) {
-        setOrders(prev => prev.map(o => o.id === orderId
-          ? { ...o, status: 'fulfilled', chitchatsId: data.chitchatsId, trackingUrl: data.trackingUrl, _fulfilling: false }
-          : o
-        ))
-      } else {
-        setOrders(prev => prev.map(o => o.id === orderId ? { ...o, _fulfilling: false, _error: data.error } : o))
-      }
-    } catch {
-      setOrders(prev => prev.map(o => o.id === orderId ? { ...o, _fulfilling: false } : o))
-    }
+    // Mark fulfilled — update status internally
+    setOrders(prev => prev.map(o => o.id === orderId ? { ...o, status: 'fulfilled' } : o))
+    await fetch(`/api/orders/${orderId}`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ status: 'fulfilled' }),
+    }).catch(() => {
+      setOrders(prev => prev.map(o => o.id === orderId ? { ...o, status: 'paid' } : o))
+    })
   }
 
   if (loading) {
