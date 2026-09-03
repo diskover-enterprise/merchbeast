@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import Image from 'next/image'
 import { useState, useEffect } from 'react'
 import { useCart } from '@/app/cart-context'
 
@@ -187,13 +188,14 @@ function ProductCard({ product }: { product: Product }) {
           <div style={{ position: 'absolute', top: 12, right: 12, zIndex: 2, background: '#db4021', borderRadius: '50%', width: 8, height: 8 }} />
         )}
         {/* Product image */}
-        <div className="fr-card-img" style={{ background: '#f5f4f0', height: 300, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '16px', overflow: 'hidden' }}>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
+        <div className="fr-card-img" style={{ background: '#f5f4f0', height: 300, position: 'relative', overflow: 'hidden' }}>
+          <Image
             src={product.images[0]}
             alt={product.name}
+            fill
+            sizes="(max-width: 768px) 100vw, 33vw"
             style={{
-              width: '100%', height: '100%', objectFit: 'contain', display: 'block',
+              objectFit: 'contain', padding: '16px',
               transition: 'transform 0.4s ease',
               transform: hovered ? 'scale(1.05)' : 'scale(1)',
             }}

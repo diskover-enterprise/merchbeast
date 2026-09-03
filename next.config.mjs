@@ -16,6 +16,7 @@ const nextConfig = {
     remotePatterns: [
       { protocol: 'https', hostname: 'images.unsplash.com' },
       { protocol: 'https', hostname: 'cdn.shopify.com' },
+      { protocol: 'https', hostname: 'res.cloudinary.com' },
     ],
   },
 };
