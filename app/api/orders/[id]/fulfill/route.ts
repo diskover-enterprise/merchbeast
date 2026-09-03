@@ -6,12 +6,12 @@ const CHITCHATS_CLIENT_ID = '561262'
 const CHITCHATS_API = `https://chitchats.com/api/v1/clients/${CHITCHATS_CLIENT_ID}/shipments`
 
 function parseAddress(address: string) {
-  const parts = address.split(', ')
-  const country = parts[parts.length - 1]
-  const postal = parts[parts.length - 2]
-  const province = parts[parts.length - 3]
-  const city = parts[parts.length - 4]
-  const line1 = parts.slice(0, parts.length - 4).join(', ')
+  const parts = address.trim().split(', ')
+  const country = parts[parts.length - 1].trim()
+  const postal = parts[parts.length - 2].trim()
+  const province = parts[parts.length - 3].trim()
+  const city = parts[parts.length - 4].trim()
+  const line1 = parts.slice(0, parts.length - 4).join(', ').trim()
   return { line1, city, province, postal, country }
 }
 
@@ -63,7 +63,7 @@ export async function POST(_req: Request, { params }: { params: Promise<{ id: st
   const res = await fetch(CHITCHATS_API, {
     method: 'POST',
     headers: {
-      'Authorization': apiKey,
+      'Authorization': `Bearer ${apiKey}`,
       'Content-Type': 'application/json',
     },
     body: JSON.stringify(payload),
