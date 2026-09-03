@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
-import { ImageIcon, Plus, Pencil, Trash2, X, Check, Upload } from 'lucide-react'
+import { ImageIcon, Plus, Pencil, Trash2, X, Check, Upload, Copy } from 'lucide-react'
 import { products as staticProducts } from '@/app/products/products-data'
 
 type Shop = { id: string; name: string; slug: string }
@@ -193,6 +193,13 @@ export default function ProductsPage() {
   function openEdit(p: MerchProduct) {
     setEditing(p)
     setForm({ shopId: p.shopId || '', name: p.name, description: p.description, price: p.price, tag: p.tag || '', images: p.images, sizes: p.sizes, colors: p.colors, active: p.active, stock: p.stock != null ? String(p.stock) : '' })
+    setSaveError('')
+    setShowForm(true)
+  }
+
+  function openDuplicate(p: MerchProduct) {
+    setEditing(null) // treat as new product
+    setForm({ shopId: p.shopId || '', name: `${p.name} (Copy)`, description: p.description, price: p.price, tag: p.tag || '', images: p.images, sizes: p.sizes, colors: p.colors, active: false, stock: p.stock != null ? String(p.stock) : '' })
     setSaveError('')
     setShowForm(true)
   }
@@ -409,6 +416,7 @@ export default function ProductsPage() {
                       </td>
                       <td className="right">
                         <div style={{ display: 'flex', justifyContent: 'flex-end', gap: 6 }}>
+                          <button className="db-btn ghost" style={{ padding: '5px 10px' }} title="Duplicate" onClick={() => openDuplicate(p)}><Copy size={12} /></button>
                           <button className="db-btn ghost" style={{ padding: '5px 10px' }} onClick={() => openEdit(p)}><Pencil size={12} /></button>
                           <button className="db-btn ghost" style={{ padding: '5px 10px', borderColor: 'rgba(255,80,80,.35)', color: '#ff5050' }} onClick={() => handleDelete(p.id)}><Trash2 size={12} /></button>
                         </div>
