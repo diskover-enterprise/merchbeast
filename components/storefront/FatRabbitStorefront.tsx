@@ -5,7 +5,7 @@ import Image from 'next/image'
 import { useState, useEffect } from 'react'
 import { useCart } from '@/app/cart-context'
 
-type Product = { slug: string; name: string; price: string; description: string; images: string[]; sizes: string[]; colors: string[]; tag: string | null }
+type Product = { slug: string; name: string; price: string; description: string; images: string[]; sizes: string[]; colors: string[]; tag: string | null; stock: number | null }
 
 export function FatRabbitStorefront({ dbProducts }: { heroImage?: string | null; dbProducts?: Product[] }) {
   const { count, setBrandColor, setShopPath } = useCart()
@@ -75,10 +75,13 @@ export function FatRabbitStorefront({ dbProducts }: { heroImage?: string | null;
           background: #e8e8e2;
           padding: 28px 40px;
           display: flex; align-items: center; justify-content: space-between;
-          gap: 20px;
+          gap: 20px; flex-wrap: wrap;
         }
         .fr-footer-logo { height: 40px; object-fit: contain; }
         .fr-footer-address { font-size: 11px; letter-spacing: 0.25em; text-transform: uppercase; color: rgba(219,64,33,0.5); font-weight: 600; text-align: center; }
+        .fr-footer-links { display: flex; gap: 20px; align-items: center; }
+        .fr-footer-link { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(219,64,33,0.4); text-decoration: none; transition: color 0.2s; }
+        .fr-footer-link:hover { color: #db4021; }
         .fr-footer-copy { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(219,64,33,0.3); text-align: right; }
 
         @media (max-width: 900px) {
@@ -119,6 +122,9 @@ export function FatRabbitStorefront({ dbProducts }: { heroImage?: string | null;
           <p className="fr-header-eyebrow">St. Catharines · 34 Geneva Street</p>
           <h1 className="fr-header-title">Merch</h1>
           <div className="fr-header-rule" />
+          <p style={{ fontSize: 11, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'rgba(219,64,33,0.45)', marginTop: 20, fontWeight: 600 }}>
+            $9.95 CAD flat-rate shipping across Canada
+          </p>
         </header>
 
         {/* GRID */}
@@ -146,6 +152,10 @@ export function FatRabbitStorefront({ dbProducts }: { heroImage?: string | null;
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src="/fat-rabbit-logo.svg" alt="Fat Rabbit" className="fr-footer-logo" />
         <span className="fr-footer-address">34 Geneva Street · St. Catharines, ONT.</span>
+        <div className="fr-footer-links">
+          <a href="/shop/fat-rabbit/return-policy" className="fr-footer-link">Return Policy</a>
+          <a href="mailto:bee@fat-rabbit.ca" className="fr-footer-link">Contact Us</a>
+        </div>
         <span className="fr-footer-copy">Powered by Merch Beast</span>
       </footer>
     </div>
@@ -156,6 +166,7 @@ function ProductCard({ product }: { product: Product }) {
   const [hovered, setHovered] = useState(false)
   const { items } = useCart()
   const inCart = items.some(i => i.product.slug === product.slug)
+  const outOfStock = product.stock !== null && product.stock === 0
 
   return (
     <Link
@@ -214,6 +225,11 @@ function ProductCard({ product }: { product: Product }) {
             <span style={{ fontSize: 14, color: '#db4021', fontWeight: 700, letterSpacing: '0.05em' }}>
               {product.price}
             </span>
+            {outOfStock && (
+              <span style={{ fontSize: 9, letterSpacing: '0.15em', textTransform: 'uppercase', fontWeight: 700, color: '#999', background: '#eee', padding: '3px 8px' }}>
+                Sold Out
+              </span>
+            )}
             {product.colors.length > 1 && (
               <span style={{ fontSize: 9, color: 'rgba(219,64,33,0.4)', letterSpacing: '0.15em', textTransform: 'uppercase', fontWeight: 600 }}>
                 {product.colors.length} colours

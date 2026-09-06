@@ -1,11 +1,12 @@
 'use client'
 
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { useCart } from '@/app/cart-context'
 
 export default function FatRabbitCartPage() {
   const { items, removeFromCart, updateQuantity, clearCart, total: subtotal, setBrandColor, setShopPath } = useCart()
+  const [confirmClear, setConfirmClear] = useState(false)
 
   useEffect(() => {
     setBrandColor('#C5442A')
@@ -101,10 +102,18 @@ export default function FatRabbitCartPage() {
                 Proceed to Checkout
               </a>
               <Link href="/shop/fat-rabbit" className="frc-continue">Continue Shopping</Link>
-              <button onClick={clearCart} style={{ display: 'block', width: '100%', marginTop: 16, background: 'none', border: 'none', cursor: 'pointer', fontSize: 10, letterSpacing: '0.2em', textTransform: 'uppercase', color: '#bbb', fontFamily: 'Georgia, serif', transition: 'color 0.2s' }}
-                onMouseOver={e => (e.currentTarget.style.color = '#C5442A')} onMouseOut={e => (e.currentTarget.style.color = '#bbb')}>
-                Clear Cart
-              </button>
+              {!confirmClear ? (
+                <button onClick={() => setConfirmClear(true)} style={{ display: 'block', width: '100%', marginTop: 16, background: 'none', border: 'none', cursor: 'pointer', fontSize: 10, letterSpacing: '0.2em', textTransform: 'uppercase', color: '#bbb', fontFamily: 'Georgia, serif', transition: 'color 0.2s' }}
+                  onMouseOver={e => (e.currentTarget.style.color = '#C5442A')} onMouseOut={e => (e.currentTarget.style.color = '#bbb')}>
+                  Clear Cart
+                </button>
+              ) : (
+                <div style={{ marginTop: 16, display: 'flex', gap: 12, alignItems: 'center', justifyContent: 'center' }}>
+                  <span style={{ fontSize: 11, letterSpacing: '0.1em', color: '#666' }}>Are you sure?</span>
+                  <button onClick={() => { clearCart(); setConfirmClear(false) }} style={{ background: '#C5442A', color: '#fff', border: 'none', cursor: 'pointer', fontSize: 10, letterSpacing: '0.15em', textTransform: 'uppercase', padding: '6px 14px', fontFamily: 'Georgia, serif' }}>Yes, Clear</button>
+                  <button onClick={() => setConfirmClear(false)} style={{ background: 'none', border: '1px solid #ccc', cursor: 'pointer', fontSize: 10, letterSpacing: '0.15em', textTransform: 'uppercase', padding: '6px 14px', fontFamily: 'Georgia, serif', color: '#999' }}>Cancel</button>
+                </div>
+              )}
             </div>
           </>
         )}

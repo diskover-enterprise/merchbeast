@@ -398,7 +398,9 @@
       "Bash(node node_modules/.bin/prisma migrate dev --name add-client-emails --create-only)",
       "Bash(DATABASE_URL=\"postgresql://neondb_owner:npg_qahU3oR2zKAg@ep-small-darkness-at190lcu-pooler.c-9.us-east-1.aws.neon.tech/neondb?channel_binding=require&sslmode=require\" node scripts/set-fat-rabbit-client-emails.mjs)",
       "Bash(DATABASE_URL='postgresql://neondb_owner:npg_qahU3oR2zKAg@ep-small-darkness-at190lcu-pooler.c-9.us-east-1.aws.neon.tech/neondb?channel_binding=require&sslmode=require' node -e ' *)",
-      "Bash(node node_modules/.bin/prisma generate)"
+      "Bash(node node_modules/.bin/prisma generate)",
+      "Bash(DATABASE_URL=\"postgresql://neondb_owner:npg_qahU3oR2zKAg@ep-small-darkness-at190lcu-pooler.c-9.us-east-1.aws.neon.tech/neondb?channel_binding=require&sslmode=require\" node --input-type=module)",
+      "Bash(2>/dev/null)"
     ]
   }
 }
