@@ -42,7 +42,7 @@ export default function ReturnPolicyPage() {
         <div className="frp-section">
           <h2 className="frp-h2">How to Return</h2>
           <p className="frp-p">
-            To initiate a return, email us at <a href="mailto:bee@fat-rabbit.ca" className="frp-a">bee@fat-rabbit.ca</a> with
+            To initiate a return, email us at <a href="mailto:team@merchbeast.shop" className="frp-a">team@merchbeast.shop</a> with
             your order number and reason for return. We will provide return instructions within 2 business days.
             Return shipping costs are the responsibility of the customer unless the item arrived damaged or incorrect.
           </p>
