@@ -37,7 +37,7 @@ export function FatRabbitStorefront({ dbProducts }: { heroImage?: string | null;
         .fr-body { padding-top: 90px; }
 
         .fr-header { text-align: center; padding: 80px 32px 64px; }
-        .fr-header-eyebrow { font-size: 10px; letter-spacing: 0.45em; text-transform: uppercase; color: rgba(219,64,33,0.4); margin-bottom: 20px; font-weight: 600; }
+        .fr-header-eyebrow { font-size: 12px; letter-spacing: 0.35em; text-transform: uppercase; color: rgba(219,64,33,0.65); margin-bottom: 20px; font-weight: 600; }
         .fr-header-title { font-size: clamp(48px, 7vw, 88px); font-weight: 800; letter-spacing: 0.04em; text-transform: uppercase; color: #db4021; line-height: 0.95; margin: 0 0 16px; }
         .fr-header-rule { width: 48px; height: 2px; background: #db4021; margin: 24px auto 0; opacity: 0.3; }
 
@@ -78,11 +78,11 @@ export function FatRabbitStorefront({ dbProducts }: { heroImage?: string | null;
           gap: 20px; flex-wrap: wrap;
         }
         .fr-footer-logo { height: 40px; object-fit: contain; }
-        .fr-footer-address { font-size: 11px; letter-spacing: 0.25em; text-transform: uppercase; color: rgba(219,64,33,0.5); font-weight: 600; text-align: center; }
+        .fr-footer-address { font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(219,64,33,0.7); font-weight: 600; text-align: center; }
         .fr-footer-links { display: flex; gap: 20px; align-items: center; }
-        .fr-footer-link { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(219,64,33,0.4); text-decoration: none; transition: color 0.2s; }
+        .fr-footer-link { font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(219,64,33,0.65); text-decoration: none; transition: color 0.2s; font-weight: 600; }
         .fr-footer-link:hover { color: #db4021; }
-        .fr-footer-copy { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(219,64,33,0.3); text-align: right; }
+        .fr-footer-copy { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(219,64,33,0.35); text-align: right; }
 
         @media (max-width: 900px) {
           .fr-product-grid { grid-template-columns: repeat(2, 1fr); }
@@ -122,7 +122,7 @@ export function FatRabbitStorefront({ dbProducts }: { heroImage?: string | null;
           <p className="fr-header-eyebrow">St. Catharines · 34 Geneva Street</p>
           <h1 className="fr-header-title">Merch</h1>
           <div className="fr-header-rule" />
-          <p style={{ fontSize: 11, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'rgba(219,64,33,0.45)', marginTop: 20, fontWeight: 600 }}>
+          <p style={{ fontSize: 12, letterSpacing: '0.15em', textTransform: 'uppercase', color: 'rgba(219,64,33,0.7)', marginTop: 20, fontWeight: 600 }}>
             $9.95 CAD flat-rate shipping across Canada
           </p>
         </header>
