@@ -12,7 +12,7 @@ export default async function FatRabbitShopPage() {
 
   const rawProducts = shop ? await prisma.merchProduct.findMany({
     where: { shopId: shop.id, active: true },
-    orderBy: { createdAt: 'asc' },
+    orderBy: [{ sortOrder: 'asc' }, { createdAt: 'asc' }],
   }) : []
 
   const dbProducts = rawProducts.map(p => ({
