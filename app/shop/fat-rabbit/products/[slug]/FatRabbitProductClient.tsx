@@ -223,7 +223,7 @@ export default function FatRabbitProductClient({
                   <p><strong>Shipping</strong><br />
                   $9.95 CAD flat rate within Canada. Orders ship within 2–5 business days. Allow 5–10 business days for delivery.</p>
                   <p style={{ marginTop: 12 }}><strong>Returns</strong><br />
-                  We accept returns within 14 days of delivery for unused items in original condition. Sale items are final sale. To initiate a return, email <a href="mailto:team@merchbeast.shop" style={{ color: '#C5442A' }}>team@merchbeast.shop</a>.</p>
+                  We accept returns within 14 days of delivery for unused items in original condition. Sale items are final sale. Return shipping costs are the responsibility of the customer. To initiate a return, email <a href="mailto:team@merchbeast.shop" style={{ color: '#C5442A' }}>team@merchbeast.shop</a>.</p>
                 </div>
               )}
             </div>
