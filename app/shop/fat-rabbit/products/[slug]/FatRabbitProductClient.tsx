@@ -34,7 +34,7 @@ export default function FatRabbitProductClient({
   const router = useRouter()
   const { addToCart, count, setBrandColor, setShopPath } = useCart()
   const [activeImg, setActiveImg] = useState(0)
-  const [selectedSize, setSelectedSize] = useState<string | undefined>(product.sizes[0])
+  const [selectedSize, setSelectedSize] = useState<string | undefined>(undefined)
   const [selectedColor, setSelectedColor] = useState<string | undefined>(product.colors[0])
   const [added, setAdded] = useState(false)
   const [sizeError, setSizeError] = useState(false)
