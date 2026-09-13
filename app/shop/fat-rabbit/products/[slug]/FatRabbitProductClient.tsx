@@ -92,12 +92,22 @@ export default function FatRabbitProductClient({
         .fr-footer-copy { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(197,68,42,0.3); }
         .fr-color-swatch { padding: 6px 14px; font-size: 11px; font-family: 'Barlow Condensed', sans-serif; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; cursor: pointer; border: 2px solid #ccc; background: transparent; color: #1a1a1a; transition: all 0.15s; text-decoration: none; display: inline-block; }
         .fr-color-swatch.active { border-color: #C5442A; background: #C5442A; color: #fff; }
+        .fr-sticky-bar { display: none; }
         @media (max-width: 768px) {
           .fr-pnav { padding: 0 16px; height: 60px; }
-          .fr-pwrap { padding: 24px 16px 40px; }
+          .fr-pwrap { padding: 24px 16px 120px; }
           .fr-playout { grid-template-columns: 1fr; gap: 20px; }
+          .fr-main-img { aspect-ratio: unset !important; height: 260px !important; }
           .fr-related-grid { grid-template-columns: repeat(2, 1fr); }
           .fr-footer { padding: 28px 20px; margin-top: 48px; }
+          .fr-desktop-buttons { display: none; }
+          .fr-sticky-bar {
+            display: flex; flex-direction: column; gap: 8px;
+            position: fixed; bottom: 0; left: 0; right: 0; z-index: 200;
+            background: rgba(232,228,220,0.97); backdrop-filter: blur(8px);
+            padding: 12px 16px 20px;
+            border-top: 1px solid rgba(197,68,42,0.2);
+          }
         }
         @media (max-width: 480px) { .fr-related-grid { grid-template-columns: 1fr; } }
       `}</style>
@@ -116,7 +126,7 @@ export default function FatRabbitProductClient({
         <div className="fr-playout">
           {/* IMAGES */}
           <div>
-            <div style={{ marginBottom: 12, position: 'relative', width: '100%', aspectRatio: '1/1', background: '#D9D4CA' }}>
+            <div className="fr-main-img" style={{ marginBottom: 12, position: 'relative', width: '100%', aspectRatio: '1/1', background: '#D9D4CA' }}>
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src={product.images[activeImg]} alt={product.name} style={{ width: '100%', height: '100%', objectFit: 'contain', display: 'block' }} />
             </div>
@@ -204,20 +214,20 @@ export default function FatRabbitProductClient({
               </div>
             )}
 
-            {/* Add to cart */}
-            <button
-              onClick={handleAddToCart}
-              disabled={outOfStock}
-              style={{ width: '100%', padding: '18px 32px', fontSize: 11, letterSpacing: '0.3em', textTransform: 'uppercase', fontFamily: 'Georgia, serif', fontWeight: 400, background: outOfStock ? '#ccc' : added ? '#2d7a3a' : '#C5442A', color: '#fff', border: 'none', cursor: outOfStock ? 'not-allowed' : 'pointer', marginBottom: 12, transition: 'background 0.2s' }}
-            >
-              {outOfStock ? 'Out of Stock' : added ? '✓ Added to Cart' : 'Add to Cart'}
-            </button>
-
-            <Link href="/shop/fat-rabbit/cart" style={{ display: 'block', width: '100%', padding: '16px 32px', fontSize: 11, letterSpacing: '0.3em', textTransform: 'uppercase', fontFamily: 'Georgia, serif', fontWeight: 400, textAlign: 'center', border: '1px solid #C5442A', color: '#C5442A', textDecoration: 'none', boxSizing: 'border-box', transition: 'all 0.2s' }}>
-              View Cart{count > 0 ? ` (${count})` : ''}
-            </Link>
-
-            <p style={{ fontSize: 11, color: '#aaa', marginTop: 16, letterSpacing: '0.1em', textAlign: 'center' }}>Secure checkout powered by Stripe</p>
+            {/* Add to cart — desktop */}
+            <div className="fr-desktop-buttons">
+              <button
+                onClick={handleAddToCart}
+                disabled={outOfStock}
+                style={{ width: '100%', padding: '18px 32px', fontSize: 11, letterSpacing: '0.3em', textTransform: 'uppercase', fontFamily: 'Georgia, serif', fontWeight: 400, background: outOfStock ? '#ccc' : added ? '#2d7a3a' : '#C5442A', color: '#fff', border: 'none', cursor: outOfStock ? 'not-allowed' : 'pointer', marginBottom: 12, transition: 'background 0.2s' }}
+              >
+                {outOfStock ? 'Out of Stock' : added ? '✓ Added to Cart' : 'Add to Cart'}
+              </button>
+              <Link href="/shop/fat-rabbit/cart" style={{ display: 'block', width: '100%', padding: '16px 32px', fontSize: 11, letterSpacing: '0.3em', textTransform: 'uppercase', fontFamily: 'Georgia, serif', fontWeight: 400, textAlign: 'center', border: '1px solid #C5442A', color: '#C5442A', textDecoration: 'none', boxSizing: 'border-box', transition: 'all 0.2s' }}>
+                View Cart{count > 0 ? ` (${count})` : ''}
+              </Link>
+              <p style={{ fontSize: 11, color: '#aaa', marginTop: 16, letterSpacing: '0.1em', textAlign: 'center' }}>Secure checkout powered by Stripe</p>
+            </div>
 
             {/* Shipping & Returns accordion */}
             <div className="fr-accordion">
@@ -257,6 +267,21 @@ export default function FatRabbitProductClient({
             </div>
           </div>
         )}
+      </div>
+
+      {/* STICKY BOTTOM BAR — mobile only */}
+      <div className="fr-sticky-bar">
+        <button
+          onClick={handleAddToCart}
+          disabled={outOfStock}
+          style={{ width: '100%', padding: '16px', fontSize: 11, letterSpacing: '0.3em', textTransform: 'uppercase', fontFamily: 'Georgia, serif', background: outOfStock ? '#ccc' : added ? '#2d7a3a' : '#C5442A', color: '#fff', border: 'none', cursor: outOfStock ? 'not-allowed' : 'pointer', transition: 'background 0.2s' }}
+        >
+          {outOfStock ? 'Out of Stock' : added ? '✓ Added to Cart' : 'Add to Cart'}
+        </button>
+        <Link href="/shop/fat-rabbit/cart" style={{ display: 'block', width: '100%', padding: '14px', fontSize: 11, letterSpacing: '0.3em', textTransform: 'uppercase', fontFamily: 'Georgia, serif', textAlign: 'center', border: '1px solid #C5442A', color: '#C5442A', textDecoration: 'none', boxSizing: 'border-box' }}>
+          View Cart{count > 0 ? ` (${count})` : ''}
+        </Link>
+        {sizeError && <p style={{ fontSize: 11, color: '#C5442A', textAlign: 'center', margin: 0, letterSpacing: '0.1em' }}>⚠ Please select a size</p>}
       </div>
 
       {/* FOOTER */}
