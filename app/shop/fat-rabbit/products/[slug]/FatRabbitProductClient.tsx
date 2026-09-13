@@ -2,8 +2,6 @@
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
-import Image from 'next/image'
-import { useRouter } from 'next/navigation'
 import { useCart } from '@/app/cart-context'
 
 type Product = {
@@ -11,7 +9,7 @@ type Product = {
   images: string[]; sizes: string[]; colors: string[]; tag: string | null; stock: number | null; material: string | null
 }
 
-type ColorVariant = { slug: string; label: string; current: boolean }
+type ColorVariant = Product & { label: string }
 
 const SIZE_GUIDE = [
   { size: 'S',   chest: '18"', length: '27"' },
@@ -23,25 +21,39 @@ const SIZE_GUIDE = [
 ]
 
 export default function FatRabbitProductClient({
-  product,
+  product: initialProduct,
   related,
   colorVariants = [],
+  initialSlug,
 }: {
   product: Product
   related: Product[]
   colorVariants?: ColorVariant[]
+  initialSlug: string
 }) {
-  const router = useRouter()
   const { addToCart, count, setBrandColor, setShopPath } = useCart()
+
+  // Active variant drives all displayed content
+  const [activeSlug, setActiveSlug] = useState(initialSlug)
+  const activeVariant = colorVariants.find(v => v.slug === activeSlug)
+  const product = activeVariant ?? initialProduct
+
   const [activeImg, setActiveImg] = useState(0)
   const [selectedSize, setSelectedSize] = useState<string | undefined>(undefined)
-  const [selectedColor, setSelectedColor] = useState<string | undefined>(product.colors[0])
   const [added, setAdded] = useState(false)
   const [sizeError, setSizeError] = useState(false)
   const [sizeGuideOpen, setSizeGuideOpen] = useState(false)
   const [policyOpen, setPolicyOpen] = useState(false)
 
   const outOfStock = product.stock !== null && product.stock === 0
+
+  // Reset image + size when colour changes
+  function selectVariant(slug: string) {
+    setActiveSlug(slug)
+    setActiveImg(0)
+    setSelectedSize(undefined)
+    setAdded(false)
+  }
 
   useEffect(() => {
     setBrandColor('#C5442A')
@@ -55,7 +67,7 @@ export default function FatRabbitProductClient({
       setTimeout(() => setSizeError(false), 2500)
       return
     }
-    addToCart(product as any, selectedSize || product.sizes[0], selectedColor || product.colors[0])
+    addToCart(product as any, selectedSize || product.sizes[0], product.colors[0])
     setAdded(true)
     setTimeout(() => setAdded(false), 2000)
   }
@@ -90,8 +102,9 @@ export default function FatRabbitProductClient({
         .fr-footer-link { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(197,68,42,0.5); text-decoration: none; transition: color 0.2s; }
         .fr-footer-link:hover { color: #C5442A; }
         .fr-footer-copy { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(197,68,42,0.3); }
-        .fr-color-swatch { padding: 6px 14px; font-size: 11px; font-family: 'Barlow Condensed', sans-serif; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; cursor: pointer; border: 2px solid #ccc; background: transparent; color: #1a1a1a; transition: all 0.15s; text-decoration: none; display: inline-block; }
-        .fr-color-swatch.active { border-color: #C5442A; background: #C5442A; color: #fff; }
+        .fr-swatch-btn { width: 36px; height: 36px; border-radius: 50%; border: 2px solid #ccc; cursor: pointer; transition: border-color 0.15s, transform 0.15s; position: relative; }
+        .fr-swatch-btn.active { border-color: #C5442A; transform: scale(1.1); }
+        .fr-swatch-btn:hover { border-color: #C5442A; }
         .fr-sticky-bar { display: none; }
         @media (max-width: 768px) {
           .fr-pnav { padding: 0 16px; height: 60px; }
@@ -150,7 +163,7 @@ export default function FatRabbitProductClient({
 
             {/* Brand blurb */}
             <p style={{ fontSize: 14, lineHeight: 1.8, color: '#666', marginBottom: 12, fontStyle: 'italic' }}>{product.description}</p>
-            <p style={{ fontSize: 13, lineHeight: 1.75, color: '#888', marginBottom: 32 }}>
+            <p style={{ fontSize: 13, lineHeight: 1.75, color: '#888', marginBottom: 28 }}>
               Fat Rabbit merch is designed in-house and made for people who know good food and good style. Printed on quality blanks and shipped directly from St. Catharines — wear it proudly.
             </p>
 
@@ -161,16 +174,27 @@ export default function FatRabbitProductClient({
               </p>
             )}
 
-            {/* Colour variants toggle */}
+            {/* Colour toggle — swaps in-place */}
             {colorVariants.length > 1 && (
               <div style={{ marginBottom: 28 }}>
-                <p style={{ fontSize: 11, letterSpacing: '0.25em', textTransform: 'uppercase', color: '#999', marginBottom: 12 }}>Colour</p>
-                <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
-                  {colorVariants.map(v => (
-                    <Link key={v.slug} href={`/shop/fat-rabbit/products/${v.slug}`} className={`fr-color-swatch${v.current ? ' active' : ''}`}>
-                      {v.label}
-                    </Link>
-                  ))}
+                <p style={{ fontSize: 11, letterSpacing: '0.25em', textTransform: 'uppercase', color: '#999', marginBottom: 12 }}>
+                  Colour — <span style={{ color: '#1a1a1a', fontStyle: 'italic', textTransform: 'none', letterSpacing: 0 }}>{colorVariants.find(v => v.slug === activeSlug)?.label}</span>
+                </p>
+                <div style={{ display: 'flex', gap: 10, alignItems: 'center' }}>
+                  {colorVariants.map(v => {
+                    const isBlack = v.label.toLowerCase() === 'black'
+                    const isWhite = v.label.toLowerCase() === 'white'
+                    const swatchColor = isBlack ? '#1a1a1a' : isWhite ? '#fff' : '#ccc'
+                    return (
+                      <button
+                        key={v.slug}
+                        onClick={() => selectVariant(v.slug)}
+                        className={`fr-swatch-btn${v.slug === activeSlug ? ' active' : ''}`}
+                        title={v.label}
+                        style={{ background: swatchColor }}
+                      />
+                    )
+                  })}
                 </div>
               </div>
             )}
@@ -197,16 +221,10 @@ export default function FatRabbitProductClient({
                 </div>
                 {sizeGuideOpen && (
                   <table className="fr-size-table">
-                    <thead>
-                      <tr>
-                        <th>Size</th><th>Chest Width</th><th>Body Length</th>
-                      </tr>
-                    </thead>
+                    <thead><tr><th>Size</th><th>Chest Width</th><th>Body Length</th></tr></thead>
                     <tbody>
                       {SIZE_GUIDE.map(row => (
-                        <tr key={row.size}>
-                          <td>{row.size}</td><td>{row.chest}</td><td>{row.length}</td>
-                        </tr>
+                        <tr key={row.size}><td>{row.size}</td><td>{row.chest}</td><td>{row.length}</td></tr>
                       ))}
                     </tbody>
                   </table>

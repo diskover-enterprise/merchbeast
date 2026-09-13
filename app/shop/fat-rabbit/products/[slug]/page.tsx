@@ -12,6 +12,15 @@ function getBaseName(name: string) {
   return name
 }
 
+function parseProduct(p: any) {
+  return {
+    ...p,
+    images: JSON.parse(p.images || '[]') as string[],
+    sizes: JSON.parse(p.sizes || '[]') as string[],
+    colors: JSON.parse(p.colors || '[]') as string[],
+  }
+}
+
 export default async function FatRabbitProductPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params
 
@@ -19,41 +28,31 @@ export default async function FatRabbitProductPage({ params }: { params: Promise
   const raw = await prisma.merchProduct.findUnique({ where: { slug } })
   if (!raw || !raw.active) notFound()
 
-  const product = {
-    ...raw,
-    images: JSON.parse(raw.images || '[]') as string[],
-    sizes: JSON.parse(raw.sizes || '[]') as string[],
-    colors: JSON.parse(raw.colors || '[]') as string[],
-  }
+  const product = parseProduct(raw)
+  const baseName = getBaseName(raw.name)
 
   const allActive = await prisma.merchProduct.findMany({
     where: { shopId: raw.shopId ?? undefined, active: true },
   })
 
   // Related: other products (excluding colour variants of the same product)
-  const baseName = getBaseName(raw.name)
-  const relatedRaw = allActive
+  const related = allActive
     .filter(p => p.slug !== slug && getBaseName(p.name) !== baseName)
     .slice(0, 3)
+    .map(parseProduct)
 
-  const related = relatedRaw.map(p => ({
-    ...p,
-    images: JSON.parse(p.images || '[]') as string[],
-    sizes: JSON.parse(p.sizes || '[]') as string[],
-    colors: JSON.parse(p.colors || '[]') as string[],
-  }))
-
-  // Colour variants of this same product
+  // Full data for all colour variants (including current) so client can swap in-place
   const colorVariants = allActive
     .filter(p => getBaseName(p.name) === baseName)
-    .map(p => ({
-      slug: p.slug,
-      label: p.name.split(' ').slice(-1)[0],
-      current: p.slug === slug,
-    }))
+    .map(p => ({ ...parseProduct(p), label: p.name.split(' ').slice(-1)[0] }))
 
   return <>
     {shop && <TrackView shopId={shop.id} productSlug={slug} />}
-    <FatRabbitProductClient product={product} related={related} colorVariants={colorVariants.length > 1 ? colorVariants : []} />
+    <FatRabbitProductClient
+      product={product}
+      related={related}
+      colorVariants={colorVariants.length > 1 ? colorVariants : []}
+      initialSlug={slug}
+    />
   </>
 }
