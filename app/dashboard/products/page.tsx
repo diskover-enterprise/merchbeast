@@ -16,8 +16,12 @@ type MerchProduct = {
   images: string[]
   sizes: string[]
   colors: string[]
+  colorImages: Record<string, string[]>
   tag: string | null
   active: boolean
+  stock: number | null
+  material: string | null
+  sortOrder: number | null
 }
 
 const emptyForm = {
@@ -29,6 +33,7 @@ const emptyForm = {
   images: [] as string[],
   sizes: [] as string[],
   colors: [] as string[],
+  colorImages: {} as Record<string, string[]>,
   active: true,
   stock: '',
   material: '',
@@ -194,14 +199,14 @@ export default function ProductsPage() {
 
   function openEdit(p: MerchProduct) {
     setEditing(p)
-    setForm({ shopId: p.shopId || '', name: p.name, description: p.description, price: p.price, tag: p.tag || '', images: p.images, sizes: p.sizes, colors: p.colors, active: p.active, stock: p.stock != null ? String(p.stock) : '', material: p.material || '', sortOrder: p.sortOrder != null ? String(p.sortOrder) : '0' })
+    setForm({ shopId: p.shopId || '', name: p.name, description: p.description, price: p.price, tag: p.tag || '', images: p.images, sizes: p.sizes, colors: p.colors, colorImages: p.colorImages || {}, active: p.active, stock: p.stock != null ? String(p.stock) : '', material: p.material || '', sortOrder: p.sortOrder != null ? String(p.sortOrder) : '0' })
     setSaveError('')
     setShowForm(true)
   }
 
   function openDuplicate(p: MerchProduct) {
     setEditing(null) // treat as new product
-    setForm({ shopId: p.shopId || '', name: `${p.name} (Copy)`, description: p.description, price: p.price, tag: p.tag || '', images: p.images, sizes: p.sizes, colors: p.colors, active: false, stock: p.stock != null ? String(p.stock) : '', material: p.material || '', sortOrder: '0' })
+    setForm({ shopId: p.shopId || '', name: `${p.name} (Copy)`, description: p.description, price: p.price, tag: p.tag || '', images: p.images, sizes: p.sizes, colors: p.colors, colorImages: p.colorImages || {}, active: false, stock: p.stock != null ? String(p.stock) : '', material: p.material || '', sortOrder: '0' })
     setSaveError('')
     setShowForm(true)
   }
@@ -345,9 +350,23 @@ export default function ProductsPage() {
                   </div>
                 </div>
                 <div className="db-field">
-                  <label>Images</label>
+                  <label>Images <span style={{ color: 'var(--ink-mute)', fontWeight: 400 }}>(fallback / single-colour)</span></label>
                   <ImageUploader images={form.images} onChange={imgs => setForm({ ...form, images: imgs })} />
                 </div>
+                {form.colors.length > 0 && (
+                  <div className="db-field">
+                    <label>Per-Colour Images <span style={{ color: 'var(--ink-mute)', fontWeight: 400 }}>(replaces fallback images when a colour is selected)</span></label>
+                    {form.colors.map(color => (
+                      <div key={color} style={{ marginBottom: 20 }}>
+                        <div style={{ fontSize: 11, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--ink-mute)', marginBottom: 8 }}>{color}</div>
+                        <ImageUploader
+                          images={form.colorImages[color] || []}
+                          onChange={imgs => setForm({ ...form, colorImages: { ...form.colorImages, [color]: imgs } })}
+                        />
+                      </div>
+                    ))}
+                  </div>
+                )}
                 <div className="db-field">
                   <label>Material <span style={{ color: 'var(--ink-mute)', fontWeight: 400 }}>(e.g. 100% ring-spun cotton · 6.1 oz/yd² · Garment-dyed)</span></label>
                   <input type="text" value={form.material} onChange={e => setForm({ ...form, material: e.target.value })} placeholder="e.g. 100% ring-spun cotton · 6.1 oz/yd² (207 GSM)" />

@@ -1,0 +1,1 @@
+ALTER TABLE "MerchProduct" ADD COLUMN IF NOT EXISTS "colorImages" TEXT NOT NULL DEFAULT '{}';

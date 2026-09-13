@@ -5,7 +5,7 @@ import Image from 'next/image'
 import { useState, useEffect } from 'react'
 import { useCart } from '@/app/cart-context'
 
-type Product = { slug: string; name: string; price: string; description: string; images: string[]; sizes: string[]; colors: string[]; tag: string | null; stock: number | null }
+type Product = { slug: string; name: string; price: string; description: string; images: string[]; sizes: string[]; colors: string[]; colorImages?: Record<string, string[]>; tag: string | null; stock: number | null }
 
 export function FatRabbitStorefront({ dbProducts }: { heroImage?: string | null; dbProducts?: Product[] }) {
   const { count, setBrandColor, setShopPath } = useCart()
@@ -200,8 +200,13 @@ function ProductCard({ product }: { product: Product }) {
         )}
         {/* Product image */}
         <div className="fr-card-img" style={{ background: '#f5f4f0', height: 300, position: 'relative', overflow: 'hidden' }}>
+          {(() => {
+            const ci = product.colorImages || {}
+            const firstColor = product.colors?.[0]
+            const thumb = (firstColor && ci[firstColor]?.length > 0) ? ci[firstColor][0] : product.images[0]
+            return (
           <Image
-            src={product.images[0]}
+            src={thumb}
             alt={product.name}
             fill
             sizes="(max-width: 768px) 100vw, 33vw"
@@ -211,6 +216,8 @@ function ProductCard({ product }: { product: Product }) {
               transform: hovered ? 'scale(1.05)' : 'scale(1)',
             }}
           />
+            )
+          })()}
         </div>
         {/* Card footer */}
         <div style={{ padding: '16px 20px 20px', borderTop: '1px solid rgba(219,64,33,0.08)' }}>

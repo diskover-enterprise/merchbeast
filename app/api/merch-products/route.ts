@@ -11,6 +11,7 @@ function deserialize(p: any) {
     images: JSON.parse(p.images || '[]'),
     sizes: JSON.parse(p.sizes || '[]'),
     colors: JSON.parse(p.colors || '[]'),
+    colorImages: JSON.parse(p.colorImages || '{}'),
   }
 }
 
@@ -44,6 +45,7 @@ export async function POST(request: Request) {
       stock: body.stock != null && body.stock !== '' ? Number(body.stock) : null,
       material: body.material || null,
       sortOrder: body.sortOrder != null && body.sortOrder !== '' ? Number(body.sortOrder) : 0,
+      colorImages: JSON.stringify(body.colorImages || {}),
     },
   })
   return Response.json(deserialize(product))

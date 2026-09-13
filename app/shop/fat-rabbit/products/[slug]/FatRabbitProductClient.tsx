@@ -6,7 +6,8 @@ import { useCart } from '@/app/cart-context'
 
 type Product = {
   id: string; slug: string; name: string; price: string; description: string
-  images: string[]; sizes: string[]; colors: string[]; tag: string | null; stock: number | null; material: string | null
+  images: string[]; sizes: string[]; colors: string[]; colorImages: Record<string, string[]>
+  tag: string | null; stock: number | null; material: string | null
 }
 
 type ColorVariant = Product & { label: string }
@@ -25,18 +26,32 @@ export default function FatRabbitProductClient({
   related,
   colorVariants = [],
   initialSlug,
+  colorImages = {},
 }: {
   product: Product
   related: Product[]
   colorVariants?: ColorVariant[]
   initialSlug: string
+  colorImages?: Record<string, string[]>
 }) {
   const { addToCart, count, setBrandColor, setShopPath } = useCart()
 
-  // Active variant drives all displayed content
+  // colorImages mode: single product with per-colour images
+  const hasColorImages = Object.keys(colorImages).length > 0
+  const [selectedColor, setSelectedColor] = useState<string>(
+    hasColorImages ? (initialProduct.colors[0] || '') : ''
+  )
+
+  // colorVariants mode: separate products swapped by slug (legacy)
   const [activeSlug, setActiveSlug] = useState(initialSlug)
   const activeVariant = colorVariants.find(v => v.slug === activeSlug)
   const product = activeVariant ?? initialProduct
+
+  // Images to show: colorImages[selectedColor] if available, else product.images
+  const currentImages =
+    hasColorImages && selectedColor && colorImages[selectedColor]?.length > 0
+      ? colorImages[selectedColor]
+      : product.images
 
   const [activeImg, setActiveImg] = useState(0)
   const [selectedSize, setSelectedSize] = useState<string | undefined>(undefined)
@@ -47,7 +62,13 @@ export default function FatRabbitProductClient({
 
   const outOfStock = product.stock !== null && product.stock === 0
 
-  // Reset image + size when colour changes
+  function selectColor(color: string) {
+    setSelectedColor(color)
+    setActiveImg(0)
+    setAdded(false)
+  }
+
+  // Reset image + size when colour variant (legacy slug mode) changes
   function selectVariant(slug: string) {
     setActiveSlug(slug)
     setActiveImg(0)
@@ -141,11 +162,11 @@ export default function FatRabbitProductClient({
           <div>
             <div className="fr-main-img" style={{ marginBottom: 12, position: 'relative', width: '100%', aspectRatio: '1/1', background: '#D9D4CA' }}>
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={product.images[activeImg]} alt={product.name} style={{ width: '100%', height: '100%', objectFit: 'contain', display: 'block' }} />
+              <img src={currentImages[activeImg]} alt={product.name} style={{ width: '100%', height: '100%', objectFit: 'contain', display: 'block' }} />
             </div>
-            {product.images.length > 1 && (
+            {currentImages.length > 1 && (
               <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
-                {product.images.map((img, i) => (
+                {currentImages.map((img, i) => (
                   <button key={i} onClick={() => setActiveImg(i)} style={{ width: 72, height: 72, padding: 0, border: i === activeImg ? '2px solid #C5442A' : '2px solid transparent', background: '#D9D4CA', cursor: 'pointer', overflow: 'hidden', flexShrink: 0 }}>
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img src={img} alt="" style={{ width: '100%', height: '100%', objectFit: 'contain', display: 'block' }} />
@@ -174,8 +195,31 @@ export default function FatRabbitProductClient({
               </p>
             )}
 
-            {/* Colour toggle — swaps in-place */}
-            {colorVariants.length > 1 && (
+            {/* Colour toggle — colorImages mode (single product, swap images) */}
+            {hasColorImages && product.colors.length > 1 && (
+              <div style={{ marginBottom: 28 }}>
+                <p style={{ fontSize: 11, letterSpacing: '0.25em', textTransform: 'uppercase', color: '#999', marginBottom: 12 }}>
+                  Colour — <span style={{ color: '#1a1a1a', fontStyle: 'italic', textTransform: 'none', letterSpacing: 0 }}>{selectedColor}</span>
+                </p>
+                <div style={{ display: 'flex', gap: 10, alignItems: 'center' }}>
+                  {product.colors.map(color => {
+                    const swatchColor = color.toLowerCase() === 'black' ? '#1a1a1a' : color.toLowerCase() === 'white' ? '#fff' : '#ccc'
+                    return (
+                      <button
+                        key={color}
+                        onClick={() => selectColor(color)}
+                        className={`fr-swatch-btn${color === selectedColor ? ' active' : ''}`}
+                        title={color}
+                        style={{ background: swatchColor }}
+                      />
+                    )
+                  })}
+                </div>
+              </div>
+            )}
+
+            {/* Colour toggle — legacy mode (separate products, swap slug) */}
+            {!hasColorImages && colorVariants.length > 1 && (
               <div style={{ marginBottom: 28 }}>
                 <p style={{ fontSize: 11, letterSpacing: '0.25em', textTransform: 'uppercase', color: '#999', marginBottom: 12 }}>
                   Colour — <span style={{ color: '#1a1a1a', fontStyle: 'italic', textTransform: 'none', letterSpacing: 0 }}>{colorVariants.find(v => v.slug === activeSlug)?.label}</span>
