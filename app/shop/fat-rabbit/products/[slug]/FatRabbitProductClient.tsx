@@ -8,7 +8,7 @@ import { useCart } from '@/app/cart-context'
 
 type Product = {
   id: string; slug: string; name: string; price: string; description: string
-  images: string[]; sizes: string[]; colors: string[]; tag: string | null; stock: number | null
+  images: string[]; sizes: string[]; colors: string[]; tag: string | null; stock: number | null; material: string | null
 }
 
 type ColorVariant = { slug: string; label: string; current: boolean }
@@ -143,6 +143,13 @@ export default function FatRabbitProductClient({
             <p style={{ fontSize: 13, lineHeight: 1.75, color: '#888', marginBottom: 32 }}>
               Fat Rabbit merch is designed in-house and made for people who know good food and good style. Printed on quality blanks and shipped directly from St. Catharines — wear it proudly.
             </p>
+
+            {/* Material */}
+            {product.material && (
+              <p style={{ fontSize: 12, letterSpacing: '0.1em', color: '#888', marginBottom: 28, textTransform: 'uppercase' }}>
+                {product.material}
+              </p>
+            )}
 
             {/* Colour variants toggle */}
             {colorVariants.length > 1 && (

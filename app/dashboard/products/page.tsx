@@ -31,6 +31,7 @@ const emptyForm = {
   colors: [] as string[],
   active: true,
   stock: '',
+  material: '',
   sortOrder: '0',
 }
 
@@ -193,14 +194,14 @@ export default function ProductsPage() {
 
   function openEdit(p: MerchProduct) {
     setEditing(p)
-    setForm({ shopId: p.shopId || '', name: p.name, description: p.description, price: p.price, tag: p.tag || '', images: p.images, sizes: p.sizes, colors: p.colors, active: p.active, stock: p.stock != null ? String(p.stock) : '', sortOrder: p.sortOrder != null ? String(p.sortOrder) : '0' })
+    setForm({ shopId: p.shopId || '', name: p.name, description: p.description, price: p.price, tag: p.tag || '', images: p.images, sizes: p.sizes, colors: p.colors, active: p.active, stock: p.stock != null ? String(p.stock) : '', material: p.material || '', sortOrder: p.sortOrder != null ? String(p.sortOrder) : '0' })
     setSaveError('')
     setShowForm(true)
   }
 
   function openDuplicate(p: MerchProduct) {
     setEditing(null) // treat as new product
-    setForm({ shopId: p.shopId || '', name: `${p.name} (Copy)`, description: p.description, price: p.price, tag: p.tag || '', images: p.images, sizes: p.sizes, colors: p.colors, active: false, stock: p.stock != null ? String(p.stock) : '', sortOrder: '0' })
+    setForm({ shopId: p.shopId || '', name: `${p.name} (Copy)`, description: p.description, price: p.price, tag: p.tag || '', images: p.images, sizes: p.sizes, colors: p.colors, active: false, stock: p.stock != null ? String(p.stock) : '', material: p.material || '', sortOrder: '0' })
     setSaveError('')
     setShowForm(true)
   }
@@ -346,6 +347,10 @@ export default function ProductsPage() {
                 <div className="db-field">
                   <label>Images</label>
                   <ImageUploader images={form.images} onChange={imgs => setForm({ ...form, images: imgs })} />
+                </div>
+                <div className="db-field">
+                  <label>Material <span style={{ color: 'var(--ink-mute)', fontWeight: 400 }}>(e.g. 100% ring-spun cotton · 6.1 oz/yd² · Garment-dyed)</span></label>
+                  <input type="text" value={form.material} onChange={e => setForm({ ...form, material: e.target.value })} placeholder="e.g. 100% ring-spun cotton · 6.1 oz/yd² (207 GSM)" />
                 </div>
                 <div className="db-field">
                   <label>Limited Edition Stock <span style={{ color: 'var(--ink-mute)', fontWeight: 400 }}>(leave blank for unlimited)</span></label>

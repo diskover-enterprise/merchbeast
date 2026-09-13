@@ -42,6 +42,7 @@ export async function POST(request: Request) {
       tag: body.tag || null,
       active: body.active ?? true,
       stock: body.stock != null && body.stock !== '' ? Number(body.stock) : null,
+      material: body.material || null,
       sortOrder: body.sortOrder != null && body.sortOrder !== '' ? Number(body.sortOrder) : 0,
     },
   })
