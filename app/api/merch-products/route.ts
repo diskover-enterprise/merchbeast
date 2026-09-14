@@ -40,6 +40,7 @@ export async function POST(request: Request) {
       images: JSON.stringify(body.images || []),
       sizes: JSON.stringify(body.sizes || []),
       colors: JSON.stringify(body.colors || []),
+      sku: body.sku || null,
       tag: body.tag || null,
       active: body.active ?? true,
       stock: body.stock != null && body.stock !== '' ? Number(body.stock) : null,

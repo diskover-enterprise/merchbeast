@@ -161,6 +161,7 @@ model MerchProduct {
   images      String   @default("[]")
   sizes       String   @default("[]")
   colors      String   @default("[]")
+  sku         String?
   tag         String?
   active      Boolean  @default(true)
   stock       Int?

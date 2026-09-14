@@ -17,6 +17,7 @@ type MerchProduct = {
   sizes: string[]
   colors: string[]
   colorImages: Record<string, string[]>
+  sku: string | null
   tag: string | null
   active: boolean
   stock: number | null
@@ -29,6 +30,7 @@ const emptyForm = {
   name: '',
   description: '',
   price: '',
+  sku: '',
   tag: '',
   images: [] as string[],
   sizes: [] as string[],
@@ -199,14 +201,14 @@ export default function ProductsPage() {
 
   function openEdit(p: MerchProduct) {
     setEditing(p)
-    setForm({ shopId: p.shopId || '', name: p.name, description: p.description, price: p.price, tag: p.tag || '', images: p.images, sizes: p.sizes, colors: p.colors, colorImages: p.colorImages || {}, active: p.active, stock: p.stock != null ? String(p.stock) : '', material: p.material || '', sortOrder: p.sortOrder != null ? String(p.sortOrder) : '0' })
+    setForm({ shopId: p.shopId || '', name: p.name, description: p.description, price: p.price, sku: p.sku || '', tag: p.tag || '', images: p.images, sizes: p.sizes, colors: p.colors, colorImages: p.colorImages || {}, active: p.active, stock: p.stock != null ? String(p.stock) : '', material: p.material || '', sortOrder: p.sortOrder != null ? String(p.sortOrder) : '0' })
     setSaveError('')
     setShowForm(true)
   }
 
   function openDuplicate(p: MerchProduct) {
     setEditing(null) // treat as new product
-    setForm({ shopId: p.shopId || '', name: `${p.name} (Copy)`, description: p.description, price: p.price, tag: p.tag || '', images: p.images, sizes: p.sizes, colors: p.colors, colorImages: p.colorImages || {}, active: false, stock: p.stock != null ? String(p.stock) : '', material: p.material || '', sortOrder: '0' })
+    setForm({ shopId: p.shopId || '', name: `${p.name} (Copy)`, description: p.description, price: p.price, sku: '', tag: p.tag || '', images: p.images, sizes: p.sizes, colors: p.colors, colorImages: p.colorImages || {}, active: false, stock: p.stock != null ? String(p.stock) : '', material: p.material || '', sortOrder: '0' })
     setSaveError('')
     setShowForm(true)
   }
@@ -305,9 +307,13 @@ export default function ProductsPage() {
                     <input type="text" value={form.price} onChange={e => setForm({ ...form, price: e.target.value })} placeholder="$45.00 CAD" />
                   </div>
                   <div className="db-field">
-                    <label>Tag</label>
-                    <input type="text" value={form.tag} onChange={e => setForm({ ...form, tag: e.target.value })} placeholder="Tee, Crewneck, Cap…" />
+                    <label>SKU</label>
+                    <input type="text" value={form.sku} onChange={e => setForm({ ...form, sku: e.target.value })} placeholder="e.g. FR-AUTO-WHT" style={{ textTransform: 'uppercase' }} />
                   </div>
+                </div>
+                <div className="db-field">
+                  <label>Tag</label>
+                  <input type="text" value={form.tag} onChange={e => setForm({ ...form, tag: e.target.value })} placeholder="Tee, Crewneck, Cap…" />
                 </div>
                 <div className="db-field">
                   <label>Description</label>
@@ -431,7 +437,10 @@ export default function ProductsPage() {
                           )}
                           <div>
                             <span>{p.name}</span>
-                            <div style={{ fontSize: 11, color: 'var(--ink-mute)', fontWeight: 400 }}>{p.description?.slice(0, 45)}{(p.description?.length ?? 0) > 45 ? '…' : ''}</div>
+                            <div style={{ fontSize: 11, color: 'var(--ink-mute)', fontWeight: 400 }}>
+                              {p.sku && <span style={{ fontFamily: 'monospace', marginRight: 8, color: 'var(--neon)', opacity: 0.7 }}>{p.sku}</span>}
+                              {p.description?.slice(0, 40)}{(p.description?.length ?? 0) > 40 ? '…' : ''}
+                            </div>
                           </div>
                         </div>
                       </td>
