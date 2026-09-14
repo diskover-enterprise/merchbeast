@@ -132,6 +132,7 @@ export default function FatRabbitProductClient({
           .fr-pwrap { padding: 24px 16px 120px; }
           .fr-playout { grid-template-columns: 1fr; gap: 20px; }
           .fr-main-img { aspect-ratio: unset !important; height: 260px !important; }
+          .fr-main-img img { padding: 20px !important; }
           .fr-related-grid { grid-template-columns: repeat(2, 1fr); }
           .fr-footer { padding: 28px 20px; margin-top: 48px; }
           .fr-desktop-buttons { display: none; }
@@ -162,7 +163,7 @@ export default function FatRabbitProductClient({
           <div>
             <div className="fr-main-img" style={{ marginBottom: 12, position: 'relative', width: '100%', aspectRatio: '1/1', background: '#D9D4CA' }}>
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={currentImages[activeImg]} alt={product.name} style={{ width: '100%', height: '100%', objectFit: 'contain', display: 'block' }} />
+              <img src={currentImages[activeImg]} alt={product.name} style={{ width: '100%', height: '100%', objectFit: 'contain', display: 'block', padding: '32px', boxSizing: 'border-box' }} />
             </div>
             {currentImages.length > 1 && (
               <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
