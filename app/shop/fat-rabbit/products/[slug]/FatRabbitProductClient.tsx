@@ -105,7 +105,12 @@ export default function FatRabbitProductClient({
       setTimeout(() => setSizeError(false), 2500)
       return
     }
-    addToCart(product as any, selectedSize || product.sizes[0], product.colors[0])
+    const selectedColour = hasVariants
+      ? (activeVariantData?.name || '')
+      : hasColorImages
+        ? selectedColor
+        : (activeVariant?.colors[0] ?? product.colors[0])
+    addToCart(product as any, selectedSize || product.sizes[0], selectedColour)
     setAdded(true)
     setTimeout(() => setAdded(false), 2000)
   }
