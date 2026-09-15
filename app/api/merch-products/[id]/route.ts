@@ -11,6 +11,7 @@ function deserialize(p: any) {
     sizes: JSON.parse(p.sizes || '[]'),
     colors: JSON.parse(p.colors || '[]'),
     colorImages: JSON.parse(p.colorImages || '{}'),
+    variants: JSON.parse(p.variants || '[]'),
   }
 }
 
@@ -34,6 +35,7 @@ export async function PUT(request: Request, { params }: { params: Promise<{ id: 
       material: body.material || null,
       sortOrder: body.sortOrder != null && body.sortOrder !== '' ? Number(body.sortOrder) : 0,
       colorImages: JSON.stringify(body.colorImages || {}),
+      variants: JSON.stringify(body.variants || []),
     },
   })
   return Response.json(deserialize(product))

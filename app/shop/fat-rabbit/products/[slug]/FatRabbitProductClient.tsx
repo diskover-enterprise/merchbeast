@@ -4,9 +4,12 @@ import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { useCart } from '@/app/cart-context'
 
+type ProductVariant = { name: string; hex: string; images: [string, string] }
+
 type Product = {
   id: string; slug: string; name: string; price: string; description: string
   images: string[]; sizes: string[]; colors: string[]; colorImages: Record<string, string[]>
+  variants: ProductVariant[]
   tag: string | null; stock: number | null; material: string | null
 }
 
@@ -27,17 +30,24 @@ export default function FatRabbitProductClient({
   colorVariants = [],
   initialSlug,
   colorImages = {},
+  variants = [],
 }: {
   product: Product
   related: Product[]
   colorVariants?: ColorVariant[]
   initialSlug: string
   colorImages?: Record<string, string[]>
+  variants?: ProductVariant[]
 }) {
   const { addToCart, count, setBrandColor, setShopPath } = useCart()
 
-  // colorImages mode: single product with per-colour images
-  const hasColorImages = Object.keys(colorImages).length > 0
+  // variants mode: new structured variants with hex swatch + 2 images each
+  const hasVariants = variants.length > 0
+  const [selectedVariantIdx, setSelectedVariantIdx] = useState(0)
+  const activeVariantData = hasVariants ? variants[selectedVariantIdx] : null
+
+  // colorImages mode: single product with per-colour images (legacy)
+  const hasColorImages = !hasVariants && Object.keys(colorImages).length > 0
   const [selectedColor, setSelectedColor] = useState<string>(
     hasColorImages ? (initialProduct.colors[0] || '') : ''
   )
@@ -47,9 +57,10 @@ export default function FatRabbitProductClient({
   const activeVariant = colorVariants.find(v => v.slug === activeSlug)
   const product = activeVariant ?? initialProduct
 
-  // Images to show: colorImages[selectedColor] if available, else product.images
-  const currentImages =
-    hasColorImages && selectedColor && colorImages[selectedColor]?.length > 0
+  // Images to show — priority: variants > colorImages > product.images
+  const currentImages: string[] = hasVariants && activeVariantData
+    ? activeVariantData.images.filter(Boolean)
+    : hasColorImages && selectedColor && colorImages[selectedColor]?.length > 0
       ? colorImages[selectedColor]
       : product.images
 
@@ -61,6 +72,12 @@ export default function FatRabbitProductClient({
   const [policyOpen, setPolicyOpen] = useState(false)
 
   const outOfStock = product.stock !== null && product.stock === 0
+
+  function selectVariantIdx(idx: number) {
+    setSelectedVariantIdx(idx)
+    setActiveImg(0)
+    setAdded(false)
+  }
 
   function selectColor(color: string) {
     setSelectedColor(color)
@@ -194,6 +211,26 @@ export default function FatRabbitProductClient({
               <p style={{ fontSize: 12, letterSpacing: '0.1em', color: '#888', marginBottom: 28, textTransform: 'uppercase' }}>
                 {product.material}
               </p>
+            )}
+
+            {/* Colour toggle — variants mode (structured, hex swatch) */}
+            {hasVariants && variants.length > 1 && (
+              <div style={{ marginBottom: 28 }}>
+                <p style={{ fontSize: 11, letterSpacing: '0.25em', textTransform: 'uppercase', color: '#999', marginBottom: 12 }}>
+                  Colour — <span style={{ color: '#1a1a1a', fontStyle: 'italic', textTransform: 'none', letterSpacing: 0 }}>{activeVariantData?.name}</span>
+                </p>
+                <div style={{ display: 'flex', gap: 10, alignItems: 'center' }}>
+                  {variants.map((v, idx) => (
+                    <button
+                      key={idx}
+                      onClick={() => selectVariantIdx(idx)}
+                      className={`fr-swatch-btn${idx === selectedVariantIdx ? ' active' : ''}`}
+                      title={v.name}
+                      style={{ background: v.hex }}
+                    />
+                  ))}
+                </div>
+              </div>
             )}
 
             {/* Colour toggle — colorImages mode (single product, swap images) */}

@@ -19,6 +19,7 @@ function parseProduct(p: any) {
     sizes: JSON.parse(p.sizes || '[]') as string[],
     colors: JSON.parse(p.colors || '[]') as string[],
     colorImages: JSON.parse(p.colorImages || '{}') as Record<string, string[]>,
+    variants: JSON.parse(p.variants || '[]') as Array<{ name: string; hex: string; images: [string, string] }>,
   }
 }
 
@@ -55,6 +56,7 @@ export default async function FatRabbitProductPage({ params }: { params: Promise
       colorVariants={colorVariants.length > 1 ? colorVariants : []}
       initialSlug={slug}
       colorImages={product.colorImages}
+      variants={product.variants}
     />
   </>
 }

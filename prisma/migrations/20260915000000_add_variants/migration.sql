@@ -1,0 +1,1 @@
+ALTER TABLE "MerchProduct" ADD COLUMN IF NOT EXISTS "variants" TEXT NOT NULL DEFAULT '[]';

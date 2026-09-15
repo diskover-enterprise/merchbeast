@@ -21,6 +21,7 @@ export default async function FatRabbitShopPage() {
     sizes: JSON.parse(p.sizes || '[]') as string[],
     colors: JSON.parse(p.colors || '[]') as string[],
     colorImages: JSON.parse(p.colorImages || '{}') as Record<string, string[]>,
+    variants: JSON.parse(p.variants || '[]') as Array<{ name: string; hex: string; images: [string, string] }>,
     tag: p.tag, stock: p.stock ?? null,
   }))
 

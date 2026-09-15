@@ -5,7 +5,7 @@ import Image from 'next/image'
 import { useState, useEffect } from 'react'
 import { useCart } from '@/app/cart-context'
 
-type Product = { slug: string; name: string; price: string; description: string; images: string[]; sizes: string[]; colors: string[]; colorImages?: Record<string, string[]>; tag: string | null; stock: number | null }
+type Product = { slug: string; name: string; price: string; description: string; images: string[]; sizes: string[]; colors: string[]; colorImages?: Record<string, string[]>; variants?: Array<{ name: string; hex: string; images: [string, string] }>; tag: string | null; stock: number | null }
 
 export function FatRabbitStorefront({ dbProducts }: { heroImage?: string | null; dbProducts?: Product[] }) {
   const { count, setBrandColor, setShopPath } = useCart()
@@ -201,9 +201,10 @@ function ProductCard({ product }: { product: Product }) {
         {/* Product image */}
         <div className="fr-card-img" style={{ background: '#f5f4f0', height: 300, position: 'relative', overflow: 'hidden' }}>
           {(() => {
+            const v0 = product.variants?.[0]
             const ci = product.colorImages || {}
             const firstColor = product.colors?.[0]
-            const thumb = (firstColor && ci[firstColor]?.length > 0) ? ci[firstColor][0] : product.images[0]
+            const thumb = v0?.images[0] || (firstColor && ci[firstColor]?.length > 0 ? ci[firstColor][0] : product.images[0])
             return (
           <Image
             src={thumb}

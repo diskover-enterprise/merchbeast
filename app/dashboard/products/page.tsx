@@ -6,6 +6,8 @@ import { products as staticProducts } from '@/app/products/products-data'
 
 type Shop = { id: string; name: string; slug: string }
 
+type ProductVariant = { name: string; hex: string; images: [string, string] }
+
 type MerchProduct = {
   id: string
   slug: string
@@ -17,6 +19,7 @@ type MerchProduct = {
   sizes: string[]
   colors: string[]
   colorImages: Record<string, string[]>
+  variants: ProductVariant[]
   sku: string | null
   tag: string | null
   active: boolean
@@ -36,6 +39,7 @@ const emptyForm = {
   sizes: [] as string[],
   colors: [] as string[],
   colorImages: {} as Record<string, string[]>,
+  variants: [] as ProductVariant[],
   active: true,
   stock: '',
   material: '',
@@ -44,6 +48,110 @@ const emptyForm = {
 
 const SIZE_OPTIONS = ['XS', 'S', 'M', 'L', 'XL', 'XXL', 'One Size']
 const COLOR_OPTIONS = ['Black', 'White', 'Ivory', 'Grey', 'Navy', 'Red', 'Green', 'Blue', 'Brown']
+
+function VariantImageSlot({ url, onUpload, onClear, label }: { url: string; onUpload: (u: string) => void; onClear: () => void; label: string }) {
+  const inputRef = useRef<HTMLInputElement>(null)
+  const [uploading, setUploading] = useState(false)
+
+  async function handleFile(file: File) {
+    setUploading(true)
+    const fd = new FormData()
+    fd.append('file', file)
+    const res = await fetch('/api/upload', { method: 'POST', body: fd })
+    if (res.ok) { const { url: u } = await res.json(); onUpload(u) }
+    setUploading(false)
+  }
+
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 4, alignItems: 'center' }}>
+      <div
+        onClick={() => !url && inputRef.current?.click()}
+        style={{
+          width: 80, height: 80, border: '1px dashed var(--line)', borderRadius: 6,
+          background: 'var(--bg-2)', cursor: url ? 'default' : 'pointer',
+          display: 'flex', alignItems: 'center', justifyContent: 'center',
+          position: 'relative', overflow: 'hidden', flexShrink: 0,
+        }}
+      >
+        {url ? (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img src={url} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+        ) : uploading ? (
+          <span className="db-spinner" />
+        ) : (
+          <Upload size={16} style={{ color: 'var(--ink-mute)' }} />
+        )}
+        {url && (
+          <button
+            type="button"
+            onClick={e => { e.stopPropagation(); onClear() }}
+            style={{ position: 'absolute', top: 2, right: 2, background: 'rgba(0,0,0,0.6)', border: 'none', borderRadius: 3, padding: '1px 3px', cursor: 'pointer', color: '#fff', lineHeight: 1 }}
+          >
+            <X size={9} />
+          </button>
+        )}
+      </div>
+      <span style={{ fontSize: 10, color: 'var(--ink-mute)', letterSpacing: '0.05em' }}>{label}</span>
+      <input ref={inputRef} type="file" accept="image/*" style={{ display: 'none' }} onChange={e => e.target.files?.[0] && handleFile(e.target.files[0])} />
+    </div>
+  )
+}
+
+function VariantManager({ variants, onChange }: { variants: ProductVariant[]; onChange: (v: ProductVariant[]) => void }) {
+  function addVariant() {
+    onChange([...variants, { name: '', hex: '#000000', images: ['', ''] }])
+  }
+  function removeVariant(i: number) {
+    onChange(variants.filter((_, idx) => idx !== i))
+  }
+  function updateVariant(i: number, patch: Partial<ProductVariant>) {
+    onChange(variants.map((v, idx) => idx === i ? { ...v, ...patch } : v))
+  }
+  function updateImage(variantIdx: number, imgIdx: 0 | 1, url: string) {
+    const imgs: [string, string] = [...variants[variantIdx].images] as [string, string]
+    imgs[imgIdx] = url
+    updateVariant(variantIdx, { images: imgs })
+  }
+
+  return (
+    <div>
+      {variants.map((v, i) => (
+        <div key={i} style={{ display: 'flex', gap: 12, alignItems: 'flex-start', padding: '12px 0', borderBottom: '1px solid var(--line)' }}>
+          {/* Swatch + name */}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 6, minWidth: 120 }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+              <input
+                type="color"
+                value={v.hex}
+                onChange={e => updateVariant(i, { hex: e.target.value })}
+                style={{ width: 28, height: 28, border: '1px solid var(--line)', borderRadius: 4, padding: 2, background: 'none', cursor: 'pointer', flexShrink: 0 }}
+              />
+              <input
+                type="text"
+                value={v.name}
+                onChange={e => updateVariant(i, { name: e.target.value })}
+                placeholder="e.g. Black"
+                style={{ flex: 1, background: 'var(--bg-2)', border: '1px solid var(--line)', borderRadius: 6, padding: '5px 8px', color: 'var(--ink)', fontSize: 12 }}
+              />
+            </div>
+          </div>
+          {/* 2 image slots */}
+          <div style={{ display: 'flex', gap: 8 }}>
+            <VariantImageSlot url={v.images[0]} label="Front" onUpload={u => updateImage(i, 0, u)} onClear={() => updateImage(i, 0, '')} />
+            <VariantImageSlot url={v.images[1]} label="Back" onUpload={u => updateImage(i, 1, u)} onClear={() => updateImage(i, 1, '')} />
+          </div>
+          {/* Remove */}
+          <button type="button" onClick={() => removeVariant(i)} style={{ marginTop: 4, background: 'none', border: 'none', cursor: 'pointer', color: '#ff5050', padding: 4 }}>
+            <Trash2 size={13} />
+          </button>
+        </div>
+      ))}
+      <button type="button" className="db-btn ghost" onClick={addVariant} style={{ marginTop: 12 }}>
+        <Plus size={13} /> Add Colour Variant
+      </button>
+    </div>
+  )
+}
 
 function ImageUploader({ images, onChange }: { images: string[]; onChange: (imgs: string[]) => void }) {
   const inputRef = useRef<HTMLInputElement>(null)
@@ -201,14 +309,14 @@ export default function ProductsPage() {
 
   function openEdit(p: MerchProduct) {
     setEditing(p)
-    setForm({ shopId: p.shopId || '', name: p.name, description: p.description, price: p.price, sku: p.sku || '', tag: p.tag || '', images: p.images, sizes: p.sizes, colors: p.colors, colorImages: p.colorImages || {}, active: p.active, stock: p.stock != null ? String(p.stock) : '', material: p.material || '', sortOrder: p.sortOrder != null ? String(p.sortOrder) : '0' })
+    setForm({ shopId: p.shopId || '', name: p.name, description: p.description, price: p.price, sku: p.sku || '', tag: p.tag || '', images: p.images, sizes: p.sizes, colors: p.colors, colorImages: p.colorImages || {}, variants: p.variants || [], active: p.active, stock: p.stock != null ? String(p.stock) : '', material: p.material || '', sortOrder: p.sortOrder != null ? String(p.sortOrder) : '0' })
     setSaveError('')
     setShowForm(true)
   }
 
   function openDuplicate(p: MerchProduct) {
     setEditing(null) // treat as new product
-    setForm({ shopId: p.shopId || '', name: `${p.name} (Copy)`, description: p.description, price: p.price, sku: '', tag: p.tag || '', images: p.images, sizes: p.sizes, colors: p.colors, colorImages: p.colorImages || {}, active: false, stock: p.stock != null ? String(p.stock) : '', material: p.material || '', sortOrder: '0' })
+    setForm({ shopId: p.shopId || '', name: `${p.name} (Copy)`, description: p.description, price: p.price, sku: '', tag: p.tag || '', images: p.images, sizes: p.sizes, colors: p.colors, colorImages: p.colorImages || {}, variants: p.variants || [], active: false, stock: p.stock != null ? String(p.stock) : '', material: p.material || '', sortOrder: '0' })
     setSaveError('')
     setShowForm(true)
   }
@@ -356,23 +464,13 @@ export default function ProductsPage() {
                   </div>
                 </div>
                 <div className="db-field">
-                  <label>Images <span style={{ color: 'var(--ink-mute)', fontWeight: 400 }}>(fallback / single-colour)</span></label>
+                  <label>Colour Variants <span style={{ color: 'var(--ink-mute)', fontWeight: 400 }}>(swatch + front & back image per colour)</span></label>
+                  <VariantManager variants={form.variants} onChange={v => setForm({ ...form, variants: v })} />
+                </div>
+                <div className="db-field">
+                  <label>Images <span style={{ color: 'var(--ink-mute)', fontWeight: 400 }}>(fallback when no variants set)</span></label>
                   <ImageUploader images={form.images} onChange={imgs => setForm({ ...form, images: imgs })} />
                 </div>
-                {form.colors.length > 0 && (
-                  <div className="db-field">
-                    <label>Per-Colour Images <span style={{ color: 'var(--ink-mute)', fontWeight: 400 }}>(replaces fallback images when a colour is selected)</span></label>
-                    {form.colors.map(color => (
-                      <div key={color} style={{ marginBottom: 20 }}>
-                        <div style={{ fontSize: 11, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--ink-mute)', marginBottom: 8 }}>{color}</div>
-                        <ImageUploader
-                          images={form.colorImages[color] || []}
-                          onChange={imgs => setForm({ ...form, colorImages: { ...form.colorImages, [color]: imgs } })}
-                        />
-                      </div>
-                    ))}
-                  </div>
-                )}
                 <div className="db-field">
                   <label>Material <span style={{ color: 'var(--ink-mute)', fontWeight: 400 }}>(e.g. 100% ring-spun cotton · 6.1 oz/yd² · Garment-dyed)</span></label>
                   <input type="text" value={form.material} onChange={e => setForm({ ...form, material: e.target.value })} placeholder="e.g. 100% ring-spun cotton · 6.1 oz/yd² (207 GSM)" />
