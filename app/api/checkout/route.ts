@@ -43,7 +43,9 @@ export async function POST(request: Request) {
       images = JSON.parse(dbProduct.images || '[]') as string[]
     }
     const unitAmount = Math.round(parseFloat(price.replace(/[^0-9.]/g, '')) * 100)
-    return { name, images, item, unitAmount }
+    // Use variant-specific image from cart if provided, otherwise fall back to product images
+    const displayImages = item.image ? [item.image] : images
+    return { name, images: displayImages, item, unitAmount }
   }))
 
   const lineItems = resolvedItems.map(({ name, images, item, unitAmount }) => {
