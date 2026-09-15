@@ -110,7 +110,10 @@ export default function FatRabbitProductClient({
       : hasColorImages
         ? selectedColor
         : (activeVariant?.colors[0] ?? product.colors[0])
-    addToCart(product as any, selectedSize || product.sizes[0], selectedColour)
+    const variantImage = hasVariants
+      ? (activeVariantData?.images[0] || currentImages[0])
+      : currentImages[0]
+    addToCart(product as any, selectedSize || product.sizes[0], selectedColour, variantImage)
     setAdded(true)
     setTimeout(() => setAdded(false), 2000)
   }

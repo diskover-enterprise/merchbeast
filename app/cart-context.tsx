@@ -8,11 +8,12 @@ export type CartItem = {
   quantity: number
   size?: string
   color?: string
+  image?: string
 }
 
 type CartContextType = {
   items: CartItem[]
-  addToCart: (product: Product, size?: string, color?: string) => void
+  addToCart: (product: Product, size?: string, color?: string, image?: string) => void
   removeFromCart: (slug: string, size?: string, color?: string) => void
   updateQuantity: (slug: string, quantity: number, size?: string, color?: string) => void
   clearCart: () => void
@@ -72,14 +73,14 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     setShopPathState(path)
   }, [])
 
-  const addToCart = useCallback((product: Product, size?: string, color?: string) => {
+  const addToCart = useCallback((product: Product, size?: string, color?: string, image?: string) => {
     setItems(prev => {
       const key = itemKey(product.slug, size, color)
       const existing = prev.find(i => itemKey(i.product.slug, i.size, i.color) === key)
       if (existing) {
         return prev.map(i => itemKey(i.product.slug, i.size, i.color) === key ? { ...i, quantity: i.quantity + 1 } : i)
       }
-      return [...prev, { product, quantity: 1, size, color }]
+      return [...prev, { product, quantity: 1, size, color, image }]
     })
   }, [])
 

@@ -73,7 +73,7 @@ export default function FatRabbitCartPage() {
             {items.map(item => (
               <div key={`${item.product.slug}-${item.size}-${item.color}`} className="frc-item">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={item.product.images?.[0]} alt={item.product.name} className="frc-item-img" />
+                <img src={item.image || item.product.images?.[0]} alt={item.product.name} className="frc-item-img" />
                 <div>
                   <p className="frc-item-name">{item.product.name}</p>
                   <p className="frc-item-meta">{[item.size, item.color].filter(Boolean).join(' · ')}</p>
