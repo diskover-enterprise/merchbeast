@@ -14,7 +14,7 @@ interface NewOrderEmailData {
 }
 
 function formatCurrency(cents: number) {
-  return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(cents / 100)
+  return new Intl.NumberFormat('en-CA', { style: 'currency', currency: 'CAD' }).format(cents / 100)
 }
 
 export function buildNewOrderEmail(data: NewOrderEmailData): { subject: string; html: string } {
@@ -74,7 +74,7 @@ export function buildNewOrderEmail(data: NewOrderEmailData): { subject: string; 
 
         <!-- Footer -->
         <tr><td style="padding:24px 0 0;text-align:center;">
-          <p style="margin:0;font-size:13px;color:#9ca3af;">MerchMarket · ${restaurantName}</p>
+          <p style="margin:0;font-size:13px;color:#9ca3af;">Fat Rabbit · Powered by Merch Beast</p>
         </td></tr>
 
       </table>
