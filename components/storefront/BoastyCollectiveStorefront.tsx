@@ -134,6 +134,9 @@ export function BoastyCollectiveStorefront({ heroImage, logo, dbProducts, active
         <span className="bc-footer-brand">Boasty<span> Collective</span></span>
         <p className="bc-footer-copy">Powered by Merch Beast</p>
       </footer>
+      <div style={{ background: '#001f33', borderTop: '1px solid rgba(255,255,255,0.06)', padding: '14px 40px', textAlign: 'center' }}>
+        <p style={{ margin: 0, fontSize: 12, color: 'rgba(255,255,255,0.3)' }}>For customer inquiries please contact <a href="mailto:team@merchbeast.shop" style={{ color: 'rgba(255,255,255,0.6)', textDecoration: 'none', fontWeight: 600 }}>team@merchbeast.shop</a></p>
+      </div>
     </div>
   )
 }

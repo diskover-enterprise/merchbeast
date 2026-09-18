@@ -152,6 +152,9 @@ export function LunchLadyStorefront({ dbProducts, activeSale }: { dbProducts?: D
         <img src="/lunch-lady-logo.png" alt="Lunch Lady" className="ll-footer-logo" />
         <p className="ll-footer-copy">Powered by Merch Beast</p>
       </footer>
+      <div style={{ borderTop: '1px solid #e8e8e8', padding: '14px 40px', textAlign: 'center', background: '#fff' }}>
+        <p style={{ margin: 0, fontSize: 12, color: '#bbb' }}>For customer inquiries please contact <a href="mailto:team@merchbeast.shop" style={{ color: '#555', textDecoration: 'none', fontWeight: 600 }}>team@merchbeast.shop</a></p>
+      </div>
     </div>
   )
 }

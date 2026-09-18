@@ -141,6 +141,9 @@ export function SappertonStorefront({ heroImage, activeSale, dbProducts }: {
           <span className="ss-footer-brand">Sapperton Scrapper</span>
           <p className="ss-footer-copy">Powered by Merch Beast</p>
         </footer>
+      <div style={{ background: '#a07808', borderTop: '1px solid rgba(255,255,255,0.1)', padding: '14px 40px', textAlign: 'center' }}>
+        <p style={{ margin: 0, fontSize: 12, color: 'rgba(245,242,238,0.6)' }}>For customer inquiries please contact <a href="mailto:team@merchbeast.shop" style={{ color: '#f5f2ee', textDecoration: 'none', fontWeight: 600 }}>team@merchbeast.shop</a></p>
+      </div>
       </div>
     </div>
   )

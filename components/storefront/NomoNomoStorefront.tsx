@@ -157,6 +157,9 @@ export function NomoNomoStorefront({ heroImage, activeSale, dbProducts }: { hero
         <span className="nn-footer-brand">NOMO NOMO</span>
         <p className="nn-footer-copy">Powered by Merch Beast</p>
       </footer>
+      <div style={{ background: '#000', borderTop: '1px solid rgba(255,255,255,0.06)', padding: '14px 40px', textAlign: 'center' }}>
+        <p style={{ margin: 0, fontSize: 12, color: 'rgba(255,255,255,0.3)' }}>For customer inquiries please contact <a href="mailto:team@merchbeast.shop" style={{ color: 'rgba(255,255,255,0.6)', textDecoration: 'none', fontWeight: 600 }}>team@merchbeast.shop</a></p>
+      </div>
     </div>
   )
 }

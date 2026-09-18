@@ -449,6 +449,9 @@ export function ArcadeStorefront({ shop, products }: Props) {
           <div style={{ fontFamily: PIXEL, fontSize: '7px', color: `${TEXT}30` }}>
             © {shop.name.toUpperCase()} · POWERED BY AFTER DESSERT
           </div>
+          <div style={{ marginTop: '16px', fontSize: '12px', fontFamily: 'sans-serif', color: `${TEXT}40` }}>
+            For customer inquiries please contact <a href="mailto:team@merchbeast.shop" style={{ color: `${TEXT}80`, textDecoration: 'none', fontWeight: 600 }}>team@merchbeast.shop</a>
+          </div>
         </footer>
       </div>
     </>
