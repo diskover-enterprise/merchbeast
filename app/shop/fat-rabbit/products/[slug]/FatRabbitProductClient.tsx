@@ -402,6 +402,12 @@ export default function FatRabbitProductClient({
         </div>
         <span className="fr-footer-copy">Powered by Merch Beast</span>
       </footer>
+      <div style={{ background: '#E8E4DC', borderTop: '1px solid rgba(197,68,42,0.08)', padding: '14px 40px', textAlign: 'center' }}>
+        <p style={{ margin: 0, fontSize: 12, color: 'rgba(197,68,42,0.55)', letterSpacing: '0.05em' }}>
+          For customer inquiries please contact{' '}
+          <a href="mailto:team@merchbeast.shop" style={{ color: '#C5442A', textDecoration: 'none', fontWeight: 600 }}>team@merchbeast.shop</a>
+        </p>
+      </div>
     </div>
   )
 }

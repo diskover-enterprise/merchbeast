@@ -158,6 +158,12 @@ export function FatRabbitStorefront({ dbProducts }: { heroImage?: string | null;
         </div>
         <span className="fr-footer-copy">Powered by Merch Beast</span>
       </footer>
+      <div style={{ background: '#e8e8e2', borderTop: '1px solid rgba(219,64,33,0.08)', padding: '14px 32px', textAlign: 'center' }}>
+        <p style={{ margin: 0, fontSize: 12, color: 'rgba(219,64,33,0.55)', letterSpacing: '0.05em' }}>
+          For customer inquiries please contact{' '}
+          <a href="mailto:team@merchbeast.shop" style={{ color: '#db4021', textDecoration: 'none', fontWeight: 600 }}>team@merchbeast.shop</a>
+        </p>
+      </div>
     </div>
   )
 }
