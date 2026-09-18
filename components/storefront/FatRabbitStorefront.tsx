@@ -205,7 +205,7 @@ function ProductCard({ product }: { product: Product }) {
           <div style={{ position: 'absolute', top: 12, right: 12, zIndex: 2, background: '#db4021', borderRadius: '50%', width: 8, height: 8 }} />
         )}
         {/* Product image */}
-        <div className="fr-card-img" style={{ background: '#f5f4f0', height: 300, position: 'relative', overflow: 'hidden' }}>
+        <div className="fr-card-img" style={{ background: '#f5f4f0', height: 360, position: 'relative', overflow: 'hidden' }}>
           {(() => {
             const v0 = product.variants?.[0]
             const ci = product.colorImages || {}
