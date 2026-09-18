@@ -97,7 +97,7 @@ export function FatRabbitStorefront({ dbProducts }: { heroImage?: string | null;
         }
         @media (max-width: 480px) {
           .fr-product-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
-          .fr-card-img { height: 180px !important; padding: 8px !important; }
+          .fr-card-img { height: 240px !important; padding: 8px !important; }
         }
       `}</style>
 
