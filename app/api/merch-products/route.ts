@@ -13,6 +13,7 @@ function deserialize(p: any) {
     colors: JSON.parse(p.colors || '[]'),
     colorImages: JSON.parse(p.colorImages || '{}'),
     variants: JSON.parse(p.variants || '[]'),
+    cost: (p.cost ?? 0) / 100,
   }
 }
 
@@ -49,6 +50,7 @@ export async function POST(request: Request) {
       sortOrder: body.sortOrder != null && body.sortOrder !== '' ? Number(body.sortOrder) : 0,
       colorImages: JSON.stringify(body.colorImages || {}),
       variants: JSON.stringify(body.variants || []),
+      cost: body.cost != null && body.cost !== '' ? Math.round(Number(body.cost) * 100) : 0,
     },
   })
   return Response.json(deserialize(product))

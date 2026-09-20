@@ -5,8 +5,10 @@ import { Check, X } from 'lucide-react'
 
 type MonthRow = {
   month: string
-  revenue: number
-  commission: number
+  grossSales: number
+  totalCost: number
+  fulfillmentFees: number
+  restaurantPayout: number
   paid: boolean
   paidAt: string | null
   paymentId: string | null
@@ -23,6 +25,8 @@ function formatMonth(m: string) {
   const [year, month] = m.split('-')
   return new Date(Number(year), Number(month) - 1).toLocaleString('en-CA', { month: 'long', year: 'numeric' })
 }
+
+function fmt(n: number) { return `$${n.toFixed(2)}` }
 
 export default function CommissionsPage() {
   const [shops, setShops] = useState<ShopData[]>([])
@@ -44,7 +48,7 @@ export default function CommissionsPage() {
     await fetch('/api/dashboard/commissions', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ shopId: shopId, month, note: noteInputs[key] || null }),
+      body: JSON.stringify({ shopId, month, note: noteInputs[key] || null }),
     })
     setSaving(null)
     load()
@@ -56,13 +60,13 @@ export default function CommissionsPage() {
     await fetch('/api/dashboard/commissions', {
       method: 'DELETE',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ shopId: shopId, month }),
+      body: JSON.stringify({ shopId, month }),
     })
     setSaving(null)
     load()
   }
 
-  const totalOwed = shops.flatMap(s => s.months).filter(m => !m.paid).reduce((sum, m) => sum + m.commission, 0)
+  const totalOwed = shops.flatMap(s => s.months).filter(m => !m.paid).reduce((sum, m) => sum + m.restaurantPayout, 0)
 
   if (loading) return (
     <>
@@ -77,11 +81,16 @@ export default function CommissionsPage() {
         <span className="num">[ 05 ]</span>
         <span className="label">Commissions</span>
         <span className="spacer" />
-        {totalOwed > 0 && <span style={{ color: '#ffb400' }}>${totalOwed.toFixed(2)} outstanding</span>}
+        {totalOwed > 0 && <span style={{ color: '#ffb400' }}>{fmt(totalOwed)} owed to restaurants</span>}
         <span className="blink" />
       </div>
 
       <div className="db-content">
+        {/* Legend */}
+        <div style={{ marginBottom: 20, fontSize: 12, color: 'var(--ink-mute)', lineHeight: 1.6 }}>
+          <strong style={{ color: 'var(--ink)' }}>Payout formula:</strong> Gross Sales − Your Cost − $5.00 fulfillment fee = Restaurant Payout &nbsp;·&nbsp; Shipping ($9.95) always goes to you
+        </div>
+
         {shops.length === 0 ? (
           <div className="db-card">
             <div className="db-empty">
@@ -90,7 +99,7 @@ export default function CommissionsPage() {
             </div>
           </div>
         ) : shops.map(shop => (
-          <div key={shop.shopId} style={{ marginBottom: 24 }}>
+          <div key={shop.shopId} style={{ marginBottom: 28 }}>
             <div style={{ fontSize: '0.7rem', letterSpacing: '0.15em', textTransform: 'uppercase', color: 'var(--neon)', marginBottom: 10 }}>
               {shop.shopName}
             </div>
@@ -101,7 +110,9 @@ export default function CommissionsPage() {
                     <tr>
                       <th>Month</th>
                       <th>Gross Sales</th>
-                      <th>Commission (25%)</th>
+                      <th>Your Cost</th>
+                      <th>Fulfillment</th>
+                      <th style={{ color: 'var(--neon)' }}>Restaurant Payout</th>
                       <th>Status</th>
                       <th>Note</th>
                       <th style={{ textAlign: 'right' }}>Action</th>
@@ -113,8 +124,10 @@ export default function CommissionsPage() {
                       return (
                         <tr key={row.month}>
                           <td style={{ fontWeight: 600 }}>{formatMonth(row.month)}</td>
-                          <td>${row.revenue.toFixed(2)}</td>
-                          <td style={{ fontWeight: 700, color: 'var(--neon)' }}>${row.commission.toFixed(2)}</td>
+                          <td>{fmt(row.grossSales)}</td>
+                          <td style={{ color: 'rgba(255,100,100,0.8)' }}>{fmt(row.totalCost)}</td>
+                          <td style={{ color: 'rgba(255,100,100,0.8)' }}>{fmt(row.fulfillmentFees)}</td>
+                          <td style={{ fontWeight: 700, color: 'var(--neon)' }}>{fmt(row.restaurantPayout)}</td>
                           <td>
                             <span style={{
                               fontSize: 11, padding: '2px 8px', borderRadius: 4,

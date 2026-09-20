@@ -79,9 +79,11 @@ model OrderItem {
   id              String   @id @default(cuid())
   orderId         String
   productId       String?
+  productSlug     String?
   productName     String?
   quantity        Int
   priceAtPurchase Int
+  costAtPurchase  Int      @default(0)
   size            String?
   color           String?
   order           Order    @relation(fields: [orderId], references: [id])
@@ -169,6 +171,7 @@ model MerchProduct {
   sortOrder   Int      @default(0)
   colorImages String   @default("{}")
   variants    String   @default("[]")
+  cost        Int      @default(0)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 }

@@ -15,6 +15,7 @@ type MerchProduct = {
   name: string
   description: string
   price: string
+  cost: number
   images: string[]
   sizes: string[]
   colors: string[]
@@ -33,6 +34,7 @@ const emptyForm = {
   name: '',
   description: '',
   price: '',
+  cost: '',
   sku: '',
   tag: '',
   images: [] as string[],
@@ -309,14 +311,14 @@ export default function ProductsPage() {
 
   function openEdit(p: MerchProduct) {
     setEditing(p)
-    setForm({ shopId: p.shopId || '', name: p.name, description: p.description, price: p.price, sku: p.sku || '', tag: p.tag || '', images: p.images, sizes: p.sizes, colors: p.colors, colorImages: p.colorImages || {}, variants: p.variants || [], active: p.active, stock: p.stock != null ? String(p.stock) : '', material: p.material || '', sortOrder: p.sortOrder != null ? String(p.sortOrder) : '0' })
+    setForm({ shopId: p.shopId || '', name: p.name, description: p.description, price: p.price, cost: p.cost != null ? String(p.cost) : '', sku: p.sku || '', tag: p.tag || '', images: p.images, sizes: p.sizes, colors: p.colors, colorImages: p.colorImages || {}, variants: p.variants || [], active: p.active, stock: p.stock != null ? String(p.stock) : '', material: p.material || '', sortOrder: p.sortOrder != null ? String(p.sortOrder) : '0' })
     setSaveError('')
     setShowForm(true)
   }
 
   function openDuplicate(p: MerchProduct) {
     setEditing(null) // treat as new product
-    setForm({ shopId: p.shopId || '', name: `${p.name} (Copy)`, description: p.description, price: p.price, sku: '', tag: p.tag || '', images: p.images, sizes: p.sizes, colors: p.colors, colorImages: p.colorImages || {}, variants: p.variants || [], active: false, stock: p.stock != null ? String(p.stock) : '', material: p.material || '', sortOrder: '0' })
+    setForm({ shopId: p.shopId || '', name: `${p.name} (Copy)`, description: p.description, price: p.price, cost: p.cost != null ? String(p.cost) : '', sku: '', tag: p.tag || '', images: p.images, sizes: p.sizes, colors: p.colors, colorImages: p.colorImages || {}, variants: p.variants || [], active: false, stock: p.stock != null ? String(p.stock) : '', material: p.material || '', sortOrder: '0' })
     setSaveError('')
     setShowForm(true)
   }
@@ -413,6 +415,10 @@ export default function ProductsPage() {
                   <div className="db-field">
                     <label>Price *</label>
                     <input type="text" value={form.price} onChange={e => setForm({ ...form, price: e.target.value })} placeholder="$45.00 CAD" />
+                  </div>
+                  <div className="db-field">
+                    <label>Your Cost ($) <span style={{ fontWeight: 400, color: 'var(--ink-mute)' }}>garment + print</span></label>
+                    <input type="number" min="0" step="0.01" value={form.cost} onChange={e => setForm({ ...form, cost: e.target.value })} placeholder="e.g. 25.00" />
                   </div>
                   <div className="db-field">
                     <label>SKU</label>

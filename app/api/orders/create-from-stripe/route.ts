@@ -30,6 +30,13 @@ export async function POST(req: Request) {
   const cartItems: { name: string; slug: string; quantity: number; price: number; size?: string | null; color?: string | null }[] =
     JSON.parse(session.metadata?.cartItems ?? '[]')
 
+  // Look up costs for merch products
+  const slugs = cartItems.map(i => i.slug).filter(Boolean)
+  const merchProducts = slugs.length > 0
+    ? await prisma.merchProduct.findMany({ where: { slug: { in: slugs } }, select: { slug: true, cost: true } })
+    : []
+  const costMap = Object.fromEntries(merchProducts.map(p => [p.slug, p.cost]))
+
   const email = session.customer_details?.email ?? 'unknown@unknown.com'
   const name = session.customer_details?.name ?? 'Guest'
 
@@ -57,8 +64,10 @@ export async function POST(req: Request) {
       items: {
         create: cartItems.map(i => ({
           productName: i.name,
+          productSlug: i.slug ?? null,
           quantity: i.quantity,
           priceAtPurchase: i.price,
+          costAtPurchase: costMap[i.slug] ?? 0,
           size: i.size ?? null,
           color: i.color ?? null,
         })),
