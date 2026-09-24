@@ -2,7 +2,7 @@ import { prisma } from '@/lib/prisma'
 import { FatRabbitStorefront } from '@/components/storefront/FatRabbitStorefront'
 import { TrackView } from '@/components/storefront/TrackView'
 
-export const revalidate = 60
+export const dynamic = 'force-dynamic'
 
 export default async function FatRabbitShopPage() {
   const shop = await prisma.shop.findUnique({
