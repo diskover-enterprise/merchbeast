@@ -42,7 +42,7 @@ export function FatRabbitStorefront({ dbProducts }: { heroImage?: string | null;
         .fr-header-rule { width: 48px; height: 2px; background: #db4021; margin: 24px auto 0; opacity: 0.3; }
 
         .fr-grid-wrap { padding: 8px 32px 96px; max-width: 1200px; margin: 0 auto; }
-        .fr-product-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+        .fr-product-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; align-items: stretch; }
 
         .fr-empty { text-align: center; padding: 120px 40px; }
         .fr-empty p { font-size: 16px; color: rgba(219,64,33,0.4); font-weight: 400; letter-spacing: 0.1em; text-transform: uppercase; }
@@ -122,7 +122,7 @@ export function FatRabbitStorefront({ dbProducts }: { heroImage?: string | null;
           <p className="fr-header-eyebrow">St. Catharines · 34 Geneva Street</p>
           <h1 className="fr-header-title">Merch</h1>
           <div className="fr-header-rule" />
-          <p style={{ fontSize: 12, letterSpacing: '0.15em', textTransform: 'uppercase', color: 'rgba(219,64,33,0.7)', marginTop: 20, fontWeight: 600 }}>
+          <p className="fr-header-eyebrow" style={{ marginTop: 20, marginBottom: 0 }}>
             $9.95 CAD flat-rate shipping across Canada
           </p>
         </header>
@@ -177,7 +177,7 @@ function ProductCard({ product }: { product: Product }) {
   return (
     <Link
       href={`/shop/fat-rabbit/products/${product.slug}`}
-      style={{ textDecoration: 'none', color: 'inherit', display: 'block' }}
+      style={{ textDecoration: 'none', color: 'inherit', display: 'flex', height: '100%' }}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
@@ -188,6 +188,9 @@ function ProductCard({ product }: { product: Product }) {
         boxShadow: hovered ? '0 8px 32px rgba(219,64,33,0.1)' : '0 2px 8px rgba(0,0,0,0.04)',
         position: 'relative',
         overflow: 'hidden',
+        display: 'flex',
+        flexDirection: 'column',
+        width: '100%',
       }}>
         {/* Tag badge */}
         {product.tag && (
@@ -227,7 +230,7 @@ function ProductCard({ product }: { product: Product }) {
           })()}
         </div>
         {/* Card footer */}
-        <div style={{ padding: '16px 20px 20px', borderTop: '1px solid rgba(219,64,33,0.08)' }}>
+        <div style={{ padding: '16px 20px 20px', borderTop: '1px solid rgba(219,64,33,0.08)', marginTop: 'auto' }}>
           <h3 style={{
             fontFamily: "'Barlow Condensed', sans-serif",
             fontSize: 14, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase',
