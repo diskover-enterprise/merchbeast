@@ -402,13 +402,15 @@
   clip-path: polygon(0 0, calc(100% - 5px) 0, 100% 5px, 100% 100%, 5px 100%, 0 calc(100% - 5px));
 }
 
-.db-badge-pending   { background: rgba(255,170,0,.14);  color: #ffaa00; }
-.db-badge-paid      { background: rgba(57,255,20,.18); color: var(--neon); }
-.db-badge-shipped   { background: rgba(0,200,130,.14);  color: #00c882; }
-.db-badge-delivered { background: rgba(0,200,130,.10);  color: #00c882; }
-.db-badge-cancelled   { background: rgba(255,80,80,.12);  color: #ff5050; }
-.db-badge-fulfilled   { background: rgba(0,200,130,.18);  color: #00c882; }
-.db-badge-unfulfilled { background: rgba(255,170,0,.14);  color: #ffaa00; }
+.db-badge-pending       { background: rgba(255,170,0,.14);  color: #ffaa00; }
+.db-badge-paid          { background: rgba(57,255,20,.18);  color: var(--neon); }
+.db-badge-unfulfilled   { background: rgba(255,170,0,.14);  color: #ffaa00; }
+.db-badge-in-production { background: rgba(100,160,255,.16); color: #64a0ff; }
+.db-badge-shipped       { background: rgba(0,200,255,.14);  color: #00c8ff; }
+.db-badge-fulfilled     { background: rgba(0,200,130,.18);  color: #00c882; }
+.db-badge-refunded      { background: rgba(255,80,80,.12);  color: #ff5050; }
+.db-badge-delivered     { background: rgba(0,200,130,.10);  color: #00c882; }
+.db-badge-cancelled     { background: rgba(255,80,80,.12);  color: #ff5050; }
 
 .db-fulfill-btn {
   font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;

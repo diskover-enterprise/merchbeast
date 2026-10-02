@@ -4,10 +4,18 @@ import { useEffect, useState } from 'react'
 import { Order } from '@/types'
 import { formatCurrency } from '@/lib/utils'
 
+const STATUS_LABELS: Record<string, string> = {
+  paid: 'Unfulfilled',
+  'in-production': 'In Production',
+  shipped: 'Shipped',
+  fulfilled: 'Fulfilled',
+  refunded: 'Refunded',
+}
+
 function StatusBadge({ status }: { status: string }) {
-  const display = status === 'paid' ? 'unfulfilled' : status
-  const cls = `db-badge db-badge-${status === 'paid' ? 'unfulfilled' : status.toLowerCase()}`
-  return <span className={cls}>{display}</span>
+  const label = STATUS_LABELS[status] ?? status
+  const key = status === 'paid' ? 'unfulfilled' : status.toLowerCase().replace(/\s+/g, '-')
+  return <span className={`db-badge db-badge-${key}`}>{label}</span>
 }
 
 export default function OrdersPage() {
@@ -50,28 +58,14 @@ export default function OrdersPage() {
     }
   }
 
-  async function toggleFulfilled(orderId: string, currentStatus: string) {
-    if (currentStatus === 'fulfilled') {
-      // Revert to paid/unfulfilled
-      setOrders(prev => prev.map(o => o.id === orderId ? { ...o, status: 'paid' } : o))
-      await fetch(`/api/orders/${orderId}`, {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ status: 'paid' }),
-      }).catch(() => {
-        setOrders(prev => prev.map(o => o.id === orderId ? { ...o, status: 'fulfilled' } : o))
-      })
-      return
-    }
-
-    // Mark fulfilled — update status internally
-    setOrders(prev => prev.map(o => o.id === orderId ? { ...o, status: 'fulfilled' } : o))
+  async function updateStatus(orderId: string, prevStatus: string, newStatus: string) {
+    setOrders(prev => prev.map(o => o.id === orderId ? { ...o, status: newStatus } : o))
     await fetch(`/api/orders/${orderId}`, {
       method: 'PATCH',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ status: 'fulfilled' }),
+      body: JSON.stringify({ status: newStatus }),
     }).catch(() => {
-      setOrders(prev => prev.map(o => o.id === orderId ? { ...o, status: 'paid' } : o))
+      setOrders(prev => prev.map(o => o.id === orderId ? { ...o, status: prevStatus } : o))
     })
   }
 
@@ -174,14 +168,21 @@ export default function OrdersPage() {
                           : <span style={{ color: 'var(--ink-mute)' }}>—</span>}
                       </td>
                       <td>
-                        {order._error && <p style={{ color: '#ff5050', fontSize: 10, marginBottom: 4 }}>{order._error}</p>}
-                        <button
-                          className={`db-fulfill-btn ${order.status === 'fulfilled' ? 'unmark' : 'mark'}`}
-                          onClick={() => toggleFulfilled(order.id, order.status)}
-                          disabled={order._fulfilling}
+                        <select
+                          value={order.status}
+                          onChange={e => updateStatus(order.id, order.status, e.target.value)}
+                          style={{
+                            fontSize: 11, fontFamily: 'monospace', padding: '4px 6px',
+                            background: 'var(--paper)', color: 'var(--ink)', border: '1px solid var(--ink-mute)',
+                            borderRadius: 4, cursor: 'pointer',
+                          }}
                         >
-                          {order._fulfilling ? '…' : order.status === 'fulfilled' ? 'Unfulfill' : 'Fulfil'}
-                        </button>
+                          <option value="paid">Unfulfilled</option>
+                          <option value="in-production">In Production</option>
+                          <option value="shipped">Shipped</option>
+                          <option value="fulfilled">Fulfilled</option>
+                          <option value="refunded">Refunded</option>
+                        </select>
                       </td>
                       <td>
                         <button
