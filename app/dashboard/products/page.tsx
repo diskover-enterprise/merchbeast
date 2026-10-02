@@ -34,6 +34,7 @@ const emptyForm = {
   name: '',
   description: '',
   price: '',
+  priceUsd: '',
   cost: '',
   sku: '',
   tag: '',
@@ -311,14 +312,14 @@ export default function ProductsPage() {
 
   function openEdit(p: MerchProduct) {
     setEditing(p)
-    setForm({ shopId: p.shopId || '', name: p.name, description: p.description, price: p.price, cost: p.cost != null ? String(p.cost) : '', sku: p.sku || '', tag: p.tag || '', images: p.images, sizes: p.sizes, colors: p.colors, colorImages: p.colorImages || {}, variants: p.variants || [], active: p.active, stock: p.stock != null ? String(p.stock) : '', material: p.material || '', sortOrder: p.sortOrder != null ? String(p.sortOrder) : '0' })
+    setForm({ shopId: p.shopId || '', name: p.name, description: p.description, price: p.price, priceUsd: (p as any).priceUsd != null && (p as any).priceUsd > 0 ? String((p as any).priceUsd / 100) : '', cost: p.cost != null ? String(p.cost) : '', sku: p.sku || '', tag: p.tag || '', images: p.images, sizes: p.sizes, colors: p.colors, colorImages: p.colorImages || {}, variants: p.variants || [], active: p.active, stock: p.stock != null ? String(p.stock) : '', material: p.material || '', sortOrder: p.sortOrder != null ? String(p.sortOrder) : '0' })
     setSaveError('')
     setShowForm(true)
   }
 
   function openDuplicate(p: MerchProduct) {
     setEditing(null) // treat as new product
-    setForm({ shopId: p.shopId || '', name: `${p.name} (Copy)`, description: p.description, price: p.price, cost: p.cost != null ? String(p.cost) : '', sku: '', tag: p.tag || '', images: p.images, sizes: p.sizes, colors: p.colors, colorImages: p.colorImages || {}, variants: p.variants || [], active: false, stock: p.stock != null ? String(p.stock) : '', material: p.material || '', sortOrder: '0' })
+    setForm({ shopId: p.shopId || '', name: `${p.name} (Copy)`, description: p.description, price: p.price, priceUsd: (p as any).priceUsd != null && (p as any).priceUsd > 0 ? String((p as any).priceUsd / 100) : '', cost: p.cost != null ? String(p.cost) : '', sku: '', tag: p.tag || '', images: p.images, sizes: p.sizes, colors: p.colors, colorImages: p.colorImages || {}, variants: p.variants || [], active: false, stock: p.stock != null ? String(p.stock) : '', material: p.material || '', sortOrder: '0' })
     setSaveError('')
     setShowForm(true)
   }
@@ -415,6 +416,10 @@ export default function ProductsPage() {
                   <div className="db-field">
                     <label>Price *</label>
                     <input type="text" value={form.price} onChange={e => setForm({ ...form, price: e.target.value })} placeholder="$45.00 CAD" />
+                  </div>
+                  <div className="db-field">
+                    <label>Price USD ($) <span style={{ fontWeight: 400, color: 'var(--ink-mute)' }}>US visitors</span></label>
+                    <input type="number" min="0" step="0.01" value={(form as any).priceUsd} onChange={e => setForm({ ...form, priceUsd: e.target.value } as any)} placeholder="e.g. 39.99" />
                   </div>
                   <div className="db-field">
                     <label>Your Cost ($) <span style={{ fontWeight: 400, color: 'var(--ink-mute)' }}>garment + print</span></label>
