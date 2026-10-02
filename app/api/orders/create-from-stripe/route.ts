@@ -9,7 +9,25 @@ export async function POST(req: Request) {
   if (!sessionId) return Response.json({ error: 'Missing sessionId' }, { status: 400 })
 
   const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!)
-  const session = await stripe.checkout.sessions.retrieve(sessionId)
+
+  // Retrieve session — if the shop has a connected Stripe account, we need to pass it
+  // Try platform account first; if it fails, look up the shop's connected account
+  let session
+  try {
+    session = await stripe.checkout.sessions.retrieve(sessionId)
+  } catch {
+    // Session may belong to a connected account — extract shopSlug from the session ID is not possible,
+    // so we try all connected shops
+    const shops = await prisma.shop.findMany({ where: { stripeAccountId: { not: null } }, select: { stripeAccountId: true, slug: true } })
+    for (const shop of shops) {
+      try {
+        session = await stripe.checkout.sessions.retrieve(sessionId, {}, { stripeAccount: shop.stripeAccountId! })
+        if (session) break
+      } catch { /* try next */ }
+    }
+  }
+
+  if (!session) return Response.json({ error: 'Session not found' }, { status: 404 })
 
   if (session.payment_status !== 'paid') {
     return Response.json({ error: 'Payment not completed' }, { status: 400 })
@@ -101,6 +119,10 @@ export async function POST(req: Request) {
     resend.emails.send({ from, to: 'team@merchbeast.shop', subject: notifSubject, html: notifHtml }),
     // Shop owner notification
     resend.emails.send({ from, to: shop.ownerEmail, subject: notifSubject, html: notifHtml }),
+    // Fat Rabbit merch team notification
+    shopSlug === 'fat-rabbit'
+      ? resend.emails.send({ from, to: 'merch@fat-rabbit.ca', subject: notifSubject, html: notifHtml })
+      : Promise.resolve(),
   ])
 
   return Response.json({ ok: true, orderId: order.id })
