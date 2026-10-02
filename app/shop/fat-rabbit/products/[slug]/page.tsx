@@ -1,3 +1,4 @@
+import { headers } from 'next/headers'
 import { prisma } from '@/lib/prisma'
 import { notFound } from 'next/navigation'
 import { TrackView } from '@/components/storefront/TrackView'
@@ -25,6 +26,8 @@ function parseProduct(p: any) {
 
 export default async function FatRabbitProductPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params
+  const hdrs = await headers()
+  const isUS = (hdrs.get('x-vercel-ip-country') ?? '') === 'US'
 
   const shop = await prisma.shop.findUnique({ where: { slug: 'fat-rabbit' }, select: { id: true } })
   const raw = await prisma.merchProduct.findUnique({ where: { slug } })
@@ -57,6 +60,7 @@ export default async function FatRabbitProductPage({ params }: { params: Promise
       initialSlug={slug}
       colorImages={product.colorImages}
       variants={product.variants}
+      isUS={isUS}
     />
   </>
 }

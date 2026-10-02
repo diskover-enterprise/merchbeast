@@ -5,11 +5,11 @@ import Image from 'next/image'
 import { useState, useEffect } from 'react'
 import { useCart } from '@/app/cart-context'
 
-type Product = { slug: string; name: string; price: string; description: string; images: string[]; sizes: string[]; colors: string[]; colorImages?: Record<string, string[]>; variants?: Array<{ name: string; hex: string; images: [string, string] }>; tag: string | null; stock: number | null }
+type Product = { slug: string; name: string; price: string; priceUsd?: number; description: string; images: string[]; sizes: string[]; colors: string[]; colorImages?: Record<string, string[]>; variants?: Array<{ name: string; hex: string; images: [string, string] }>; tag: string | null; stock: number | null }
 
-export function FatRabbitStorefront({ dbProducts }: { heroImage?: string | null; dbProducts?: Product[] }) {
-  const { count, setBrandColor, setShopPath } = useCart()
-  useEffect(() => { setBrandColor('#db4021'); setShopPath('/shop/fat-rabbit') }, [setBrandColor, setShopPath])
+export function FatRabbitStorefront({ dbProducts, isUS = false }: { heroImage?: string | null; dbProducts?: Product[]; isUS?: boolean }) {
+  const { count, setBrandColor, setShopPath, setIsUS } = useCart()
+  useEffect(() => { setBrandColor('#db4021'); setShopPath('/shop/fat-rabbit'); setIsUS(isUS) }, [setBrandColor, setShopPath, setIsUS, isUS])
 
   const products = dbProducts !== undefined ? dbProducts : []
 
@@ -123,7 +123,7 @@ export function FatRabbitStorefront({ dbProducts }: { heroImage?: string | null;
           <h1 className="fr-header-title">Merch</h1>
           <div className="fr-header-rule" />
           <p className="fr-header-eyebrow" style={{ marginTop: 20, marginBottom: 0 }}>
-            $9.95 CAD flat-rate shipping across Canada
+            {isUS ? '$9.95 USD flat-rate shipping to the US' : '$9.95 CAD flat-rate shipping across Canada'}
           </p>
         </header>
 
@@ -133,7 +133,7 @@ export function FatRabbitStorefront({ dbProducts }: { heroImage?: string | null;
             <div className="fr-empty"><p>New drops coming soon.</p></div>
           ) : (
             <div className="fr-product-grid">
-              {products.map(p => <ProductCard key={p.slug} product={p} />)}
+              {products.map(p => <ProductCard key={p.slug} product={p} isUS={isUS} />)}
             </div>
           )}
         </div>
@@ -168,11 +168,14 @@ export function FatRabbitStorefront({ dbProducts }: { heroImage?: string | null;
   )
 }
 
-function ProductCard({ product }: { product: Product }) {
+function ProductCard({ product, isUS }: { product: Product; isUS: boolean }) {
   const [hovered, setHovered] = useState(false)
   const { items } = useCart()
   const inCart = items.some(i => i.product.slug === product.slug)
   const outOfStock = product.stock !== null && product.stock === 0
+  const displayPrice = isUS && product.priceUsd && product.priceUsd > 0
+    ? `$${(product.priceUsd / 100).toFixed(2)} USD`
+    : product.price
 
   return (
     <Link
@@ -240,7 +243,7 @@ function ProductCard({ product }: { product: Product }) {
           </h3>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
             <span style={{ fontSize: 14, color: '#db4021', fontWeight: 700, letterSpacing: '0.05em' }}>
-              {product.price}
+              {displayPrice}
             </span>
             {outOfStock && (
               <span style={{ fontSize: 9, letterSpacing: '0.15em', textTransform: 'uppercase', fontWeight: 700, color: '#999', background: '#eee', padding: '3px 8px' }}>

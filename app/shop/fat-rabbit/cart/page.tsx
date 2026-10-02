@@ -5,7 +5,7 @@ import Link from 'next/link'
 import { useCart } from '@/app/cart-context'
 
 export default function FatRabbitCartPage() {
-  const { items, removeFromCart, updateQuantity, clearCart, total: subtotal, setBrandColor, setShopPath } = useCart()
+  const { items, removeFromCart, updateQuantity, clearCart, total: subtotal, setBrandColor, setShopPath, isUS } = useCart()
   const [confirmClear, setConfirmClear] = useState(false)
 
   useEffect(() => {
@@ -95,7 +95,7 @@ export default function FatRabbitCartPage() {
               </div>
               <a href="/api/checkout" className="frc-checkout" onClick={async (e) => {
                 e.preventDefault()
-                const res = await fetch('/api/checkout', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ items: items.map((item: any) => ({ slug: item.product.slug, quantity: item.quantity, size: item.size, color: item.color, image: item.image })), shopSlug: 'fat-rabbit' }) })
+                const res = await fetch('/api/checkout', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ items: items.map((item: any) => ({ slug: item.product.slug, quantity: item.quantity, size: item.size, color: item.color, image: item.image })), shopSlug: 'fat-rabbit', isUS }) })
                 const data = await res.json()
                 if (data.url) window.location.href = data.url
               }}>

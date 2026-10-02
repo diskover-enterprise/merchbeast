@@ -18,10 +18,11 @@ function findStaticProduct(slug: string) {
 
 export async function POST(request: Request) {
   const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!)
-  const { items, discountCode, shopSlug: bodyShopSlug } = await request.json() as {
+  const { items, discountCode, shopSlug: bodyShopSlug, isUS } = await request.json() as {
     items: { slug: string; quantity: number; size?: string; color?: string }[]
     discountCode?: string
     shopSlug?: string
+    isUS?: boolean
   }
 
   if (!items?.length) {
@@ -29,7 +30,7 @@ export async function POST(request: Request) {
   }
 
   const resolvedItems = await Promise.all(items.map(async (item) => {
-    let name: string, price: string, images: string[]
+    let name: string, price: string, images: string[], priceUsd = 0
     const staticProduct = findStaticProduct(item.slug)
     if (staticProduct) {
       name = staticProduct.name
@@ -40,19 +41,23 @@ export async function POST(request: Request) {
       if (!dbProduct) throw new Error(`Product not found: ${item.slug}`)
       name = dbProduct.name
       price = dbProduct.price
+      priceUsd = dbProduct.priceUsd ?? 0
       images = JSON.parse(dbProduct.images || '[]') as string[]
     }
-    const unitAmount = Math.round(parseFloat(price.replace(/[^0-9.]/g, '')) * 100)
+    const unitAmountCad = Math.round(parseFloat(price.replace(/[^0-9.]/g, '')) * 100)
+    const unitAmount = isUS && priceUsd > 0 ? priceUsd : unitAmountCad
     // Use variant-specific image from cart if provided, otherwise fall back to product images
     const displayImages = item.image ? [item.image] : images
     return { name, images: displayImages, item, unitAmount }
   }))
 
+  const currency = isUS ? 'usd' : 'cad'
+
   const lineItems = resolvedItems.map(({ name, images, item, unitAmount }) => {
     const meta = [item.size, item.color].filter(Boolean).join(' / ')
     return {
       price_data: {
-        currency: 'cad',
+        currency,
         product_data: {
           name: meta ? `${name} — ${meta}` : name,
           images: images.slice(0, 1),
@@ -139,7 +144,7 @@ export async function POST(request: Request) {
   if (saleDiscountCents > 0) {
     finalLineItems.push({
       price_data: {
-        currency: 'cad',
+        currency,
         product_data: { name: `Sale Discount`, images: [] },
         unit_amount: -saleDiscountCents,
       },
@@ -149,7 +154,7 @@ export async function POST(request: Request) {
   if (discountAmountCents > 0) {
     finalLineItems.push({
       price_data: {
-        currency: 'cad',
+        currency,
         product_data: { name: `Promo (${discountCode!.toUpperCase()})`, images: [] },
         unit_amount: -discountAmountCents,
       },
@@ -167,7 +172,26 @@ export async function POST(request: Request) {
     color: item.color ?? null,
   }))
 
-  const session = await stripe.checkout.sessions.create({
+  // Check if this shop has a connected Stripe account (e.g. Fat Rabbit)
+  const shopRecord = saleShop ?? await prisma.shop.findUnique({ where: { slug: shopSlug } })
+  const connectedAccountId = shopRecord?.stripeAccountId ?? null
+
+  // Calculate platform fee if routing to a connected account:
+  // cost of all items + $10 shipping + $5 fulfillment
+  let applicationFeeAmount: number | undefined
+  if (connectedAccountId) {
+    const slugs = resolvedItems.map(({ item }) => item.slug).filter(Boolean)
+    const costs = slugs.length > 0
+      ? await prisma.merchProduct.findMany({ where: { slug: { in: slugs } }, select: { slug: true, cost: true } })
+      : []
+    const costMap = Object.fromEntries(costs.map(p => [p.slug, p.cost]))
+    const totalCostCents = resolvedItems.reduce((sum, { item }) => sum + (costMap[item.slug] ?? 0) * item.quantity, 0)
+    const shippingCents = 1000 // $10
+    const fulfillmentCents = 500 // $5
+    applicationFeeAmount = totalCostCents + shippingCents + fulfillmentCents
+  }
+
+  const sessionParams: Parameters<typeof stripe.checkout.sessions.create>[0] = {
     payment_method_types: ['card'],
     line_items: finalLineItems,
     mode: 'payment',
@@ -180,7 +204,7 @@ export async function POST(request: Request) {
       {
         shipping_rate_data: {
           type: 'fixed_amount',
-          fixed_amount: { amount: 1000, currency: 'cad' },
+          fixed_amount: { amount: 1000, currency },
           display_name: 'Standard Shipping',
           delivery_estimate: {
             minimum: { unit: 'business_day', value: 5 },
@@ -189,12 +213,19 @@ export async function POST(request: Request) {
         },
       },
     ],
+    ...(connectedAccountId ? {
+      payment_intent_data: { application_fee_amount: applicationFeeAmount },
+      automatic_tax: { enabled: true },
+    } : {}),
     metadata: {
       shopSlug,
       cartItems: JSON.stringify(cartMeta),
       ...(discountId ? { discountId } : {}),
     },
-  })
+  }
+
+  const sessionOptions = connectedAccountId ? { stripeAccount: connectedAccountId } : undefined
+  const session = await stripe.checkout.sessions.create(sessionParams, sessionOptions)
 
   // Increment usage count
   if (discountId) {

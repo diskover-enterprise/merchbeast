@@ -7,7 +7,7 @@ import { useCart } from '@/app/cart-context'
 type ProductVariant = { name: string; hex: string; images: [string, string] }
 
 type Product = {
-  id: string; slug: string; name: string; price: string; description: string
+  id: string; slug: string; name: string; price: string; priceUsd?: number; description: string
   images: string[]; sizes: string[]; colors: string[]; colorImages: Record<string, string[]>
   variants: ProductVariant[]
   tag: string | null; stock: number | null; material: string | null
@@ -31,6 +31,7 @@ export default function FatRabbitProductClient({
   initialSlug,
   colorImages = {},
   variants = [],
+  isUS = false,
 }: {
   product: Product
   related: Product[]
@@ -38,6 +39,7 @@ export default function FatRabbitProductClient({
   initialSlug: string
   colorImages?: Record<string, string[]>
   variants?: ProductVariant[]
+  isUS?: boolean
 }) {
   const { addToCart, count, setBrandColor, setShopPath } = useCart()
 
@@ -205,7 +207,12 @@ export default function FatRabbitProductClient({
           {/* DETAILS */}
           <div style={{ paddingTop: 16 }}>
             <h1 style={{ fontSize: 36, fontWeight: 400, fontStyle: 'italic', lineHeight: 1.2, marginBottom: 16 }}>{product.name}</h1>
-            <p style={{ fontSize: 26, color: '#C5442A', fontWeight: 600, marginBottom: 8 }}>${product.price} <span style={{ fontSize: 12, color: '#aaa', fontWeight: 400, letterSpacing: '0.05em' }}>CAD</span></p>
+            <p style={{ fontSize: 26, color: '#C5442A', fontWeight: 600, marginBottom: 8 }}>
+              {isUS && product.priceUsd && product.priceUsd > 0
+                ? <>${(product.priceUsd / 100).toFixed(2)} <span style={{ fontSize: 12, color: '#aaa', fontWeight: 400, letterSpacing: '0.05em' }}>USD</span></>
+                : <>{product.price} <span style={{ fontSize: 12, color: '#aaa', fontWeight: 400, letterSpacing: '0.05em' }}>CAD</span></>
+              }
+            </p>
             <p style={{ fontSize: 11, color: '#aaa', letterSpacing: '0.15em', textTransform: 'uppercase', marginBottom: 24 }}>+ $9.95 CAD flat-rate shipping across Canada</p>
 
             {/* Brand blurb */}

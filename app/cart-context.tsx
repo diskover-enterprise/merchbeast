@@ -24,6 +24,8 @@ type CartContextType = {
   setBrandColor: (color: string) => void
   shopPath: string
   setShopPath: (path: string) => void
+  isUS: boolean
+  setIsUS: (v: boolean) => void
 }
 
 const CartContext = createContext<CartContextType | null>(null)
@@ -40,6 +42,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   const [items, setItems] = useState<CartItem[]>([])
   const [brandColor, setBrandColorState] = useState('#1C2E54')
   const [shopPath, setShopPathState] = useState('')
+  const [isUS, setIsUS] = useState(false)
 
   // Load items for the current shopPath whenever it changes
   useEffect(() => {
@@ -108,7 +111,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   const count = items.reduce((sum, i) => sum + i.quantity, 0)
 
   return (
-    <CartContext.Provider value={{ items, addToCart, removeFromCart, updateQuantity, clearCart, total, subtotal: total, count, brandColor, setBrandColor, shopPath, setShopPath }}>
+    <CartContext.Provider value={{ items, addToCart, removeFromCart, updateQuantity, clearCart, total, subtotal: total, count, brandColor, setBrandColor, shopPath, setShopPath, isUS, setIsUS }}>
       {children}
     </CartContext.Provider>
   )
