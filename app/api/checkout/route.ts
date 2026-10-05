@@ -186,7 +186,7 @@ export async function POST(request: Request) {
       : []
     const costMap = Object.fromEntries(costs.map(p => [p.slug, p.cost]))
     const totalCostCents = resolvedItems.reduce((sum, { item }) => sum + (costMap[item.slug] ?? 0) * item.quantity, 0)
-    const shippingCents = 1000 // $10
+    const shippingCents = isUS ? 1500 : 1000
     const fulfillmentCents = 500 // $5
     applicationFeeAmount = totalCostCents + shippingCents + fulfillmentCents
   }
@@ -204,7 +204,7 @@ export async function POST(request: Request) {
       {
         shipping_rate_data: {
           type: 'fixed_amount',
-          fixed_amount: { amount: 1000, currency },
+          fixed_amount: { amount: isUS ? 1500 : 1000, currency },
           display_name: 'Standard Shipping',
           delivery_estimate: {
             minimum: { unit: 'business_day', value: 5 },

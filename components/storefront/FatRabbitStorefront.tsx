@@ -123,7 +123,7 @@ export function FatRabbitStorefront({ dbProducts, isUS = false }: { heroImage?: 
           <h1 className="fr-header-title">Merch</h1>
           <div className="fr-header-rule" />
           <p className="fr-header-eyebrow" style={{ marginTop: 20, marginBottom: 0 }}>
-            {isUS ? '$9.95 USD flat-rate shipping to the US' : '$9.95 CAD flat-rate shipping across Canada'}
+            {isUS ? '$15.00 CAD flat-rate shipping to the US' : '$9.95 CAD flat-rate shipping across Canada'}
           </p>
         </header>
 
