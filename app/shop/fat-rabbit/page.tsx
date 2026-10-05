@@ -2,6 +2,8 @@ import { headers } from 'next/headers'
 import { prisma } from '@/lib/prisma'
 import { FatRabbitStorefront } from '@/components/storefront/FatRabbitStorefront'
 import { TrackView } from '@/components/storefront/TrackView'
+import { MetaPixel } from '@/components/analytics/MetaPixel'
+import { GoogleTag } from '@/components/analytics/GoogleTag'
 
 export const dynamic = 'force-dynamic'
 
@@ -12,7 +14,7 @@ export default async function FatRabbitShopPage() {
 
   const shop = await prisma.shop.findUnique({
     where: { slug: 'fat-rabbit' },
-    select: { id: true, bannerImage: true },
+    select: { id: true, bannerImage: true, metaPixelId: true, gtmId: true },
   })
 
   const rawProducts = shop ? await prisma.merchProduct.findMany({
@@ -33,6 +35,8 @@ export default async function FatRabbitShopPage() {
 
   return <>
     {shop && <TrackView shopId={shop.id} />}
+    <MetaPixel pixelIds={[process.env.NEXT_PUBLIC_META_PIXEL_ID, shop?.metaPixelId]} />
+    <GoogleTag gtmIds={[process.env.NEXT_PUBLIC_GTM_ID, shop?.gtmId]} />
     <FatRabbitStorefront heroImage={shop?.bannerImage ?? null} dbProducts={dbProducts} isUS={isUS} />
   </>
 }

@@ -14,6 +14,7 @@ export async function GET() {
       secondaryColor: true, accentColor: true, fontFamily: true,
       tagline: true, about: true, heroHeadline: true,
       instagram: true, websiteUrl: true, address: true,
+      metaPixelId: true, gtmId: true,
     },
   })
   return Response.json(shop)
@@ -42,6 +43,8 @@ export async function PUT(req: Request) {
       instagram: body.instagram ?? null,
       websiteUrl: body.websiteUrl ?? null,
       address: body.address ?? null,
+      metaPixelId: body.metaPixelId ?? null,
+      gtmId: body.gtmId ?? null,
     },
   })
   return Response.json(updated)

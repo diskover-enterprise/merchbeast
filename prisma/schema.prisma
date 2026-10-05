@@ -27,6 +27,8 @@ model Shop {
   websiteUrl        String?
   address           String?
   stripeAccountId   String?
+  metaPixelId       String?
+  gtmId             String?
   createdAt         DateTime  @default(now())
   products          Product[]
   orders            Order[]

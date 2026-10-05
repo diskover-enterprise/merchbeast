@@ -382,6 +382,16 @@ function ShopEditor({ shop, onSaved }: { shop: Shop; onSaved: (updated: Shop) =>
                   <input type="text" value={form.websiteUrl || ''} onChange={e => set('websiteUrl', e.target.value)} placeholder="https://…" />
                 </div>
               </div>
+              <div className="db-field-row">
+                <div className="db-field">
+                  <label>Meta Pixel ID</label>
+                  <input type="text" value={(form as any).metaPixelId || ''} onChange={e => set('metaPixelId', e.target.value)} placeholder="e.g. 1234567890123" />
+                </div>
+                <div className="db-field">
+                  <label>Google Tag Manager ID</label>
+                  <input type="text" value={(form as any).gtmId || ''} onChange={e => set('gtmId', e.target.value)} placeholder="e.g. GTM-XXXXXXX" />
+                </div>
+              </div>
               <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginTop: 8 }}>
                 <button className="db-btn primary" onClick={save} disabled={saving}>
                   <Check size={13} /> {saving ? 'Saving…' : 'Save Changes'}
