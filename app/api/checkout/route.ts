@@ -177,7 +177,7 @@ export async function POST(request: Request) {
   const connectedAccountId = shopRecord?.stripeAccountId ?? null
 
   // Calculate platform fee if routing to a connected account:
-  // cost of all items + $10 shipping + $5 fulfillment
+  // cost of all items + shipping + $5/item fulfillment
   let applicationFeeAmount: number | undefined
   if (connectedAccountId) {
     const slugs = resolvedItems.map(({ item }) => item.slug).filter(Boolean)
@@ -187,7 +187,8 @@ export async function POST(request: Request) {
     const costMap = Object.fromEntries(costs.map(p => [p.slug, p.cost]))
     const totalCostCents = resolvedItems.reduce((sum, { item }) => sum + (costMap[item.slug] ?? 0) * item.quantity, 0)
     const shippingCents = isUS ? 1500 : 1000
-    const fulfillmentCents = 500 // $5
+    const totalItems = resolvedItems.reduce((sum, { item }) => sum + item.quantity, 0)
+    const fulfillmentCents = totalItems * 500 // $5 per item
     applicationFeeAmount = totalCostCents + shippingCents + fulfillmentCents
   }
 
