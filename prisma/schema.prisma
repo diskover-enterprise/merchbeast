@@ -174,8 +174,13 @@ model MerchProduct {
   sortOrder   Int      @default(0)
   colorImages String   @default("{}")
   variants    String   @default("[]")
-  cost        Int      @default(0)
-  priceUsd    Int      @default(0)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  cost            Int      @default(0)   // what you charge the shop (cents)
+  yourCost        Int      @default(0)   // your production cost (cents)
+  priceUsd        Int      @default(0)
+  weightGrams     Int      @default(0)
+  productType     String?               // e.g. "tshirt", "hoodie", "crewneck", "hat", "tote"
+  countryOfOrigin String?               // ISO 2-letter, e.g. "CA", "BD"
+  cusmaCertified  Boolean  @default(false)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
 }

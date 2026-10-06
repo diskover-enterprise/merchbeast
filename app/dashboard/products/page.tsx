@@ -29,6 +29,28 @@ type MerchProduct = {
   sortOrder: number | null
 }
 
+const PRODUCT_TYPES = [
+  { value: 'tshirt',   label: 'T-Shirt' },
+  { value: 'hoodie',   label: 'Hoodie' },
+  { value: 'crewneck', label: 'Crewneck' },
+  { value: 'hat',      label: 'Hat / Trucker' },
+  { value: 'tote',     label: 'Tote Bag' },
+  { value: 'other',    label: 'Other' },
+]
+
+const COUNTRIES_OF_ORIGIN = [
+  { value: 'CA', label: '🇨🇦 Canada' },
+  { value: 'US', label: '🇺🇸 United States' },
+  { value: 'MX', label: '🇲🇽 Mexico' },
+  { value: 'BD', label: '🇧🇩 Bangladesh' },
+  { value: 'CN', label: '🇨🇳 China' },
+  { value: 'VN', label: '🇻🇳 Vietnam' },
+  { value: 'PK', label: '🇵🇰 Pakistan' },
+  { value: 'IN', label: '🇮🇳 India' },
+]
+
+const CUSMA_COUNTRIES = ['CA', 'US', 'MX']
+
 const emptyForm = {
   shopId: '',
   name: '',
@@ -36,6 +58,7 @@ const emptyForm = {
   price: '',
   priceUsd: '',
   cost: '',
+  yourCost: '',
   sku: '',
   tag: '',
   images: [] as string[],
@@ -47,6 +70,10 @@ const emptyForm = {
   stock: '',
   material: '',
   sortOrder: '0',
+  weightGrams: '',
+  productType: '',
+  countryOfOrigin: '',
+  cusmaCertified: false,
 }
 
 const SIZE_OPTIONS = ['XS', 'S', 'M', 'L', 'XL', 'XXL', 'One Size']
@@ -312,14 +339,16 @@ export default function ProductsPage() {
 
   function openEdit(p: MerchProduct) {
     setEditing(p)
-    setForm({ shopId: p.shopId || '', name: p.name, description: p.description, price: p.price, priceUsd: (p as any).priceUsd != null && (p as any).priceUsd > 0 ? String((p as any).priceUsd / 100) : '', cost: p.cost != null ? String(p.cost) : '', sku: p.sku || '', tag: p.tag || '', images: p.images, sizes: p.sizes, colors: p.colors, colorImages: p.colorImages || {}, variants: p.variants || [], active: p.active, stock: p.stock != null ? String(p.stock) : '', material: p.material || '', sortOrder: p.sortOrder != null ? String(p.sortOrder) : '0' })
+    const pa = p as any
+    setForm({ shopId: p.shopId || '', name: p.name, description: p.description, price: p.price, priceUsd: pa.priceUsd > 0 ? String(pa.priceUsd / 100) : '', cost: p.cost != null ? String(p.cost) : '', yourCost: pa.yourCost > 0 ? String(pa.yourCost / 100) : '', sku: p.sku || '', tag: p.tag || '', images: p.images, sizes: p.sizes, colors: p.colors, colorImages: p.colorImages || {}, variants: p.variants || [], active: p.active, stock: p.stock != null ? String(p.stock) : '', material: p.material || '', sortOrder: p.sortOrder != null ? String(p.sortOrder) : '0', weightGrams: pa.weightGrams > 0 ? String(pa.weightGrams) : '', productType: pa.productType || '', countryOfOrigin: pa.countryOfOrigin || '', cusmaCertified: pa.cusmaCertified || false })
     setSaveError('')
     setShowForm(true)
   }
 
   function openDuplicate(p: MerchProduct) {
     setEditing(null) // treat as new product
-    setForm({ shopId: p.shopId || '', name: `${p.name} (Copy)`, description: p.description, price: p.price, priceUsd: (p as any).priceUsd != null && (p as any).priceUsd > 0 ? String((p as any).priceUsd / 100) : '', cost: p.cost != null ? String(p.cost) : '', sku: '', tag: p.tag || '', images: p.images, sizes: p.sizes, colors: p.colors, colorImages: p.colorImages || {}, variants: p.variants || [], active: false, stock: p.stock != null ? String(p.stock) : '', material: p.material || '', sortOrder: '0' })
+    const pa = p as any
+    setForm({ shopId: p.shopId || '', name: `${p.name} (Copy)`, description: p.description, price: p.price, priceUsd: pa.priceUsd > 0 ? String(pa.priceUsd / 100) : '', cost: p.cost != null ? String(p.cost) : '', yourCost: pa.yourCost > 0 ? String(pa.yourCost / 100) : '', sku: '', tag: p.tag || '', images: p.images, sizes: p.sizes, colors: p.colors, colorImages: p.colorImages || {}, variants: p.variants || [], active: false, stock: p.stock != null ? String(p.stock) : '', material: p.material || '', sortOrder: '0', weightGrams: pa.weightGrams > 0 ? String(pa.weightGrams) : '', productType: pa.productType || '', countryOfOrigin: pa.countryOfOrigin || '', cusmaCertified: pa.cusmaCertified || false })
     setSaveError('')
     setShowForm(true)
   }
@@ -422,8 +451,12 @@ export default function ProductsPage() {
                     <input type="number" min="0" step="0.01" value={(form as any).priceUsd} onChange={e => setForm({ ...form, priceUsd: e.target.value } as any)} placeholder="e.g. 39.99" />
                   </div>
                   <div className="db-field">
-                    <label>Your Cost ($) <span style={{ fontWeight: 400, color: 'var(--ink-mute)' }}>garment + print</span></label>
+                    <label>Charge to Shop ($) <span style={{ fontWeight: 400, color: 'var(--ink-mute)' }}>your fee per item</span></label>
                     <input type="number" min="0" step="0.01" value={form.cost} onChange={e => setForm({ ...form, cost: e.target.value })} placeholder="e.g. 25.00" />
+                  </div>
+                  <div className="db-field">
+                    <label>Your Cost ($) <span style={{ fontWeight: 400, color: 'var(--ink-mute)' }}>garment + print</span></label>
+                    <input type="number" min="0" step="0.01" value={(form as any).yourCost} onChange={e => setForm({ ...form, yourCost: e.target.value } as any)} placeholder="e.g. 18.00" />
                   </div>
                   <div className="db-field">
                     <label>SKU</label>
@@ -485,6 +518,35 @@ export default function ProductsPage() {
                 <div className="db-field">
                   <label>Material <span style={{ color: 'var(--ink-mute)', fontWeight: 400 }}>(e.g. 100% ring-spun cotton · 6.1 oz/yd² · Garment-dyed)</span></label>
                   <input type="text" value={form.material} onChange={e => setForm({ ...form, material: e.target.value })} placeholder="e.g. 100% ring-spun cotton · 6.1 oz/yd² (207 GSM)" />
+                </div>
+                <div style={{ borderTop: '1px solid var(--line)', paddingTop: 16, marginTop: 4 }}>
+                  <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--ink-mute)', marginBottom: 12 }}>Shipping &amp; Customs</p>
+                  <div className="db-field-row">
+                    <div className="db-field">
+                      <label>Product Type <span style={{ color: 'var(--ink-mute)', fontWeight: 400 }}>for HTS code</span></label>
+                      <select value={(form as any).productType} onChange={e => setForm({ ...form, productType: e.target.value } as any)}>
+                        <option value="">— Select —</option>
+                        {PRODUCT_TYPES.map(t => <option key={t.value} value={t.value}>{t.label}</option>)}
+                      </select>
+                    </div>
+                    <div className="db-field">
+                      <label>Weight (grams)</label>
+                      <input type="number" min="0" value={(form as any).weightGrams} onChange={e => setForm({ ...form, weightGrams: e.target.value } as any)} placeholder="e.g. 200" />
+                    </div>
+                    <div className="db-field">
+                      <label>Country of Origin</label>
+                      <select value={(form as any).countryOfOrigin} onChange={e => {
+                        const co = e.target.value
+                        setForm({ ...form, countryOfOrigin: co, cusmaCertified: CUSMA_COUNTRIES.includes(co) } as any)
+                      }}>
+                        <option value="">— Select —</option>
+                        {COUNTRIES_OF_ORIGIN.map(c => <option key={c.value} value={c.value}>{c.label}</option>)}
+                      </select>
+                    </div>
+                    <div className="db-field" style={{ justifyContent: 'flex-end', paddingTop: 20 }}>
+                      <Toggle label="CUSMA Certified" checked={(form as any).cusmaCertified} onChange={v => setForm({ ...form, cusmaCertified: v } as any)} />
+                    </div>
+                  </div>
                 </div>
                 <div className="db-field">
                   <label>Limited Edition Stock <span style={{ color: 'var(--ink-mute)', fontWeight: 400 }}>(leave blank for unlimited)</span></label>

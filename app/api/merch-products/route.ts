@@ -14,7 +14,12 @@ function deserialize(p: any) {
     colorImages: JSON.parse(p.colorImages || '{}'),
     variants: JSON.parse(p.variants || '[]'),
     cost: (p.cost ?? 0) / 100,
+    yourCost: p.yourCost ?? 0,
     priceUsd: p.priceUsd ?? 0,
+    weightGrams: p.weightGrams ?? 0,
+    productType: p.productType ?? null,
+    countryOfOrigin: p.countryOfOrigin ?? null,
+    cusmaCertified: p.cusmaCertified ?? false,
   }
 }
 
@@ -52,7 +57,12 @@ export async function POST(request: Request) {
       colorImages: JSON.stringify(body.colorImages || {}),
       variants: JSON.stringify(body.variants || []),
       cost: body.cost != null && body.cost !== '' ? Math.round(Number(body.cost) * 100) : 0,
+      yourCost: body.yourCost != null && body.yourCost !== '' ? Math.round(Number(body.yourCost) * 100) : 0,
       priceUsd: body.priceUsd != null && body.priceUsd !== '' ? Math.round(Number(body.priceUsd) * 100) : 0,
+      weightGrams: body.weightGrams != null && body.weightGrams !== '' ? Number(body.weightGrams) : 0,
+      productType: body.productType || null,
+      countryOfOrigin: body.countryOfOrigin || null,
+      cusmaCertified: body.cusmaCertified ?? false,
     },
   })
   return Response.json(deserialize(product))
