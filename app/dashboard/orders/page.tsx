@@ -60,13 +60,14 @@ export default function OrdersPage() {
 
   async function updateStatus(orderId: string, prevStatus: string, newStatus: string) {
     setOrders(prev => prev.map(o => o.id === orderId ? { ...o, status: newStatus } : o))
-    await fetch(`/api/orders/${orderId}`, {
+    const res = await fetch(`/api/orders/${orderId}`, {
       method: 'PATCH',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ status: newStatus }),
-    }).catch(() => {
+    }).catch(() => null)
+    if (!res || !res.ok) {
       setOrders(prev => prev.map(o => o.id === orderId ? { ...o, status: prevStatus } : o))
-    })
+    }
   }
 
   if (loading) {
