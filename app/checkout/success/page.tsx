@@ -38,6 +38,30 @@ const BRANDS: Record<string, { name: string; shopPath: string; bg: string; color
     accent: '#C84020',
     font: 'Georgia, serif',
   },
+  'fat-rabbit': {
+    name: 'Fat Rabbit',
+    shopPath: '/shop/fat-rabbit',
+    bg: '#f5f4f0',
+    color: '#1a1a1a',
+    accent: '#DB4021',
+    font: "'Helvetica Neue', Helvetica, Arial, sans-serif",
+  },
+  'bar-bravo': {
+    name: 'Bar Bravo',
+    shopPath: '/shop/bar-bravo',
+    bg: '#fafafa',
+    color: '#111',
+    accent: '#111',
+    font: "'Helvetica Neue', Helvetica, Arial, sans-serif",
+  },
+  'sapperton-scrapper': {
+    name: 'Sapperton Scrapper',
+    shopPath: '/shop/sapperton-scrapper',
+    bg: '#fafafa',
+    color: '#111',
+    accent: '#111',
+    font: "'Helvetica Neue', Helvetica, Arial, sans-serif",
+  },
 }
 
 function SuccessContent() {
