@@ -21,6 +21,7 @@ function StatusBadge({ status }: { status: string }) {
 export default function OrdersPage() {
   const [orders, setOrders] = useState<any[]>([])
   const [loading, setLoading] = useState(true)
+  const [shopFilter, setShopFilter] = useState('all')
 
   useEffect(() => {
     fetch('/api/orders').then((r) => r.json()).then((data) => {
@@ -28,6 +29,9 @@ export default function OrdersPage() {
       setLoading(false)
     })
   }, [])
+
+  const shops = Array.from(new Set(orders.map(o => o.shopSlug).filter(Boolean))).sort()
+  const filtered = shopFilter === 'all' ? orders : orders.filter(o => o.shopSlug === shopFilter)
 
   async function fetchAddress(orderId: string) {
     setOrders(prev => prev.map(o => o.id === orderId ? { ...o, _fetchingAddress: true, _error: null } : o))
@@ -94,12 +98,26 @@ export default function OrdersPage() {
         <span className="num">[ 02 ]</span>
         <span className="label">Orders</span>
         <span className="spacer" />
-        <span>{orders.length}&nbsp;total</span>
+        <select
+          value={shopFilter}
+          onChange={e => setShopFilter(e.target.value)}
+          style={{
+            fontSize: 11, fontFamily: 'monospace', padding: '4px 8px',
+            background: 'var(--paper)', color: 'var(--ink)', border: '1px solid var(--ink-mute)',
+            borderRadius: 4, cursor: 'pointer',
+          }}
+        >
+          <option value="all">All Shops</option>
+          {shops.map(s => (
+            <option key={s} value={s}>{s.replace(/-/g, ' ')}</option>
+          ))}
+        </select>
+        <span>{filtered.length}&nbsp;{shopFilter === 'all' ? 'total' : 'orders'}</span>
         <span className="blink" />
       </div>
 
       <div className="db-content">
-        {orders.length === 0 ? (
+        {filtered.length === 0 ? (
           <div className="db-card">
             <div className="db-empty">
               <p className="db-empty-tag">No orders yet</p>
@@ -113,7 +131,7 @@ export default function OrdersPage() {
                 <thead>
                   <tr>
                     <th>Order ID</th>
-                    <th>Shop</th>
+                    {shopFilter === 'all' && <th>Shop</th>}
                     <th>Customer</th>
                     <th>Items</th>
                     <th>Size</th>
@@ -128,10 +146,10 @@ export default function OrdersPage() {
                   </tr>
                 </thead>
                 <tbody>
-                  {orders.map((order) => (
+                  {filtered.map((order) => (
                     <tr key={order.id}>
                       <td className="mono">{order.id.slice(0, 8)}…</td>
-                      <td style={{ fontSize: 12, textTransform: 'capitalize' }}>{order.shopSlug?.replace(/-/g, ' ') || '—'}</td>
+                      {shopFilter === 'all' && <td style={{ fontSize: 12, textTransform: 'capitalize' }}>{order.shopSlug?.replace(/-/g, ' ') || '—'}</td>}
                       <td className="strong">
                         {order.customer?.name}
                         <br />
