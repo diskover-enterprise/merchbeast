@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { useState, useEffect } from 'react'
 import { barBravoProducts, type BarBravoProduct } from '@/app/products/bar-bravo-products-data'
 import { useCart } from '@/app/cart-context'
+import { salePriceBasis, usdPriceLabel } from '@/lib/currency'
 import type { ActiveSale } from '@/lib/sale'
 import { calcSalePrice } from '@/lib/sale'
 
@@ -166,7 +167,8 @@ export function BarBravoStorefront({ heroImage, activeSale, dbProducts }: {
 
 function ProductCard({ product, activeSale }: { product: BarBravoProduct; activeSale?: ActiveSale }) {
   const [hovered, setHovered] = useState(false)
-  const salePrice = calcSalePrice(product.price, activeSale ?? null, product.slug)
+  const { isUS } = useCart()
+  const salePrice = calcSalePrice(salePriceBasis(product, isUS), activeSale ?? null, product.slug)
 
   return (
     <Link
@@ -189,7 +191,7 @@ function ProductCard({ product, activeSale }: { product: BarBravoProduct; active
         </h3>
         <div style={{ display: 'flex', gap: 6, flexShrink: 0 }}>
           {salePrice && <span style={{ fontSize: 14, color: '#2d6b65', fontWeight: 700 }}>${salePrice}</span>}
-          <span style={{ fontSize: 14, color: salePrice ? 'rgba(240,234,214,0.3)' : '#f0ead6', fontWeight: 600, textDecoration: salePrice ? 'line-through' : 'none' }}>${product.price}</span>
+          <span style={{ fontSize: 14, color: salePrice ? 'rgba(240,234,214,0.3)' : '#f0ead6', fontWeight: 600, textDecoration: salePrice ? 'line-through' : 'none' }}>{usdPriceLabel(product, isUS) ?? `$${product.price}`}</span>
         </div>
       </div>
       {product.colors && (

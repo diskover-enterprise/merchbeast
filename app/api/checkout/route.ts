@@ -18,42 +18,48 @@ function findStaticProduct(slug: string) {
 
 export async function POST(request: Request) {
   const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!)
-  const { items, discountCode, shopSlug: bodyShopSlug, isUS } = await request.json() as {
-    items: { slug: string; quantity: number; size?: string; color?: string }[]
+  const { items, discountCode, shopSlug: bodyShopSlug, isUS: bodyIsUS } = await request.json() as {
+    items: { slug: string; quantity: number; size?: string; color?: string; image?: string }[]
     discountCode?: string
     shopSlug?: string
     isUS?: boolean
   }
+
+  // Detect US visitors from Vercel's geo header so every storefront gets it; the body flag is a fallback for local dev
+  const ipCountry = request.headers.get('x-vercel-ip-country')
+  const isUS = ipCountry ? ipCountry === 'US' : !!bodyIsUS
 
   if (!items?.length) {
     return Response.json({ error: 'Cart is empty' }, { status: 400 })
   }
 
   const resolvedItems = await Promise.all(items.map(async (item) => {
-    let name: string, price: string, images: string[], priceUsd = 0
+    let name: string, price: string, images: string[]
     const staticProduct = findStaticProduct(item.slug)
+    const dbProduct = await prisma.merchProduct.findUnique({ where: { slug: item.slug } })
     if (staticProduct) {
       name = staticProduct.name
       price = staticProduct.price
       images = staticProduct.images
     } else {
-      const dbProduct = await prisma.merchProduct.findUnique({ where: { slug: item.slug } })
       if (!dbProduct) throw new Error(`Product not found: ${item.slug}`)
       name = dbProduct.name
       price = dbProduct.price
-      priceUsd = dbProduct.priceUsd ?? 0
       images = JSON.parse(dbProduct.images || '[]') as string[]
     }
+    const priceUsd = dbProduct?.priceUsd ?? 0
     const unitAmountCad = Math.round(parseFloat(price.replace(/[^0-9.]/g, '')) * 100)
-    const unitAmount = isUS && priceUsd > 0 ? priceUsd : unitAmountCad
     // Use variant-specific image from cart if provided, otherwise fall back to product images
     const displayImages = item.image ? [item.image] : images
-    return { name, images: displayImages, item, unitAmount }
+    return { name, images: displayImages, item, unitAmountCad, priceUsd }
   }))
 
-  const currency = isUS ? 'usd' : 'cad'
+  // Charge in USD only when every item has a USD price — otherwise a CAD amount would be billed as USD
+  const useUSD = isUS && resolvedItems.every(r => r.priceUsd > 0)
+  const currency = useUSD ? 'usd' : 'cad'
+  const pricedItems = resolvedItems.map(r => ({ ...r, unitAmount: useUSD ? r.priceUsd : r.unitAmountCad }))
 
-  const lineItems = resolvedItems.map(({ name, images, item, unitAmount }) => {
+  const lineItems = pricedItems.map(({ name, images, item, unitAmount }) => {
     const meta = [item.size, item.color].filter(Boolean).join(' / ')
     return {
       price_data: {
@@ -92,8 +98,8 @@ export async function POST(request: Request) {
   if (saleShop) {
     const activeSale = await prisma.shopSale.findFirst({ where: { shopId: saleShop.id, active: true } })
     if (activeSale) {
-      const orderTotalCents = resolvedItems.reduce((sum, { item, unitAmount }) => sum + unitAmount * item.quantity, 0)
-      const slugsInCart = resolvedItems.map(({ item }) => item.slug)
+      const orderTotalCents = pricedItems.reduce((sum, { item, unitAmount }) => sum + unitAmount * item.quantity, 0)
+      const slugsInCart = pricedItems.map(({ item }) => item.slug)
       const saleSlugs: string[] = JSON.parse(activeSale.productSlugs || '[]')
       const appliesToCart = activeSale.scope === 'cart' || saleSlugs.length === 0
       const appliesToSomething = appliesToCart || slugsInCart.some(s => saleSlugs.includes(s))
@@ -104,7 +110,7 @@ export async function POST(request: Request) {
             : Math.min(activeSale.value, orderTotalCents)
         } else {
           // Per-product: sum discount only on matching items
-          for (const { item, unitAmount } of resolvedItems) {
+          for (const { item, unitAmount } of pricedItems) {
             if (saleSlugs.includes(item.slug)) {
               const itemTotal = unitAmount * item.quantity
               saleDiscountCents += activeSale.type === 'percentage'
@@ -121,7 +127,7 @@ export async function POST(request: Request) {
   let discountAmountCents = 0
   let discountId: string | null = null
   if (discountCode) {
-    const orderTotalCents = resolvedItems.reduce((sum, { item, unitAmount }) => sum + unitAmount * item.quantity, 0)
+    const orderTotalCents = pricedItems.reduce((sum, { item, unitAmount }) => sum + unitAmount * item.quantity, 0)
     const shop = await prisma.shop.findUnique({ where: { slug: shopSlug } })
     if (shop) {
       const discount = await prisma.discountCode.findUnique({
@@ -163,7 +169,7 @@ export async function POST(request: Request) {
   }
 
   // Pass shop slug + item details as metadata so success page can create the DB order
-  const cartMeta = resolvedItems.map(({ name, item, unitAmount }) => ({
+  const cartMeta = pricedItems.map(({ name, item, unitAmount }) => ({
     name,
     slug: item.slug,
     quantity: item.quantity,
@@ -180,14 +186,14 @@ export async function POST(request: Request) {
   // cost of all items + shipping + $5/item fulfillment
   let applicationFeeAmount: number | undefined
   if (connectedAccountId) {
-    const slugs = resolvedItems.map(({ item }) => item.slug).filter(Boolean)
+    const slugs = pricedItems.map(({ item }) => item.slug).filter(Boolean)
     const costs = slugs.length > 0
       ? await prisma.merchProduct.findMany({ where: { slug: { in: slugs } }, select: { slug: true, cost: true } })
       : []
     const costMap = Object.fromEntries(costs.map(p => [p.slug, p.cost]))
-    const totalCostCents = resolvedItems.reduce((sum, { item }) => sum + (costMap[item.slug] ?? 0) * item.quantity, 0)
+    const totalCostCents = pricedItems.reduce((sum, { item }) => sum + (costMap[item.slug] ?? 0) * item.quantity, 0)
     const shippingCents = isUS ? 1500 : 1000
-    const totalItems = resolvedItems.reduce((sum, { item }) => sum + item.quantity, 0)
+    const totalItems = pricedItems.reduce((sum, { item }) => sum + item.quantity, 0)
     const fulfillmentCents = totalItems * 500 // $5 per item
     applicationFeeAmount = totalCostCents + shippingCents + fulfillmentCents
   }

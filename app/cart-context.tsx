@@ -2,6 +2,7 @@
 
 import { createContext, useContext, useState, useCallback, useEffect } from 'react'
 import type { Product } from './products/products-data'
+import { hasUsdPrice } from '@/lib/currency'
 
 export type CartItem = {
   product: Product
@@ -26,6 +27,7 @@ type CartContextType = {
   setShopPath: (path: string) => void
   isUS: boolean
   setIsUS: (v: boolean) => void
+  currency: 'USD' | 'CAD'
 }
 
 const CartContext = createContext<CartContextType | null>(null)
@@ -43,6 +45,11 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   const [brandColor, setBrandColorState] = useState('#1C2E54')
   const [shopPath, setShopPathState] = useState('')
   const [isUS, setIsUS] = useState(false)
+
+  // Detect US visitors once for every storefront
+  useEffect(() => {
+    fetch('/api/geo').then(r => r.json()).then(d => { if (d.country) setIsUS(d.country === 'US') }).catch(() => {})
+  }, [])
 
   // Load items for the current shopPath whenever it changes
   useEffect(() => {
@@ -103,15 +110,20 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     try { localStorage.removeItem(cartStorageKey(shopPath)) } catch {}
   }, [shopPath])
 
+  // Mirrors /api/checkout: USD only when every item has a USD price
+  const currency: 'USD' | 'CAD' = isUS && items.length > 0 && items.every(i => hasUsdPrice(i.product)) ? 'USD' : 'CAD'
+
   const total = items.reduce((sum, i) => {
-    const price = parseFloat(i.product.price.replace(/[^0-9.]/g, ''))
+    const price = currency === 'USD'
+      ? i.product.priceUsd! / 100
+      : parseFloat(i.product.price.replace(/[^0-9.]/g, ''))
     return sum + price * i.quantity
   }, 0)
 
   const count = items.reduce((sum, i) => sum + i.quantity, 0)
 
   return (
-    <CartContext.Provider value={{ items, addToCart, removeFromCart, updateQuantity, clearCart, total, subtotal: total, count, brandColor, setBrandColor, shopPath, setShopPath, isUS, setIsUS }}>
+    <CartContext.Provider value={{ items, addToCart, removeFromCart, updateQuantity, clearCart, total, subtotal: total, count, brandColor, setBrandColor, shopPath, setShopPath, isUS, setIsUS, currency }}>
       {children}
     </CartContext.Provider>
   )

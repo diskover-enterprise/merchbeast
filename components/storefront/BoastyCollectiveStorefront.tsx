@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { useState, useEffect } from 'react'
 import { boastyProducts, type BoastyProduct } from '@/app/products/boasty-collective-products-data'
 import { useCart } from '@/app/cart-context'
+import { salePriceBasis, usdPriceLabel } from '@/lib/currency'
 import type { ActiveSale } from '@/lib/sale'
 import { calcSalePrice } from '@/lib/sale'
 
@@ -143,7 +144,8 @@ export function BoastyCollectiveStorefront({ heroImage, logo, dbProducts, active
 
 function ProductCard({ product, activeSale }: { product: BoastyProduct; activeSale?: ActiveSale }) {
   const [hovered, setHovered] = useState(false)
-  const salePrice = calcSalePrice(product.price, activeSale ?? null, product.slug)
+  const { isUS } = useCart()
+  const salePrice = calcSalePrice(salePriceBasis(product, isUS), activeSale ?? null, product.slug)
 
   return (
     <Link href={product.path} style={{ textDecoration: 'none', color: 'inherit', display: 'block' }} onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)}>
@@ -161,7 +163,7 @@ function ProductCard({ product, activeSale }: { product: BoastyProduct; activeSa
         <h3 style={{ fontSize: 13, fontWeight: 600, lineHeight: 1.4, color: '#1a1a2e', flex: 1, marginRight: 8 }}>{product.name}</h3>
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', flexShrink: 0 }}>
           {salePrice && <span style={{ fontSize: 13, color: '#e53e3e', fontWeight: 700 }}>{salePrice}</span>}
-          <span style={{ fontSize: 13, color: salePrice ? '#aaa' : '#F4A261', fontWeight: 700, textDecoration: salePrice ? 'line-through' : 'none' }}>{product.price}</span>
+          <span style={{ fontSize: 13, color: salePrice ? '#aaa' : '#F4A261', fontWeight: 700, textDecoration: salePrice ? 'line-through' : 'none' }}>{usdPriceLabel(product, isUS) ?? product.price}</span>
         </div>
       </div>
       {product.colors && (

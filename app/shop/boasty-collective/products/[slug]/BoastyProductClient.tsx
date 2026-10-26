@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { useCart } from '@/app/cart-context'
+import { usdPriceLabel } from '@/lib/currency'
 
 type Product = {
   id: string; slug: string; name: string; price: string; description: string
@@ -10,7 +11,7 @@ type Product = {
 }
 
 export default function BoastyProductClient({ product, related }: { product: Product; related: Product[] }) {
-  const { addToCart, count, setBrandColor, setShopPath } = useCart()
+  const { addToCart, count, setBrandColor, setShopPath, isUS } = useCart()
   const [activeImg, setActiveImg] = useState(0)
   const [selectedSize, setSelectedSize] = useState<string | undefined>()
   const [selectedColor, setSelectedColor] = useState<string | undefined>()
@@ -89,7 +90,7 @@ export default function BoastyProductClient({ product, related }: { product: Pro
 
           <div style={{ paddingTop: 16 }}>
             <h1 style={{ fontSize: 28, fontWeight: 800, lineHeight: 1.2, marginBottom: 16, letterSpacing: '-0.01em', textTransform: 'uppercase', color: '#003A5C' }}>{product.name}</h1>
-            <p style={{ fontSize: 24, color: '#F4A261', fontWeight: 700, marginBottom: 24 }}>{product.price}</p>
+            <p style={{ fontSize: 24, color: '#F4A261', fontWeight: 700, marginBottom: 24 }}>{usdPriceLabel(product, isUS) ?? product.price}</p>
             <p style={{ fontSize: 14, lineHeight: 1.7, color: '#555', marginBottom: 32 }}>{product.description}</p>
 
             {product.sizes.length > 0 && (
@@ -131,7 +132,7 @@ export default function BoastyProductClient({ product, related }: { product: Pro
                   </div>
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
                     <h3 style={{ fontSize: 13, fontWeight: 600, lineHeight: 1.4, color: '#1a1a2e', flex: 1, marginRight: 8 }}>{p.name}</h3>
-                    <span style={{ fontSize: 13, color: '#F4A261', fontWeight: 700, flexShrink: 0 }}>{p.price}</span>
+                    <span style={{ fontSize: 13, color: '#F4A261', fontWeight: 700, flexShrink: 0 }}>{usdPriceLabel(p, isUS) ?? p.price}</span>
                   </div>
                 </Link>
               ))}

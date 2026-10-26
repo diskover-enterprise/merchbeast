@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { useState, useEffect, useRef } from 'react'
 import { products as staticProducts, type Product } from '@/app/products/products-data'
 import { useCart } from '@/app/cart-context'
+import { salePriceBasis, usdPriceLabel } from '@/lib/currency'
 import type { ActiveSale } from '@/lib/sale'
 import { calcSalePrice } from '@/lib/sale'
 
@@ -161,7 +162,8 @@ export function LunchLadyStorefront({ dbProducts, activeSale }: { dbProducts?: D
 
 function ProductCard({ product, activeSale }: { product: Product; activeSale?: ActiveSale }) {
   const [hovered, setHovered] = useState(false)
-  const salePrice = calcSalePrice(product.price, activeSale ?? null, product.slug)
+  const { isUS } = useCart()
+  const salePrice = calcSalePrice(salePriceBasis(product, isUS), activeSale ?? null, product.slug)
 
   return (
     <Link
@@ -194,7 +196,7 @@ function ProductCard({ product, activeSale }: { product: Product; activeSale?: A
         </div>
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', flexShrink: 0 }}>
           {salePrice && <span style={{ fontSize: 13, color: '#e53e3e', fontWeight: 700 }}>{salePrice}</span>}
-          <span style={{ fontSize: 13, color: salePrice ? '#aaa' : '#C84020', fontWeight: 600, textDecoration: salePrice ? 'line-through' : 'none' }}>{product.price}</span>
+          <span style={{ fontSize: 13, color: salePrice ? '#aaa' : '#C84020', fontWeight: 600, textDecoration: salePrice ? 'line-through' : 'none' }}>{usdPriceLabel(product, isUS) ?? product.price}</span>
         </div>
       </div>
     </Link>

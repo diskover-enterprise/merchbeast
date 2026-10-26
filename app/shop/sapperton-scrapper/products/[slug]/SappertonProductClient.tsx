@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { useCart } from '@/app/cart-context'
+import { usdPriceLabel } from '@/lib/currency'
 
 type Product = {
   id: string; slug: string; name: string; price: string; description: string
@@ -10,7 +11,7 @@ type Product = {
 }
 
 export default function SappertonProductClient({ product, related }: { product: Product; related: Product[] }) {
-  const { addToCart, count, setBrandColor, setShopPath } = useCart()
+  const { addToCart, count, setBrandColor, setShopPath, isUS } = useCart()
   const [activeImg, setActiveImg] = useState(0)
   const [selectedSize, setSelectedSize] = useState<string | undefined>()
   const [selectedColor, setSelectedColor] = useState<string | undefined>()
@@ -93,7 +94,7 @@ export default function SappertonProductClient({ product, related }: { product: 
               {product.tag || 'Apparel'}
             </p>
             <h1 style={{ fontFamily: "'Barlow Condensed', sans-serif", fontSize: 48, fontWeight: 900, fontStyle: 'italic', textTransform: 'uppercase', lineHeight: 1.05, marginBottom: 16, letterSpacing: '-0.01em', color: '#b8860b' }}>{product.name}</h1>
-            <p style={{ fontFamily: "'Barlow Condensed', sans-serif", fontSize: 36, color: '#b8860b', fontWeight: 900, marginBottom: 24 }}>${product.price}</p>
+            <p style={{ fontFamily: "'Barlow Condensed', sans-serif", fontSize: 36, color: '#b8860b', fontWeight: 900, marginBottom: 24 }}>{usdPriceLabel(product, isUS) ?? `$${product.price}`}</p>
             <p style={{ fontFamily: "'Barlow', sans-serif", fontSize: 14, lineHeight: 1.7, color: 'rgba(184,134,11,0.5)', marginBottom: 32 }}>{product.description}</p>
 
             {product.sizes.length > 0 && (
@@ -148,7 +149,7 @@ export default function SappertonProductClient({ product, related }: { product: 
                   </div>
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
                     <h3 style={{ fontFamily: "'Barlow Condensed', sans-serif", fontSize: 15, fontWeight: 700, fontStyle: 'italic', textTransform: 'uppercase', lineHeight: 1.3, color: '#b8860b', flex: 1, marginRight: 8 }}>{p.name}</h3>
-                    <span style={{ fontSize: 14, color: '#b8860b', fontWeight: 700, flexShrink: 0 }}>${p.price}</span>
+                    <span style={{ fontSize: 14, color: '#b8860b', fontWeight: 700, flexShrink: 0 }}>{usdPriceLabel(p, isUS) ?? `$${p.price}`}</span>
                   </div>
                 </Link>
               ))}

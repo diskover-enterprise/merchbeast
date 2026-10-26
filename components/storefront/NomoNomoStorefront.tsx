@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { useState, useEffect, useRef } from 'react'
 import { nomoProducts, type NomoProduct } from '@/app/products/nomo-nomo-products-data'
 import { useCart } from '@/app/cart-context'
+import { salePriceBasis, usdPriceLabel } from '@/lib/currency'
 import type { ActiveSale } from '@/lib/sale'
 import { calcSalePrice } from '@/lib/sale'
 
@@ -166,7 +167,8 @@ export function NomoNomoStorefront({ heroImage, activeSale, dbProducts }: { hero
 
 function ProductCard({ product, activeSale, stock }: { product: NomoProduct; activeSale?: ActiveSale; stock?: number | null }) {
   const [hovered, setHovered] = useState(false)
-  const salePrice = calcSalePrice(product.price, activeSale ?? null, product.slug)
+  const { isUS } = useCart()
+  const salePrice = calcSalePrice(salePriceBasis(product, isUS), activeSale ?? null, product.slug)
   const isLimited = stock != null
 
   return (
@@ -200,7 +202,7 @@ function ProductCard({ product, activeSale, stock }: { product: NomoProduct; act
         </h3>
         <div style={{ display: 'flex', gap: 6, flexShrink: 0 }}>
           {salePrice && <span style={{ fontSize: 16, color: '#ff6b6b', fontWeight: 700 }}>${salePrice}</span>}
-          <span style={{ fontSize: 16, color: salePrice ? 'rgba(255,255,255,0.3)' : '#fff', fontWeight: 700, textDecoration: salePrice ? 'line-through' : 'none' }}>${product.price}</span>
+          <span style={{ fontSize: 16, color: salePrice ? 'rgba(255,255,255,0.3)' : '#fff', fontWeight: 700, textDecoration: salePrice ? 'line-through' : 'none' }}>{usdPriceLabel(product, isUS) ?? `$${product.price}`}</span>
         </div>
       </div>
       {product.colors && (

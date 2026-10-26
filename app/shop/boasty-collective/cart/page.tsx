@@ -3,12 +3,13 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { useCart } from '@/app/cart-context'
+import { usdPriceLabel } from '@/lib/currency'
 import { PromoCodeInput } from '@/components/PromoCodeInput'
 import { calcSaleDiscountCents } from '@/lib/sale'
 import type { ActiveSale } from '@/lib/sale'
 
 export default function BoastyCartPage() {
-  const { items, removeFromCart, updateQuantity, total, setBrandColor, setShopPath } = useCart()
+  const { items, removeFromCart, updateQuantity, total, setBrandColor, setShopPath, currency } = useCart()
   useEffect(() => { setBrandColor('#003A5C'); setShopPath('/shop/boasty-collective') }, [setBrandColor, setShopPath])
   const [checkoutError, setCheckoutError] = useState<string | null>(null)
   const [loading, setLoading] = useState(false)
@@ -125,7 +126,7 @@ export default function BoastyCartPage() {
                     {(size || color) && (
                       <p className="bc-cart-item-meta">{[size, color].filter(Boolean).join(' · ')}</p>
                     )}
-                    <p className="bc-cart-item-price">{product.price}</p>
+                    <p className="bc-cart-item-price">{(currency === 'USD' && usdPriceLabel(product, true)) || product.price}</p>
                   </div>
                   <div className="bc-cart-qty">
                     <button className="bc-cart-qty-btn" onClick={() => quantity === 1 ? removeFromCart(product.slug, size, color) : updateQuantity(product.slug, quantity - 1, size, color)}>−</button>
@@ -141,18 +142,18 @@ export default function BoastyCartPage() {
               <p className="bc-cart-summary-title">Order Summary</p>
               <div className="bc-cart-summary-row">
                 <span>Subtotal</span>
-                <span>${total.toFixed(2)} CAD</span>
+                <span>${total.toFixed(2)} {currency}</span>
               </div>
               {saleDiscountCents > 0 && (
                 <div className="bc-cart-summary-row" style={{ color: '#F4A261' }}>
                   <span>{activeSale!.name}</span>
-                  <span>−${(saleDiscountCents / 100).toFixed(2)} CAD</span>
+                  <span>−${(saleDiscountCents / 100).toFixed(2)} {currency}</span>
                 </div>
               )}
               {discountCents > 0 && (
                 <div className="bc-cart-summary-row" style={{ color: '#86efac' }}>
                   <span>Promo Code</span>
-                  <span>−${(discountCents / 100).toFixed(2)} CAD</span>
+                  <span>−${(discountCents / 100).toFixed(2)} {currency}</span>
                 </div>
               )}
               <div className="bc-cart-summary-row">
@@ -161,7 +162,7 @@ export default function BoastyCartPage() {
               </div>
               <div className="bc-cart-summary-row bc-cart-summary-total">
                 <span>Total</span>
-                <span>${discountedTotal.toFixed(2)} CAD</span>
+                <span>${discountedTotal.toFixed(2)} {currency}</span>
               </div>
               <PromoCodeInput
                 shopSlug="boasty-collective"

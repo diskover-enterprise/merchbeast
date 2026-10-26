@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { useState, useEffect } from 'react'
 import { the1982Products, type The1982Product } from '@/app/products/the1982-products-data'
 import { useCart } from '@/app/cart-context'
+import { salePriceBasis, usdPriceLabel } from '@/lib/currency'
 import type { ActiveSale } from '@/lib/sale'
 import { calcSalePrice } from '@/lib/sale'
 
@@ -149,7 +150,8 @@ export function The1982Storefront({ heroImage, dbProducts, activeSale }: { heroI
 
 function ProductCard({ product, dark, activeSale }: { product: The1982Product; dark?: boolean; activeSale?: ActiveSale }) {
   const [hovered, setHovered] = useState(false)
-  const salePrice = calcSalePrice(product.price, activeSale ?? null, product.slug)
+  const { isUS } = useCart()
+  const salePrice = calcSalePrice(salePriceBasis(product, isUS), activeSale ?? null, product.slug)
 
   return (
     <Link
@@ -177,7 +179,7 @@ function ProductCard({ product, dark, activeSale }: { product: The1982Product; d
         </h3>
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', flexShrink: 0 }}>
           {salePrice && <span style={{ fontSize: 13, color: '#B8860B', fontWeight: 700 }}>{salePrice}</span>}
-          <span style={{ fontSize: 13, color: salePrice ? (dark ? 'rgba(255,255,255,0.2)' : '#bbb') : (dark ? 'rgba(255,255,255,0.6)' : '#555'), fontWeight: 600, textDecoration: salePrice ? 'line-through' : 'none' }}>{product.price}</span>
+          <span style={{ fontSize: 13, color: salePrice ? (dark ? 'rgba(255,255,255,0.2)' : '#bbb') : (dark ? 'rgba(255,255,255,0.6)' : '#555'), fontWeight: 600, textDecoration: salePrice ? 'line-through' : 'none' }}>{usdPriceLabel(product, isUS) ?? product.price}</span>
         </div>
       </div>
       {product.colors && (

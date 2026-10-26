@@ -5,7 +5,7 @@ import Link from 'next/link'
 import { useCart } from '@/app/cart-context'
 
 export default function FatRabbitCartPage() {
-  const { items, removeFromCart, updateQuantity, clearCart, total: subtotal, setBrandColor, setShopPath, isUS } = useCart()
+  const { items, removeFromCart, updateQuantity, clearCart, total: subtotal, setBrandColor, setShopPath, isUS, currency } = useCart()
   const [confirmClear, setConfirmClear] = useState(false)
 
   useEffect(() => {
@@ -84,14 +84,14 @@ export default function FatRabbitCartPage() {
                     <button className="frc-remove" onClick={() => removeFromCart(item.product.slug, item.size, item.color)}>Remove</button>
                   </div>
                 </div>
-                <div className="frc-item-price">${(parseFloat(item.product.price) * item.quantity).toFixed(2)}</div>
+                <div className="frc-item-price">${((currency === 'USD' ? item.product.priceUsd! / 100 : parseFloat(item.product.price)) * item.quantity).toFixed(2)}</div>
               </div>
             ))}
 
             <div className="frc-summary">
               <div className="frc-subtotal">
                 <span className="frc-subtotal-label">Subtotal</span>
-                <span className="frc-subtotal-val">${subtotal.toFixed(2)}</span>
+                <span className="frc-subtotal-val">${subtotal.toFixed(2)} {currency}</span>
               </div>
               <a href="/api/checkout" className="frc-checkout" onClick={async (e) => {
                 e.preventDefault()

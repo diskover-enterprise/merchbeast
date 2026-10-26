@@ -3,12 +3,13 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { useCart } from '@/app/cart-context'
+import { usdPriceLabel } from '@/lib/currency'
 import { PromoCodeInput } from '@/components/PromoCodeInput'
 import { calcSaleDiscountCents } from '@/lib/sale'
 import type { ActiveSale } from '@/lib/sale'
 
 export default function LunchLadyCartPage() {
-  const { items, removeFromCart, updateQuantity, total, setBrandColor, setShopPath } = useCart()
+  const { items, removeFromCart, updateQuantity, total, setBrandColor, setShopPath, currency } = useCart()
   useEffect(() => { setBrandColor('#1C2E54'); setShopPath('/shop/lunch-lady') }, [setBrandColor, setShopPath])
   const [checkoutError, setCheckoutError] = useState<string | null>(null)
   const [loading, setLoading] = useState(false)
@@ -125,7 +126,7 @@ export default function LunchLadyCartPage() {
                     {(size || color) && (
                       <p className="ll-cart-item-meta">{[size, color].filter(Boolean).join(' · ')}</p>
                     )}
-                    <p className="ll-cart-item-price">{product.price}</p>
+                    <p className="ll-cart-item-price">{(currency === 'USD' && usdPriceLabel(product, true)) || product.price}</p>
                   </div>
                   <div className="ll-cart-qty">
                     <button className="ll-cart-qty-btn" onClick={() => quantity === 1 ? removeFromCart(product.slug, size, color) : updateQuantity(product.slug, quantity - 1, size, color)}>−</button>
@@ -141,18 +142,18 @@ export default function LunchLadyCartPage() {
               <p className="ll-cart-summary-title">Order Summary</p>
               <div className="ll-cart-summary-row">
                 <span>Subtotal</span>
-                <span>${total.toFixed(2)} CAD</span>
+                <span>${total.toFixed(2)} {currency}</span>
               </div>
               {saleDiscountCents > 0 && (
                 <div className="ll-cart-summary-row" style={{ color: '#86efac' }}>
                   <span>{activeSale!.name}</span>
-                  <span>−${(saleDiscountCents / 100).toFixed(2)} CAD</span>
+                  <span>−${(saleDiscountCents / 100).toFixed(2)} {currency}</span>
                 </div>
               )}
               {discountCents > 0 && (
                 <div className="ll-cart-summary-row" style={{ color: '#86efac' }}>
                   <span>Promo Code</span>
-                  <span>−${(discountCents / 100).toFixed(2)} CAD</span>
+                  <span>−${(discountCents / 100).toFixed(2)} {currency}</span>
                 </div>
               )}
               <div className="ll-cart-summary-row">
@@ -161,7 +162,7 @@ export default function LunchLadyCartPage() {
               </div>
               <div className="ll-cart-summary-row ll-cart-summary-total">
                 <span>Total</span>
-                <span>${discountedTotal.toFixed(2)} CAD</span>
+                <span>${discountedTotal.toFixed(2)} {currency}</span>
               </div>
               <PromoCodeInput
                 shopSlug="lunch-lady"

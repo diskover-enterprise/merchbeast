@@ -3,12 +3,13 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { useCart } from '@/app/cart-context'
+import { usdPriceLabel } from '@/lib/currency'
 import { PromoCodeInput } from '@/components/PromoCodeInput'
 import { calcSaleDiscountCents } from '@/lib/sale'
 import type { ActiveSale } from '@/lib/sale'
 
 export default function NomoCartPage() {
-  const { items, removeFromCart, updateQuantity, total, setBrandColor, setShopPath } = useCart()
+  const { items, removeFromCart, updateQuantity, total, setBrandColor, setShopPath, currency } = useCart()
   useEffect(() => { setBrandColor('#C41E1E'); setShopPath('/shop/nomo-nomo') }, [setBrandColor, setShopPath])
   const [checkoutError, setCheckoutError] = useState<string | null>(null)
   const [loading, setLoading] = useState(false)
@@ -124,7 +125,7 @@ export default function NomoCartPage() {
                     {(size || color) && (
                       <p className="nn-cart-item-meta">{[size, color].filter(Boolean).join(' · ')}</p>
                     )}
-                    <p className="nn-cart-item-price">{product.price}</p>
+                    <p className="nn-cart-item-price">{(currency === 'USD' && usdPriceLabel(product, true)) || product.price}</p>
                   </div>
                   <div className="nn-cart-qty">
                     <button className="nn-cart-qty-btn" onClick={() => quantity === 1 ? removeFromCart(product.slug, size, color) : updateQuantity(product.slug, quantity - 1, size, color)}>−</button>
@@ -140,18 +141,18 @@ export default function NomoCartPage() {
               <p className="nn-cart-summary-title">Order Summary</p>
               <div className="nn-cart-summary-row">
                 <span>Subtotal</span>
-                <span>${total.toFixed(2)} CAD</span>
+                <span>${total.toFixed(2)} {currency}</span>
               </div>
               {saleDiscountCents > 0 && (
                 <div className="nn-cart-summary-row" style={{ color: '#ff6b6b' }}>
                   <span>{activeSale!.name}</span>
-                  <span>−${(saleDiscountCents / 100).toFixed(2)} CAD</span>
+                  <span>−${(saleDiscountCents / 100).toFixed(2)} {currency}</span>
                 </div>
               )}
               {discountCents > 0 && (
                 <div className="nn-cart-summary-row" style={{ color: '#86efac' }}>
                   <span>Promo Code</span>
-                  <span>−${(discountCents / 100).toFixed(2)} CAD</span>
+                  <span>−${(discountCents / 100).toFixed(2)} {currency}</span>
                 </div>
               )}
               <div className="nn-cart-summary-row">
@@ -160,7 +161,7 @@ export default function NomoCartPage() {
               </div>
               <div className="nn-cart-summary-row nn-cart-summary-total">
                 <span>Total</span>
-                <span>${discountedTotal.toFixed(2)} CAD</span>
+                <span>${discountedTotal.toFixed(2)} {currency}</span>
               </div>
               <PromoCodeInput
                 shopSlug="nomo-nomo"

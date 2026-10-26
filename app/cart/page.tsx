@@ -3,12 +3,13 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { useCart } from '../cart-context'
+import { usdPriceLabel } from '@/lib/currency'
 import { PromoCodeInput } from '@/components/PromoCodeInput'
 import { calcSaleDiscountCents } from '@/lib/sale'
 import type { ActiveSale } from '@/lib/sale'
 
 export default function CartPage() {
-  const { items, removeFromCart, updateQuantity, total, brandColor, shopPath } = useCart()
+  const { items, removeFromCart, updateQuantity, total, brandColor, shopPath, currency } = useCart()
   const [checkoutError, setCheckoutError] = useState<string | null>(null)
   const [loading, setLoading] = useState(false)
   const [appliedCode, setAppliedCode] = useState<string | null>(null)
@@ -132,7 +133,7 @@ export default function CartPage() {
                     {(size || color) && (
                       <p className="cart-item-meta">{[size, color].filter(Boolean).join(' · ')}</p>
                     )}
-                    <p className="cart-item-price">{product.price}</p>
+                    <p className="cart-item-price">{(currency === 'USD' && usdPriceLabel(product, true)) || product.price}</p>
                   </div>
                   <div className="cart-qty">
                     <button className="cart-qty-btn" onClick={() => quantity === 1 ? removeFromCart(product.slug, size, color) : updateQuantity(product.slug, quantity - 1, size, color)}>−</button>
@@ -149,18 +150,18 @@ export default function CartPage() {
               <p className="cart-summary-title">Order Summary</p>
               <div className="cart-summary-row">
                 <span>Subtotal</span>
-                <span>${total.toFixed(2)} CAD</span>
+                <span>${total.toFixed(2)} {currency}</span>
               </div>
               {saleDiscountCents > 0 && (
                 <div className="cart-summary-row" style={{ color: '#276749' }}>
                   <span>{activeSale!.name}</span>
-                  <span>−${(saleDiscountCents / 100).toFixed(2)} CAD</span>
+                  <span>−${(saleDiscountCents / 100).toFixed(2)} {currency}</span>
                 </div>
               )}
               {discountCents > 0 && (
                 <div className="cart-summary-row" style={{ color: '#276749' }}>
                   <span>Promo Code</span>
-                  <span>−${(discountCents / 100).toFixed(2)} CAD</span>
+                  <span>−${(discountCents / 100).toFixed(2)} {currency}</span>
                 </div>
               )}
               <div className="cart-summary-row">
@@ -169,7 +170,7 @@ export default function CartPage() {
               </div>
               <div className="cart-summary-row cart-summary-total">
                 <span>Total</span>
-                <span>${discountedTotal.toFixed(2)} CAD</span>
+                <span>${discountedTotal.toFixed(2)} {currency}</span>
               </div>
               <PromoCodeInput
                 shopSlug={shopSlug}

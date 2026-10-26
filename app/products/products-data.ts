@@ -2,6 +2,7 @@ export type Product = {
   slug: string
   name: string
   price: string
+  priceUsd?: number | null
   description: string
   shopifyUrl: string
   path: string

@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { useCart } from '@/app/cart-context'
+import { usdPriceLabel } from '@/lib/currency'
 
 type Product = {
   id: string; slug: string; name: string; price: string; description: string
@@ -10,7 +11,7 @@ type Product = {
 }
 
 export default function LunchLadyProductClient({ product, related }: { product: Product; related: Product[] }) {
-  const { addToCart, count, setBrandColor, setShopPath } = useCart()
+  const { addToCart, count, setBrandColor, setShopPath, isUS } = useCart()
   const [activeImg, setActiveImg] = useState(0)
   const [selectedSize, setSelectedSize] = useState<string | undefined>()
   const [selectedColor, setSelectedColor] = useState<string | undefined>()
@@ -93,7 +94,7 @@ export default function LunchLadyProductClient({ product, related }: { product: 
           <div style={{ paddingTop: 16 }}>
             <div style={{ width: 40, height: 2, background: '#C84020', marginBottom: 20 }} />
             <h1 style={{ fontSize: 28, fontWeight: 400, lineHeight: 1.2, marginBottom: 16, letterSpacing: '-0.01em', color: '#111' }}>{product.name}</h1>
-            <p style={{ fontSize: 22, color: '#C84020', fontWeight: 600, marginBottom: 24, fontFamily: 'Georgia, serif' }}>{product.price}</p>
+            <p style={{ fontSize: 22, color: '#C84020', fontWeight: 600, marginBottom: 24, fontFamily: 'Georgia, serif' }}>{usdPriceLabel(product, isUS) ?? product.price}</p>
             <p style={{ fontSize: 14, lineHeight: 1.8, color: '#666', marginBottom: 32 }}>{product.description}</p>
 
             {product.sizes.length > 0 && (
@@ -148,7 +149,7 @@ export default function LunchLadyProductClient({ product, related }: { product: 
                   </div>
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
                     <h3 style={{ fontSize: 13, fontWeight: 400, lineHeight: 1.4, color: '#111', flex: 1, marginRight: 8 }}>{p.name}</h3>
-                    <span style={{ fontSize: 13, color: '#C84020', fontWeight: 600, flexShrink: 0 }}>{p.price}</span>
+                    <span style={{ fontSize: 13, color: '#C84020', fontWeight: 600, flexShrink: 0 }}>{usdPriceLabel(p, isUS) ?? p.price}</span>
                   </div>
                 </Link>
               ))}

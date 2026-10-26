@@ -3,12 +3,13 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { useCart } from '@/app/cart-context'
+import { usdPriceLabel } from '@/lib/currency'
 import { PromoCodeInput } from '@/components/PromoCodeInput'
 import { calcSaleDiscountCents } from '@/lib/sale'
 import type { ActiveSale } from '@/lib/sale'
 
 export default function SappertonCartPage() {
-  const { items, removeFromCart, updateQuantity, total, setBrandColor, setShopPath } = useCart()
+  const { items, removeFromCart, updateQuantity, total, setBrandColor, setShopPath, currency } = useCart()
   useEffect(() => { setBrandColor('#b8860b'); setShopPath('/shop/sapperton-scrapper') }, [setBrandColor, setShopPath])
   const [checkoutError, setCheckoutError] = useState<string | null>(null)
   const [loading, setLoading] = useState(false)
@@ -126,7 +127,7 @@ export default function SappertonCartPage() {
                     {(size || color) && (
                       <p className="ss-cart-item-meta">{[size, color].filter(Boolean).join(' · ')}</p>
                     )}
-                    <p className="ss-cart-item-price">${product.price}</p>
+                    <p className="ss-cart-item-price">{(currency === 'USD' && usdPriceLabel(product, true)) || `$${product.price}`}</p>
                   </div>
                   <div className="ss-cart-qty">
                     <button className="ss-cart-qty-btn" onClick={() => quantity === 1 ? removeFromCart(product.slug, size, color) : updateQuantity(product.slug, quantity - 1, size, color)}>−</button>
@@ -142,18 +143,18 @@ export default function SappertonCartPage() {
               <p className="ss-cart-summary-title">Order Summary</p>
               <div className="ss-cart-summary-row">
                 <span>Subtotal</span>
-                <span>${total.toFixed(2)} CAD</span>
+                <span>${total.toFixed(2)} {currency}</span>
               </div>
               {saleDiscountCents > 0 && (
                 <div className="ss-cart-summary-row" style={{ color: '#ff6b6b' }}>
                   <span>{activeSale!.name}</span>
-                  <span>−${(saleDiscountCents / 100).toFixed(2)} CAD</span>
+                  <span>−${(saleDiscountCents / 100).toFixed(2)} {currency}</span>
                 </div>
               )}
               {discountCents > 0 && (
                 <div className="ss-cart-summary-row" style={{ color: '#86efac' }}>
                   <span>Promo Code</span>
-                  <span>−${(discountCents / 100).toFixed(2)} CAD</span>
+                  <span>−${(discountCents / 100).toFixed(2)} {currency}</span>
                 </div>
               )}
               <div className="ss-cart-summary-row">
@@ -162,7 +163,7 @@ export default function SappertonCartPage() {
               </div>
               <div className="ss-cart-summary-row ss-cart-summary-total">
                 <span>Total</span>
-                <span>${discountedTotal.toFixed(2)} CAD</span>
+                <span>${discountedTotal.toFixed(2)} {currency}</span>
               </div>
               <PromoCodeInput
                 shopSlug="sapperton-scrapper"

@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { useState, useEffect } from 'react'
 import { sappertonProducts, type SappertonProduct } from '@/app/products/sapperton-scrapper-products-data'
 import { useCart } from '@/app/cart-context'
+import { salePriceBasis, usdPriceLabel } from '@/lib/currency'
 import type { ActiveSale } from '@/lib/sale'
 import { calcSalePrice } from '@/lib/sale'
 
@@ -151,7 +152,8 @@ export function SappertonStorefront({ heroImage, activeSale, dbProducts }: {
 
 function ProductCard({ product, activeSale }: { product: SappertonProduct; activeSale?: ActiveSale }) {
   const [hovered, setHovered] = useState(false)
-  const salePrice = calcSalePrice(product.price, activeSale ?? null, product.slug)
+  const { isUS } = useCart()
+  const salePrice = calcSalePrice(salePriceBasis(product, isUS), activeSale ?? null, product.slug)
 
   return (
     <Link
@@ -174,7 +176,7 @@ function ProductCard({ product, activeSale }: { product: SappertonProduct; activ
         </h3>
         <div style={{ display: 'flex', gap: 6, flexShrink: 0, alignItems: 'baseline' }}>
           {salePrice && <span style={{ fontSize: 15, color: '#b8860b', fontWeight: 700 }}>${salePrice}</span>}
-          <span style={{ fontSize: 15, color: salePrice ? 'rgba(184,134,11,0.3)' : '#b8860b', fontWeight: 600, textDecoration: salePrice ? 'line-through' : 'none' }}>${product.price}</span>
+          <span style={{ fontSize: 15, color: salePrice ? 'rgba(184,134,11,0.3)' : '#b8860b', fontWeight: 600, textDecoration: salePrice ? 'line-through' : 'none' }}>{usdPriceLabel(product, isUS) ?? `$${product.price}`}</span>
         </div>
       </div>
       {product.colors && (
