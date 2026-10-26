@@ -137,6 +137,7 @@ export default function OrdersPage() {
                     <th>Size</th>
                     <th>Color</th>
                     <th>Ship To</th>
+                    <th>Shipping</th>
                     <th>Total</th>
                     <th>Status</th>
                     <th>Tracking</th>
@@ -179,6 +180,7 @@ export default function OrdersPage() {
                             </button>
                         }
                       </td>
+                      <td style={{ fontSize: 12 }}>{order.shippingTotal != null ? formatCurrency(order.shippingTotal) : <span style={{ color: 'var(--ink-mute)' }}>—</span>}</td>
                       <td className="strong">{formatCurrency(order.total)}</td>
                       <td><StatusBadge status={order.status} /></td>
                       <td style={{ fontSize: 12 }}>

@@ -32,6 +32,7 @@ export async function GET() {
     createdAt: o.createdAt.toISOString(),
     shopSlug: o.shop?.slug || '—',
     shippingAddress: o.shippingAddress,
+    shippingTotal: o.shippingTotal,
     chitchatsId: o.chitchatsId,
     trackingUrl: o.trackingUrl,
   })))
