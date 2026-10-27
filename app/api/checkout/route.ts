@@ -4,6 +4,7 @@ import { getProduct } from '@/app/products/products-data'
 import { the1982Products } from '@/app/products/the1982-products-data'
 import { nomoProducts } from '@/app/products/nomo-nomo-products-data'
 import { boastyProducts } from '@/app/products/boasty-collective-products-data'
+import { magariProducts } from '@/app/products/magari-products-data'
 
 function findStaticProduct(slug: string) {
   const main = getProduct(slug)
@@ -35,8 +36,9 @@ export async function POST(request: Request) {
 
   const resolvedItems = await Promise.all(items.map(async (item) => {
     let name: string, price: string, images: string[]
-    const staticProduct = findStaticProduct(item.slug)
     const dbProduct = await prisma.merchProduct.findUnique({ where: { slug: item.slug } })
+    // Magari's launch lineup is only a stand-in until its products exist in the dashboard
+    const staticProduct = findStaticProduct(item.slug) ?? (dbProduct ? null : magariProducts.find(p => p.slug === item.slug) ?? null)
     if (staticProduct) {
       name = staticProduct.name
       price = staticProduct.price
@@ -89,6 +91,7 @@ export async function POST(request: Request) {
     : refererPath.includes('/shop/the-1982') ? 'the-1982'
     : refererPath.includes('/shop/bar-bravo') ? 'bar-bravo'
     : refererPath.includes('/shop/sapperton-scrapper') ? 'sapperton-scrapper'
+    : refererPath.includes('/shop/magari') ? 'magari'
     : 'lunch-lady'
   )
 
