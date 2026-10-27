@@ -5,7 +5,7 @@ import Link from 'next/link'
 import { useCart } from '@/app/cart-context'
 
 export const MAGARI_PATH = '/shop/magari'
-export const MAGARI_LOGO = '/magari/logo.png'
+export const MAGARI_LOGO = 'https://res.cloudinary.com/dwjvblzu9/image/upload/v1793121772/merchbeast/magari-logo.png'
 
 /** The Magari wordmark. Falls back to written text if the logo file isn't there yet. */
 export function MagariLogo({ className, alt = 'Magari by Oca' }: { className?: string; alt?: string }) {
