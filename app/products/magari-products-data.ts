@@ -68,8 +68,8 @@ export const magariProducts: MagariProduct[] = [
     priceUsd: 4500,
     description: 'Washed black heavyweight tee. Magari on the chest; on the back, a figure from an old Italian card deck holding up a plate of pasta.',
     images: [
-      'https://res.cloudinary.com/dwjvblzu9/image/upload/v1793124432/merchbeast/magari-tee-front.jpg',
       'https://res.cloudinary.com/dwjvblzu9/image/upload/v1793124432/merchbeast/magari-tee-back.jpg',
+      'https://res.cloudinary.com/dwjvblzu9/image/upload/v1793124432/merchbeast/magari-tee-front.jpg',
       'https://res.cloudinary.com/dwjvblzu9/image/upload/v1793124433/merchbeast/magari-tee-logo.jpg',
       'https://res.cloudinary.com/dwjvblzu9/image/upload/v1793124431/merchbeast/magari-tee-art.jpg',
     ],
