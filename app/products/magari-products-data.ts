@@ -1,6 +1,6 @@
 // Launch lineup for Magari by Oca. Shown until products are added in the dashboard;
 // once the shop has active DB products, the storefront uses those instead.
-// TODO(magari): prices and the tote photo are placeholders until the restaurant confirms them.
+// TODO(magari): prices are placeholders until the restaurant confirms them.
 export type MagariCategory = 'hat' | 'tee' | 'tote'
 
 export type MagariProduct = {
@@ -81,8 +81,11 @@ export const magariProducts: MagariProduct[] = [
     slug: 'magari-tote',
     name: 'Magari Tote',
     price: '30.00',
-    description: 'Heavy canvas tote, big enough for a loaf, two bottles and whatever else you picked up on the Drive.',
-    images: [],
+    description: 'Natural canvas tote covered in figures from an old Italian card deck, with one holding up a plate of pasta. Big enough for a loaf, two bottles and whatever else you picked up on the Drive.',
+    images: [
+      'https://res.cloudinary.com/dwjvblzu9/image/upload/v1793134946/merchbeast/magari-tote-front.jpg',
+      'https://res.cloudinary.com/dwjvblzu9/image/upload/v1793134963/merchbeast/magari-tote-detail.jpg',
+    ],
     sizes: ['One Size'],
     colors: ['Natural'],
     tag: 'Tote',
