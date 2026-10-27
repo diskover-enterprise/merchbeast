@@ -84,7 +84,6 @@ export const magariProducts: MagariProduct[] = [
     description: 'Natural canvas tote covered in figures from an old Italian card deck, with one holding up a plate of pasta. Big enough for a loaf, two bottles and whatever else you picked up on the Drive.',
     images: [
       'https://res.cloudinary.com/dwjvblzu9/image/upload/v1793134946/merchbeast/magari-tote-front.jpg',
-      'https://res.cloudinary.com/dwjvblzu9/image/upload/v1793134963/merchbeast/magari-tote-detail.jpg',
     ],
     sizes: ['One Size'],
     colors: ['Natural'],
