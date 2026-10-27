@@ -56,11 +56,11 @@
 
 /* ── Logo fallback (if the image is missing) ─────── */
 .mg-logo-text { font-family: var(--mg-chalk-font); font-size: 30px; line-height: 1; letter-spacing: 0.02em; }
-.mg-logo-text.mg-masthead-logo { display: block; font-size: clamp(88px, 15vw, 190px); }
+.mg-logo-text.mg-masthead-logo { display: block; font-size: clamp(70px, 12vw, 152px); }
 
 /* ── Masthead ────────────────────────────────────── */
 .mg-masthead { padding: var(--mg-7) 0 var(--mg-6); text-align: center; }
-.mg-masthead-logo { width: min(640px, 82vw); height: auto; margin: 0 auto; }
+.mg-masthead-logo { width: min(512px, 66vw); height: auto; margin: 0 auto; }
 .mg-masthead-line { margin-top: var(--mg-4); font-family: var(--mg-note-font); font-size: 30px; line-height: 1; color: var(--mg-ink); transform: rotate(-1.5deg); display: inline-block; }
 
 /* ── Sections ────────────────────────────────────── */

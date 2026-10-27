@@ -9,7 +9,7 @@ import { loadMagari } from './data'
 export const dynamic = 'force-dynamic'
 
 export const metadata: Metadata = {
-  title: 'Magari by Oca — things from the restaurant',
+  title: 'Magari by Oca — merch by magari',
   description: 'Hats, a tee and a tote from Magari by Oca, 1260 Commercial Drive, Vancouver.',
 }
 

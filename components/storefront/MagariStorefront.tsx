@@ -20,7 +20,7 @@ export function MagariStorefront({ products, isUS = false, heroImage }: { produc
       <section className="mg-masthead">
         <div className="mg-wrap">
           <MagariLogo className="mg-masthead-logo" />
-          <p className="mg-masthead-line"><ChalkText>things from the restaurant.</ChalkText></p>
+          <p className="mg-masthead-line"><ChalkText>merch by magari.</ChalkText></p>
         </div>
       </section>
 
