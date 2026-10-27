@@ -11,7 +11,6 @@ export function MagariFooter() {
           </div>
           <ul className="mg-footer-list">
             <li><a href="https://www.instagram.com/magari_by_oca" target="_blank" rel="noreferrer">Instagram</a></li>
-            <li><a href="https://www.magaribyoca.com" target="_blank" rel="noreferrer">Restaurant</a></li>
           </ul>
           <ul className="mg-footer-list">
             <li><Link href="/shop/magari/shipping-returns">Shipping / Returns</Link></li>

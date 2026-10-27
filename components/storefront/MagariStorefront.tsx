@@ -3,7 +3,7 @@
 import type { MagariProduct } from '@/app/products/magari-products-data'
 import { MagariShell } from './magari/MagariShell'
 import { MagariLogo } from './magari/Header'
-import { ChalkHeading, ChalkText } from './magari/Chalk'
+import { ChalkText } from './magari/Chalk'
 import { ProductGrid, SpecialsBoard } from './magari/Products'
 import { EditorialImageSection } from './magari/EditorialImageSection'
 
@@ -33,24 +33,11 @@ export function MagariStorefront({ products, isUS = false, heroImage }: { produc
         </section>
       )}
 
-      {hats.length > 0 && (
+      {products.length > 0 && (
         <section className="mg-section">
-          <div className="mg-wrap">
-            <div className="mg-section-head">
-              <ChalkHeading size="xl" tilt={-2}>hats.</ChalkHeading>
-            </div>
-            <ProductGrid products={hats} hero />
-          </div>
-        </section>
-      )}
-
-      {rest.length > 0 && (
-        <section className="mg-section">
-          <div className="mg-wrap">
-            <div className="mg-section-head" style={{ paddingLeft: '8%' }}>
-              <ChalkHeading size="l" tilt={1}>wear it outside.</ChalkHeading>
-            </div>
-            <ProductGrid products={rest} offset={hats.length} />
+          <div className="mg-wrap" style={{ display: 'grid', gap: 'var(--mg-6)' }}>
+            {hats.length > 0 && <ProductGrid products={hats} hero />}
+            {rest.length > 0 && <ProductGrid products={rest} offset={hats.length} />}
           </div>
         </section>
       )}
