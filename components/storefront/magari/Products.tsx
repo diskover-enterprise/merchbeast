@@ -90,7 +90,7 @@ export function SpecialsBoard({ products }: { products: MagariProduct[] }) {
   return (
     <ChalkboardPanel as="section" className="mg-specials" style={{ transform: 'rotate(-0.3deg)' }}>
       <ChalkHeading onBoard as="h2" tilt={-1.5} className="mg-specials-title" style={{ transformOrigin: 'center' }}>
-        TODAY&apos;S THINGS
+        TODAY&apos;S MERCH
       </ChalkHeading>
       <p className="mg-chalk-note mg-specials-sub">— all of it, while it lasts —</p>
       <ul className="mg-specials-list">

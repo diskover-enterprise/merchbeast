@@ -42,7 +42,7 @@ export const magariProducts: MagariProduct[] = [
   },
   {
     slug: 'magari-cap-white-embroidery',
-    name: 'Magari Cap — white embroidery',
+    name: 'Magari Cap — white on black',
     price: '38.00',
     description: 'Washed black six-panel cap with the Magari logo embroidered in white. The one people ask about. Unstructured, low profile, adjustable strap.',
     images: [

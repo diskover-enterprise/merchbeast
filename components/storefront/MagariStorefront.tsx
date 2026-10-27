@@ -25,6 +25,14 @@ export function MagariStorefront({ products, isUS = false, heroImage }: { produc
 
       <div id="shop" />
 
+      {products.length > 0 && (
+        <section className="mg-section">
+          <div className="mg-wrap">
+            <SpecialsBoard products={products} />
+          </div>
+        </section>
+      )}
+
       {hats.length > 0 && (
         <section className="mg-section">
           <div className="mg-wrap">
@@ -43,14 +51,6 @@ export function MagariStorefront({ products, isUS = false, heroImage }: { produc
               <ChalkHeading size="l" tilt={1}>wear it outside.</ChalkHeading>
             </div>
             <ProductGrid products={rest} offset={hats.length} />
-          </div>
-        </section>
-      )}
-
-      {products.length > 0 && (
-        <section className="mg-section">
-          <div className="mg-wrap">
-            <SpecialsBoard products={products} />
           </div>
         </section>
       )}
