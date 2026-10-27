@@ -57,7 +57,7 @@ export function MagariStorefront({ products, isUS = false, heroImage }: { produc
 
       <EditorialImageSection id="about" image={heroImage || RESTAURANT_IMAGE} alt="Behind the bar at Magari on Commercial Drive" line="1260 Commercial Drive.">
         <p className="mg-body mg-muted">
-          Magari is the little sibling of Oca Pastificio. These are the things we wear behind the bar, made in small runs and sold here and at the restaurant.
+          Something to wear between dinners at Magari.
         </p>
       </EditorialImageSection>
     </MagariShell>
