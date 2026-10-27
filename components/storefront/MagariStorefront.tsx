@@ -7,8 +7,7 @@ import { ChalkHeading, ChalkText } from './magari/Chalk'
 import { ProductGrid, SpecialsBoard } from './magari/Products'
 import { EditorialImageSection } from './magari/EditorialImageSection'
 
-// TODO(magari): swap for a photo from inside the restaurant
-const RESTAURANT_IMAGE = 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=1800&q=80'
+const RESTAURANT_IMAGE = 'https://res.cloudinary.com/dwjvblzu9/image/upload/v1793125205/merchbeast/magari-restaurant-bar.jpg'
 
 export function MagariStorefront({ products, isUS = false, heroImage }: { products: MagariProduct[]; isUS?: boolean; heroImage?: string | null }) {
   const hats = products.filter(p => p.category === 'hat')
@@ -56,7 +55,7 @@ export function MagariStorefront({ products, isUS = false, heroImage }: { produc
         </section>
       )}
 
-      <EditorialImageSection id="about" image={heroImage || RESTAURANT_IMAGE} alt="Inside Magari on Commercial Drive" line="1260 Commercial Drive.">
+      <EditorialImageSection id="about" image={heroImage || RESTAURANT_IMAGE} alt="Behind the bar at Magari on Commercial Drive" line="1260 Commercial Drive.">
         <p className="mg-body mg-muted">
           Magari is the little sibling of Oca Pastificio. These are the things we wear behind the bar, made in small runs and sold here and at the restaurant.
         </p>

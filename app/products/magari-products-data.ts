@@ -1,6 +1,6 @@
 // Launch lineup for Magari by Oca. Shown until products are added in the dashboard;
 // once the shop has active DB products, the storefront uses those instead.
-// TODO(magari): prices and photos are placeholders until the restaurant confirms them.
+// TODO(magari): prices and the tote photo are placeholders until the restaurant confirms them.
 export type MagariCategory = 'hat' | 'tee' | 'tote'
 
 export type MagariProduct = {
@@ -26,7 +26,12 @@ export const magariProducts: MagariProduct[] = [
     name: 'Magari Cap — black on black',
     price: '38.00',
     description: 'Washed black six-panel cap with the Magari logo embroidered in black thread. You see it when the light hits it. Unstructured, low profile, adjustable strap.',
-    images: ['/magari/cap-washed-black.jpg'],
+    images: [
+      'https://res.cloudinary.com/dwjvblzu9/image/upload/v1793124428/merchbeast/magari-cap-black-front.jpg',
+      'https://res.cloudinary.com/dwjvblzu9/image/upload/v1793124425/merchbeast/magari-cap-black-angle.jpg',
+      'https://res.cloudinary.com/dwjvblzu9/image/upload/v1793124427/merchbeast/magari-cap-black-detail.jpg',
+      'https://res.cloudinary.com/dwjvblzu9/image/upload/v1793124426/merchbeast/magari-cap-black-back.jpg',
+    ],
     sizes: ['One Size'],
     colors: ['Washed Black'],
     tag: 'Hat',
@@ -40,7 +45,12 @@ export const magariProducts: MagariProduct[] = [
     name: 'Magari Cap — white embroidery',
     price: '38.00',
     description: 'Washed black six-panel cap with the Magari logo embroidered in white. The one people ask about. Unstructured, low profile, adjustable strap.',
-    images: ['https://images.unsplash.com/photo-1521369909029-2afed882baee?w=1200&q=80'],
+    images: [
+      'https://res.cloudinary.com/dwjvblzu9/image/upload/v1793124430/merchbeast/magari-cap-white-front.jpg',
+      'https://res.cloudinary.com/dwjvblzu9/image/upload/v1793124428/merchbeast/magari-cap-white-angle.jpg',
+      'https://res.cloudinary.com/dwjvblzu9/image/upload/v1793124429/merchbeast/magari-cap-white-detail.jpg',
+      'https://res.cloudinary.com/dwjvblzu9/image/upload/v1793124429/merchbeast/magari-cap-white-back.jpg',
+    ],
     sizes: ['One Size'],
     colors: ['Washed Black'],
     tag: 'Hat',
@@ -53,10 +63,15 @@ export const magariProducts: MagariProduct[] = [
     slug: 'magari-tee',
     name: 'Magari Tee',
     price: '45.00',
-    description: 'Heavyweight cotton tee with the Magari logo printed on the chest. Boxy, a little long. Washes soft.',
-    images: ['https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=1200&q=80'],
+    description: 'Washed black heavyweight tee. Magari on the chest; on the back, a figure from an old Italian card deck holding up a plate of pasta.',
+    images: [
+      'https://res.cloudinary.com/dwjvblzu9/image/upload/v1793124432/merchbeast/magari-tee-front.jpg',
+      'https://res.cloudinary.com/dwjvblzu9/image/upload/v1793124432/merchbeast/magari-tee-back.jpg',
+      'https://res.cloudinary.com/dwjvblzu9/image/upload/v1793124433/merchbeast/magari-tee-logo.jpg',
+      'https://res.cloudinary.com/dwjvblzu9/image/upload/v1793124431/merchbeast/magari-tee-art.jpg',
+    ],
     sizes: ['S', 'M', 'L', 'XL', 'XXL'],
-    colors: ['Bone'],
+    colors: ['Washed Black'],
     tag: 'Tee',
     category: 'tee',
     path: '/shop/magari/products/magari-tee',
