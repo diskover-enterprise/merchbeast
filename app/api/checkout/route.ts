@@ -49,7 +49,7 @@ export async function POST(request: Request) {
       price = dbProduct.price
       images = JSON.parse(dbProduct.images || '[]') as string[]
     }
-    const priceUsd = dbProduct?.priceUsd ?? 0
+    const priceUsd = dbProduct?.priceUsd ?? (staticProduct && 'priceUsd' in staticProduct ? staticProduct.priceUsd ?? 0 : 0)
     const unitAmountCad = Math.round(parseFloat(price.replace(/[^0-9.]/g, '')) * 100)
     // Use variant-specific image from cart if provided, otherwise fall back to product images
     const displayImages = item.image ? [item.image] : images

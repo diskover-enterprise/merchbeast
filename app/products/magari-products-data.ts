@@ -25,6 +25,7 @@ export const magariProducts: MagariProduct[] = [
     slug: 'magari-cap-black-on-black',
     name: 'Magari Cap — black on black',
     price: '45.00',
+    priceUsd: 4500,
     description: 'Washed black six-panel cap with the Magari logo embroidered in black thread. You see it when the light hits it. Unstructured, low profile, adjustable strap.',
     images: [
       'https://res.cloudinary.com/dwjvblzu9/image/upload/v1793124428/merchbeast/magari-cap-black-front.jpg',
@@ -44,6 +45,7 @@ export const magariProducts: MagariProduct[] = [
     slug: 'magari-cap-white-embroidery',
     name: 'Magari Cap — white on black',
     price: '45.00',
+    priceUsd: 4500,
     description: 'Washed black six-panel cap with the Magari logo embroidered in white. The one people ask about. Unstructured, low profile, adjustable strap.',
     images: [
       'https://res.cloudinary.com/dwjvblzu9/image/upload/v1793124430/merchbeast/magari-cap-white-front.jpg',
@@ -63,6 +65,7 @@ export const magariProducts: MagariProduct[] = [
     slug: 'magari-tee',
     name: 'Magari Tee',
     price: '45.00',
+    priceUsd: 4500,
     description: 'Washed black heavyweight tee. Magari on the chest; on the back, a figure from an old Italian card deck holding up a plate of pasta.',
     images: [
       'https://res.cloudinary.com/dwjvblzu9/image/upload/v1793124432/merchbeast/magari-tee-front.jpg',
@@ -81,6 +84,7 @@ export const magariProducts: MagariProduct[] = [
     slug: 'magari-tote',
     name: 'Magari Tote',
     price: '30.00',
+    priceUsd: 3000,
     description: 'Natural canvas tote covered in figures from an old Italian card deck, with one holding up a plate of pasta. Big enough for a loaf, two bottles and whatever else you picked up on the Drive.',
     images: [
       'https://res.cloudinary.com/dwjvblzu9/image/upload/v1793134946/merchbeast/magari-tote-front.jpg',
