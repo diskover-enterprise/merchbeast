@@ -1,0 +1,316 @@
+/* LFA Merch Shop — LFA heritage × modern collegiate fashion.
+   Balance: cream/white carry the page, maroon is the signature, powder blue is a rare accent. */
+
+.lf-root {
+  /* colour */
+  --lf-maroon: #8F2434;
+  --lf-maroon-deep: #741C29;
+  --lf-blue: #75A9C0;
+  --lf-blue-soft: #DCE8EE;
+  --lf-cream: #F8F6F1;
+  --lf-white: #FFFFFF;
+  --lf-grey: #E8E7E3;
+  --lf-well: #F3EFE9;      /* product photo ground */
+  --lf-ink: #252525;
+  --lf-muted: #6E6B66;
+  --lf-rule: #DEDCD6;
+  --lf-on-maroon: #F3EDE2;
+
+  /* type */
+  --lf-serif: var(--lf-font-serif), 'Cormorant Garamond', Georgia, serif;
+  --lf-sans: var(--font-inter), 'Helvetica Neue', Helvetica, Arial, sans-serif;
+
+  /* spacing */
+  --lf-gutter: 48px;
+  --lf-max: 1440px;
+  --lf-section: 120px;
+
+  background: var(--lf-cream);
+  color: var(--lf-ink);
+  font-family: var(--lf-sans);
+  font-size: 15px;
+  line-height: 1.55;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+.lf-root *, .lf-root *::before, .lf-root *::after { box-sizing: border-box; }
+.lf-root a { color: inherit; }
+.lf-root img { display: block; max-width: 100%; }
+.lf-root button { font-family: inherit; }
+.lf-wrap { max-width: var(--lf-max); margin: 0 auto; padding: 0 var(--lf-gutter); }
+.lf-sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+/* ── Type ────────────────────────────────────────── */
+.lf-micro { margin: 0; font-size: 11px; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; }
+.lf-accent { color: var(--lf-maroon); }
+.lf-h2, .lf-heading-l { margin: 0; font-family: var(--lf-serif); font-weight: 500; line-height: 1.02; letter-spacing: -0.01em; }
+.lf-h2 { font-size: clamp(36px, 3.6vw, 56px); margin-top: 14px; }
+.lf-heading-l { font-size: clamp(40px, 4.4vw, 64px); }
+.lf-italic { font-style: italic; }
+.lf-eyebrow { display: block; font-size: 11px; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: var(--lf-maroon); }
+.lf-label { font-size: 11px; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase; color: var(--lf-muted); }
+.lf-label-value { color: var(--lf-ink); letter-spacing: 0.04em; text-transform: none; font-size: 13px; margin-left: 8px; }
+.lf-body { margin: 0; font-size: 15px; line-height: 1.75; color: #3D3B38; max-width: 52ch; }
+.lf-muted { color: var(--lf-muted); }
+.lf-currency { font-size: 10px; letter-spacing: 0.14em; color: var(--lf-muted); }
+.lf-arrow-link { font-size: 11px; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; text-decoration: none; white-space: nowrap; }
+.lf-arrow-link span { display: inline-block; margin-left: 6px; transition: transform 0.3s ease; }
+a:hover > .lf-arrow-link span, .lf-arrow-link:hover span { transform: translateX(4px); }
+
+/* ── Buttons & controls ──────────────────────────── */
+.lf-root .lf-btn { display: inline-flex; align-items: center; justify-content: center; padding: 18px 34px; background: var(--lf-maroon); color: var(--lf-on-maroon); border: 1px solid var(--lf-maroon); border-radius: 0; font-size: 11px; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; text-decoration: none; cursor: pointer; transition: background 0.25s, color 0.25s, border-color 0.25s; }
+.lf-root .lf-btn:hover { background: var(--lf-maroon-deep); border-color: var(--lf-maroon-deep); }
+.lf-root .lf-btn:disabled { background: var(--lf-grey); border-color: var(--lf-grey); color: var(--lf-muted); cursor: not-allowed; }
+.lf-root .lf-btn.ghost { background: transparent; color: var(--lf-ink); border-color: var(--lf-ink); }
+.lf-root .lf-btn.ghost:hover { background: var(--lf-ink); color: var(--lf-cream); }
+.lf-root .lf-btn.outline-light { background: transparent; color: var(--lf-on-maroon); border-color: rgba(243, 237, 226, 0.6); }
+.lf-root .lf-btn.outline-light:hover { background: var(--lf-on-maroon); color: var(--lf-maroon); border-color: var(--lf-on-maroon); }
+.lf-option { min-width: 54px; height: 46px; padding: 0 14px; border: 1px solid var(--lf-rule); background: transparent; font-size: 13px; cursor: pointer; border-radius: 0; color: var(--lf-ink); transition: border-color 0.2s; }
+.lf-option:hover { border-color: var(--lf-ink); }
+.lf-option.active { background: var(--lf-ink); color: var(--lf-cream); border-color: var(--lf-ink); }
+.lf-textlink { background: none; border: none; padding: 0; font: inherit; font-size: 12px; color: var(--lf-muted); text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
+.lf-textlink:hover { color: var(--lf-maroon); }
+.lf-qty { display: inline-flex; border: 1px solid var(--lf-rule); width: fit-content; }
+.lf-qty button { width: 44px; height: 52px; border: none; background: transparent; font-size: 16px; cursor: pointer; color: var(--lf-ink); }
+.lf-qty span { width: 32px; display: flex; align-items: center; justify-content: center; font-size: 14px; }
+.lf-swatches { display: inline-flex; gap: 6px; }
+.lf-swatch { width: 12px; height: 12px; border-radius: 50%; border: 1px solid rgba(0, 0, 0, 0.14); padding: 0; display: inline-block; }
+button.lf-swatch { width: 28px; height: 28px; cursor: pointer; outline: 1px solid transparent; outline-offset: 3px; transition: outline-color 0.2s; }
+button.lf-swatch.active, button.lf-swatch:hover { outline-color: var(--lf-ink); }
+
+/* ── Announcement + header ───────────────────────── */
+.lf-announce { background: var(--lf-maroon); color: var(--lf-on-maroon); text-align: center; font-size: 10.5px; font-weight: 500; letter-spacing: 0.24em; text-transform: uppercase; padding: 9px 16px; }
+.lf-header { position: sticky; top: 0; z-index: 50; background: var(--lf-cream); border-bottom: 1px solid var(--lf-rule); }
+.lf-header-inner { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 32px; height: 84px; }
+.lf-header-logo { display: block; }
+.lf-logo { height: 46px; width: auto; mix-blend-mode: multiply; }
+.lf-nav { display: flex; justify-content: center; gap: 36px; font-size: 11px; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; }
+.lf-nav a { text-decoration: none; padding: 6px 0; background: linear-gradient(currentColor, currentColor) 0 100% / 0 1px no-repeat; transition: background-size 0.3s ease; }
+.lf-nav a:hover { background-size: 100% 1px; }
+.lf-header-actions { display: flex; align-items: center; gap: 6px; }
+.lf-icon-btn { position: relative; display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px; border: none; background: transparent; color: var(--lf-ink); cursor: pointer; text-decoration: none; }
+.lf-icon-btn:hover { color: var(--lf-maroon); }
+.lf-menu-btn { display: none; }
+.lf-bag-count { position: absolute; top: 4px; right: 2px; min-width: 16px; height: 16px; padding: 0 4px; border-radius: 8px; background: var(--lf-maroon); color: var(--lf-on-maroon); font-size: 9.5px; font-weight: 600; display: flex; align-items: center; justify-content: center; }
+
+/* Mobile drawer */
+.lf-drawer { position: fixed; inset: 0; z-index: 100; background: var(--lf-cream); display: flex; flex-direction: column; padding: 0 16px 32px; transform: translateX(-100%); transition: transform 0.35s ease; visibility: hidden; }
+.lf-drawer.open { transform: none; visibility: visible; }
+.lf-drawer-head { display: flex; justify-content: space-between; align-items: center; height: 72px; border-bottom: 1px solid var(--lf-rule); }
+.lf-drawer-head .lf-logo { height: 38px; }
+.lf-drawer-nav { display: grid; padding: 24px 0; }
+.lf-drawer-nav a { font-family: var(--lf-serif); font-size: 40px; line-height: 1.3; text-decoration: none; }
+.lf-drawer-foot { margin-top: auto; display: flex; justify-content: space-between; font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--lf-muted); }
+.lf-drawer-foot a { text-decoration: none; color: var(--lf-ink); }
+
+/* ── Hero: brand panel + lifestyle photo ─────────── */
+.lf-hero { display: grid; grid-template-columns: minmax(360px, 4fr) 8fr; min-height: clamp(560px, calc(100vh - 85px), 760px); }
+.lf-hero.compact { grid-template-columns: 5fr 7fr; min-height: 500px; }
+.lf-hero-panel { display: flex; flex-direction: column; justify-content: space-between; gap: 40px; padding: 56px var(--lf-gutter) 40px; }
+.tone-maroon .lf-hero-panel { background: var(--lf-maroon); color: var(--lf-on-maroon); }
+.tone-ink .lf-hero-panel { background: #2A2827; color: var(--lf-on-maroon); }
+.tone-cream .lf-hero-panel { background: #EFE9DF; color: var(--lf-ink); }
+.tone-grey .lf-hero-panel { background: var(--lf-grey); color: var(--lf-ink); }
+/* one-colour official logo on dark panels, full colour on light ones */
+.lf-hero-logo { display: block; width: 120px; aspect-ratio: 1280 / 1140; background: currentColor; -webkit-mask: var(--lf-mark) center / contain no-repeat; mask: var(--lf-mark) center / contain no-repeat; }
+.tone-cream .lf-hero-logo, .tone-grey .lf-hero-logo { background: var(--lf-mark) center / contain no-repeat; -webkit-mask: none; mask: none; }
+.lf-hero-copy { display: grid; gap: 24px; justify-items: start; }
+.lf-hero-title { margin: 0; font-family: var(--lf-serif); font-weight: 500; font-size: clamp(48px, 4.6vw, 84px); line-height: 0.95; letter-spacing: -0.02em; }
+.lf-hero.compact .lf-hero-title { font-size: clamp(44px, 4.2vw, 72px); }
+.lf-hero-title span { display: block; }
+.lf-hero-body { margin: 0; font-size: 16px; line-height: 1.7; max-width: 40ch; opacity: 0.85; }
+.lf-hero-meta { opacity: 0.7; }
+.lf-hero-photo { position: relative; overflow: hidden; background: #2A2827; min-height: 320px; }
+.lf-hero-photo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 30%; }
+
+/* ── Sections ────────────────────────────────────── */
+.lf-section { padding: var(--lf-section) 0; }
+.lf-section-tight { padding: 16px 0 0; }
+.lf-section-rule { border-top: 1px solid var(--lf-rule); }
+.lf-section-head { display: flex; justify-content: space-between; align-items: flex-end; gap: 24px; margin-bottom: 56px; }
+
+/* ── Collections ─────────────────────────────────── */
+.lf-collection-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 24px; }
+.lf-collection { display: block; text-decoration: none; color: var(--lf-ink); }
+.lf-collection-media { position: relative; aspect-ratio: 3 / 4; overflow: hidden; background: var(--lf-well); }
+.lf-collection-media img { width: 100%; height: 100%; object-fit: cover; transition: transform 1.2s cubic-bezier(0.2, 0.7, 0.2, 1); }
+.lf-collection:hover .lf-collection-media img { transform: scale(1.035); }
+.lf-collection-copy { padding-top: 20px; display: grid; gap: 8px; justify-items: start; }
+.lf-collection-title { margin: 0; font-family: var(--lf-serif); font-weight: 500; font-size: clamp(28px, 2.4vw, 40px); line-height: 1; }
+.lf-collection-line { margin: 0 0 4px; font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--lf-muted); }
+
+/* ── Alumnae feature, listings ───────────────────── */
+.lf-feature { display: grid; grid-template-columns: 7fr 4fr; gap: 64px; align-items: center; }
+.lf-feature-photo { display: block; aspect-ratio: 16 / 10; overflow: hidden; }
+.lf-feature-photo img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 30%; transition: transform 1.2s cubic-bezier(0.2, 0.7, 0.2, 1); }
+.lf-feature-photo:hover img { transform: scale(1.03); }
+.lf-feature-copy { display: grid; gap: 24px; justify-items: start; }
+.lf-page-head { padding: 72px 0 0; }
+.lf-listing { padding-top: 56px; }
+.lf-chips { display: flex; flex-wrap: wrap; gap: 8px; margin: -24px 0 40px; }
+.lf-chips a { padding: 10px 16px; border: 1px solid var(--lf-rule); font-size: 11px; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase; text-decoration: none; transition: border-color 0.2s; }
+.lf-chips a:hover { border-color: var(--lf-ink); }
+.lf-chips a.active { background: var(--lf-ink); border-color: var(--lf-ink); color: var(--lf-cream); }
+
+/* ── Product cards ───────────────────────────────── */
+.lf-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 56px 24px; }
+.lf-card { display: block; text-decoration: none; color: inherit; }
+.lf-card-media { position: relative; aspect-ratio: 4 / 5; background: var(--lf-well); overflow: hidden; }
+.lf-card-layer { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; transition: opacity 0.5s ease; }
+.lf-card-layer img { width: 100%; height: 100%; object-fit: cover; }
+.lf-pdp-thumbs img, .lf-cart-thumb img { display: block; }
+.lf-card-layer.alt { opacity: 0; background: var(--lf-well); }
+.lf-card:hover .lf-card-media.has-alt .lf-card-layer.alt { opacity: 1; }
+.lf-badge { position: absolute; top: 14px; left: 14px; background: var(--lf-cream); color: var(--lf-ink); font-size: 10px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; padding: 6px 10px; }
+.lf-card-info { padding-top: 18px; display: grid; gap: 6px; }
+.lf-card-row { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+.lf-card-name { margin: 0; font-size: 14px; font-weight: 500; line-height: 1.35; }
+.lf-card-price { font-size: 14px; }
+.lf-card-colour { font-size: 13px; color: var(--lf-muted); }
+.lf-photo-empty { font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--lf-muted); }
+
+/* ── Heritage feature ────────────────────────────── */
+.lf-heritage { position: relative; overflow: hidden; background: var(--lf-maroon); color: var(--lf-on-maroon); padding: 136px 0; }
+.lf-heritage-mark { position: absolute; right: -16%; top: 50%; width: min(58vw, 860px); aspect-ratio: 1280 / 640; transform: translateY(-50%); background: var(--lf-on-maroon); opacity: 0.07; -webkit-mask: var(--lf-mark) top center / 100% auto no-repeat; mask: var(--lf-mark) top center / 100% auto no-repeat; pointer-events: none; }
+.lf-heritage-inner { position: relative; display: grid; grid-template-columns: 1.15fr 1fr; gap: 64px; align-items: center; }
+.lf-heritage-year { font-family: var(--lf-serif); font-weight: 400; font-size: clamp(160px, 21vw, 330px); line-height: 0.8; letter-spacing: -0.03em; color: transparent; -webkit-text-stroke: 1px rgba(243, 237, 226, 0.5); }
+.lf-heritage-copy { display: grid; gap: 28px; justify-items: start; }
+.lf-heritage-title { margin: 0; font-family: var(--lf-serif); font-weight: 400; font-size: clamp(44px, 4.6vw, 72px); line-height: 1; letter-spacing: -0.01em; }
+.lf-heritage-rule { width: 56px; height: 1px; background: rgba(243, 237, 226, 0.5); }
+.lf-heritage-lines { display: grid; gap: 8px; color: rgba(243, 237, 226, 0.78); }
+
+/* ── Categories ──────────────────────────────────── */
+.lf-category-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+.lf-category { display: block; text-decoration: none; color: inherit; }
+.lf-category-media { position: relative; aspect-ratio: 4 / 5; overflow: hidden; }
+.lf-category-media img { width: 100%; height: 100%; object-fit: cover; transition: transform 1.2s cubic-bezier(0.2, 0.7, 0.2, 1); }
+.lf-category:hover .lf-category-media img { transform: scale(1.035); }
+.lf-category-label { display: flex; justify-content: space-between; padding: 18px 0 0; font-size: 12px; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; }
+.lf-category-label span:last-child { transition: transform 0.3s ease; }
+.lf-category:hover .lf-category-label span:last-child { transform: translateX(4px); color: var(--lf-maroon); }
+
+/* ── Community ───────────────────────────────────── */
+.lf-community { background: var(--lf-white); padding: 136px 0; }
+.lf-community-inner { display: grid; justify-items: center; text-align: center; gap: 24px; }
+.lf-community-title { margin: 0; font-family: var(--lf-serif); font-weight: 500; font-size: clamp(42px, 4.8vw, 72px); line-height: 1; letter-spacing: -0.01em; max-width: 14ch; }
+.lf-community-audiences { display: flex; gap: 14px; color: var(--lf-ink); }
+.lf-community-audiences span { display: inline-flex; gap: 14px; }
+.lf-dot { color: var(--lf-blue); }
+.lf-community-body { margin: 8px 0 0; font-size: 17px; line-height: 1.75; color: var(--lf-muted); max-width: 56ch; }
+
+/* ── Footer ──────────────────────────────────────── */
+.lf-footer { background: var(--lf-cream); border-top: 1px solid var(--lf-rule); padding: 96px 0 40px; font-size: 14px; }
+.lf-footer-top { display: grid; grid-template-columns: 1.2fr 1fr 1fr 1.2fr 1.6fr; gap: 40px; }
+.lf-footer-brand { display: grid; gap: 20px; align-content: start; justify-items: start; }
+.lf-footer-brand .lf-micro { color: var(--lf-muted); }
+.lf-footer-logo { width: 132px; height: auto; }
+.lf-footer-heading { color: var(--lf-maroon); margin-bottom: 20px; }
+.lf-footer-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+.lf-footer a { text-decoration: none; }
+.lf-footer a:hover { color: var(--lf-maroon); }
+.lf-newsletter-title { margin: 0 0 20px; font-family: var(--lf-serif); font-size: 30px; line-height: 1.1; }
+.lf-newsletter-form { display: flex; border-bottom: 1px solid var(--lf-ink); }
+.lf-newsletter-form input { flex: 1; min-width: 0; border: none; background: transparent; padding: 12px 0; font: inherit; font-size: 14px; color: var(--lf-ink); outline: none; }
+.lf-newsletter-form button { border: none; background: transparent; font-size: 11px; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; color: var(--lf-maroon); cursor: pointer; padding: 0 0 0 16px; }
+.lf-footer-note { margin: 0; color: var(--lf-muted); }
+.lf-footer-bottom { display: flex; justify-content: space-between; gap: 16px; margin-top: 80px; padding-top: 24px; border-top: 1px solid var(--lf-rule); font-size: 12px; color: var(--lf-muted); }
+
+/* ── Product page ────────────────────────────────── */
+.lf-crumbs { display: flex; flex-wrap: wrap; gap: 10px; padding: 28px 0; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--lf-muted); }
+.lf-crumbs a { text-decoration: none; color: var(--lf-ink); }
+.lf-pdp { display: grid; grid-template-columns: 1.25fr 1fr; gap: 80px; padding-bottom: var(--lf-section); align-items: start; }
+.lf-pdp-photo { position: relative; aspect-ratio: 4 / 5; background: var(--lf-well); overflow: hidden; display: flex; align-items: center; justify-content: center; }
+.lf-pdp-photo img { width: 100%; height: 100%; object-fit: cover; }
+.lf-pdp-thumbs { display: flex; gap: 10px; margin-top: 10px; }
+.lf-pdp-thumbs button { width: 84px; aspect-ratio: 4 / 5; padding: 0; border: 1px solid transparent; background: var(--lf-well); cursor: pointer; overflow: hidden; display: flex; align-items: center; justify-content: center; }
+.lf-pdp-thumbs button.active { border-color: var(--lf-ink); }
+.lf-pdp-thumbs img { width: 100%; height: 100%; object-fit: cover; }
+.lf-pdp-info { display: grid; gap: 32px; position: sticky; top: 140px; }
+.lf-pdp-name { margin: 14px 0 0; font-family: var(--lf-serif); font-weight: 500; font-size: clamp(40px, 3.8vw, 58px); line-height: 1; letter-spacing: -0.01em; }
+.lf-pdp-price { margin: 16px 0 0; font-size: 18px; }
+.lf-pdp-group { display: grid; gap: 14px; }
+.lf-pdp-options { display: flex; gap: 8px; flex-wrap: wrap; }
+.lf-pdp-buy { display: grid; grid-template-columns: auto 1fr; gap: 10px; }
+.lf-details { border-top: 1px solid var(--lf-rule); }
+.lf-details:last-child { border-bottom: 1px solid var(--lf-rule); }
+.lf-details summary { padding: 18px 0; cursor: pointer; font-size: 11px; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; list-style: none; display: flex; justify-content: space-between; }
+.lf-details summary::-webkit-details-marker { display: none; }
+.lf-details[open] summary span:last-child { transform: rotate(45deg); }
+.lf-details div { padding-bottom: 18px; font-size: 14px; color: var(--lf-muted); line-height: 1.7; }
+
+/* ── Cart ────────────────────────────────────────── */
+.lf-cart { max-width: 820px; margin: 0 auto; padding: 88px 0 var(--lf-section); }
+.lf-cart-item { display: grid; grid-template-columns: 96px 1fr auto; gap: 20px; padding: 20px 0; border-bottom: 1px solid var(--lf-rule); align-items: start; }
+.lf-cart-thumb { width: 96px; aspect-ratio: 4 / 5; background: var(--lf-well); display: flex; align-items: center; justify-content: center; overflow: hidden; }
+.lf-cart-thumb img { width: 100%; height: 100%; object-fit: cover; }
+.lf-cart-summary { margin-top: 40px; display: grid; gap: 16px; }
+.lf-cart-row { display: flex; justify-content: space-between; font-size: 15px; }
+.lf-cart .lf-btn { width: 100%; }
+
+/* ── Tablet ──────────────────────────────────────── */
+@media (max-width: 1100px) {
+  .lf-root { --lf-gutter: 32px; --lf-section: 96px; }
+  .lf-header-inner { grid-template-columns: 1fr auto 1fr; height: 72px; }
+  .lf-menu-btn { display: inline-flex; justify-self: start; margin-left: -10px; }
+  .lf-nav { display: none; }
+  .lf-header-actions { justify-self: end; }
+  .lf-logo { height: 40px; }
+  .lf-grid { grid-template-columns: repeat(2, 1fr); gap: 48px 20px; }
+  .lf-category-grid { grid-template-columns: repeat(2, 1fr); }
+  .lf-footer-top { grid-template-columns: repeat(3, 1fr); }
+  .lf-footer-brand { grid-column: 1 / -1; grid-auto-flow: column; align-items: end; justify-content: start; gap: 32px; }
+  .lf-newsletter { grid-column: 1 / -1; max-width: 480px; }
+  .lf-pdp { gap: 48px; }
+
+  /* Hero stacks: image on top, copy below, so the headline never sits on the garment */
+  .lf-hero, .lf-hero.compact { grid-template-columns: 1fr; min-height: 0; }
+  .lf-hero-photo { order: -1; aspect-ratio: 16 / 10; }
+  .lf-hero-panel { padding: 48px var(--lf-gutter); gap: 32px; }
+  .lf-hero-logo { width: 96px; }
+  .lf-feature { grid-template-columns: 1fr; gap: 32px; }
+}
+
+/* ── Mobile ──────────────────────────────────────── */
+@media (max-width: 760px) {
+  .lf-root { --lf-gutter: 16px; --lf-section: 72px; }
+  .lf-hide-sm { display: none; }
+  .lf-header-inner { height: 64px; gap: 8px; }
+  .lf-logo { height: 34px; }
+
+  .lf-hero-copy { gap: 20px; }
+  .lf-hero-title { font-size: clamp(48px, 13vw, 64px); }
+  .lf-hero-photo { aspect-ratio: 3 / 2; min-height: 0; }
+  .lf-hero-panel { padding: 36px var(--lf-gutter) 32px; }
+  .lf-heritage-mark { top: 8%; right: -55%; }
+
+  .lf-section-head { margin-bottom: 32px; }
+  .lf-grid { gap: 36px 12px; }
+  .lf-card-info { padding-top: 12px; gap: 4px; }
+  .lf-card-row { align-items: flex-start; }
+  .lf-card-name, .lf-card-price { font-size: 13px; }
+  .lf-card-colour { font-size: 12px; }
+  .lf-card-row:last-child { flex-direction: column; gap: 8px; }
+  .lf-category-grid { gap: 12px; }
+  .lf-category-label { font-size: 11px; letter-spacing: 0.16em; padding-top: 12px; }
+
+  .lf-heritage { padding: 88px 0; }
+  .lf-heritage-inner { grid-template-columns: 1fr; gap: 24px; }
+  .lf-heritage-year { font-size: 34vw; }
+  .lf-heritage-mark { width: 120vw; }
+  .lf-community { padding: 88px 0; }
+  .lf-community-body { font-size: 16px; }
+
+  .lf-footer { padding-top: 64px; }
+  .lf-footer-top { grid-template-columns: 1fr 1fr; gap: 36px 24px; }
+  .lf-footer-brand { grid-auto-flow: row; }
+  .lf-footer-logo { width: 110px; }
+  .lf-footer-bottom { flex-direction: column; margin-top: 56px; }
+
+  .lf-pdp { grid-template-columns: 1fr; gap: 28px; }
+  .lf-pdp-media { margin: 0 calc(var(--lf-gutter) * -1); }
+  .lf-pdp-thumbs { padding: 0 var(--lf-gutter); }
+  .lf-pdp-info { position: static; gap: 24px; }
+  .lf-cart { padding-top: 48px; }
+  .lf-cart-item { grid-template-columns: 72px 1fr auto; gap: 14px; }
+  .lf-cart-thumb { width: 72px; }
+}
