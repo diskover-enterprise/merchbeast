@@ -18,9 +18,8 @@ export const nav = [
 export const hero = {
   lines: ['Belli', 'Goods'],
   sub: ['Merch from your', 'neighbourhood pizzeria.'],
-  // Cropped from the approved mockup; swap for the original photo file when it arrives
-  image: '/belli/hero.jpg',
-  imageAlt: 'Three friends at a Belli table wearing Belli tees and a Belli cap',
+  image: '/belli/hero-trackies.jpg',
+  imageAlt: 'Three men laughing over pizza in Belli velour tracksuits and a Belli cap',
 }
 
 /** Words in the scrolling ticker, in order. */
