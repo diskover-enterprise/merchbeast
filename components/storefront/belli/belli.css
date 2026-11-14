@@ -44,7 +44,7 @@
 /* ── Hero ────────────────────────────────────────── */
 .bl-hero { display: grid; grid-template-columns: 34fr 66fr; align-items: end; background: var(--bl-white); }
 .bl-hero-copy { container-type: inline-size; align-self: center; padding: 64px 0 64px var(--bl-gutter); }
-.bl-hero-title { margin: 0; font-family: var(--bl-display); font-weight: 400; text-transform: uppercase; line-height: 0.84; letter-spacing: 0.005em; }
+.bl-hero-title { margin: 0; font-family: var(--bl-display); font-weight: 400; text-transform: uppercase; line-height: 0.98; letter-spacing: 0.005em; }
 /* each word fills the column width */
 .bl-hero-title span { display: block; font-size: 39cqi; }
 .bl-hero-sub { margin: 26px 0 0; font-family: var(--bl-mono); font-weight: 400; font-size: clamp(16px, 1.9vw, 28px); line-height: 1.25; text-transform: uppercase; letter-spacing: 0.02em; }
