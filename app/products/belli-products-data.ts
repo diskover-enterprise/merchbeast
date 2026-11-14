@@ -1,6 +1,6 @@
 // Launch lineup for Belli Goods. Shown until Belli's products are added in the dashboard;
 // once the shop has active DB products, the storefront uses those instead.
-// TODO(belli): prices are placeholders, and only the Dickys x Belli tee has photos so far.
+// TODO(belli): prices are placeholders; the tees (other than the collab), hoodie, crewneck and tote still need photos.
 export type BelliCategory = 'tees' | 'hoodies' | 'crewnecks' | 'hats' | 'totes' | 'accessories'
 
 export type BelliProduct = {
@@ -45,9 +45,14 @@ export const belliProducts: BelliProduct[] = [
     images: [], sizes: APPAREL, colors: ['Cream'], path: path('belli-crewneck'), shopifyUrl: '',
   },
   {
-    slug: 'belli-dad-hat', name: 'Belli Dad Hat', price: '35.00', tag: 'Hat', category: 'hats',
-    description: 'Washed cotton dad hat with the Belli script embroidered in cream. Adjustable strap.',
-    images: [], sizes: ['One Size'], colors: ['Black'], path: path('belli-dad-hat'), shopifyUrl: '',
+    slug: 'belli-9forty-cap', name: 'Belli 9FORTY Cap', price: '40.00', tag: 'Hat', category: 'hats',
+    description: 'Black New Era 9FORTY with the Belli script in raised cream puff embroidery and a pair of dice on the side. Adjustable strap.',
+    images: ['/belli/hat-black-9forty.jpg'], sizes: ['One Size'], colors: ['Black'], path: path('belli-9forty-cap'), shopifyUrl: '',
+  },
+  {
+    slug: 'belli-camo-dad-hat', name: 'Belli Camo Dad Hat', price: '40.00', tag: 'Hat', category: 'hats',
+    description: 'Woodland camo dad hat with the Belli script in raised gold puff embroidery and gold dice on the side. Adjustable strap.',
+    images: ['/belli/hat-camo.jpg'], sizes: ['One Size'], colors: ['Camo'], path: path('belli-camo-dad-hat'), shopifyUrl: '',
   },
   {
     slug: 'belli-tote', name: 'Belli Tote', price: '25.00', tag: 'Tote', category: 'totes',
