@@ -134,8 +134,6 @@ export default function OrdersPage() {
                     {shopFilter === 'all' && <th>Shop</th>}
                     <th>Customer</th>
                     <th>Items</th>
-                    <th>Size</th>
-                    <th>Color</th>
                     <th>Ship To</th>
                     <th>Shipping</th>
                     <th>Total</th>
@@ -158,14 +156,23 @@ export default function OrdersPage() {
                           {order.customer?.email}
                         </span>
                       </td>
-                      <td>
-                        {order.items?.map((i: any) => `${i.product?.name} ×${i.quantity}`).join(', ')}
-                      </td>
-                      <td style={{ fontSize: 12 }}>
-                        {order.items?.map((i: any) => i.size).filter(Boolean).join(', ') || <span style={{ color: 'var(--ink-mute)' }}>—</span>}
-                      </td>
-                      <td style={{ fontSize: 12 }}>
-                        {order.items?.map((i: any) => i.color).filter(Boolean).join(', ') || <span style={{ color: 'var(--ink-mute)' }}>—</span>}
+                      <td style={{ minWidth: 200 }}>
+                        {/* One block per item: name and quantity, with its size and colour underneath */}
+                        <div style={{ display: 'grid', gap: 10 }}>
+                          {order.items?.map((i: any, idx: number) => (
+                            <div key={i.id ?? idx} style={idx > 0 ? { borderTop: '1px solid var(--ink-mute)', paddingTop: 10 } : undefined}>
+                              <div>
+                                {i.product?.name}
+                                <span style={{ marginLeft: 6, color: 'var(--ink-mute)' }}>×{i.quantity}</span>
+                              </div>
+                              {(i.size || i.color) && (
+                                <div style={{ fontSize: 11, fontFamily: 'monospace', marginTop: 3, color: 'var(--neon)' }}>
+                                  {[i.size && `Size ${i.size}`, i.color].filter(Boolean).join(' · ')}
+                                </div>
+                              )}
+                            </div>
+                          ))}
+                        </div>
                       </td>
                       <td style={{ fontSize: 12 }}>
                         {order.shippingAddress
